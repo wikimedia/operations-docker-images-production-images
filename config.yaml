@@ -1,0 +1,2 @@
+registry: docker-registry.wikimedia.org
+seed_image: wikimedia-jessie:latest

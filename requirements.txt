@@ -1,0 +1,4 @@
+docker>=2.1.0
+pyyaml
+jinja2
+python-debian

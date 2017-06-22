@@ -1,0 +1,5 @@
+nodejs-devel (0.0.1) wikimedia; urgency=medium
+
+  * Initial release. This image is equivalent to https://github.com/d00rman/nodejs-docker-image
+
+ -- Giuseppe Lavagetto <joe@wikimedia.org>  Thu, 22 Jun 2017 15:01:51 +0200

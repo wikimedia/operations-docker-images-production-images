@@ -1,0 +1,135 @@
+#!/usr/bin/env python3
+import argparse
+import os
+
+from io import BytesIO
+
+import docker
+import docker.errors
+import yaml
+
+from jinja2 import Environment, FileSystemLoader
+from debian.changelog import Changelog
+
+known_images = {}
+
+
+def find_image_tag(image_name):
+    if image_name not in known_images:
+        return ""
+    image = known_images[image_name]
+    return "{}:{}".format(image.name, image.tag)
+
+
+def apt_install(pkgs):
+    return """
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive \
+    apt-get install --yes {packages} \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+""".format(packages=pkgs)
+
+
+class DockerImage(object):
+
+    def __init__(self, path, config, base):
+        if not base.endswith('/'):
+            base += '/'
+        env = Environment(loader=FileSystemLoader(path))
+        env.filters['image_tag'] = find_image_tag
+        env.filters['apt_install'] = apt_install
+        self.tpl = env.get_template('Dockerfile.template')
+        self.config = config
+        with open(os.path.join(path, 'changelog'), 'rb') as fh:
+            chlog = fh.read()
+        changelog = Changelog(chlog)
+        self.tag = str(changelog.get_version())
+        self.name = str(changelog.get_package())
+
+    @property
+    def dockerfile(self):
+        dockerfile = self.tpl.render(**self.config)
+        print('Generated Dockerfile:')
+        print('===')
+        print(dockerfile)
+        print('===')
+        return BytesIO(bytes(dockerfile, 'utf8'))
+
+
+class DockerBuilder(object):
+
+    def __init__(self, directory, configfile):
+        self.base_directory = directory
+        self.config = {
+            'registry': 'docker-registry.wikimedia.org',
+            'username': None, 'password': None,
+            'seed_image': 'wikimedia-jessie'
+        }
+        self.config.update(self._read_config(configfile))
+        self.client = docker.from_env(version='auto')
+
+    def _read_config(self, configfile):
+        with open(configfile, 'rb') as fh:
+            raw_config = yaml.load(fh)
+        return {k: v for k, v in raw_config.items()
+                if k in self.config}
+
+    def scan(self):
+        """
+        Scan the base directory for image definitions, and create the
+        corresponding dockerfile
+        """
+        for root, dirs, files in os.walk(self.base_directory):
+            if 'Dockerfile.template' in files:
+                print(
+                    'Processing the dockerfile template in {base}'.format(base=root)
+                )
+                yield DockerImage(root, self.config, self.base_directory)
+
+    def build(self, image):
+        print('Building image {name}:{version}'.format(name=image.name, version=image.tag))
+        image_ref = "{name}:{tag}".format(name=image.name, tag=image.tag)
+        self.client.images.build(
+            fileobj=image.dockerfile,
+            tag=image_ref,
+            nocache=True,
+            rm=True,
+            pull=False,
+        )
+        print("Image built.")
+        fullname = os.path.join(self.config['registry'], image.name)
+        for tag in [image.tag, 'latest']:
+            self.client.api.tag(image_ref, fullname, tag)
+            yield (fullname, tag)
+
+    def publish(self, name, tag):
+        """Publish the locally built image to the registry"""
+        if all([self.config['username'], self.config['password']]):
+            self.client.login(
+                self.config['username'],
+                password=self.config['password'],
+                registry=self.config['registry']
+            )
+            command_output = self.client.push(name, tag)
+            print(command_output)
+        else:
+            print('Not pushing as credentials are not set.')
+
+
+def main(args):
+    db = DockerBuilder(args.directory, args.configfile)
+    for image in db.scan():
+        for name, tag in db.build(image):
+            known_images[name] = image
+            db.publish(name, tag)
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-c', '--configfile', default="config.yaml")
+    parser.add_argument('directory')
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+    main(parse_args())

@@ -1,0 +1,5 @@
+# TODO: allow to define a "latest" token that fetches the latest version of the parent
+# from this repository
+FROM {{ registry }}/{{ "nodejs-slim" | image_tag }}
+
+{{ "npm" | apt_install}}
