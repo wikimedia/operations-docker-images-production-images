@@ -87,6 +87,13 @@ class DockerBuilder(object):
                 )
                 yield DockerImage(root, self.config, self.base_directory)
 
+    def image_exists(self, image):
+        try:
+            self.client.images.get("{}:{}".format(image.name, image.tag))
+            return True
+        except docker.errors.ImageNotFound:
+            return False
+
     def build(self, image):
         print('Building image {name}:{version}'.format(name=image.name, version=image.tag))
         image_ref = "{name}:{tag}".format(name=image.name, tag=image.tag)
@@ -120,6 +127,8 @@ class DockerBuilder(object):
 def main(args):
     db = DockerBuilder(args.directory, args.configfile)
     for image in db.scan():
+        if db.image_exists(image):
+            continue
         for name, tag in db.build(image):
             known_images[image.name] = image
             db.publish(name, tag)
