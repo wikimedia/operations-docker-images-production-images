@@ -110,7 +110,7 @@ class DockerBuilder(object):
                 password=self.config['password'],
                 registry=self.config['registry']
             )
-            command_output = self.client.push(name, tag)
+            command_output = self.client.api.push(name, tag)
             print(command_output)
         else:
             print('Not pushing as credentials are not set.')
