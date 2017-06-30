@@ -16,6 +16,7 @@ known_images = {}
 
 def find_image_tag(image_name):
     if image_name not in known_images:
+        print('WARNING: image {name} not found'.format(name=image_name))
         return ""
     image = known_images[image_name]
     return "{}:{}".format(image.name, image.tag)
@@ -120,7 +121,7 @@ def main(args):
     db = DockerBuilder(args.directory, args.configfile)
     for image in db.scan():
         for name, tag in db.build(image):
-            known_images[name] = image
+            known_images[image.name] = image
             db.publish(name, tag)
 
 
