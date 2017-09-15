@@ -26,9 +26,8 @@ def apt_install(pkgs):
     return """
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive \
-    apt-get install --yes {packages} \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-""".format(packages=pkgs)
+    apt-get install --yes {packages} --no-install-recommends \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* """.format(packages=pkgs)
 
 
 class DockerImage(object):
@@ -64,7 +63,7 @@ class DockerBuilder(object):
         self.config = {
             'registry': 'docker-registry.wikimedia.org',
             'username': None, 'password': None,
-            'seed_image': 'wikimedia-jessie'
+            'seed_image': 'wikimedia-stretch'
         }
         self.config.update(self._read_config(configfile))
         self.client = docker.from_env(version='auto')
