@@ -1,4 +1,4 @@
-FROM {{ registry }}/{{ seed_image }}:latest
+FROM {{ registry }}/{{ seed_image }}
 LABEL Description="Fluent-bit image to run as a sidecar container" \
       maintainer="joe@wikimedia.org"
 
