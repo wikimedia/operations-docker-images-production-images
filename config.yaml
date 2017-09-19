@@ -1,2 +1,2 @@
 registry: docker-registry.wikimedia.org
-seed_image: wikimedia-jessie:latest
+seed_image: wikimedia-stretch:latest

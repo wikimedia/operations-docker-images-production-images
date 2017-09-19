@@ -2,7 +2,7 @@
 import argparse
 import os
 
-from io import BytesIO
+from contextlib import contextmanager
 
 import docker
 import docker.errors
@@ -14,6 +14,14 @@ from debian.changelog import Changelog
 known_images = {}
 
 
+@contextmanager
+def pushd(dirname):
+    cur_dir = os.getcwd()
+    os.chdir(dirname)
+    yield
+    os.chdir(cur_dir)
+
+
 def find_image_tag(image_name):
     if image_name not in known_images:
         print('WARNING: image {name} not found'.format(name=image_name))
@@ -22,22 +30,26 @@ def find_image_tag(image_name):
     return "{}:{}".format(image.name, image.tag)
 
 
-def apt_install(pkgs):
-    return """
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive \
-    apt-get install --yes {packages} --no-install-recommends \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* """.format(packages=pkgs)
+def apt_installer(opts):
+    def apt_install(pkgs):
+        return """
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive \
+    apt-get install {apt_options} --yes {packages} --no-install-recommends \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* """.format(
+            apt_options=opts,
+            packages=pkgs
+        )
+    return apt_install
 
 
 class DockerImage(object):
 
-    def __init__(self, path, config, base):
-        if not base.endswith('/'):
-            base += '/'
+    def __init__(self, path, config):
+        self.path = path
         env = Environment(loader=FileSystemLoader(path))
         env.filters['image_tag'] = find_image_tag
-        env.filters['apt_install'] = apt_install
+        env.filters['apt_install'] = apt_installer(config['apt_options'])
         self.tpl = env.get_template('Dockerfile.template')
         self.config = config
         with open(os.path.join(path, 'changelog'), 'rb') as fh:
@@ -53,17 +65,18 @@ class DockerImage(object):
         print('===')
         print(dockerfile)
         print('===')
-        return BytesIO(bytes(dockerfile, 'utf8'))
+        return dockerfile
 
 
 class DockerBuilder(object):
 
     def __init__(self, directory, configfile):
-        self.base_directory = directory
+        self.base_directory = os.path.join(os.getcwd(), directory)
         self.config = {
             'registry': 'docker-registry.wikimedia.org',
             'username': None, 'password': None,
-            'seed_image': 'wikimedia-stretch'
+            'seed_image': 'wikimedia-stretch:latest',
+            'apt_options': '',
         }
         self.config.update(self._read_config(configfile))
         self.client = docker.from_env(version='auto')
@@ -84,7 +97,7 @@ class DockerBuilder(object):
                 print(
                     'Processing the dockerfile template in {base}'.format(base=root)
                 )
-                yield DockerImage(root, self.config, self.base_directory)
+                yield DockerImage(root, self.config)
 
     def image_exists(self, image):
         try:
@@ -95,14 +108,19 @@ class DockerBuilder(object):
 
     def build(self, image):
         print('Building image {name}:{version}'.format(name=image.name, version=image.tag))
+        print('Build context: {path}'.format(path=image.path))
         image_ref = "{name}:{tag}".format(name=image.name, tag=image.tag)
-        self.client.images.build(
-            fileobj=image.dockerfile,
-            tag=image_ref,
-            nocache=True,
-            rm=True,
-            pull=False,
-        )
+        with pushd(image.path):
+            with open('Dockerfile', 'w') as fh:
+                fh.write(image.dockerfile)
+            self.client.images.build(
+                path='.',
+                tag=image_ref,
+                nocache=True,
+                rm=True,
+                pull=False,
+            )
+            os.remove('Dockerfile')
         print("Image built.")
         fullname = os.path.join(self.config['registry'], image.name)
         for tag in [image.tag, 'latest']:
