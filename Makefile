@@ -38,13 +38,13 @@ production-image.created:
 clean-artifacts:
 ifeq ($(DOCKER), 1)
 	-docker rmi production-images-build:latest
-	rm production-image.created
+	-rm production-image.created
 endif
-	rm -rf .artifacts
+	-rm -rf .artifacts
 
 clean: clean-artifacts clean-dev
-	rm -rf .venv
-	rm -rf frozen-requirements.txt
+	-rm -rf .venv
+	-rm -rf frozen-requirements.txt
 
 clean-dev:
 	rm -rf .venv-dev
