@@ -8,7 +8,7 @@ import docker
 import docker.errors
 import yaml
 
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, Template
 from debian.changelog import Changelog
 
 known_images = {}
@@ -31,15 +31,22 @@ def find_image_tag(image_name):
 
 
 def apt_installer(opts):
+    t = Template("""
+{%- if http_proxy -%}
+RUN echo 'Acquire::http::Proxy \"{{ http_proxy }}\";' > /etc/apt/apt.conf.d/80_proxy \\
+    && apt-get update {{ apt_options }} \\
+{%- else -%}
+RUN apt-get update {{ apt_options }} \\
+{%- endif %}
+    && DEBIAN_FRONTEND=noninteractive \\
+    apt-get install {{ apt_options }} --yes {{ packages }} --no-install-recommends \\
+{%- if http_proxy %}
+    && rm -f /etc/apt/apt.conf.d/80_proxy \\
+{%- endif %}
+    && apt-get clean && rm -rf /var/lib/apt/lists/* """)
+
     def apt_install(pkgs):
-        return """
-RUN apt-get update {apt_options} \
-    && DEBIAN_FRONTEND=noninteractive \
-    apt-get install {apt_options} --yes {packages} --no-install-recommends \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* """.format(
-            apt_options=opts,
-            packages=pkgs
-        )
+        return t.render(**opts, packages=pkgs)
     return apt_install
 
 
@@ -49,7 +56,7 @@ class DockerImage(object):
         self.path = path
         env = Environment(loader=FileSystemLoader(path))
         env.filters['image_tag'] = find_image_tag
-        env.filters['apt_install'] = apt_installer(config['apt_options'])
+        env.filters['apt_install'] = apt_installer(config)
         self.tpl = env.get_template('Dockerfile.template')
         self.config = config
         with open(os.path.join(path, 'changelog'), 'rb') as fh:
@@ -57,6 +64,9 @@ class DockerImage(object):
         changelog = Changelog(chlog)
         self.tag = str(changelog.get_version())
         self.name = str(changelog.get_package())
+
+    def apt_installer(self):
+        env = Environment()
 
     @property
     def dockerfile(self):
@@ -77,6 +87,7 @@ class DockerBuilder(object):
             'username': None, 'password': None,
             'seed_image': 'wikimedia-stretch:latest',
             'apt_options': '',
+            'http_proxy': None,
         }
         self.config.update(self._read_config(configfile))
         self.client = docker.from_env(version='auto')
