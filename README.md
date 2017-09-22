@@ -73,15 +73,34 @@ and they are exposed to the templates as variables and filters:
 ### Filters
 
 * `image_tag`: This filter allows to retrieve the current image tag for a
-  specific image name. Thus this filter will search the current version of the `nodejs-dev` image and substitute it in the template. This allows to keep all dependencies updated automagically
+  specific image name. Thus this filter will search the current version of the
+  `nodejs-dev` image and substitute it in the template. This allows to keep all
+  dependencies updated automagically
   in sync. Example
 
 ``` dockerfile
 FROM {{ registry }}/{{ "nodejs-dev" | image_tag }}
 ```
 
- * `apt_install`: this filter will get the string you pass it as a list of packages to install with apt, and add the correct stanza to your dockerfile.
+ * `apt_install`: this filter will get the string you pass it as a list of
+   packages to install with apt, and add the correct stanza to your dockerfile.
 
+Build containers
+----------------
+
+Our build system allows using a build docker image to generate artifacts you
+later want to use in the actual service container. Please note that when newer
+docker versions including multi-stage builds will be available, it would be
+advisable to switch to that system.
+
+If you need to build libraries or binaries but don't want to pollute your
+container with, you can create a `Dockerfile.build.template` in the container
+directory, using the same syntax of the main docker container, and have the
+build put any artifacts you'll want to use into the `/build` directory. That
+directory will be later be copied to the `build` subdirectory of the main Dockerfile
+build context, so you can use those.
+
+The build script will take care of cleaning after itself.
 
 Regenerate artifacts
 --------------------

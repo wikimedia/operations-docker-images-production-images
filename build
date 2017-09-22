@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 import argparse
 import os
+import tarfile
 
 from contextlib import contextmanager
+from io import BytesIO
 
 import docker
 import docker.errors
 import yaml
 
 from jinja2 import Environment, FileSystemLoader, Template
+from jinja2.exceptions import TemplateNotFound
 from debian.changelog import Changelog
 
 known_images = {}
@@ -27,7 +30,7 @@ def find_image_tag(image_name):
         print('WARNING: image {name} not found'.format(name=image_name))
         return ""
     image = known_images[image_name]
-    return "{}:{}".format(image.name, image.tag)
+    return str(image)
 
 
 def apt_installer(opts):
@@ -46,36 +49,113 @@ RUN apt-get update {{ apt_options }} \\
     && apt-get clean && rm -rf /var/lib/apt/lists/* """)
 
     def apt_install(pkgs):
-        return t.render(**opts, packages=pkgs)
+        return t.render(packages=pkgs, **opts)
     return apt_install
+
+
+def apt_pruner(opts):
+    t = Template("""
+{%- if http_proxy -%}
+echo 'Acquire::http::Proxy \"{{ http_proxy }}\";' > /etc/apt/apt.conf.d/80_proxy  && \\
+{%- endif -%}
+    apt update && DEBIAN_FRONTEND=noninteractive apt-get remove --yes --purge --autoremove {{ packages }} \\
+{%- if http_proxy %}
+    && rm -f /etc/apt/apt.conf.d/80_proxy \\
+{%- endif %}
+    && apt-get clean && rm -rf /var/lib/apt/lists/* """)
+
+    def apt_prune(pkgs):
+        return t.render(packages=pkgs, **opts)
+    return apt_prune
 
 
 class DockerImage(object):
 
     def __init__(self, path, config):
         self.path = path
-        env = Environment(loader=FileSystemLoader(path))
-        env.filters['image_tag'] = find_image_tag
-        env.filters['apt_install'] = apt_installer(config)
-        self.tpl = env.get_template('Dockerfile.template')
+        self.env = Environment(loader=FileSystemLoader(path))
+        self.env.filters['image_tag'] = find_image_tag
+        self.env.filters['apt_install'] = apt_installer(config)
+        self.env.filters['apt_prune'] = apt_pruner(config)
         self.config = config
         with open(os.path.join(path, 'changelog'), 'rb') as fh:
             chlog = fh.read()
         changelog = Changelog(chlog)
         self.tag = str(changelog.get_version())
         self.name = str(changelog.get_package())
+        self.build_tag = '{name}-build:{tag}'.format(name=self.name,
+                                                     tag=self.tag)
 
-    def apt_installer(self):
-        env = Environment()
+    def exists(self, client):
+        """
+        Checks existence of a docker image
+        """
+        try:
+            client.images.get(str(self))
+            return True
+        except docker.errors.ImageNotFound:
+            return False
 
     @property
     def dockerfile(self):
-        dockerfile = self.tpl.render(**self.config)
-        print('Generated Dockerfile:')
+        tpl = self.env.get_template('Dockerfile.template')
+        dockerfile = tpl.render(**self.config)
+        return dockerfile
+
+    @property
+    def dockerfile_build(self):
+        try:
+            tpl = self.env.get_template('Dockerfile.build.template')
+        except TemplateNotFound:
+            return None
+        return tpl.render(**self.config)
+
+    def build(self, client, build_container=False):
+        """
+        Build the image.
+        Parameters:
+          client - a docker.client instance
+          build_container - if True, this will build the build container for
+              the image. If False (the default), it will build the actual image.
+
+        Returns: the tag for the image built, or None if no dockerfile was found,
+                 False if an exception was raised.
+        """
+        filename = os.path.join(self.path, 'Dockerfile')
+        tag = str(self)
+
+        if build_container:
+            filename += '.build'
+            tag = self.build_tag
+            dockerfile = self.dockerfile_build
+        else:
+            dockerfile = self.dockerfile
+
+        if dockerfile is None:
+            return None
+        with open(filename, 'w') as fh:
+            fh.write(dockerfile)
+
         print('===')
+        print('Generated dockerfile for image {img}:'.format(img=tag))
         print(dockerfile)
         print('===')
-        return dockerfile
+        try:
+            client.images.build(
+                path=self.path,
+                dockerfile=filename,
+                tag=tag,
+                nocache=True,
+                rm=True,
+                pull=False,
+            )
+            return tag
+        except Exception as e:
+            print("Building image {} failed: {}".format(tag, e))
+            return False
+
+    def __str__(self):
+        return "{}:{}".format(self.name, self.tag)
 
 
 class DockerBuilder(object):
@@ -90,7 +170,7 @@ class DockerBuilder(object):
             'http_proxy': None,
         }
         self.config.update(self._read_config(configfile))
-        self.client = docker.from_env(version='auto')
+        self.client = docker.from_env(version='auto', timeout=600)
 
     def _read_config(self, configfile):
         with open(configfile, 'rb') as fh:
@@ -106,36 +186,68 @@ class DockerBuilder(object):
         for root, dirs, files in os.walk(self.base_directory):
             if 'Dockerfile.template' in files:
                 print(
-                    'Processing the dockerfile template in {base}'.format(base=root)
+                    '* Processing the dockerfile template in {base}'.format(
+                        base=root)
                 )
                 yield DockerImage(root, self.config)
 
-    def image_exists(self, image):
-        try:
-            self.client.images.get("{}:{}".format(image.name, image.tag))
+    def _build_artifacts(self, image):
+        print('==> Building artifacts')
+        print('===> Creating the build image')
+        image_tag = image.build(self.client, build_container=True)
+        if image_tag is None:
             return True
-        except docker.errors.ImageNotFound:
+        elif image_tag is False:
+            print('*** ERROR: Building artifacts failed!')
+            os.remove('Dockerfile.build')
+            return False
+        else:
+            os.remove('Dockerfile.build')
+
+        print('==> Extracting artifacts from the build image')
+
+        try:
+            container = self.client.containers.create(
+                image_tag,
+                name="{}-build_ephemeral".format(image.name),
+                network_disabled=False,
+            )
+            archive = container.get_archive('/build')
+        except Exception as e:
+            print(
+                '*** ERROR: creating the build container failed: {}'.format(e))
+            self.client.images.remove(image_tag)
+            return False
+
+        print('==> Write artifacts to the filesystem')
+        try:
+            tar = tarfile.open(mode="r", fileobj=BytesIO(archive[0].data))
+            tar.extractall()
+            container.remove()
+            self.client.images.remove(image_tag)
+            return True
+        except Exception as e:
+            print('*** ERROR: Tar extraction failed: {}'.format(e))
+            container.remove()
+            self.client.images.remove(image_tag)
             return False
 
     def build(self, image):
-        print('Building image {name}:{version}'.format(name=image.name, version=image.tag))
-        print('Build context: {path}'.format(path=image.path))
-        image_ref = "{name}:{tag}".format(name=image.name, tag=image.tag)
+        print('=> Building image {name}:{version}'.format(
+            name=image.name, version=image.tag))
+        print('* Build context: {path}'.format(path=image.path))
         with pushd(image.path):
-            with open('Dockerfile', 'w') as fh:
-                fh.write(image.dockerfile)
-            self.client.images.build(
-                path='.',
-                tag=image_ref,
-                nocache=True,
-                rm=True,
-                pull=False,
-            )
+            if self._build_artifacts(image) is False:
+                return
+            print('==> Building the image')
+            img_name = image.build(self.client)
             os.remove('Dockerfile')
-        print("Image built.")
+        if img_name is False:
+            print('** ERROR: Image {} NOT built!'.format(image))
+            return
         fullname = os.path.join(self.config['registry'], image.name)
         for tag in [image.tag, 'latest']:
-            self.client.api.tag(image_ref, fullname, tag)
+            self.client.api.tag(str(image), fullname, tag)
             yield (fullname, tag)
 
     def publish(self, name, tag):
@@ -154,11 +266,12 @@ class DockerBuilder(object):
 
 def main(args):
     db = DockerBuilder(args.directory, args.configfile)
+    print("> Scanning {}".format(db.base_directory))
     for image in db.scan():
-        if db.image_exists(image):
+        known_images[image.name] = image
+        if image.exists(db.client):
             continue
         for name, tag in db.build(image):
-            known_images[image.name] = image
             db.publish(name, tag)
 
 

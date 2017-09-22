@@ -4,3 +4,4 @@
 /.venv
 /frozen-requirements.txt
 /production-image.created
+*/build/*
