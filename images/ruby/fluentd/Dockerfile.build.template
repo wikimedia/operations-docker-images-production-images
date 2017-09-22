@@ -1,0 +1,10 @@
+{%- set jemalloc_version = "4.4.0" -%}
+FROM {{ registry }}/{{ seed_image }}
+
+{{ "make gcc g++ libc-dev wget bzip2 ca-certificates" | apt_install }} \
+   && update-ca-certificates \
+   && wget -O /tmp/jemalloc-{{ jemalloc_version }}.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/{{ jemalloc_version }}/jemalloc-{{ jemalloc_version }}.tar.bz2 \
+   && cd /tmp && tar -xjf jemalloc-{{ jemalloc_version }}.tar.bz2 && cd jemalloc-{{ jemalloc_version }}/ \
+   && ./configure && make \
+   && mkdir /build && mv lib/libjemalloc.so.2 /build \
+   && echo "==> IMAGE BUILD DONE <=="

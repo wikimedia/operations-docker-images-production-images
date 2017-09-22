@@ -1,0 +1,3 @@
+FROM {{ registry }}/{{ seed_image }}
+
+{{ "ruby ruby-all-dev" | apt_install }}

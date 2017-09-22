@@ -1,0 +1,5 @@
+fluentd (0.0.1) wikimedia; urgency=medium
+
+  * Initial release with version 0.12.40 of fluentd
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Mon, 25 Sep 2017 11:11:16 +0200
