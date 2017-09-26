@@ -121,6 +121,13 @@ class DockerImage(object):
         Returns: the tag for the image built, or None if no dockerfile was found,
                  False if an exception was raised.
         """
+        if self.config['http_proxy']:
+            buildargs = {
+                'http_proxy': self.config['http_proxy'], 'https_proxy': self.config['http_proxy'],
+                'HTTP_PROXY': self.config['http_proxy'], 'HTTPS_PROXY': self.config['http_proxy'],
+            }
+        else:
+            buildargs = {}
         filename = os.path.join(self.path, 'Dockerfile')
         tag = str(self)
 
@@ -148,6 +155,7 @@ class DockerImage(object):
                 nocache=True,
                 rm=True,
                 pull=False,
+                buildargs=buildargs,
             )
             return tag
         except Exception as e:
