@@ -1,0 +1,36 @@
+FROM {{ registry }}/{{ "fluentd" | image_tag }}
+LABEL Description="Fluentd image for running as a kubernetes daemonset"
+
+{% if http_proxy -%}
+RUN echo 'Acquire::http::Proxy \"{{ http_proxy }}\";' > /etc/apt/apt.conf.d/80_proxy \
+    && apt-get update \
+{%- else -%}
+RUN apt-get update \
+{% endif -%}
+    && buildDeps="sudo make gcc g++ libc-dev ruby-dev libffi-dev" \
+    && apt-get install -y --no-install-recommends $buildDeps \
+    && gem install fluent-plugin-secure-forward \
+    && gem install fluent-plugin-record-reformer \
+    && gem install fluent-plugin-elasticsearch \
+    && gem install fluent-plugin-kubernetes_metadata_filter \
+    && gem install ffi \
+    && gem install fluent-plugin-systemd -v 0.0.8 \
+    && SUDO_FORCE_REMOVE=yes \
+    apt-get purge -y --auto-remove \
+                  -o APT::AutoRemove::RecommendsImportant=false \
+                  $buildDeps \
+    && rm -rf /var/lib/apt/lists/* \
+{%- if http_proxy %}    && rm -f /etc/apt/apt.conf.d/80_proxy \{% endif -%}
+    && gem sources --clear-all \
+    && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
+
+# Copy configuration files
+COPY ./kubernetes.conf /etc/fluentd
+
+# Environment variables
+ENV FLUENTD_OPT=""
+ENV FLUENTD_CONF="fluentd.conf"
+ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
+
+# Run Fluentd
+CMD exec fluentd -c /etc/fluentd/$FLUENTD_CONF -p /etc/fluentd/plugins $FLUENTD_OPT

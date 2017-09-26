@@ -1,0 +1,6 @@
+kubernetes-fluentd-daemonset (0.0.1) wikimedia; urgency=medium
+
+  * Initial release. This is configured to relay logs to elasticsearch
+    directly - we might need to change that in the future.
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 26 Sep 2017 10:10:54 +0200
