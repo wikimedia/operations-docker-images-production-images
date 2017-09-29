@@ -1,0 +1,5 @@
+prometheus-statsd-exporter (0.0.1) wikimedia; urgency=medium
+
+  * Initial release.
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Fri, 29 Sep 2017 09:35:37 +0200

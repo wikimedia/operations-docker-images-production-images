@@ -1,0 +1,6 @@
+FROM {{ registry }}/{{ seed_image }}
+{{ "prometheus-statsd-exporter" | apt_install }} \
+   && rm -rf /usr/share/gocode/src/github.com/prometheus
+
+
+ENTRYPOINT ["/usr/bin/statsd_exporter"]
