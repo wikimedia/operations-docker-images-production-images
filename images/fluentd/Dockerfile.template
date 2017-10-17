@@ -1,16 +1,16 @@
 # Partially taken from https://github.com/fluent/fluentd-docker-image
-FROM {{ registry }}/{{ "ruby" | image_tag }}
+FROM {{ "ruby" | image_tag }}
 LABEL Description="Fluentd wikimedia image" \
       maintainer="joe@wikimedia.org"
 
-{{ "dumb-init make gcc libc6-dev" | apt_install }} \
+RUN {{ "dumb-init make gcc libc6-dev" | apt_install }} \
     && update-ca-certificates \
     && echo 'gem: --no-document' >> /etc/gemrc \
     && gem install oj -v 2.18.3 \
     && gem install json -v 2.1.0 \
     && gem install fluentd -v 0.12.40 \
     && mkdir -p /var/log/fluentd /etc/fluentd /etc/fluentd/plugins \
-    && {{ "make gcc" | apt_prune }}
+    && {{ "make gcc" | apt_remove }}
 
 COPY build/libjemalloc.so.2 /usr/lib
 COPY fluentd.conf /etc/fluentd

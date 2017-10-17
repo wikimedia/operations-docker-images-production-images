@@ -1,7 +1,0 @@
-*.pyc
-/.artifacts
-/.venv-dev
-/.venv
-/frozen-requirements.txt
-/production-image.created
-*/build/*

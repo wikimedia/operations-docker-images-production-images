@@ -1,5 +1,5 @@
-FROM {{ registry }}/{{ seed_image }}
-{{ "prometheus-statsd-exporter" | apt_install }} \
+FROM {{ seed_image }}
+RUN {{ "prometheus-statsd-exporter" | apt_install }} \
    && rm -rf /usr/share/gocode/src/github.com/prometheus
 
 

@@ -1,6 +1,6 @@
 FROM {{ registry }}/wikimedia-jessie:latest
 
-{{ "statsd-proxy gettext-base" | apt_install }}
+RUN {{ "statsd-proxy gettext-base" | apt_install }}
 
 COPY statsd-proxy.cfg /etc/statsd-proxy.cfg.tpl
 COPY entrypoint.sh /bin/entrypoint

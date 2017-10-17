@@ -1,9 +1,8 @@
-FROM {{ registry }}/{{ seed_image }}
+FROM {{ seed_image }}
 LABEL Description="Fluent-bit image to run as a sidecar container" \
       maintainer="joe@wikimedia.org"
 
-{{ "td-agent-bit" | apt_install }}
-
+RUN {{ "td-agent-bit" | apt_install }}
 
 COPY fluent-bit.conf /etc/td-agent-bit/td-agent-bit.conf
 

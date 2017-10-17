@@ -1,0 +1,5 @@
+Package: kubernetes-fluentd-daemonset
+Description: Base image for running fluentd
+Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>
+Depends: fluentd
+

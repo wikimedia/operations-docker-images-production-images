@@ -1,4 +1,4 @@
-FROM {{ registry }}/{{ "fluentd" | image_tag }}
+FROM {{ "fluentd" | image_tag }}
 LABEL Description="Fluentd image for running as a kubernetes daemonset"
 
 {% if http_proxy -%}

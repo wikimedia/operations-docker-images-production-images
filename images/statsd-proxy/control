@@ -1,0 +1,3 @@
+Package: statsd-proxy
+Description: performant proxy to statsd backends
+Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>
