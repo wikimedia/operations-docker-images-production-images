@@ -1,0 +1,5 @@
+python3-build-stretch (0.0.1) wikimedia; urgency=medium
+
+  * Initial release
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 31 Oct 2017 12:29:38 +0100

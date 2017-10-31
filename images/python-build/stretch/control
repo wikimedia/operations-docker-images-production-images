@@ -1,0 +1,4 @@
+Package: python3-build-stretch
+Description: Image for building tar archives with python wheels for an application
+Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>
+Depends: python3-devel

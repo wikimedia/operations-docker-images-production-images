@@ -1,0 +1,11 @@
+FROM {{ "python3-devel" | image_tag }}
+
+# git is needed as some python modules use git tags for setuptools
+RUN {{ "python3-pip python3-setuptools git" | apt_install }} \
+    && mkdir /wheels && pip3 install wheel
+
+COPY run.sh /bin/run.sh
+
+VOLUME ["/wheels", "/deploy"]
+
+CMD ["/bin/run.sh"]
