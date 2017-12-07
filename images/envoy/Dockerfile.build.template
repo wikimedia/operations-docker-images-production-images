@@ -1,0 +1,5 @@
+FROM {{ seed_image }}
+
+COPY envoy_build.sh /bin/envoy_build
+# This build is too strange and convoluted to be properly written down in a dockerfile. meh.
+RUN /bin/envoy_build

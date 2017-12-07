@@ -1,0 +1,7 @@
+FROM {{ seed_image }}
+
+COPY build/envoy.binary /usr/bin/envoy
+COPY entrypoint.sh /bin/entrypoint
+COPY envoy-basic-config.yaml /etc/envoy.yaml.tpl
+RUN {{ "gettext-base" | apt_install }}
+CMD ["/bin/entypoint"]

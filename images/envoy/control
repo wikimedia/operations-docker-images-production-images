@@ -1,0 +1,3 @@
+Package: envoy
+Description: Basic envoy proxy container
+Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>
