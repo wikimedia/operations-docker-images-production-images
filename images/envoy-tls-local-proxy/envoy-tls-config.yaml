@@ -1,0 +1,45 @@
+admin:
+  access_log_path: /var/log/envoy/admin-access.log
+  address:
+    socket_address: {address: 127.0.0.1, port_value: 9631}
+static_resources:
+  clusters:
+  - name: local_service
+    connect_timeout: 1.0s
+    lb_policy: round_robin
+    load_assignment:
+      cluster_name: local_service
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address: {address: 127.0.0.1, port_value: $SERVICE_PORT }
+    type: strict_dns
+  listeners:
+  - address:
+      socket_address: {address: 0.0.0.0, port_value: $PUBLIC_PORT }
+    filter_chains:
+    - filters:
+      - name: envoy.http_connection_manager
+        typed_config:
+          '@type': type.googleapis.com/envoy.config.filter.network.http_connection_manager.v2.HttpConnectionManager
+          http_filters:
+          - name: envoy.router
+            typed_config: {}
+          http_protocol_options: {accept_http_10: true}
+          route_config:
+            virtual_hosts:
+            - domains: ['*']
+              name: tls_termination
+              routes:
+              - match: {prefix: /}
+                route: {cluster: local_service}
+          stat_prefix: ingress_https_$SERVICE_NAME
+      tls_context:
+        common_tls_context:
+          tls_certificates:
+          - certificate_chain: {filename: /etc/envoy/ssl/service.crt}
+            private_key: {filename: /etc/envoy/ssl/service.key}
+    listener_filters:
+    - name: envoy.listener.tls_inspector
+      typed_config: {}

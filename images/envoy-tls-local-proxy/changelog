@@ -1,0 +1,5 @@
+envoy-tls-local-proxy (1.5.0-1) wikimedia; urgency=medium
+
+  * First release, without any special TLS settings for now.
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 21 Dec 2017 15:26:11 +0100
