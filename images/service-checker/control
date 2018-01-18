@@ -1,0 +1,3 @@
+Package: service-checker
+Description: A testing tool for swagger-based webservices
+Maintainer: Dan Duvall <dduvall@wikimedia.org>

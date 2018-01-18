@@ -1,0 +1,5 @@
+service-checker (0.0.1) wikimedia; urgency=medium
+
+  * Initial release using WMF Debian package on stretch.
+
+ -- Dan Duvall <dduvall@wikimedia.org>  Thu, 08 Feb 2018 10:37:40 -0800
