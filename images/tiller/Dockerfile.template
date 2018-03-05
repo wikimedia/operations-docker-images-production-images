@@ -1,0 +1,6 @@
+FROM {{ seed_image }}
+
+RUN {{ "tiller" | apt_install }}
+
+CMD /usr/sbin/tiller
+EXPOSE 44134

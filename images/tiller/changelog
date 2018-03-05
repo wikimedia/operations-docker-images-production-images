@@ -1,0 +1,5 @@
+tiller (0.0.1) wikimedia; urgency=medium
+
+  * Initial release using WMF Debian package on stretch.
+
+ -- Alexandros Kosiaris <akosiaris@wikimedia.org>  Mon, 05 Mar 2018 18:20:40 +0200
