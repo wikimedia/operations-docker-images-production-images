@@ -1,3 +1,9 @@
+python3-build-stretch (0.0.2) wikimedia; urgency=medium
+
+  * Allow to build images without source code, dependency only.
+
+ -- Riccardo Coccioli <rcoccioli@wikimedia.org>  Thu, 15 Mar 2018 10:17:44 +0100
+
 python3-build-stretch (0.0.1) wikimedia; urgency=medium
 
   * Initial release
