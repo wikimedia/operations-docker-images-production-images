@@ -1,0 +1,3 @@
+FROM {{ seed_image }}
+
+RUN {{ "tcpdump iproute mtr-tiny iputils-arping iputils-ping tshark sudo dnsutils dstat gdb git curl wget httpry iperf jq moreutils binutils ngrep ncdu psmisc strace sysstat tree perf" | apt_install }}
