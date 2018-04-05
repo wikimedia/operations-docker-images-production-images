@@ -1,4 +1,10 @@
-envoy (0.0.1) wikimedia; urgency=medium
+envoy (1.6.0-1) wikimedia; urgency=medium
+
+  * Update container to envoy 1.6.0
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Sun, 08 Apr 2018 08:30:19 +0200
+
+envoy (1.5.0-1) wikimedia; urgency=medium
 
   * First version of a basic local envoy proxy
 
