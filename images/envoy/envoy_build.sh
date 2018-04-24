@@ -9,7 +9,7 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get install -y --no-install-recommends ca-certificates git gnupg2
 (git clone https://github.com/envoyproxy/envoy.git /source && cd source \
-     && git checkout v1.5.0)
+     && git checkout v1.6.0)
 apt-get install --no-install-recommends -y wget software-properties-common make cmake python python-pip \
         bc libtool automake zip time golang g++ gdb strace patch rsync
 
@@ -65,6 +65,8 @@ done
 # Allow access by non-root for building.
 chmod -R a+rX /bazel-prebuilt-root /bazel-prebuilt-output
 cd /source
+test -z "${http_proxy}" || git config --global http.proxy "$http_proxy"
+
 ./ci/do_ci.sh bazel.release.server_only
 
 # Now let's extract the envoy binary from the build, and cleanup the build workspace
