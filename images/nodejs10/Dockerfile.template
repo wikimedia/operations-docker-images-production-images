@@ -1,0 +1,5 @@
+FROM {{ seed_image }}
+
+ADD nodejs10.list /etc/apt/sources.list.d/nodejs10.list
+
+RUN {{ "nodejs" | apt_install }}

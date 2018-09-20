@@ -1,0 +1,5 @@
+nodejs10-slim (0.0.1) wikimedia; urgency=medium
+
+  * Initial release.
+
+ -- Alexandros Kosiaris <akosiaris@wikimedia.org>  Thu, 20 Sep 2018 13:56:09 +0300
