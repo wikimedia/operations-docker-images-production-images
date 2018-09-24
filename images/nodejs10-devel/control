@@ -1,0 +1,3 @@
+Package: nodejs10-devel
+Description: Image for development of nodejs 10.x based applications. This is a temporary image to ease the migration
+Maintainer: Alexandros Kosiaris <akosiaris@wikimedia.org>

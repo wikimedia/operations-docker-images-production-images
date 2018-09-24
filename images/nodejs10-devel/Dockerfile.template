@@ -1,0 +1,8 @@
+FROM {{ seed_image }}
+
+COPY nodesource.gpg.key /tmp/nodesource.gpg.key
+RUN {{ "gnupg2" | apt_install }} \
+    && cat /tmp/nodesource.gpg.key | apt-key add - \
+    && echo 'deb http://deb.nodesource.com/node_10.x stretch main' > /etc/apt/sources.list.d/nodesource.list \
+    && {{ "nodejs" | apt_install}} && rm -f /tmp/nodesource.gpg.key \
+    && {{ "gnupg2" | apt_remove }}
