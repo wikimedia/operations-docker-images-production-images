@@ -1,5 +1,0 @@
-Package: fluentd
-Description: Base image for running fluentd
-Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>
-Depends: ruby
-
