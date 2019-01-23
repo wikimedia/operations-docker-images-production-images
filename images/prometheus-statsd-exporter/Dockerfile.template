@@ -4,3 +4,4 @@ RUN {{ "prometheus-statsd-exporter" | apt_install }} \
 
 
 ENTRYPOINT ["/usr/bin/prometheus-statsd-exporter"]
+CMD ["--statsd.mapping-config=/etc/monitoring/prometheus-statsd.conf"]
