@@ -1,3 +1,10 @@
+prometheus-statsd-exporter (0.0.2) wikimedia; urgency=medium
+
+  * Bump version to denote that we now support 0.8.0+ds1-4 and no longer
+    0.4.0+git20170831.48.2dfca9b-1~wmf1
+
+ -- Alexandros Kosiaris <akosiaris@wikimedia.org>  Wed, 23 Jan 2019 14:30:37 +0200
+
 prometheus-statsd-exporter (0.0.1) wikimedia; urgency=medium
 
   * Initial release.
