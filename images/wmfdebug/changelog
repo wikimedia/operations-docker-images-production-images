@@ -1,3 +1,9 @@
+wmfdebug (0.0.2) wikimedia; urgency=medium
+
+  * Add ca-certificates
+
+ -- Alexandros Kosiaris <akosiaris@wikimedia.org>  Thu, 24 Mar 2019 16:20:40 +0200
+
 wmfdebug (0.0.1) wikimedia; urgency=medium
 
   * Initial release.
