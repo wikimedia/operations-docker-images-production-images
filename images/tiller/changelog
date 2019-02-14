@@ -1,4 +1,4 @@
-tiller (2.12.2~wmf1) wikimedia; urgency=medium
+tiller (2.12.2-wmf1) wikimedia; urgency=medium
 
   * Updated tiller version for features and client security issues.
 
