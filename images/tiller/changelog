@@ -1,3 +1,9 @@
+tiller (2.12.2~wmf1) wikimedia; urgency=medium
+
+  * Updated tiller version for features and client security issues.
+
+ -- Fabián Sellés Rosa <fsero@wikimedia.org>  Thu, 14 Feb 2019 16:40:40 +0100
+
 tiller (0.0.1) wikimedia; urgency=medium
 
   * Initial release using WMF Debian package on stretch.
