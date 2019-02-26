@@ -1,5 +1,5 @@
 Package: golang
-Depends: ci-stretch
+Depends: stretch
 Description: base image for building go applications.
  Uses the same interface as the dockerhub images, but defaults to
  using the go packages from Debian.
