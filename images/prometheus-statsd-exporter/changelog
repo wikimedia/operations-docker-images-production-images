@@ -1,3 +1,10 @@
+prometheus-statsd-exporter (0.0.4) wikimedia; urgency=medium
+
+  * Run the application as an unprivileged user
+  * Bump version number to denote that
+
+ -- Alexandros Kosiaris <akosiaris@wikimedia.org>  Wed, 27 Feb 2019 13:01:37 +0200
+
 prometheus-statsd-exporter (0.0.3) wikimedia; urgency=medium
 
   * Add a default parameter specifying the statsd mapping file path we will be
