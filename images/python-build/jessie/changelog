@@ -1,3 +1,9 @@
+python3-build-jessie (0.0.2-s1) wikimedia; urgency=high
+
+   Removal of backports T219747
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Mon,  1 Apr 2019 08:42:53 +0200
+
 python3-build-jessie (0.0.2) wikimedia; urgency=medium
 
   * Allow to build images without source code, dependency only.
