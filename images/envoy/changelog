@@ -1,3 +1,9 @@
+envoy (1.9.1-1) wikimedia; urgency=high
+
+  * Update container to envoy 1.9.1
+
+ -- Fabian Selles <fsero@wikimedia.org>  Mon, 08 Apr 2019 13:30:19 +0200
+
 envoy (1.6.0-1) wikimedia; urgency=medium
 
   * Update container to envoy 1.6.0
