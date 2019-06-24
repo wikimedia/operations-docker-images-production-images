@@ -1,3 +1,9 @@
+nodejs10-slim (0.0.2) UNRELEASED; urgency=medium
+
+  * Update nodejs10 for zlib1 compatibility (closes T226346)
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Mon, 24 Jun 2019 08:15:22 +0200
+
 nodejs10-slim (0.0.1) wikimedia; urgency=medium
 
   * Initial release.
