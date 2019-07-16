@@ -1,0 +1,3 @@
+Package: coredns
+Description: coredns container for k8s
+Maintainer: Fsero <fabian.sellesrosa@gmail.com>

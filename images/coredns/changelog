@@ -1,0 +1,5 @@
+coredns (1.5.2-1) wikimedia; urgency=medium
+
+  * First version of coredns container
+
+ -- Fabian Selles <fsero@wikimedia.org>  Tue, 16 Jul 2019 10:40:14 +0200

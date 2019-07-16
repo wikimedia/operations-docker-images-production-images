@@ -1,0 +1,6 @@
+FROM {{ seed_image }}
+
+RUN {{ "coredns" | apt_install }}
+COPY Corefile /etc/coredns/Corefile
+COPY entrypoint.sh /bin/entrypoint.sh
+CMD ["/bin/entrypoint.sh"]
