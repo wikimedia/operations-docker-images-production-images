@@ -1,3 +1,9 @@
+nodejs-devel (0.1.1) wikimedia; urgency=high
+
+   * T228196
+
+ -- Fabián Sellés Rosa <fsero@wikimedia.org>  Tue, 16 Jul 2019 20:10:12 +0000
+
 nodejs-devel (0.1.0) wikimedia; urgency=medium
 
   * Re-adding, using nodesource.com packages

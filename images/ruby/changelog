@@ -1,3 +1,9 @@
+ruby (0.0.2) wikimedia; urgency=high
+
+   * T228196
+
+ -- Fabián Sellés Rosa <fsero@wikimedia.org>  Tue, 16 Jul 2019 20:10:19 +0000
+
 ruby (0.0.1) wikimedia; urgency=medium
 
   * Initial release.

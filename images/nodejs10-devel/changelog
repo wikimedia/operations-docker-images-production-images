@@ -1,3 +1,15 @@
+nodejs10-devel (0.0.3) wikimedia; urgency=high
+
+   * T228196
+
+ -- Fabián Sellés Rosa <fsero@wikimedia.org>  Tue, 16 Jul 2019 20:09:58 +0000
+
+nodejs10-devel (0.0.2) wikimedia; urgency=high
+
+   * T228196
+
+ -- Fabián Sellés Rosa <fsero@wikimedia.org>  Tue, 16 Jul 2019 19:23:35 +0000
+
 nodejs10-devel (0.0.1) wikimedia; urgency=medium
 
   * Initial release.

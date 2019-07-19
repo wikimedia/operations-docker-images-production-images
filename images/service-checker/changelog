@@ -1,3 +1,9 @@
+service-checker (0.0.3) wikimedia; urgency=high
+
+   * T228196
+
+ -- Fabián Sellés Rosa <fsero@wikimedia.org>  Tue, 16 Jul 2019 20:10:21 +0000
+
 service-checker (0.0.2) wikimedia; urgency=medium
 
   * Bump to version 0.1.5

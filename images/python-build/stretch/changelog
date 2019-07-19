@@ -1,3 +1,17 @@
+python3-build-stretch (0.0.2-s2) wikimedia; urgency=high
+
+   Refresh for update in parent image python3-devel:
+   * T228196
+
+ -- Fabián Sellés Rosa <fsero@wikimedia.org>  Tue, 16 Jul 2019 20:10:17 +0000
+
+python3-build-stretch (0.0.2-s1) wikimedia; urgency=high
+
+   Refresh for update in parent image python3:
+   * T228196
+
+ -- Fabián Sellés Rosa <fsero@wikimedia.org>  Tue, 16 Jul 2019 20:10:15 +0000
+
 python3-build-stretch (0.0.2) wikimedia; urgency=medium
 
   * Allow to build images without source code, dependency only.

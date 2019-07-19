@@ -1,3 +1,15 @@
+prometheus-statsd-exporter (0.0.7) wikimedia; urgency=high
+
+   * T228196
+
+ -- Fabián Sellés Rosa <fsero@wikimedia.org>  Tue, 16 Jul 2019 20:10:02 +0000
+
+prometheus-statsd-exporter (0.0.6) wikimedia; urgency=high
+
+   * T228196
+
+ -- Fabián Sellés Rosa <fsero@wikimedia.org>  Tue, 16 Jul 2019 19:25:41 +0000
+
 prometheus-statsd-exporter (0.0.5) wikimedia; urgency=medium
 
   * Rebuild with version 0.9
