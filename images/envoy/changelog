@@ -1,3 +1,9 @@
+envoy (1.11.1-1) wikimedia; urgency=high
+
+   * Bump envoy to 1.11.1
+
+ -- Fabián Sellés Rosa <fsero@wikimedia.org>  Wed, 14 Aug 2019 13:09:03 +0000
+
 envoy (1.11.0-1) wikimedia; urgency=high
 
    * Bump envoy to 1.11.0
