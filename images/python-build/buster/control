@@ -1,0 +1,3 @@
+Package: python3-build-buster
+Description: Image for building tar archives with python wheels for an application
+Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>
