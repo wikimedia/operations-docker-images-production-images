@@ -1,3 +1,9 @@
+envoy (1.11.1-2) wikimedia; urgency=medium
+
+  * Use zone-aware routing primitives, fix config placement.
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 17 Sep 2019 11:49:26 +0200
+
 envoy (1.11.1-1) wikimedia; urgency=high
 
    * Bump envoy to 1.11.1
@@ -21,18 +27,6 @@ envoy (1.9.1-2) wikimedia; urgency=high
    * T228196
 
  -- Fabián Sellés Rosa <fsero@wikimedia.org>  Tue, 16 Jul 2019 19:20:01 +0000
-
-envoy (1.9.1-1) wikimedia; urgency=high
-
-   * T228196
-
- -- Fabián Sellés Rosa <fsero@wikimedia.org>  Tue, 16 Jul 2019 19:19:42 +0000
-
-envoy (1.9.1-1-s1) wikimedia; urgency=high
-
-   * T228196
-
- -- Fabián Sellés Rosa <fsero@wikimedia.org>  Tue, 16 Jul 2019 19:18:12 +0000
 
 envoy (1.9.1-1) wikimedia; urgency=high
 
