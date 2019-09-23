@@ -1,6 +1,11 @@
 FROM {{ seed_image }}
 
-RUN {{ "envoyproxy gettext-base" | apt_install }}
-COPY envoy-basic-config.yaml /etc/envoy/envoy.yaml.tpl
+RUN {{ "envoyproxy gettext-base" | apt_install }} && \
+    chown -R envoy:envoy /etc/envoy
+
 COPY entrypoint.sh /bin/entrypoint.sh
+
+USER envoy
+COPY envoy-basic-config.yaml /etc/envoy/envoy.yaml.tpl
+
 CMD ["/bin/entrypoint.sh"]
