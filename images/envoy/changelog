@@ -1,3 +1,9 @@
+envoy (1.11.2-1) wikimedia; urgency=high
+
+  * New package version
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Mon, 21 Oct 2019 14:15:44 +0200
+
 envoy (1.11.1-2) wikimedia; urgency=medium
 
   * Use zone-aware routing primitives, fix config placement.
