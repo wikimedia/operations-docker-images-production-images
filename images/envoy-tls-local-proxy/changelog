@@ -1,3 +1,9 @@
+envoy-tls-local-proxy (1.11.2-2) UNRELEASED; urgency=medium
+
+  * Add ADMIN_PORT and ADMIN_LISTEN to allow opening the ports to clients (T237234)
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Fri, 08 Nov 2019 11:29:35 +0100
+
 envoy-tls-local-proxy (1.11.2-1) wikimedia; urgency=high
 
   * New package version

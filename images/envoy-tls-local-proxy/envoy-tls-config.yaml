@@ -1,7 +1,7 @@
 admin:
   access_log_path: /var/log/envoy/admin-access.log
   address:
-    socket_address: {address: 127.0.0.1, port_value: 9631}
+    socket_address: {address: $ADMIN_LISTEN, port_value: $ADMIN_PORT}
 static_resources:
   clusters:
   - name: local_service
@@ -33,7 +33,9 @@ static_resources:
               name: tls_termination
               routes:
               - match: {prefix: /}
-                route: {cluster: local_service}
+                route:
+                  cluster: local_service
+                  timeout: $UPSTREAM_TIMEOUT
           stat_prefix: ingress_https_$SERVICE_NAME
       tls_context:
         common_tls_context:
