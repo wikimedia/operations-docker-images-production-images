@@ -21,8 +21,6 @@ static_resources:
     filter_chains:
     - filters:
       - name: envoy.http_connection_manager
-        server_name: $SERVICE_NAME-tls
-        server_header_transformation: APPEND_IF_ABSENT
         typed_config:
           '@type': type.googleapis.com/envoy.config.filter.network.http_connection_manager.v2.HttpConnectionManager
           http_filters:
@@ -39,6 +37,8 @@ static_resources:
                   cluster: local_service
                   timeout: $UPSTREAM_TIMEOUT
           stat_prefix: ingress_https_$SERVICE_NAME
+          server_name: $SERVICE_NAME-tls
+          server_header_transformation: APPEND_IF_ABSENT
       tls_context:
         common_tls_context:
           tls_certificates:

@@ -1,3 +1,9 @@
+envoy-tls-local-proxy (1.12.1-2) wikimedia; urgency=medium
+
+  * Fix server_name, server_header_transformation positions
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Mon, 25 Nov 2019 14:40:33 +0100
+
 envoy-tls-local-proxy (1.12.1-1) wikimedia; urgency=medium
 
   * Add ADMIN_PORT and ADMIN_LISTEN to allow opening the ports to clients (T237234)
