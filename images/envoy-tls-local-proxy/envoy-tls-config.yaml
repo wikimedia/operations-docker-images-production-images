@@ -1,7 +1,7 @@
 admin:
   access_log_path: /var/log/envoy/admin-access.log
   address:
-    socket_address: {address: $ADMIN_LISTEN, port_value: $ADMIN_PORT}
+    socket_address: {address: 127.0.0.1, port_value: 1666}
 static_resources:
   clusters:
   - name: local_service
@@ -15,7 +15,43 @@ static_resources:
             address:
               socket_address: {address: 127.0.0.1, port_value: $SERVICE_PORT }
     type: strict_dns
+  - name: admin_interface
+    connect_timeout: 1.0s
+    lb_policy: round_robin
+    load_assignment:
+      cluster_name: admin_interface
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address: {address: 127.0.0.1, port_value: 1666 }
+    type: strict_dns
   listeners:
+  - address:
+      socket_address: {address: $ADMIN_LISTEN, port_value: $ADMIN_PORT }
+    filter_chains:
+    - filters:
+      - name: envoy.http_connection_manager
+        typed_config:
+          '@type': type.googleapis.com/envoy.config.filter.network.http_connection_manager.v2.HttpConnectionManager
+          http_filters:
+          - name: envoy.router
+            typed_config: {}
+          http_protocol_options: {accept_http_10: true}
+          route_config:
+            virtual_hosts:
+            - domains: ['*']
+              name: admin_interface
+              routes:
+              - match: {prefix: /stats/ }
+                route:
+                  cluster: admin_interface
+                  timeout: 5.0s
+              - match: {prefix: /}
+                direct_response:
+                  status: 403
+                  body: {inline_string: "You can't access this url."}
+          stat_prefix: admin_interface
   - address:
       socket_address: {address: 0.0.0.0, port_value: $PUBLIC_PORT }
     filter_chains:

@@ -1,6 +1,7 @@
 FROM {{ "envoy" | image_tag }}
 
 RUN mkdir /etc/envoy/ssl
+COPY entrypoint.sh /bin/entrypoint.sh
 COPY envoy-tls-config.yaml /etc/envoy/envoy.yaml.tpl
 
 USER envoy
