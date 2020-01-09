@@ -1,0 +1,3 @@
+Package: buster-nodejs10
+Description: Base image for nodejs 10.x based applications on Debian Buster
+Maintainer: Alexandros Kosiaris <akosiaris@wikimedia.org>

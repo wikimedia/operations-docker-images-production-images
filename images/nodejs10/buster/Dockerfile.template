@@ -1,0 +1,3 @@
+FROM docker-registry.wikimedia.org/wikimedia-buster:latest
+
+RUN {{ "nodejs" | apt_install }}
