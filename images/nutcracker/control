@@ -1,0 +1,3 @@
+Package: nutcracker
+Description: nutcracker (aka twemproxy) container image to be used as a sidecar container
+Maintainer: Alexandros Kosiaris <akosiaris@wikimedia.org>
