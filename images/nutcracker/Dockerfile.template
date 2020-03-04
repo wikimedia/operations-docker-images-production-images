@@ -1,3 +1,6 @@
 FROM {{ seed_image }}
 
 RUN {{ "nutcracker" | apt_install }}
+
+USER nutcracker
+ENTRYPOINT ["/usr/sbin/nutcracker", "--verbose=4", "--mbuf-size=65536"]

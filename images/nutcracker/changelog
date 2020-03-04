@@ -1,3 +1,10 @@
+nutcracker (0.0.2) wikimedia; urgency=medium
+
+  * Force running under nutcracker user
+  * Specify default entrypoint and preferred arguments
+
+ -- Alexandros Kosiaris <akosiaris@wikimedia.org>  Wed, 04 Mar 2020 15:43:25 +0200
+
 nutcracker (0.0.1) wikimedia; urgency=medium
 
   * Initial release
