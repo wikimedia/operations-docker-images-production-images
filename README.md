@@ -9,7 +9,7 @@ Build the images
 
 The contents of the images directory can be built using `docker-pkg` as follows:
 
-   $ docker-pkg -c <config-file> images
+   $ docker-pkg -c <config-file> build ./images
 
 if your configuration includes the login credentials for docker, the generated
 images will  be pushed to the registry.
