@@ -1,0 +1,5 @@
+python2-build-buster (0.0.1) wikimedia; urgency=medium
+
+  * Initial buster image for python2.
+
+ -- Antoine Musso <hashar@free.fr>  Mon, 23 Mar 2020 16:38:07 +0100
