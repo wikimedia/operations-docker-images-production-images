@@ -1,3 +1,9 @@
+envoy-tls-local-proxy (1.13.1-1) wikimedia; urgency=medium
+
+  * New upstream version 1.13.1
+
+ -- Reuven Lazarus <rlazarus@wikimedia.org>  Thu, 19 Mar 2020 16:58:05 -0400
+
 envoy-tls-local-proxy (1.12.2-1) wikimedia; urgency=high
 
    Refresh for update in parent image envoy:
