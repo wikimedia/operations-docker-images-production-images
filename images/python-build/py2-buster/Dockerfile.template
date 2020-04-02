@@ -1,0 +1,14 @@
+FROM docker-registry.wikimedia.org/wikimedia-buster:latest
+
+ENV PYTHON_SUFFIX=2
+
+RUN {{ "python2 python2-dev python-pip python-setuptools git" | apt_install }} \
+    && pip2 install --upgrade pip \
+    && mkdir /wheels && pip2 install wheel
+
+COPY run.sh /bin/run.sh
+
+# These volumes are respectively where the wheels will be built, and where the code for the application resides
+VOLUME ["/wheels", "/deploy"]
+
+CMD ["/bin/run.sh"]

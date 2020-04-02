@@ -1,3 +1,10 @@
+python3-build-stretch (0.0.3) wikimedia; urgency=medium
+
+  * Allow to change the python and pip suffix in the container entrypoint by
+    setting the environment variable PYTHON_SUFFIX (default: 3).
+
+ -- Antoine Musso <hashar@free.fr>  Mon, 23 Mar 2020 16:38:07 +0100
+
 python3-build-stretch (0.0.2-s2) wikimedia; urgency=high
 
    Refresh for update in parent image python3-devel:
