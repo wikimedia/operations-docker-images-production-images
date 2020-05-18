@@ -1,6 +1,7 @@
-FROM {{ seed_image }}
+FROM docker-registry.wikimedia.org/wikimedia-buster:latest
 
 RUN {{ "tiller" | apt_install }}
+ENV TILLER_HISTORY_MAX=100
 
 CMD /usr/sbin/tiller
 EXPOSE 44134

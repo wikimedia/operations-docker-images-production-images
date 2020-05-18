@@ -1,3 +1,11 @@
+tiller (2.16.7-wmf1) wikimedia; urgency=medium
+
+  * Update to buster
+  * Update tiller to v2.16.7
+  * Limit the number of releases tiller keeps to 100 by default 
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Mon, 18 May 2020 15:49:07 +0200
+
 tiller (2.12.2-wmf1) wikimedia; urgency=medium
 
   * Updated tiller version for features and client security issues.
