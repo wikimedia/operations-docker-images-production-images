@@ -1,0 +1,6 @@
+golang (1.13-1) wikimedia; urgency=medium
+
+   * golang 1.13 from backports on buster base image
+   * configure GOCACHE and GOENV
+
+ -- Cole White <cwhite@wikimedia.org>  Tue, 19 May 2020 09:04:41 -0600
