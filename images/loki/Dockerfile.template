@@ -1,0 +1,44 @@
+FROM docker-registry.wikimedia.org/golang:1.13-1 as build
+
+ENV LOKI_VERSION=v1.5.0
+ENV SOURCE_REPO=https://github.com/grafana/loki.git
+ENV PROJECT_BASE=/go/github.com/grafana
+ENV REPO_BASE=/go/github.com/grafana/loki
+
+ENV BUILD_IN_CONTAINER=false
+ENV GOARCH=amd64
+ENV GOOS=linux
+
+USER root
+RUN {{ "ca-certificates git build-essential gogoprotobuf golang-golang-x-tools libprotobuf-dev libsystemd-dev" | apt_install }}
+
+USER nobody
+WORKDIR /go
+
+RUN mkdir -p $PROJECT_BASE \
+  && cd $PROJECT_BASE \
+  && git clone $SOURCE_REPO \
+  && cd $REPO_BASE \
+  && git checkout tags/$LOKI_VERSION
+
+WORKDIR $REPO_BASE
+RUN make test \
+  && make loki \
+  && mv cmd/loki/loki /go/
+
+COPY config.yaml /go/loki-config.yaml
+
+FROM docker-registry.wikimedia.org/wikimedia-buster
+
+RUN groupadd -o -g "900" -r "runuser" \
+  && useradd -l -o -m -d "/home/runuser" -r -g "runuser" -u "900" "runuser" \
+  && mkdir -p /loki \
+  && chown -R 900:900 /loki
+
+COPY --from=build --chown=root /go/loki /usr/bin/loki
+COPY --from=build --chown=root /go/loki-config.yaml /etc/loki/config.yaml
+
+USER "runuser"
+ENV HOME="/home/runuser"
+EXPOSE 3100/tcp
+ENTRYPOINT ["/usr/bin/loki", "-config.file=/etc/loki/config.yaml"]
