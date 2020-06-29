@@ -1,4 +1,0 @@
-Package: envoy-tls-local-proxy
-Description: Basic envoy proxy container, with TLS support
-Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>
-Depends: envoy
