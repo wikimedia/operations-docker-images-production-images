@@ -1,6 +1,6 @@
-envoy (1.14.1-1) wikimedia; urgency=medium
+envoy (1.14.4-1) wikimedia; urgency=medium
 
-  * New upstream version 1.14.1
+  * New upstream version 1.14.4
 
  -- Janis Meybohm <jmeybohm@wikimedia.org>  Thu, 16 Jul 2020 14:26:46 +0200
 
