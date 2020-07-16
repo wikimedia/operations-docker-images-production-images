@@ -1,3 +1,9 @@
+envoy (1.14.1-1) wikimedia; urgency=medium
+
+  * New upstream version 1.14.1
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Thu, 16 Jul 2020 14:26:46 +0200
+
 envoy (1.13.1-2) wikimedia; urgency=medium
 
   * Don't try to create a envoy config if it already exists
