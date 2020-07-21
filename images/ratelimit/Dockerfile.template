@@ -1,0 +1,35 @@
+FROM docker-registry.wikimedia.org/golang:1.13-1 as build
+
+ENV RATELIMIT_VERSION=v1.5.0-vendor
+ENV SOURCE_REPO=https://gerrit.wikimedia.org/r/operations/software/envoyproxy/ratelimiter
+ENV WORK_BASE=/work/repo
+
+USER root
+RUN {{ "ca-certificates git build-essential" | apt_install }}
+
+WORKDIR $WORK_BASE
+RUN git clone $SOURCE_REPO && \
+    cd ratelimiter && \
+    git checkout $RATELIMIT_VERSION
+
+WORKDIR $WORK_BASE/ratelimiter
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o $WORK_BASE/ratelimiter/ratelimit -ldflags="-w -s" -v github.com/envoyproxy/ratelimit/src/service_cmd
+
+RUN mv $WORK_BASE/ratelimiter/ratelimit /work/ratelimit.cmd
+
+RUN groupadd -o -g "900" -r "runuser" \
+  && useradd -l -o -m -d "/home/runuser" -r -g "runuser" -u "900" "runuser"
+
+FROM scratch
+
+COPY --from=build /work/ratelimit.cmd /usr/bin/ratelimit
+COPY --from=build /etc/passwd /etc/passwd
+COPY --from=build /etc/group /etc/group
+COPY --from=build /home/runuser /home/runuser
+COPY --from=build /usr/share/ca-certificates /usr/share/ca-certificates
+COPY --from=build /etc/ssl/certs /etc/ssl/certs
+
+USER "runuser"
+ENV HOME="/home/runuser"
+ENTRYPOINT ["/usr/bin/ratelimit"]

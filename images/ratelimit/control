@@ -1,0 +1,3 @@
+Package: ratelimit
+Description: Envoy ratelimit service container for API gateway and other services
+Maintainer: Hugh Nowlan <hnowlan@wikimedia.org>
