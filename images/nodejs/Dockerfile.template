@@ -1,3 +1,4 @@
-FROM {{ seed_image }}
+FROM {{ "wikimedia-stretch" | image_tag }}
+
 
 RUN {{ "nodejs nodejs-legacy" | apt_install }}

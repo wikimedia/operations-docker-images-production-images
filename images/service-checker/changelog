@@ -1,3 +1,9 @@
+service-checker (0.0.6) wikimedia; urgency=medium
+
+  * Switch to buster as the base image
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Fri, 15 Jan 2021 11:03:10 +0100
+
 service-checker (0.0.5) wikimedia; urgency=medium
 
   * Bump the software to 0.2.1-1

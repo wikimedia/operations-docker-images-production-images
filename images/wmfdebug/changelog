@@ -1,3 +1,9 @@
+wmfdebug (0.0.5) wikimedia; urgency=high
+
+   Refresh for update in parent image: switching to buster as seed image
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 23 Jul 2020 12:05:24 +0200
+
 wmfdebug (0.0.4) wikimedia; urgency=high
 
    * T228196

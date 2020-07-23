@@ -1,4 +1,4 @@
-FROM {{ seed_image }}
+FROM {{ "wikimedia-stretch" | image_tag }}
 
 COPY nodesource.gpg.key /tmp/nodesource.gpg.key
 RUN {{ "gnupg2" | apt_install }} \

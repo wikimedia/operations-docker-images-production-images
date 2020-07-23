@@ -1,4 +1,4 @@
-golang (1.11.5-3) wikimedia; urgency=high
+golang-stretch (1.11.5-3) wikimedia; urgency=high
 
    * T228196
 

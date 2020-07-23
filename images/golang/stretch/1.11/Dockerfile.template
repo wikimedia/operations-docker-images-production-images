@@ -1,4 +1,4 @@
-FROM {{ seed_image }}
+FROM {{ "wikimedia-stretch" | image_tag }}
 
 USER root
 ENV GOLANG_VERSION 1.11
