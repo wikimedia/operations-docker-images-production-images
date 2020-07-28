@@ -1,0 +1,3 @@
+Package: envoy-future
+Description: Envoy image for API gateway and other images that require more recent envoy images.
+Maintainer: Hugh Nowlan <hnowlan@wikimedia.org>

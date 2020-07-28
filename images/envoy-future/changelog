@@ -1,0 +1,5 @@
+envoy-future (1.15.0) wikimedia; urgency=medium
+
+  * Initial release of WMF internal version of envoy-future.
+
+ -- Hugh Nowlan <hnowlan@wikimedia.org>  Tue, 27 Jul 2020 14:19:05 +0000

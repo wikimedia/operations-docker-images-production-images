@@ -1,0 +1,1 @@
+../envoy/entrypoint.sh
