@@ -1,5 +1,5 @@
 FROM {{ seed_image }}
 
-RUN {{ "python-service-checker" | apt_install }}
+RUN {{ "python3-service-checker" | apt_install }}
 
 ENTRYPOINT ["/usr/bin/service-checker-swagger"]

@@ -1,3 +1,10 @@
+service-checker (0.0.4) wikimedia; urgency=medium
+
+  * Switch to python3 version instead
+  * This also bumps the software to 0.2.0-1.1
+
+ -- Alexandros Kosiaris <akosiaris@wikimedia.org.com>  Wed, 05 Aug 2020 18:47:36 +0300
+
 service-checker (0.0.3) wikimedia; urgency=high
 
    * T228196
