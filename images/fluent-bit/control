@@ -1,0 +1,3 @@
+Package: fluent-bit
+Description: Lightweight agent compatible with fluentd
+Maintainer: Petr Pchelko <ppchelko@wikimedia.org>
