@@ -1,11 +1,11 @@
-FROM docker-registry.wikimedia.org/golang:1.13-1 as build
+FROM docker-registry.wikimedia.org/golang:1.13-2 as build
 
 ENV RATELIMIT_VERSION=v1.5.0-vendor
 ENV SOURCE_REPO=https://gerrit.wikimedia.org/r/operations/software/envoyproxy/ratelimiter
 ENV WORK_BASE=/work/repo
 
 USER root
-RUN {{ "ca-certificates git build-essential" | apt_install }}
+RUN {{ "git build-essential" | apt_install }}
 
 WORKDIR $WORK_BASE
 RUN git clone $SOURCE_REPO && \

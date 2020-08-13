@@ -1,4 +1,4 @@
-FROM docker-registry.wikimedia.org/golang:1.13-1 as build
+FROM docker-registry.wikimedia.org/golang:1.13-2 as build
 
 ENV LOKI_VERSION=v1.5.0
 ENV SOURCE_REPO=https://github.com/grafana/loki.git
@@ -10,7 +10,7 @@ ENV GOARCH=amd64
 ENV GOOS=linux
 
 USER root
-RUN {{ "ca-certificates git build-essential gogoprotobuf golang-golang-x-tools libprotobuf-dev libsystemd-dev" | apt_install }}
+RUN {{ "git build-essential gogoprotobuf golang-golang-x-tools libprotobuf-dev libsystemd-dev" | apt_install }}
 
 USER nobody
 WORKDIR /go
