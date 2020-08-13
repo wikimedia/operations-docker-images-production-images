@@ -1,3 +1,9 @@
+ratelimit (1.5.1) wikimedia; urgency=high
+
+   * Add config_check to fail startup on invalid config
+
+ -- Petr Pchelko <ppchelko@wikimedia.org>  Thu, 13 Aug 2020 07:45:17 -0700
+
 ratelimit (1.5.0) wikimedia; urgency=medium
 
   * Initial release of WMF internal version

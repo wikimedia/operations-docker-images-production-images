@@ -14,21 +14,21 @@ RUN git clone $SOURCE_REPO && \
 WORKDIR $WORK_BASE/ratelimiter
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o $WORK_BASE/ratelimiter/ratelimit -ldflags="-w -s" -v github.com/envoyproxy/ratelimit/src/service_cmd
+RUN CGO_ENABLED=0 GOOS=linux go build -o $WORK_BASE/ratelimiter/ratelimit_config_check -ldflags="-w -s" -v github.com/envoyproxy/ratelimit/src/config_check_cmd
 
 RUN mv $WORK_BASE/ratelimiter/ratelimit /work/ratelimit.cmd
+RUN mv $WORK_BASE/ratelimiter/ratelimit_config_check /work/ratelimit_config_check.cmd
+
+FROM docker-registry.wikimedia.org/wikimedia-buster
+
+COPY --from=build /work/ratelimit.cmd /usr/bin/ratelimit
+COPY --from=build /work/ratelimit_config_check.cmd /usr/bin/ratelimit_config_check
 
 RUN groupadd -o -g "900" -r "runuser" \
   && useradd -l -o -m -d "/home/runuser" -r -g "runuser" -u "900" "runuser"
+RUN {{ "ca-certificates" | apt_install }}
 
-FROM scratch
-
-COPY --from=build /work/ratelimit.cmd /usr/bin/ratelimit
-COPY --from=build /etc/passwd /etc/passwd
-COPY --from=build /etc/group /etc/group
-COPY --from=build /home/runuser /home/runuser
-COPY --from=build /usr/share/ca-certificates /usr/share/ca-certificates
-COPY --from=build /etc/ssl/certs /etc/ssl/certs
-
+COPY entrypoint.sh /bin/entrypoint.sh
 USER "runuser"
 ENV HOME="/home/runuser"
-ENTRYPOINT ["/usr/bin/ratelimit"]
+ENTRYPOINT ["/bin/entrypoint.sh"]
