@@ -1,3 +1,10 @@
+golang (1.13-3) wikimedia; urgency=medium
+
+   * Add git
+   * Add build-essential
+
+ -- addshore <addshorewiki@gmail.com>  Mon, 14 Mar 2020 12:16:00 +0100
+
 golang (1.13-2) wikimedia; urgency=medium
 
    * Add ca-certificates

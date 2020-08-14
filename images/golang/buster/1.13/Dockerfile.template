@@ -8,7 +8,7 @@ ENV GOCACHE $GOPATH/.cache/go-build
 ENV GOENV $GOPATH/.config/go/env
 ENV PATH $GOPATH/bin:/usr/lib/go-$GOLANG_VERSION/bin:$PATH
 
-RUN {{ "golang-$GOLANG_VERSION ca-certificates" | apt_install }} \
+RUN {{ "golang-$GOLANG_VERSION ca-certificates git build-essential" | apt_install }} \
     && mkdir -p "$GOPATH/src" "$GOPATH/bin" "$GOPATH/.cache" "$GOPATH/.config" \
     && chmod -R 777 "$GOPATH"
 
