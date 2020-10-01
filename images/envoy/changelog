@@ -1,3 +1,11 @@
+envoy (1.15.1-2) wikimedia; urgency=medium
+
+  * Update base image to wikimedia-buster
+  * New envoy upstream version 1.15.1
+  * Bug: T264157
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Thu, 01 Oct 2020 08:35:26 +0200
+
 envoy (1.14.4-1) wikimedia; urgency=medium
 
   * New upstream version 1.14.4
