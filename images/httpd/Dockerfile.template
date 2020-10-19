@@ -1,0 +1,35 @@
+FROM docker-registry.wikimedia.org/wikimedia-buster:latest
+
+# Variables to be defined at build time
+ARG APACHE_RUN_USER=www-data
+ARG APACHE_RUN_GROUP=www-data
+ARG APACHE_RUN_DIR=/run/apache2
+ARG APACHE_LOCK_DIR=/var/lock/apache2
+ARG APACHE_LOG_DIR=/var/log/apache2
+ENV APACHE_RUN_PORT=8080
+
+
+RUN {{ "apache2 libapache2-mod-security2" | apt_install }} && \
+        mkdir -p $APACHE_RUN_DIR $APACHE_LOCK_DIR $APACHE_LOG_DIR && \
+        chown -R ${APACHE_RUN_USER}. $APACHE_RUN_DIR $APACHE_LOCK_DIR $APACHE_LOG_DIR && \
+        sed -i -e s/\\*:80/\*:\$\{APACHE_RUN_PORT\}/ /etc/apache2/sites-available/000-default.conf && \
+        /bin/echo "Listen \${APACHE_RUN_PORT}" > /etc/apache2/ports.conf && \
+        # Build envvars to be used by httpd at runtime
+        /bin/echo -e "export APACHE_RUN_USER=${APACHE_RUN_USER}\n\
+export APACHE_PID_FILE=${APACHE_RUN_DIR}/httpd.pid\n\
+export APACHE_RUN_USER=${APACHE_RUN_USER}\n\
+export APACHE_RUN_DIR=${APACHE_RUN_DIR}\n\
+export APACHE_RUN_GROUP=${APACHE_RUN_USER}\n\
+# Use system-default locale. This is the default under debian.\n\
+export LANG=C\n\
+export APACHE_LOG_DIR=${APACHE_LOG_DIR}\n\
+export APACHE_LOCK_DIR=${APACHE_LOCK_DIR}\n" > /etc/apache2/envvars
+
+COPY entrypoint.sh /bin/entrypoint.sh
+
+# Apache runs as root by default, and drops privileges to its user.
+# We want to run it as www-data all the way through instead
+
+USER ${APACHE_RUN_USER}
+
+ENTRYPOINT ["/bin/entrypoint.sh"]

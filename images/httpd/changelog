@@ -1,0 +1,5 @@
+httpd (2.4.38-1) wikimedia; urgency=medium
+
+  * Initial release. Bug: T265324
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Fri, 16 Oct 2020 15:21:28 +0200
