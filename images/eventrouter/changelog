@@ -1,0 +1,5 @@
+eventrouter (0.3.0-1) wikimedia; urgency=medium
+
+  * Initial release
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Mon, 19 Oct 2020 14:55:39 +0200

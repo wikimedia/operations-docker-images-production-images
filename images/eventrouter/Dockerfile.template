@@ -1,0 +1,25 @@
+FROM docker-registry.wikimedia.org/golang:1.13-3 as build
+
+ENV SOURCE_VERSION=v0.3-wmf
+ENV SOURCE_REPO=https://gerrit.wikimedia.org/r/operations/software/heptiolabs/eventrouter.git
+ENV SOURCE_DIR=/src/eventrouter
+
+USER root
+
+ENV CGO_ENABLED=0 GOOS=linux
+WORKDIR $SOURCE_DIR
+RUN git clone $SOURCE_REPO . && \
+    git checkout $SOURCE_VERSION && \
+    go build -ldflags="-w -s"
+
+RUN groupadd -o -g "900" -r "runuser" \
+  && useradd -l -o -r -g "runuser" -u "900" "runuser"
+
+FROM scratch
+
+COPY --from=build /etc/passwd /etc/passwd
+COPY --from=build /src/eventrouter/config.json /etc/eventrouter/
+COPY --from=build /src/eventrouter/eventrouter /usr/bin/
+
+USER "runuser"
+ENTRYPOINT ["/usr/bin/eventrouter"]
