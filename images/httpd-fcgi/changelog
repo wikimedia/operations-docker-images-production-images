@@ -1,0 +1,5 @@
+httpd-fcgi (2.4.38-1) wikimedia; urgency=medium
+
+  * Initial release. (Bug: T265324)
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 22 Oct 2020 12:49:08 +0200

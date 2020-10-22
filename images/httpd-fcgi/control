@@ -1,0 +1,10 @@
+Package: httpd-fcgi
+Description: httpd container for running fcgi applications.
+ Apache runs as www-data in this image. It is expected that the configuration
+ This image installs all the modules needed to run a fastcgi application,
+ but doesn't include anything useless to this end, like perl or other httpd dependencies.
+Depends: httpd
+Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>
+
+
+
