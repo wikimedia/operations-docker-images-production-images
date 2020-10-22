@@ -1,0 +1,5 @@
+Package: openjdk-11-jdk
+Description: base image for building Java 11 applications.
+ An image used to build images to be used in the WMF
+ pipeline. Contains the entire JDK for version 11
+Maintainer: Alexandros Kosiaris <akosiaris@wikimedia.org>
