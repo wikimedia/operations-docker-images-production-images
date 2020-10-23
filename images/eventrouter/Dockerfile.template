@@ -22,4 +22,4 @@ COPY --from=build /src/eventrouter/config.json /etc/eventrouter/
 COPY --from=build /src/eventrouter/eventrouter /usr/bin/
 
 USER "runuser"
-ENTRYPOINT ["/usr/bin/eventrouter"]
+ENTRYPOINT ["/usr/bin/eventrouter", "-logtostderr"]
