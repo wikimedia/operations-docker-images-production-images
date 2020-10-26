@@ -1,3 +1,9 @@
+eventrouter (0.3.0-3) wikimedia; urgency=medium
+
+  * Use less generic field names in output json
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Mon, 26 Oct 2020 10:06:39 +0100
+
 eventrouter (0.3.0-2) wikimedia; urgency=medium
 
   * Always log to stderr
