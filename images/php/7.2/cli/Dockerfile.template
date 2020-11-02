@@ -1,0 +1,46 @@
+FROM docker-registry.wikimedia.org/wikimedia-buster:latest
+
+# We declare each php_ini variable we want to be able to modify
+ENV PHP.date.timezone=UTC \
+    PHP.default_socket_timeout=60 \
+    PHP.display_errors=stderr \
+    PHP.error_log= \
+    PHP.error_reporting="E_ALL & ~E_STRICT" \
+    PHP.include_path=".:/usr/share/php" \
+    PHP.log_errors=On \
+    PHP.max_execution_time=180 \
+    PHP.memory_limit=200M \
+    PHP.mysql.connect_timeout=3 \
+    PHP.pcre.backtrack_limit=50000 \
+    PHP.session.save_path=/tmp
+ENV   ENTRY_POINT_SCRIPT /bin/entrypoint.php
+
+# Install all the php packages we need, and configure them.
+{% set packages|replace('\n', ' ') -%}
+php7.2-cli
+php7.2-bcmath
+php7.2-bz2
+php7.2-curl
+php7.2-dba
+php7.2-gd
+php7.2-gmp
+php7.2-intl
+php7.2-mbstring
+php7.2-mysql
+php7.2-xml
+php-excimer
+php-apcu
+php-geoip
+php-igbinary
+php-memcached
+php-msgpack
+php-redis
+{%- endset -%}
+RUN echo 'deb http://apt.wikimedia.org/wikimedia buster-wikimedia component/php72' > /etc/apt/sources.list.d/php72.list &&\
+    {{ packages | apt_install }} && \
+    echo 'memcached.store_retry_count=0' >> /etc/php/7.2/mods-available/memcached.ini && \
+    sed -i"" s/compact_strings=On/compact_strings=Off/ /etc/php/7.2/mods-available/igbinary.ini && \
+    echo 'mysqli.allow_local_infile=Off' >> /etc/php/7.2/mods-available/mysqli.ini && \
+    echo '<?php echo "hello, world\n"; ?>' > /bin/entrypoint.php
+COPY php.ini /etc/php/7.2/cli/php.ini
+CMD ["/bin/bash", "-c", "/usr/bin/php7.2 ${ENTRY_POINT_SCRIPT}"]
