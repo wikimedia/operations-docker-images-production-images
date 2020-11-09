@@ -1,0 +1,6 @@
+Package: openjdk-11-jre
+Description: base image for running Java 11 applications.
+ An image used to build images to be used in the WMF
+ pipeline. Contains the just the JRE for version 1,
+ not the entire JDK
+Maintainer: Alexandros Kosiaris <akosiaris@wikimedia.org>
