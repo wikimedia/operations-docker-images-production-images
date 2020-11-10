@@ -1,0 +1,30 @@
+FROM {{ "php7.2-cli" | image_tag }}
+
+ENV PHP.opcache.memory_consumption=200 \
+    PHP.opcache.max_accelerated_files=6000 \
+    PHP.opcache.interned_strings_buffer=10 \
+    PHP.auto_prepend_file= \
+    PHP.apc.shm_size=200M \
+    FPM.process_control_timeout=60 \
+    FPM.pm.max_children=10 \
+    FPM.request_slowlog_timeout=10 \
+    FPM.request_terminate_timeout=60 \
+    FPM.log_level=warning \
+    FCGI_MODE=FCGI_TCP
+
+USER root
+
+RUN {{ "php7.2-fpm" | apt_install }} && \
+    rm -rf /etc/php/7.2/fpm/pool.d/* && \
+    install -d -o www-data -g www-data -m 0750 /run/shared && \
+    install -d -o www-data -g www-data -m 0750 /srv/monitoring
+
+# COPY the configurations
+COPY conf/php.ini conf/php-fpm.conf /etc/php/7.2/fpm/
+COPY conf/pool.d/ /etc/php/7.2/fpm/pool.d/
+# Copy the monitoring scripts.
+COPY --chown=www-data:www-data monitoring /srv/monitoring
+
+USER www-data
+
+ENTRYPOINT [ "/usr/sbin/php-fpm7.2", "--nodaemonize", "--fpm-config", "/etc/php/7.2/fpm/php-fpm.conf" ]
