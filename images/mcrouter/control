@@ -1,0 +1,3 @@
+Package: mcrouter 
+Description: Memcached router 
+Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>

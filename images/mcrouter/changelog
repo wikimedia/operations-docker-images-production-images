@@ -1,0 +1,5 @@
+mcrouter (0.41.0-deb10) wikimedia; urgency=medium
+
+  * Initial release.
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Mon, 16 Nov 2020 16:07:23 +0100

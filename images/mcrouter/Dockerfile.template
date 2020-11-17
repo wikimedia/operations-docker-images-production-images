@@ -1,0 +1,24 @@
+FROM docker-registry.wikimedia.org/wikimedia-buster:latest
+LABEL Description="mcrouter images" \
+      maintainer="joe@wikimedia.org"
+
+ENV PORT=5000 \
+      CONFIG=file:/etc/mcrouter/config.json \
+      ROUTE_PREFIX=/default/cluster \
+      CROSS_REGION_TO=250 \
+      CROSS_CLUSTER_TO=1000 \
+      NUM_PROXIES=1 \
+      PROBE_TIMEOUT=10000 \
+      TIMEOUTS_UNTIL_TKO=5 \
+      USE_SSL="no" \
+      SSL_PORT=5001
+
+
+RUN {{ "mcrouter ca-certificates" | apt_install }} && mkdir -p /etc/mcrouter/ssl && \
+      chown mcrouter:mcrouter /etc/mcrouter/ssl
+COPY entrypoint.sh /bin/entrypoint
+
+USER mcrouter
+
+# Entry point
+CMD ["/bin/entrypoint"]
