@@ -1,0 +1,4 @@
+Package: prometheus-nutcracker-exporter
+Description: nutcracker prometheus exporter
+Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>
+Depends: python3

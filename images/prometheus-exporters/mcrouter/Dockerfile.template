@@ -1,0 +1,7 @@
+FROM docker-registry.wikimedia.org/wikimedia-buster:latest
+RUN {{ "prometheus-mcrouter-exporter" | apt_install }} \
+   && rm -rf /usr/share/gocode/src/github.com/prometheus
+
+USER nobody
+ENTRYPOINT ["/usr/bin/prometheus-mcrouter-exporter"]
+CMD ["--mcrouter.address", "localhost:5000", "-mcrouter.server_metrics", "-web.listen-address", ":9151" ]

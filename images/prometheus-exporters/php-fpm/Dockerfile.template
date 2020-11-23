@@ -1,0 +1,16 @@
+FROM {{ "golang" | image_tag }} as build
+USER root
+RUN {{ "upx-ucl" | apt_install }}
+USER nobody
+RUN go get -d github.com/bakins/php-fpm-exporter && cd /go/src/github.com/bakins/php-fpm-exporter && \
+   GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" ./cmd/php-fpm-exporter && \
+   upx --brute php-fpm-exporter && cp php-fpm-exporter /go/bin
+
+
+FROM docker-registry.wikimedia.org/wikimedia-buster:latest
+
+COPY --from=build /go/bin/php-fpm-exporter /usr/bin/prometheus-php-fpm-exporter
+
+USER nobody
+ENTRYPOINT ["/usr/bin/prometheus-php-fpm-exporter"]
+CMD ["--endpoint", "http://127.0.0.1:9181/fpm-status"]

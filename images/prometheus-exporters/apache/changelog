@@ -1,0 +1,5 @@
+prometheus-apache-exporter (0.0.1) wikimedia; urgency=medium
+
+  * Initial release. (Closes: #XXXXXX)
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Mon, 23 Nov 2020 08:01:02 +0100

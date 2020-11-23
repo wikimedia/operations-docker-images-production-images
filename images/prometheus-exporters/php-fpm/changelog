@@ -1,0 +1,5 @@
+prometheus-php-fpm-exporter (0.0.1) wikimedia; urgency=medium
+
+  * Initial release. (Closes: #XXXXXX)
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Mon, 23 Nov 2020 08:00:29 +0100

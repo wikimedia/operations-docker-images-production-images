@@ -1,0 +1,3 @@
+Package: prometheus-php-fpm-exporter
+Description: php-fpm prometheus exporter
+Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>

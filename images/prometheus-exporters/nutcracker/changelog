@@ -1,0 +1,5 @@
+prometheus-nutcracker-exporter (0.0.1) wikimedia; urgency=medium
+
+  * Initial release. (Bug: T265324)
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 17 Nov 2020 15:46:17 +0100

@@ -1,0 +1,3 @@
+Package: prometheus-apache-exporter
+Description: Apache to prometheus exporter
+Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>

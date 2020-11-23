@@ -1,0 +1,3 @@
+Package: prometheus-mcrouter-exporter
+Description: Mcrouter to prometheus exporter
+Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>
