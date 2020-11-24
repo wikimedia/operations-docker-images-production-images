@@ -1,3 +1,9 @@
+fluent-bit (1.5.3-1) wikimedia; urgency=high
+
+   Upgrade base buster image T268612
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 24 Nov 2020 11:39:35 +0100
+
 fluent-bit (1.5.3-0) wikimedia; urgency=medium
 
    * Update fluent-bit package to 1.5.3

@@ -1,3 +1,9 @@
+openjdk-11-jdk (0.1-s1) wikimedia; urgency=high
+
+   Upgrade base buster image T268612
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 24 Nov 2020 11:39:40 +0100
+
 openjdk-11-jdk (0.1) wikimedia; urgency=medium
 
   * Initial release.

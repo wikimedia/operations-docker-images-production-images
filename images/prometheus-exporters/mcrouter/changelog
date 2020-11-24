@@ -1,5 +1,11 @@
+prometheus-mcrouter-exporter (0.0.1-1) wikimedia; urgency=high
+
+   Upgrade base buster image T268612
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 24 Nov 2020 11:39:49 +0100
+
 prometheus-mcrouter-exporter (0.0.1) wikimedia; urgency=medium
 
-  * Initial release. (Closes: #XXXXXX)
+  * Initial release.
 
  -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Mon, 23 Nov 2020 08:01:32 +0100

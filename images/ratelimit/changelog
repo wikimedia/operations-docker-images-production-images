@@ -1,3 +1,9 @@
+ratelimit (1.5.1-s1) wikimedia; urgency=high
+
+   Upgrade base buster image T268612
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 24 Nov 2020 11:39:53 +0100
+
 ratelimit (1.5.1) wikimedia; urgency=high
 
    * Add config_check to fail startup on invalid config

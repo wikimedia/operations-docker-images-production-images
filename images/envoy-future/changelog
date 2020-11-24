@@ -1,3 +1,9 @@
+envoy-future (1.16.0-1) wikimedia; urgency=high
+
+   Upgrade base buster image T268612
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 24 Nov 2020 11:39:29 +0100
+
 envoy-future (1.16.0) wikimedia; urgency=medium
 
   * New upstream version 1.16.0.

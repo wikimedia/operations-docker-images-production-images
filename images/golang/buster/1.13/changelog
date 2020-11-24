@@ -1,3 +1,9 @@
+golang (1.13-3-s1) wikimedia; urgency=high
+
+   Upgrade base buster image T268612
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 24 Nov 2020 11:39:37 +0100
+
 golang (1.13-3) wikimedia; urgency=medium
 
    * Add git

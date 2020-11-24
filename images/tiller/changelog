@@ -1,8 +1,14 @@
+tiller (2.16.7-2) wikimedia; urgency=medium
+
+  * Rebuild for T268612; also fix the debian version
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 24 Nov 2020 11:41:23 +0100
+
 tiller (2.16.7-wmf1) wikimedia; urgency=medium
 
   * Update to buster
   * Update tiller to v2.16.7
-  * Limit the number of releases tiller keeps to 100 by default 
+  * Limit the number of releases tiller keeps to 100 by default
 
  -- Janis Meybohm <jmeybohm@wikimedia.org>  Mon, 18 May 2020 15:49:07 +0200
 

@@ -1,3 +1,9 @@
+envoy (1.15.1-3) wikimedia; urgency=high
+
+   Upgrade base buster image T268612
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 24 Nov 2020 11:39:31 +0100
+
 envoy (1.15.1-2) wikimedia; urgency=medium
 
   * Update base image to wikimedia-buster

@@ -1,3 +1,9 @@
+httpd (2.4.38-1-s1) wikimedia; urgency=high
+
+   Upgrade base buster image T268612
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 24 Nov 2020 11:39:38 +0100
+
 httpd (2.4.38-1) wikimedia; urgency=medium
 
   * Initial release. Bug: T265324

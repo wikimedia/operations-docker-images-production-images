@@ -1,3 +1,9 @@
+buster-nodejs10-slim (0.0.1-s1) wikimedia; urgency=high
+
+   Upgrade base buster image T268612
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 24 Nov 2020 11:39:47 +0100
+
 buster-nodejs10-slim (0.0.1) wikimedia; urgency=medium
 
   * Initial release.
