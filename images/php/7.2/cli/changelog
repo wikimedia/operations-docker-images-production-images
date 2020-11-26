@@ -1,3 +1,9 @@
+php7.2-cli (0.1.1) wikimedia; urgency=medium
+
+  * Change env variables format to play nice with blubber
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 26 Nov 2020 16:16:28 +0100
+
 php7.2-cli (0.1.0) wikimedia; urgency=medium
 
   * Initial release. (Bug: T265324)

@@ -1,15 +1,16 @@
 FROM {{ "php7.2-cli" | image_tag }}
 
-ENV PHP.opcache.memory_consumption=200 \
-    PHP.opcache.max_accelerated_files=6000 \
-    PHP.opcache.interned_strings_buffer=10 \
-    PHP.auto_prepend_file= \
-    PHP.apc.shm_size=200M \
-    FPM.process_control_timeout=60 \
-    FPM.pm.max_children=10 \
-    FPM.request_slowlog_timeout=10 \
-    FPM.request_terminate_timeout=60 \
-    FPM.log_level=warning \
+ENV PHP__opcache__enable=1 \
+    PHP__opcache__memory_consumption=200 \
+    PHP__opcache__max_accelerated_files=6000 \
+    PHP__opcache__interned_strings_buffer=10 \
+    PHP__auto_prepend_file= \
+    PHP__apc__shm_size=200M \
+    FPM__process_control_timeout=60 \
+    FPM__pm__max_children=10 \
+    FPM__request_slowlog_timeout=10 \
+    FPM__request_terminate_timeout=60 \
+    FPM__log_level=warning \
     FCGI_MODE=FCGI_TCP
 
 USER root
