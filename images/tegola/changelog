@@ -1,0 +1,5 @@
+tegola (0.12.1) wikimedia; urgency=medium
+
+  * Initial release of tegola tile server for maps.
+
+ -- Hugh Nowlan <hnowlan@wikimedia.org>  Wed, 06 Jan 2021 18:32:53 +0000
