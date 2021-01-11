@@ -1,4 +1,4 @@
-httpd-fcgi (2.4.38-1-s2) wikimedia; urgency=high
+httpd-fcgi (2.4.38-2) wikimedia; urgency=high
 
   *  Drop ServerAdmin config line (T251005)
 
