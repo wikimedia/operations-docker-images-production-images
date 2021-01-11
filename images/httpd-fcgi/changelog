@@ -1,3 +1,9 @@
+httpd-fcgi (2.4.38-1-s2) wikimedia; urgency=high
+
+  *  Drop ServerAdmin config line (T251005)
+
+ -- Daniel Zahn <dzahn@wikimedia.org>  Mon, 11 Jan 2021 13:01:37 -0800
+
 httpd-fcgi (2.4.38-1-s1) wikimedia; urgency=high
 
    Refresh for update in parent image httpd:
