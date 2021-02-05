@@ -1,3 +1,9 @@
+python3-build-buster (0.1.0) wikimedia; urgency=medium
+
+  * Remove the harmful (and useless) pip upgrade instruction
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Fri, 05 Feb 2021 14:57:38 +0100
+
 python3-build-buster (0.0.2-s1) wikimedia; urgency=high
 
    Upgrade base buster image T268612
