@@ -1,0 +1,3 @@
+Package: python3-buster
+Description: Lightweight base image for python 3.7 applications
+Maintainer: Bryan Davis <bd808@wikimedia.org>
