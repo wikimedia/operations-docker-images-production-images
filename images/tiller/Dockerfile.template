@@ -1,7 +1,8 @@
-FROM docker-registry.wikimedia.org/wikimedia-buster:latest
+FROM {{ seed_image }}
 
 RUN {{ "tiller" | apt_install }}
 ENV TILLER_HISTORY_MAX=100
 
+USER {{ "nobody" | uid }}
 CMD /usr/sbin/tiller
 EXPOSE 44134
