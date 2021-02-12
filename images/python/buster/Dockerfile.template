@@ -1,4 +1,4 @@
-FROM {{ "wikimedia-buster" | image_tag }}
+FROM {{ seed_image }}
 
 # python3-setuptools is needed to make this base image work with Blubber's
 # 'python' configuration which invokes `python3 -m easy_install pip`.
