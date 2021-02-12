@@ -1,3 +1,9 @@
+fluent-bit (1.5.3-2) wikimedia; urgency=medium
+
+  * Rebuild for T274254; Use numeric UID
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Fri, 12 Feb 2021 18:15:50 +0100
+
 fluent-bit (1.5.3-1) wikimedia; urgency=high
 
    Upgrade base buster image T268612
