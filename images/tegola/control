@@ -1,4 +1,0 @@
-Package: tegola
-Description: Tegola is a vector tile server delivering Mapbox Vector Tiles with support for PostGIS and GeoPackage data providers
-Maintainer: Hugh Nowlan <hnowlan@wikimedia.org>
-Build-Depends: golang
