@@ -29,6 +29,6 @@ RUN groupadd -o -g "900" -r "runuser" \
 RUN {{ "ca-certificates" | apt_install }}
 
 COPY entrypoint.sh /bin/entrypoint.sh
-USER "runuser"
+USER "900"
 ENV HOME="/home/runuser"
 ENTRYPOINT ["/bin/entrypoint.sh"]

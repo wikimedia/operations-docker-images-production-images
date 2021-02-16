@@ -1,3 +1,10 @@
+tiller (2.16.7-3) wikimedia; urgency=medium
+
+  * Rebuild for T274254
+  * Run tiller as user nobody
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Fri, 12 Feb 2021 17:55:33 +0100
+
 tiller (2.16.7-2) wikimedia; urgency=medium
 
   * Rebuild for T268612; also fix the debian version

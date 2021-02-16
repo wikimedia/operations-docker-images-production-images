@@ -1,3 +1,9 @@
+eventrouter (0.3.0-5) wikimedia; urgency=medium
+
+  * Rebuild for T274254; Use numeric UID
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Fri, 12 Feb 2021 18:13:47 +0100
+
 eventrouter (0.3.0-4) wikimedia; urgency=medium
 
   * Don't send duplicate events from resync to sink
