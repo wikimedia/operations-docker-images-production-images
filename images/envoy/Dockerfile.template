@@ -1,11 +1,11 @@
-FROM docker-registry.wikimedia.org/wikimedia-buster
+FROM {{ seed_image }}
 
 RUN {{ "envoyproxy gettext-base" | apt_install }} && \
-    chown -R envoy:envoy /etc/envoy
+    chown -R nobody:nogroup /etc/envoy /var/log/envoy
 
 COPY entrypoint.sh /bin/entrypoint.sh
 
-USER envoy
+USER {{ "nobody" | uid }}
 COPY envoy-basic-config.yaml /etc/envoy/envoy.yaml.tpl
 
 CMD ["/bin/entrypoint.sh"]
