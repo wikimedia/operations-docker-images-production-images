@@ -1,0 +1,5 @@
+Package: php7.3-cli
+Description: Basic php7.3 container
+ By default, this image will just execute a php script located at
+ /bin/entrypoint.php
+Maintainer: Giuseppe Lavagetto

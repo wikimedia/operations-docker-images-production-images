@@ -1,0 +1,5 @@
+php7.3-fpm (7.3.19-1) wikimedia; urgency=medium
+
+  * Initial release.
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Wed, 17 Feb 2021 18:53:50 +0100
