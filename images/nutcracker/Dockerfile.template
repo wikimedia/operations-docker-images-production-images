@@ -1,6 +1,7 @@
 FROM {{ seed_image }}
 
-RUN {{ "nutcracker" | apt_install }}
+RUN {{ "nutcracker" | apt_install }} && \
+    chown -R nobody /var/log/nutcracker
 
-USER nutcracker
+USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/sbin/nutcracker", "--verbose=4", "--mbuf-size=65536"]

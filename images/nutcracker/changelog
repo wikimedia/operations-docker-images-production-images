@@ -1,3 +1,9 @@
+nutcracker (0.0.4) wikimedia; urgency=medium
+
+  * Run as user nobody, Bug: T274254
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Wed, 17 Feb 2021 18:19:53 +0100
+
 nutcracker (0.0.3) wikimedia; urgency=high
 
    Refresh for update in parent image: switching to buster as seed image
