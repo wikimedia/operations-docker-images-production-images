@@ -2,6 +2,6 @@ FROM {{ seed_image }}
 RUN {{ "prometheus-statsd-exporter" | apt_install }} \
    && rm -rf /usr/share/gocode/src/github.com/prometheus
 
-USER prometheus-statsd-exporter
+USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/bin/prometheus-statsd-exporter"]
 CMD ["--statsd.mapping-config=/etc/monitoring/prometheus-statsd.conf"]

@@ -1,3 +1,9 @@
+prometheus-statsd-exporter (0.0.9) wikimedia; urgency=medium
+
+  * Run as user nobody, Bug: T274254
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Wed, 17 Feb 2021 18:08:52 +0100
+
 prometheus-statsd-exporter (0.0.8) wikimedia; urgency=high
 
    Refresh for update in parent image: switching to buster as seed image
