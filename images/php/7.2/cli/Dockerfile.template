@@ -43,4 +43,7 @@ RUN echo 'deb http://apt.wikimedia.org/wikimedia buster-wikimedia component/php7
     echo 'mysqli.allow_local_infile=Off' >> /etc/php/7.2/mods-available/mysqli.ini && \
     echo '<?php echo "hello, world\n"; ?>' > /bin/entrypoint.php
 COPY php.ini /etc/php/7.2/cli/php.ini
+
+USER {{ "www-data" | uid }}
+
 CMD ["/bin/bash", "-c", "/usr/bin/php7.2 ${ENTRY_POINT_SCRIPT}"]

@@ -26,6 +26,6 @@ COPY conf/pool.d/ /etc/php/7.2/fpm/pool.d/
 # Copy the monitoring scripts.
 COPY --chown=www-data:www-data monitoring /srv/monitoring
 
-USER www-data
+USER {{ "www-data" | uid }}
 
 ENTRYPOINT [ "/usr/sbin/php-fpm7.2", "--nodaemonize", "--fpm-config", "/etc/php/7.2/fpm/php-fpm.conf" ]

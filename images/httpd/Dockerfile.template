@@ -30,6 +30,6 @@ COPY entrypoint.sh /bin/entrypoint.sh
 # Apache runs as root by default, and drops privileges to its user.
 # We want to run it as www-data all the way through instead
 
-USER ${APACHE_RUN_USER}
+USER {{ "www-data" | uid }}
 
 ENTRYPOINT ["/bin/entrypoint.sh"]

@@ -1,3 +1,9 @@
+httpd-fcgi (2.4.38-3) wikimedia; urgency=medium
+
+  * Use numeric UIDs
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 23 Feb 2021 16:50:54 +0100
+
 httpd-fcgi (2.4.38-2) wikimedia; urgency=high
 
   *  Drop ServerAdmin config line (T251005)

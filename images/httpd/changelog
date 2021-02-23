@@ -1,3 +1,9 @@
+httpd (2.4.38-2) wikimedia; urgency=medium
+
+  * Use numeric UIDs
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 23 Feb 2021 16:58:15 +0100
+
 httpd (2.4.38-1-s1) wikimedia; urgency=high
 
    Upgrade base buster image T268612
