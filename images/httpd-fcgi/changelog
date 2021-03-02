@@ -1,3 +1,9 @@
+httpd-fcgi (2.4.38-4) UNRELEASED; urgency=medium
+
+  * Allow changing the FCGI url
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 02 Mar 2021 17:00:14 +0100
+
 httpd-fcgi (2.4.38-3) wikimedia; urgency=medium
 
   * Use numeric UIDs

@@ -7,6 +7,7 @@ USER root
 #   - "FCGI_TCP" - default, sends fcgi requests to fcgi://localhost:9000
 #   - "FCGI_UNIX" - uses a unix socket instead.
 #   Please note you'll have to provide the fcgi daemon yourself.
+# * FCGI_URL To be used if you use FCGI_TCP to indicate the url to contact.
 # * SERVER_SIGNATURE
 #   This is the value of the Server: header. It will probably be overridden for every
 #   pod.
@@ -18,6 +19,7 @@ USER root
 ENV FCGI_MODE="FCGI_TCP" \
     SERVER_SIGNATURE="wikimedia" \
     SERVERGROUP="default" \
+    FCGI_URL="127.0.0.1:9000" \
     DEBUG=0
 
 # Add the configuration we want to use.

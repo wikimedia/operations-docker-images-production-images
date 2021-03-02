@@ -1,6 +1,7 @@
 php7.2-cli (0.1.2) wikimedia; urgency=medium
 
   * Use numeric UIDs
+  * Allow changing the listen URL
 
  -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 23 Feb 2021 16:51:26 +0100
 
