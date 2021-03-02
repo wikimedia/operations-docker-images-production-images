@@ -1,0 +1,5 @@
+mediawiki-httpd (0.1.0) wikimedia; urgency=medium
+
+  * Initial release (closes: T276097).
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 02 Mar 2021 10:46:34 +0100

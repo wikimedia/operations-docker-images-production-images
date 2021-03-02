@@ -1,0 +1,14 @@
+# Note: this image will *not* work per-se. It will need to have a fresh copy of
+# mediawiki-config extracted to /srv/mediawiki in order to work.
+# This will be done via blubber.
+FROM {{ "httpd-fcgi" | image_tag }}
+
+USER root
+
+# Copy the apache configuration and the other configurations we need to add
+COPY --chown=root:root apache2 /etc/apache2
+# Disable the deflate module, not used in MediaWiki. Also enable access_compat
+# as we still have some apache 2.2-compatible ACLs :/
+RUN a2dismod deflate && a2enmod access_compat
+
+USER {{ "www-data" | uid }}

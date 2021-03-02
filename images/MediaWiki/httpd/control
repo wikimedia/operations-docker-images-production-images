@@ -1,0 +1,7 @@
+Package: mediawiki-httpd
+Description: httpd container for running MediaWiki.
+ This image has all the base files needed to run MediaWiki within our production settings.
+ What is not included are any virtualhosts that would allow actually serving requests. 
+ Those will need to be provided separately.
+Depends: httpd-fcgi
+Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>
