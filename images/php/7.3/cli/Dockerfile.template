@@ -43,6 +43,6 @@ RUN {{ packages | apt_install }} && \
     echo '<?php echo "hello, world\n"; ?>' > /bin/entrypoint.php
 COPY php.ini /etc/php/7.3/cli/php.ini
 
-USER {{ "www-data" || uid }}
+USER {{ "www-data" | uid }}
 
 CMD ["/bin/bash", "-c", "/usr/bin/php7.3 ${ENTRY_POINT_SCRIPT}"]
