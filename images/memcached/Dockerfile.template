@@ -1,0 +1,27 @@
+FROM {{ seed_image }}
+
+ENV MEMC_VERBOSITY="" \
+        MEMC_MEMORY=64 \
+        # MEMC_MODE can be:
+        # 'tls': only listen via TLS on the specified port, on 0.0.0.0
+        # 'local': only listen in cleartext on 127.0.0.1
+        # 'insecure': only listen in cleartext on 0.0.0.0
+        # 'dual': listen via TLS on 0.0.0.0 on the specified port,
+        #         and in cleartext on 127.0.0.1 on port+1
+        MEMC_MODE="local" \
+        MEMC_PORT=11211 \
+        MEMC_CONN_LIMIT=1024 \
+        MEMC_GROWTH_FACTOR=1.25 \
+        MEMC_MIN_SLAB_SIZE=48 \
+        MEMC_ADDITIONAL_ARGS=""
+
+
+RUN echo "deb http://apt.wikimedia.org/wikimedia buster-wikimedia component/memcached16" > /etc/apt/sources.list.d/memecached.list \
+        && {{ "ca-certificates memcached" | apt_install }} && mkdir -p /etc/memcached/ssl \
+        && chown -R nobody:nogroup /etc/memcached
+
+COPY entrypoint.sh /bin
+
+USER {{ "nobody" | uid }}
+
+ENTRYPOINT [ "/bin/entrypoint.sh" ]

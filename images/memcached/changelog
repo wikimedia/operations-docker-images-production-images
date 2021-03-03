@@ -1,0 +1,5 @@
+memcached (1.6.6-1) wikimedia; urgency=medium
+
+  * Initial release.
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 02 Mar 2021 18:11:31 +0100
