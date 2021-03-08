@@ -9,6 +9,6 @@ USER root
 COPY --chown=root:root apache2 /etc/apache2
 # Disable the deflate module, not used in MediaWiki. Also enable access_compat
 # as we still have some apache 2.2-compatible ACLs :/
-RUN a2dismod deflate && a2enmod access_compat
+RUN a2dismod -f deflate && a2enmod access_compat
 
 USER {{ "www-data" | uid }}
