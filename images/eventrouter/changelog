@@ -1,3 +1,12 @@
+eventrouter (0.3.0-6) wikimedia; urgency=medium
+
+  * Use up to date golang build image
+  * Use debian as base image
+  * Run as user nobody (drop runuser)
+  * T274852
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Mon, 08 Mar 2021 15:39:45 +0100
+
 eventrouter (0.3.0-5) wikimedia; urgency=medium
 
   * Rebuild for T274254; Use numeric UID
