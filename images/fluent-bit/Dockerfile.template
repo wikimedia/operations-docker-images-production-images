@@ -1,10 +1,6 @@
-FROM docker-registry.wikimedia.org/wikimedia-buster
+FROM {{ seed_image }}
 
 RUN {{ "td-agent-bit" | apt_install }}
 
-RUN groupadd -o -g "900" -r "runuser" \
-  && useradd -l -o -m -d "/home/runuser" -r -g "runuser" -u "900" "runuser"
-
-USER "900"
-
+USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/bin/td-agent-bit"]

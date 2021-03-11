@@ -1,3 +1,11 @@
+fluent-bit (1.5.3-3) wikimedia; urgency=medium
+
+  * Use seed_image
+  * Run as user nobody (drop runuser)
+  * Bug: T274852
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Thu, 11 Mar 2021 16:21:25 +0100
+
 fluent-bit (1.5.3-2) wikimedia; urgency=medium
 
   * Rebuild for T274254; Use numeric UID
