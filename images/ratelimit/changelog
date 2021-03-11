@@ -1,3 +1,12 @@
+ratelimit (1.5.1-s3) wikimedia; urgency=medium
+
+  * Use up to date golang build image
+  * Use {{ seed_image }} as base
+  * Run as user nobody (drop runuser)
+  * T274852
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Thu, 11 Mar 2021 16:15:32 +0100
+
 ratelimit (1.5.1-s2) wikimedia; urgency=medium
 
   * Rebuild for T274254; Use numeric UID
