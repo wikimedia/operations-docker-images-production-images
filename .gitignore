@@ -1,1 +1,3 @@
 *~
+.vscode
+docker-pkg-build.log
