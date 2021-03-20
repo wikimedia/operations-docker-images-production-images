@@ -15,10 +15,14 @@ ENV PORT=5000 \
 
 
 RUN {{ "mcrouter ca-certificates" | apt_install }} && mkdir -p /etc/mcrouter/ssl && \
-      chown mcrouter:mcrouter /etc/mcrouter/ssl
+      chown mcrouter:mcrouter /etc/mcrouter/ssl && mkdir -p /var/mcrouter && chown mcrouter:mcrouter /var/mcrouter && \
+      # Check that mcrouter has the correct uid. We need to use numeric UIDs to enable pod security policies.
+      id mcrouter | grep -qF uid=999
 COPY entrypoint.sh /bin/entrypoint
+COPY healthz.sh /bin/healthz
 
-USER mcrouter
+# This is the mcrouter user in this container.
+USER 999
 
 # Entry point
 CMD ["/bin/entrypoint"]
