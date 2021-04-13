@@ -2,7 +2,7 @@
 require __DIR__ . "/AdoyFastCgiClient.php";
 use Adoy\FastCGI\Client;
 # Only runs in cli mode
-if ( PHP_SAPI ( ) != "cli" ) {
+if ( PHP_SAPI != "cli" ) {
     error_log("This script can only be executed from cli");
     exit(1);
 }
