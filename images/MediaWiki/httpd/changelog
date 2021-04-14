@@ -1,3 +1,9 @@
+mediawiki-httpd (0.1.1) wikimedia; urgency=medium
+
+  * Adapt configuration files to kubernetes
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Wed, 14 Apr 2021 17:26:36 +0200
+
 mediawiki-httpd (0.1.0) wikimedia; urgency=medium
 
   * Initial release (closes: T276097).
