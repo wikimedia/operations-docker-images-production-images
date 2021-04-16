@@ -1,3 +1,10 @@
+envoy (1.15.4-1) wikimedia; urgency=medium
+
+  * New envoy upstream version 1.15.4
+  * Bug: T280317
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Fri, 16 Apr 2021 11:35:46 +0200
+
 envoy (1.15.1-4) wikimedia; urgency=medium
 
   * Run envoy as user nobody, Bug: T274254
