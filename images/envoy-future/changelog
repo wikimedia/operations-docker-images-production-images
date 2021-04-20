@@ -1,3 +1,9 @@
+envoy-future (1.16.3-1) wikimedia; urgency=medium
+
+  * New upstream version 1.16.3.
+
+ -- Hugh Nowlan <hnowlan@wikimedia.org>  Fri, 20 Apr 2021 12:36:05 +0000
+
 envoy-future (1.16.0-2) wikimedia; urgency=medium
 
   * Run envoy as user nobody, Bug: T274254
