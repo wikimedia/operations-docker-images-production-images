@@ -1,0 +1,5 @@
+python3-build-bullseye (0.0.1) wikimedia; urgency=medium
+
+  * Initial bullseye image.
+
+ -- Riccardo Coccioli <rcoccioli@wikimedia.org>  Wed, 05 May 2021 15:08:38 +0200
