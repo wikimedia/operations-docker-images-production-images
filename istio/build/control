@@ -1,0 +1,3 @@
+Package: build
+Description: Build image for Istio.
+Maintainer: Luca Toscano <ltoscano@wikimedia.org>

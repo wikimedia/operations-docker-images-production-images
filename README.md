@@ -14,21 +14,25 @@ Prerequisites
 Updating an image
 -----------------
 
-Before building, make changes to the desired template in `./images` and update
+Before building, make changes to the desired template in `./images` or `./istio` and update
 the changelog using `docker-pkg`:
 
     $ docker-pkg -c <config-file> update <name> --version <version> --reason '* <to be added to changelog>' ./images/<name>
 
-For example:
+For example (images directory):
 
     $ docker-pkg -c config.yaml update golang --version 1.14-1 --reason '* Version bump.' ./images/golang
+
+For example (istio directory):
+
+    $ docker-pkg -c config-istio.yaml update build --version 1.6.3 --reason '* Version bump.' ./istio/build
 
 Build the images
 ----------------
 
-The contents of the images directory can be built using `docker-pkg` as follows:
+The contents of the `./images` or `./istio` directories can be built using `docker-pkg` as follows:
 
-   $ docker-pkg -c <config-file> build ./images
+   $ docker-pkg -c <config-file> build <directory>
 
 If your configuration includes the login credentials for docker, the generated
 images will be automatically pushed to the registry.

@@ -1,0 +1,37 @@
+FROM docker-registry.wikimedia.org/istio/build:latest as build
+
+FROM {{ seed_image }}
+
+ENV BUILD_DIR=/go/github.com/istio/istio \
+    # Environment variable indicating the exact proxy sha - for debugging or version-specific configs
+    # See istio.deps in the istio repository
+    ISTIO_META_ISTIO_PROXY_SHA="1ef6cb53abbb057185f4bcb60e28cf92c3a174ad" \
+    # Environment variable indicating the exact build, for debugging
+    ISTIO_META_ISTIO_VERSION=1.6.14
+
+USER root
+RUN {{ "istio" | add_user }}
+
+# Istio's base docker image installs a lot of tools, we selected only the few that seemed mandatory.
+RUN {{ "iptables iproute2" | apt_install }}; \
+    # By default istio adds the following in its Dockerfiles:
+    # echo "istio-proxy ALL=NOPASSWD: /usr/sbin/iptables * " >> /etc/sudoers
+    # The version below is tailored for our use case (namely allowing only iptables commands).
+    echo "istio ALL=NOPASSWD: /usr/sbin/iptables * " >> /etc/sudoers \
+        && echo "istio ALL=NOPASSWD: /usr/sbin/ip6tables * "
+
+# Copy Envoy bootstrap templates used by pilot-agent
+COPY --from=build --chown=root $BUILD_DIR/tools/packaging/common/envoy_bootstrap_v2.json /var/lib/istio/envoy/envoy_bootstrap_tmpl.json
+
+# Install Envoy.
+COPY --from=build $BUILD_DIR/out/linux_amd64/envoy /usr/local/bin/envoy
+
+COPY --from=build --chown=root $BUILD_DIR/out/linux_amd64/pilot-agent /usr/local/bin/pilot-agent
+COPY --from=build --chown=root $BUILD_DIR/pilot/docker/envoy_policy.yaml.tmpl /var/lib/istio/envoy/envoy_policy.yaml.tmpl
+
+COPY --from=build --chown=root $BUILD_DIR/out/linux_amd64/release/stats-filter.wasm /etc/istio/extensions/stats-filter.wasm
+COPY --from=build --chown=root $BUILD_DIR/out/linux_amd64/release/metadata-exchange-filter.wasm /etc/istio/extensions/metadata-exchange-filter.wasm
+
+USER {{ "istio" | uid }}
+# The pilot-agent will bootstrap Envoy.
+ENTRYPOINT ["/usr/local/bin/pilot-agent"]

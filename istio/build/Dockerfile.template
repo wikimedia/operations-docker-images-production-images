@@ -1,0 +1,24 @@
+FROM docker-registry.wikimedia.org/golang1.15 as build
+
+# The ISTIO_VERSION value is injected in the Helm charts compiled in istioctl
+# and related binaries as the Docker Image tag to use when pulling.
+{% set istio_make_variables = 'ISTIO_VERSION=1.6.14-1 BUILD_WITH_CONTAINER=0' %}
+{% set repo_base = '/go/github.com/istio' %}
+{% set istio_version_git_tag = '1.6.14' %}
+
+WORKDIR /go
+
+USER root
+RUN {{ "curl ca-certificates go-bindata" | apt_install }}
+
+USER nobody
+RUN mkdir -p {{ repo_base }} \
+  && cd {{ repo_base }} \
+  && git clone https://github.com/istio/istio.git istio \
+  && cd istio \
+  && git checkout tags/{{ istio_version_git_tag }}
+
+WORKDIR {{ repo_base }}/istio
+# The gen-charts target is needed to add the Istio's default
+# helm charts in the final istioctl/operator binaries.
+RUN export {{ istio_make_variables }}; make gen-charts && make build-linux

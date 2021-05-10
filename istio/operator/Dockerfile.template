@@ -1,0 +1,13 @@
+FROM docker-registry.wikimedia.org/istio/build:latest as build
+
+FROM {{ seed_image }}
+
+USER root
+
+RUN {{ "istio" | add_user }}
+
+COPY --from=build --chown=root /go/github.com/istio/istio/out/linux_amd64/operator /usr/bin/operator
+
+USER {{ "istio" | uid }}
+
+ENTRYPOINT ["/usr/bin/operator"]

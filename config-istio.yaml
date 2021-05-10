@@ -1,0 +1,6 @@
+registry: docker-registry.wikimedia.org
+seed_image: docker-registry.wikimedia.org/wikimedia-buster:latest
+namespace: istio
+
+known_uid_mappings:
+  istio: 1337
