@@ -2,7 +2,7 @@ FROM docker-registry.wikimedia.org/wikimedia-buster
 
 USER root
 # installed from backports
-ENV GOLANG_VERSION 1.13
+ENV GOLANG_VERSION 1.14
 ENV GOPATH /go
 ENV GOCACHE $GOPATH/.cache/go-build
 ENV GOENV $GOPATH/.config/go/env
