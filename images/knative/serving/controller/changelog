@@ -1,0 +1,5 @@
+knative-serving-controller (0.18.1-1) wikimedia; urgency=high
+
+  * Upstream release 0.18.1
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Thu, 6 May 2021 16:39:43 +0100

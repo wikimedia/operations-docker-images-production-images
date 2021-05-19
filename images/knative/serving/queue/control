@@ -1,0 +1,4 @@
+Package: knative-serving-queue
+Description: Knative Serving Queue
+Depends: knative-build
+Maintainer: Luca Toscano <ltoscano@wikimedia.org>

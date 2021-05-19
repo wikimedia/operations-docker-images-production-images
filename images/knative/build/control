@@ -1,0 +1,3 @@
+Package: knative-build
+Description: Build image for Knative.
+Maintainer: Luca Toscano <ltoscano@wikimedia.org>

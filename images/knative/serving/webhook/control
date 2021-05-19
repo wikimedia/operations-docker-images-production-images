@@ -1,0 +1,4 @@
+Package: knative-serving-webhook
+Description: Knative Serving Webhook
+Depends: knative-build
+Maintainer: Luca Toscano <ltoscano@wikimedia.org>

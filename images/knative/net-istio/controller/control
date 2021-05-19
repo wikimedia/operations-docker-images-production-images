@@ -1,0 +1,4 @@
+Package: knative-net-istio-controller
+Description: Knative Net Istio Controller
+Depends: knative-build
+Maintainer: Luca Toscano <ltoscano@wikimedia.org>

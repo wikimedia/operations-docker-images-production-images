@@ -1,0 +1,9 @@
+FROM docker-registry.wikimedia.org/knative-build:latest as build
+
+FROM {{ seed_image }}
+
+USER root
+COPY --from=build --chown=root /go/github.com/knative/net-istio/cmd/controller/controller /usr/bin/controller
+
+USER nobody
+ENTRYPOINT ["/usr/bin/controller"]
