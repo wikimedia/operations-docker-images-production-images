@@ -1,6 +1,6 @@
 FROM docker-registry.wikimedia.org/golang:1.13-3-s1 as build
 
-ENV RATELIMIT_VERSION=v1.5.0-vendor
+ENV RATELIMIT_VERSION=v1.5.0-1-vendor
 ENV SOURCE_REPO=https://gerrit.wikimedia.org/r/operations/software/envoyproxy/ratelimiter
 ENV WORK_BASE=/work/repo
 
