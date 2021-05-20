@@ -1,3 +1,9 @@
+envoy-future (1.18.3-1) wikimedia; urgency=medium
+
+  * New upstream version 1.18.3.
+
+ -- Hugh Nowlan <hnowlan@wikimedia.org>  Thu, 20 May 2021 17:36:05 +0000
+
 envoy-future (1.16.3-1) wikimedia; urgency=medium
 
   * New upstream version 1.16.3.
