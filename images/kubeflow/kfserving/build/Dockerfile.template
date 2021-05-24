@@ -1,0 +1,13 @@
+FROM docker-registry.wikimedia.org/golang1.15 as build
+
+{% set repo_base = '/go/github.com/kubeflow' %}
+
+USER nobody
+RUN mkdir -p {{ repo_base }} \
+  && cd {{ repo_base }} \
+  && git clone https://github.com/kubeflow/kfserving.git kfserving \
+  && cd kfserving \
+  && git checkout tags/v0.5.1
+
+WORKDIR {{ repo_base }}/kfserving/cmd
+RUN cd manager && go build && cd ../agent && go build

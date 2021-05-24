@@ -1,0 +1,4 @@
+Package: kubeflow-kfserving-controller
+Description: Kubeflow Kfserving Controller
+Depends: kubeflow-kfserving-build
+Maintainer: Luca Toscano <ltoscano@wikimedia.org>
