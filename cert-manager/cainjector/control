@@ -1,0 +1,4 @@
+Package: cainjector
+Description: cert-manager cainjector
+Depends: build
+Maintainer: Janis Meybohm <jmeybohm@wikimedia.org>

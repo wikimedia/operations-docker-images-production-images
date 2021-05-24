@@ -1,0 +1,4 @@
+Package: controller
+Description: cert-manager controller
+Depends: build
+Maintainer: Janis Meybohm <jmeybohm@wikimedia.org>

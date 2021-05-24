@@ -1,0 +1,5 @@
+build (1.5.4-1) wikimedia; urgency=high
+
+  * Upstream release 1.5.4
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Fri, 05 Nov 2021 14:31:12 +0100
