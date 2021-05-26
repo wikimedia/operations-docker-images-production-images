@@ -1,0 +1,5 @@
+Package: golang1.15
+Description: base image for building go applications.
+ Uses the same interface as the dockerhub images, but defaults to
+ using the go packages from Debian.
+Maintainer: Luca Toscano <ltoscano@wikimedia.org>
