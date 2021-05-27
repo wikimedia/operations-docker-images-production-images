@@ -1,3 +1,9 @@
+prometheus-apache-exporter (0.0.2) wikimedia; urgency=medium
+
+  * Use numerical UID when running
+
+ -- Kunal Mehta <legoktm@debian.org>  Thu, 27 May 2021 11:31:14 -0700
+
 prometheus-apache-exporter (0.0.1) wikimedia; urgency=medium
 
   * Initial release. (Closes: #XXXXXX)

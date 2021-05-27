@@ -3,5 +3,5 @@ FROM {{ seed_image }}
 RUN {{ "prometheus-apache-exporter" | apt_install }} \
    && rm -rf /usr/share/gocode/src/github.com/prometheus
 
-USER nobody
+USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/bin/prometheus-apache-exporter", "-log.format", "logger:stdout?json=true"]

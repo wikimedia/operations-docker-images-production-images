@@ -11,6 +11,6 @@ FROM docker-registry.wikimedia.org/wikimedia-buster:latest
 
 COPY --from=build /go/bin/php-fpm-exporter /usr/bin/prometheus-php-fpm-exporter
 
-USER nobody
+USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/bin/prometheus-php-fpm-exporter"]
 CMD ["--endpoint", "http://127.0.0.1:9181/fpm-status"]
