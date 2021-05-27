@@ -1,0 +1,5 @@
+golang1.15 (1.15-1) wikimedia; urgency=medium
+
+  * Golang 1.15 on Bullseye base image.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 26 May 2021 10:22:26 +0200
