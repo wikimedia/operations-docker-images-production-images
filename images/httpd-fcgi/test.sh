@@ -7,12 +7,19 @@ set -e
 # whole repository.
 # In the meantime, bash is enough and actually is faster to write and debug. We're just losing some
 # fancy output.
-
-RED=$(tput setaf 1)
-NC=$(tput sgr0)
+if [ -n "$TERM" -a "$TERM" != "dumb" ]; then
+    RED=$(tput setaf 1)
+    NC=$(tput sgr0)
+else
+    RED=""
+    NC=""
+fi
+IMAGE=$1
+# Reset http_proxy if set, we want to call localhost without going through the proxy...
+export http_proxy=
 
 docker_run() {
-    docker run -d --rm $@ -p 8080:8080 docker-registry.wikimedia.org/httpd-fcgi
+    docker run -d --rm $@ -p 8080:8080 "$IMAGE"
     if [ $? -ne 0 ]; then
         exit 1
     fi
@@ -54,7 +61,7 @@ fi
 if test_in_logs $id "proxy:debug"; then
     failed_exit $id "Found debug messages in the logs"
 fi
-if ! test_in_logs $id "localhost:9000"; then
+if ! test_in_logs $id "127.0.0.1:9000"; then
     failed_exit $id "The default proxy on localhost:9000 is not used"
 fi
 test_success $id

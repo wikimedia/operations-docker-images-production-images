@@ -45,7 +45,7 @@ install -d -o www-data -g www-data -m 0750 /run/shared
 cat << EOF >> /etc/apache2/envvars
 
 ## fcgi-enabled image
-export FCGI_MODE SERVER_SIGNATURE SERVERGROUP DEBUG
+export FCGI_MODE FCGI_URL SERVER_SIGNATURE SERVERGROUP DEBUG
 EOF
 echo "Reconfiguration done. Verifying."
 apache2ctl configtest
