@@ -1,3 +1,9 @@
+prometheus-apache-exporter (0.0.3) wikimedia; urgency=medium
+
+  * Don't use unsupported -log.format flag (T283861)
+
+ -- Kunal Mehta <legoktm@debian.org>  Thu, 27 May 2021 12:17:23 -0700
+
 prometheus-apache-exporter (0.0.2) wikimedia; urgency=medium
 
   * Use numerical UID when running
