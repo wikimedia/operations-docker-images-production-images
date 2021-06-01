@@ -1,0 +1,3 @@
+Package: nodejs12-devel
+Description: Base image for nodejs 12.x based applications on Debian Bullseye. Contains npm
+Maintainer: Alexandros Kosiaris <akosiaris@wikimedia.org>

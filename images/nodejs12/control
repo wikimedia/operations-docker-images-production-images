@@ -1,0 +1,3 @@
+Package: nodejs12
+Description: Base image for nodejs 12.x based applications on Debian Bullseye
+Maintainer: Alexandros Kosiaris <akosiaris@wikimedia.org>
