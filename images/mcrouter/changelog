@@ -1,4 +1,10 @@
-mcrouter (0.41.0-3) UNRELEASED; urgency=medium
+mcrouter (0.41.0-4) UNRELEASED; urgency=medium
+
+  * Fix test.sh to work with docker-pkg
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Sat, 29 May 2021 18:43:43 +0200
+
+mcrouter (0.41.0-3) wikimedia; urgency=medium
 
   * Add healthz script.
   * Use numeric UID
