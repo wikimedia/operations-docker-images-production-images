@@ -1,3 +1,3 @@
-FROM docker-registry.wikimedia.org/wikimedia-buster:latest
+FROM {{ registry }}/wikimedia-buster:latest
 
 RUN {{ "openjdk-11-jdk-headless" | apt_install }}

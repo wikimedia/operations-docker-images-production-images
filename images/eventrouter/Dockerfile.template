@@ -1,4 +1,4 @@
-FROM docker-registry.wikimedia.org/golang:1.13-3-s1 as build
+FROM {{ registry }}/golang:1.13-3-s1 as build
 
 ENV SOURCE_VERSION=v0.3-wmf
 ENV SOURCE_REPO=https://gerrit.wikimedia.org/r/operations/software/heptiolabs/eventrouter.git

@@ -1,4 +1,4 @@
-FROM docker-registry.wikimedia.org/wikimedia-buster:latest
+FROM {{ registry }}/wikimedia-buster:latest
 LABEL Description="mcrouter images" \
       maintainer="joe@wikimedia.org"
 

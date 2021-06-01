@@ -1,4 +1,4 @@
-FROM docker-registry.wikimedia.org/wikimedia-buster
+FROM {{ registry }}/wikimedia-buster
 
 USER root
 # installed from backports

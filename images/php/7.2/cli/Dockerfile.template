@@ -1,4 +1,4 @@
-FROM docker-registry.wikimedia.org/wikimedia-buster:latest
+FROM {{ registry }}/wikimedia-buster:latest
 
 # We declare each php_ini variable we want to be able to modify
 # Note: error_reporting is using the numeric value for

@@ -1,4 +1,4 @@
-FROM docker-registry.wikimedia.org/wikimedia-buster:latest
+FROM {{ registry }}/wikimedia-buster:latest
 
 # Variables to be defined at build time
 ARG APACHE_RUN_USER=www-data

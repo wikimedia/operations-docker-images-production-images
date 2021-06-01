@@ -1,4 +1,4 @@
-FROM docker-registry.wikimedia.org/golang:1.13-3 as build
+FROM {{ registry }}/golang:1.13-3 as build
 
 ENV LOKI_VERSION=v1.5.0
 ENV SOURCE_REPO=https://github.com/grafana/loki.git
@@ -28,7 +28,7 @@ RUN make test \
 
 COPY config.yaml /go/loki-config.yaml
 
-FROM docker-registry.wikimedia.org/wikimedia-buster
+FROM {{ registry }}/wikimedia-buster
 
 RUN groupadd -o -g "900" -r "runuser" \
   && useradd -l -o -m -d "/home/runuser" -r -g "runuser" -u "900" "runuser" \
