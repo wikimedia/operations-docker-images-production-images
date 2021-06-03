@@ -1,5 +1,5 @@
 FROM {{ "python3" | image_tag }}
 RUN {{ "prometheus-nutcracker-exporter" | apt_install }}
 
-USER nobody
+USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/bin/prometheus-nutcracker-exporter"]

@@ -1,3 +1,9 @@
+prometheus-nutcracker-exporter (0.0.2) wikimedia; urgency=medium
+
+  * Use numeric uids.
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 03 Jun 2021 15:36:41 +0200
+
 prometheus-nutcracker-exporter (0.0.1) wikimedia; urgency=medium
 
   * Initial release. (Bug: T265324)
