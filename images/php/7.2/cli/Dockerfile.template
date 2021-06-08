@@ -20,6 +20,7 @@ ENV   ENTRY_POINT_SCRIPT /bin/entrypoint.php
 
 # Install all the php packages we need, and configure them.
 {% set packages|replace('\n', ' ') -%}
+ca-certificates
 php7.2-cli
 php7.2-bcmath
 php7.2-bz2

@@ -1,3 +1,9 @@
+php7.3-cli (7.3.19-3) wikimedia; urgency=high
+
+   Adding ca-certificates
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue,  8 Jun 2021 13:03:39 +0200
+
 php7.3-cli (7.3.19-2) wikimedia; urgency=medium
 
   * Use numeric value for error reporting

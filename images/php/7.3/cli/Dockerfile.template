@@ -20,6 +20,7 @@ ENV PHP__date__timezone=UTC \
 
 # Install all the php packages we need, and configure them.
 {% set packages|replace('\n', ' ') -%}
+ca-certificates
 php7.3-cli
 php7.3-bcmath
 php7.3-bz2
