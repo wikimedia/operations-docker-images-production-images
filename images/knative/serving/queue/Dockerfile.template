@@ -3,7 +3,15 @@ FROM docker-registry.wikimedia.org/knative-build:latest as build
 FROM {{ seed_image }}
 
 USER root
-COPY --from=build --chown=root /go/github.com/knative/serving/cmd/queue/queue /usr/bin/queue
+
+# Upstream builds its docker images using the ko tool, that puts
+# binaries into a specific location.
+# Part of knative's revision code relies on ko's standard paths
+# for the queue proxy's sidecar image:
+# https://github.com/knative/serving/blob/release-0.18/pkg/reconciler/revision/resources/queue.go#L174
+# Without using this path scheme the queue-proxy sidecar image fails health probes.
+RUN mkdir /ko-app
+COPY --from=build --chown=root /go/github.com/knative/serving/cmd/queue/queue /ko-app/queue
 
 USER nobody
-ENTRYPOINT ["/usr/bin/queue"]
+ENTRYPOINT ["/ko-app/queue"]

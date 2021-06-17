@@ -1,3 +1,9 @@
+knative-serving-queue (0.18.1-2) wikimedia; urgency=high
+
+  * Move entrypoint to /ko-app to follow more closely what upstream does.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Thu, 7 Jun 2021 12:00:43 +0100
+
 knative-serving-queue (0.18.1-1) wikimedia; urgency=high
 
   * Upstream release 0.18.1
