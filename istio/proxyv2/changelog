@@ -1,3 +1,11 @@
+proxyv2 (1.9.5-2) wikimedia; urgency=high
+
+  * Bump image version to match the other ones. This is needed since
+    istioctl assumes that there is a global shared tag for all the images
+    to use in its manifests.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 23 Jun 2021 16:22:43 +0100
+
 proxyv2 (1.9.5-1) wikimedia; urgency=high
 
   * Upstream release 1.9.5
