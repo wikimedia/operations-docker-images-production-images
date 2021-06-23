@@ -1,3 +1,9 @@
+operator (1.9.5-2) wikimedia; urgency=high
+
+  * Include version in control's build image dependency.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 23 Jun 2021 11:39:43 +0100
+
 operator (1.9.5-1) wikimedia; urgency=high
 
   * Upstream release 1.9.5

@@ -1,6 +1,7 @@
 proxyv2 (1.9.5-1) wikimedia; urgency=high
 
   * Upstream release 1.9.5
+  * Include version in control's build image dependency.
 
  -- Luca Toscano <ltoscano@wikimedia.org>  Fri, 18 Jun 2021 17:39:43 +0100
 
