@@ -1,4 +1,4 @@
-FROM docker-registry.wikimedia.org/knative-build:latest as build
+FROM {{ "knative-build" | image_tag }} as build
 
 FROM {{ seed_image }}
 

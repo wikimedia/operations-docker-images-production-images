@@ -1,4 +1,4 @@
-FROM docker-registry.wikimedia.org/kubeflow-kfserving-build:latest as build
+FROM {{ "kubeflow-kfserving-build" | image_tag }} as build
 
 FROM {{ seed_image }}
 
