@@ -1,8 +1,10 @@
 FROM {{ "wikimedia-stretch" | image_tag }}
 
+COPY nodesource.pref /etc/apt/preferences.d/nodesource
 COPY nodesource.gpg.key /tmp/nodesource.gpg.key
 RUN {{ "gnupg2" | apt_install }} \
     && cat /tmp/nodesource.gpg.key | apt-key add - \
     && echo 'deb http://deb.nodesource.com/node_10.x stretch main' > /etc/apt/sources.list.d/nodesource.list \
     && {{ "nodejs" | apt_install}} && rm -f /tmp/nodesource.gpg.key \
+    && rm -f /etc/apt/preferences.d/nodesource \
     && {{ "gnupg2" | apt_remove }}
