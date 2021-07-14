@@ -1,3 +1,9 @@
+pilot (1.9.5-3) wikimedia; urgency=high
+
+  * Artificial bump after proxyv2 image update.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 14 Jul 2021 11:22:00 +0100
+
 pilot (1.9.5-2) wikimedia; urgency=high
 
   * Include version in control's build image dependency.

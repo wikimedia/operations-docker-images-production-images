@@ -1,3 +1,10 @@
+proxyv2 (1.9.5-3) wikimedia; urgency=high
+
+  * Add envoy compiled wasm files alongside regular wasm files
+    (to mimic the upstream docker images).
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 14 Jul 2021 11:22:00 +0100
+
 proxyv2 (1.9.5-2) wikimedia; urgency=high
 
   * Bump image version to match the other ones. This is needed since
