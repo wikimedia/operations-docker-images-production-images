@@ -1,3 +1,9 @@
+mediawiki-httpd (0.1.2) wikimedia; urgency=medium
+
+  * Update to handle logging in the parent image
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Fri, 23 Jul 2021 10:26:45 +0200
+
 mediawiki-httpd (0.1.1) wikimedia; urgency=medium
 
   * Adapt configuration files to kubernetes

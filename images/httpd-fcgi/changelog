@@ -1,4 +1,10 @@
-httpd-fcgi (2.4.38-4) UNRELEASED; urgency=medium
+httpd-fcgi (2.4.38-5) wikimedia; urgency=medium
+
+  * Switch to json format logging
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Fri, 23 Jul 2021 10:25:51 +0200
+
+httpd-fcgi (2.4.38-4) wikimedia; urgency=medium
 
   * Allow changing the FCGI url
 
