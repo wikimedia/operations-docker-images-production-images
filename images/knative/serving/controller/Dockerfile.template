@@ -5,5 +5,5 @@ FROM {{ seed_image }}
 USER root
 COPY --from=build --chown=root /go/github.com/knative/serving/cmd/controller/controller /usr/bin/controller
 
-USER nobody
+USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/bin/controller"]

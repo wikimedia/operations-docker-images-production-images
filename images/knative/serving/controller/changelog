@@ -1,3 +1,9 @@
+knative-serving-controller (0.18.1-3) wikimedia; urgency=high
+
+  * Use uid in USER directive instead of 'nobody'.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 28 Jul 2021 15:12:43 +0100
+
 knative-serving-controller (0.18.1-2) wikimedia; urgency=high
 
   * Improve the build image import in the Dockerfile template.

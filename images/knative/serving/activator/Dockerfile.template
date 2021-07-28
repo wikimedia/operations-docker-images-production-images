@@ -5,6 +5,6 @@ FROM {{ seed_image }}
 USER root
 COPY --from=build --chown=root /go/github.com/knative/serving/cmd/activator/activator /usr/bin/activator
 
-USER nobody
+USER {{ "nobody" | uid }}
 
 ENTRYPOINT ["/usr/bin/activator"]

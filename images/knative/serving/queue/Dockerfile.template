@@ -13,5 +13,5 @@ USER root
 RUN mkdir /ko-app
 COPY --from=build --chown=root /go/github.com/knative/serving/cmd/queue/queue /ko-app/queue
 
-USER nobody
+USER {{ "nobody" | uid }}
 ENTRYPOINT ["/ko-app/queue"]
