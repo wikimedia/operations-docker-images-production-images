@@ -1,3 +1,9 @@
+kubeflow-kfserving-controller (0.6.0-1) wikimedia; urgency=high
+
+  * Upstream release 0.6.0
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Thu, 29 Jul 2021 17:14:43 +0100
+
 kubeflow-kfserving-controller (0.5.1-2) wikimedia; urgency=high
 
   * Improve the build image import in the Dockerfile template.
