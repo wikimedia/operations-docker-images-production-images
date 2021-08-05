@@ -1,0 +1,5 @@
+php7.2-fpm-multiversion-base (1.0.0) wikimedia; urgency=high
+
+   * Initial release.
+
+ -- Ahmon Dancy <adancy@wikimedia.org>  Thu,  5 Aug 2021 14:56:34 -0700

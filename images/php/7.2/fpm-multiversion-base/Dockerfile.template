@@ -1,0 +1,14 @@
+FROM {{ "php7.2-fpm" | image_tag }}
+
+USER root
+
+# Install the WMF internal CAs (T284417)
+# and the php extensions (T285309)
+{% set packages|replace('\n', ' ') -%}
+wmf-certificates
+php-luasandbox
+php-wikidiff2
+{%- endset -%}
+RUN {{ packages | apt_install }}
+
+USER {{ "www-data" | uid }}
