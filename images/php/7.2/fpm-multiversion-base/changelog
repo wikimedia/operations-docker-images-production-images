@@ -1,3 +1,9 @@
+php7.2-fpm-multiversion-base (1.0.1) unstable; urgency=medium
+
+  * Add php-excimer and php-wmerrors packages
+
+ -- Ahmon Dancy <dancy@dancysoft.com>  Sat, 07 Aug 2021 10:38:24 -0700
+
 php7.2-fpm-multiversion-base (1.0.0) wikimedia; urgency=high
 
    * Initial release.
