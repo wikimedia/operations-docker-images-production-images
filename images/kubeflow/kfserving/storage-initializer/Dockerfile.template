@@ -1,0 +1,19 @@
+FROM {{ "kubeflow-kfserving-build" | image_tag }} as build
+
+FROM {{ registry }}/python3-buster:latest
+
+USER root
+
+# The Docker image follows what upstream does in:
+# https://github.com/kubeflow/kfserving/blob/release-0.6/python/storage-initializer.Dockerfile
+# Rather than copying over the files to build, we just pip install the package.
+# This is a trade-off to keep the Docker image as slim as possible, but of course it forces us
+# to wait for a pip package release before upgrading Kfserving.
+# 'cpp' is needed to when installing kfserving since some dependencies require it.
+# Please note that the pip upgrade is needed to avoid failures in downloading
+# dependencies (like ray), see: https://github.com/ray-project/ray/issues/5444#issuecomment-520991458
+COPY --from=build --chown=root /go/github.com/kubeflow/kfserving/python/storage-initializer/scripts/initializer-entrypoint /usr/bin/storage-initializer-entrypoint
+RUN chmod +x /usr/bin/storage-initializer-entrypoint && {{ "python3-pip cpp" | apt_install }} && python3 -m pip --no-cache-dir install --upgrade pip && python3 -m pip --no-cache-dir install kfserving==0.6.0
+
+USER {{ "nobody" | uid }}
+ENTRYPOINT ["/usr/bin/storage-initializer-entrypoint"]
