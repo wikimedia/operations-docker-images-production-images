@@ -8,6 +8,7 @@ USER root
 wmf-certificates
 php-luasandbox
 php-wikidiff2
+php-wmerrors
 {%- endset -%}
 RUN {{ packages | apt_install }}
 
