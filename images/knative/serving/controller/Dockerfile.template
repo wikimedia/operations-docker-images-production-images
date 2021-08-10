@@ -4,6 +4,10 @@ FROM {{ seed_image }}
 
 USER root
 COPY --from=build --chown=root /go/github.com/knative/serving/cmd/controller/controller /usr/bin/controller
+# The knative controller tries to resolve an image tag to its uuid the first time
+# that it deploys it, and it needs to be able to validate the certificate offered
+# from the Docker registry.
+RUN {{ "wmf-certificates" | apt_install }}
 
 USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/bin/controller"]
