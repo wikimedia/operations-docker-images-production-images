@@ -1,0 +1,4 @@
+Package: kubeflow-kfserving-storage-initializer
+Description: Kubeflow Kfserving Storage Initializer
+Depends: kubeflow-kfserving-build
+Maintainer: Luca Toscano <ltoscano@wikimedia.org>

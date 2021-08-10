@@ -1,0 +1,5 @@
+kubeflow-kfserving-storage-initializer (0.6.0-1) wikimedia; urgency=high
+
+  * Upstream release 0.6.0
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Fri, 6 Aug 2021 17:14:43 +0100
