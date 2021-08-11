@@ -16,5 +16,12 @@ COPY --from=build --chown=root /go/github.com/kubeflow/kfserving/python/storage-
 RUN chmod +x /usr/bin/storage-initializer-entrypoint && {{ "python3-pip cpp wmf-certificates" | apt_install }} \
   && python3 -m pip --no-cache-dir install --upgrade pip && python3 -m pip --no-cache-dir install kfserving==0.6.0
 
+# Temporary workaround to force boto to use the Puppet CA to validate
+# the TLS certificates of the Swift/S3 internal endpoints. This image is used
+# as init-container, that are listed in the kfserving yaml config as part of
+# ConfigMap (with no possibility of adding ENV variables for example).
+# It relies on the wmf-certificates package installed previously.
+ENV AWS_CA_BUNDLE /usr/share/ca-certificates/wikimedia/Puppet_Internal_CA.crt
+
 USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/bin/storage-initializer-entrypoint"]
