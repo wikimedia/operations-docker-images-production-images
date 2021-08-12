@@ -21,7 +21,11 @@ RUN chmod +x /usr/bin/storage-initializer-entrypoint && {{ "python3-pip cpp wmf-
 # as init-container, that are listed in the kfserving yaml config as part of
 # ConfigMap (with no possibility of adding ENV variables for example).
 # It relies on the wmf-certificates package installed previously.
-ENV AWS_CA_BUNDLE /usr/share/ca-certificates/wikimedia/Puppet_Internal_CA.crt
+# The AWS_DEFAULT_REGION env variable is needed to avoid S3 v4 signature validations
+# when trying to contact Swift.
+# See https://github.com/kubeflow/kfserving/issues/1765 (AWS_CA_BUNDLE)
+# and https://github.com/kubeflow/kfserving/issues/1766 (AWS_DEFAULT_REGION)
+ENV AWS_CA_BUNDLE=/usr/share/ca-certificates/wikimedia/Puppet_Internal_CA.crt AWS_DEFAULT_REGION=US
 
 USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/bin/storage-initializer-entrypoint"]
