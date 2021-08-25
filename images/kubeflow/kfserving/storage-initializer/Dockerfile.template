@@ -25,7 +25,7 @@ RUN chmod +x /usr/bin/storage-initializer-entrypoint && {{ "python3-pip cpp wmf-
 # when trying to contact Swift.
 # See https://github.com/kubeflow/kfserving/issues/1765 (AWS_CA_BUNDLE)
 # and https://github.com/kubeflow/kfserving/issues/1766 (AWS_DEFAULT_REGION)
-ENV AWS_CA_BUNDLE=/usr/share/ca-certificates/wikimedia/Puppet_Internal_CA.crt AWS_DEFAULT_REGION=US
+ENV AWS_CA_BUNDLE=/usr/share/ca-certificates/wikimedia/Puppet_Internal_CA.crt AWS_DEFAULT_REGION=us-east-1
 
 USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/bin/storage-initializer-entrypoint"]

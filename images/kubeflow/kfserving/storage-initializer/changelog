@@ -1,3 +1,9 @@
+kubeflow-kfserving-storage-initializer (0.6.0-5) wikimedia; urgency=high
+
+  * Change AWS_DEFAULT_REGION to 'us-east-1' after Swift OS upgrade.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 25 Aug 2021 16:26:23 +0200
+
 kubeflow-kfserving-storage-initializer (0.6.0-4) wikimedia; urgency=high
 
   * Add ENV value for AWS_DEFAULT_REGION.
