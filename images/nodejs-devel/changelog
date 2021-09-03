@@ -1,3 +1,9 @@
+nodejs-devel (0.1.2) wikimedia; urgency=medium
+
+  * Fix apt pinning so nodejs is installed from nodesource (T290209)
+
+ -- Kunal Mehta <legoktm@debian.org>  Fri, 03 Sep 2021 13:53:13 -0700
+
 nodejs-devel (0.1.1) wikimedia; urgency=high
 
    * T228196
