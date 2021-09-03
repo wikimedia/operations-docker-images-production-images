@@ -1,0 +1,3 @@
+Package: echoserver
+Description: A simple server that responds with the http headers it received
+Maintainer: Janis Meybohm <jmeybohm@wikimedia.org>

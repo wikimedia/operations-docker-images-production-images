@@ -1,0 +1,6 @@
+echoserver (1.10.0-1) wikimedia; urgency=medium
+
+  * Initial import of echoserver 1.10
+  * https://github.com/kubernetes/kubernetes/tree/master/test/images/echoserver
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Fri, 03 Sep 2021 15:04:08 +0200
