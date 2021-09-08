@@ -1,3 +1,9 @@
+php7.2-fpm-multiversion-base (1.0.2) wikimedia; urgency=medium
+
+  * Add php-excimer extension (T288165)
+
+ -- Dave Pifke <dpifke@wikimedia.org>  Wed, 08 Sep 2021 13:36:07 -0700
+
 php7.2-fpm-multiversion-base (1.0.1) unstable; urgency=medium
 
   * Add php-excimer and php-wmerrors packages
