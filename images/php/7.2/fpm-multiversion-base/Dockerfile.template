@@ -20,4 +20,6 @@ php-wmerrors
 {%- endset -%}
 RUN {{ packages | apt_install }}
 
+COPY conf/wmerrors.ini /etc/php/7.2/mods-available/wmerrors.ini
+
 USER {{ "www-data" | uid }}

@@ -1,3 +1,9 @@
+php7.2-fpm-multiversion-base (1.0.3) wikimedia; urgency=medium
+
+  * Add configuration for wmerrors (T288851)
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Wed, 15 Sep 2021 16:47:04 +0200
+
 php7.2-fpm-multiversion-base (1.0.2) wikimedia; urgency=medium
 
   * Add php-excimer extension (T288165)
