@@ -1,3 +1,9 @@
+nodejs-slim (0.0.2-s1) wikimedia; urgency=high
+
+   T291458
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 21 Sep 2021 11:39:47 +0200
+
 nodejs-slim (0.0.2) wikimedia; urgency=high
 
    * T228196
