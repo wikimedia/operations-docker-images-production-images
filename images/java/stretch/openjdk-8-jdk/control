@@ -3,3 +3,4 @@ Description: base image for building Java 8 applications.
  An image used to build images to be used in the WMF
  pipeline. Contains the entire JDK for version 8
 Maintainer: Alexandros Kosiaris <akosiaris@wikimedia.org>
+Depends: openjdk-8-jre
