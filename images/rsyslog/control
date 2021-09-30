@@ -1,0 +1,3 @@
+Package: rsyslog
+Description: full-featured, lightweight syslog daemon
+Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>

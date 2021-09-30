@@ -1,0 +1,11 @@
+FROM {{ "bullseye" | image_tag }}
+
+RUN {{ "wmf-certificates rsyslog rsyslog-kafka" | apt_install }} && chown -R nobody. /var/spool/rsyslog
+
+COPY rsyslog.conf /etc/rsyslog.conf
+
+ENTRYPOINT ["/usr/sbin/rsyslogd"]
+
+USER {{ "nobody" | uid }}
+
+CMD ["-n", "-iNONE"]

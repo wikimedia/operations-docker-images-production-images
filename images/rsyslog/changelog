@@ -1,0 +1,5 @@
+rsyslog (8.2102.0-1) wikimedia; urgency=medium
+
+  * Initial release. (T288851)
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Wed, 29 Sep 2021 15:25:41 +0200
