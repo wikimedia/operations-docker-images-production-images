@@ -1,3 +1,9 @@
+operator (1.9.5-4) wikimedia; urgency=high
+
+  * Artificial bump after proxyv2 image update.
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Wed, 13 Oct 2021 18:32:33 +0200
+
 operator (1.9.5-3) wikimedia; urgency=high
 
   * Artificial bump after proxyv2 image update.

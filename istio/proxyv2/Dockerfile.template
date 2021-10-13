@@ -14,7 +14,7 @@ USER root
 RUN {{ "istio" | add_user }}
 
 # Istio's base docker image installs a lot of tools, we selected only the few that seemed mandatory.
-RUN {{ "iptables iproute2" | apt_install }}; \
+RUN {{ "iptables iproute2 wmf-certificates" | apt_install }}; \
     # By default istio adds the following in its Dockerfiles:
     # echo "istio-proxy ALL=NOPASSWD: /usr/sbin/iptables * " >> /etc/sudoers
     # The version below is tailored for our use case (namely allowing only iptables commands).
