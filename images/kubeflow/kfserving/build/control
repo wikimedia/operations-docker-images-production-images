@@ -1,3 +1,0 @@
-Package: kubeflow-kfserving-build
-Description: Build image for Kubeflow Kfserving.
-Maintainer: Luca Toscano <ltoscano@wikimedia.org>

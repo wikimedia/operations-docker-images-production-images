@@ -1,4 +1,0 @@
-Package: kubeflow-kfserving-agent
-Description: Kubeflow Kfserving agent
-Depends: kubeflow-kfserving-build
-Maintainer: Luca Toscano <ltoscano@wikimedia.org>
