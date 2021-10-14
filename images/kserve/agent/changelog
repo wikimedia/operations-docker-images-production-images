@@ -1,0 +1,5 @@
+kserve-agent (0.7.0-1) wikimedia; urgency=high
+
+  * Upstream release 0.7.0
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Thu, 14 Oct 2021 10:14:43 +0100

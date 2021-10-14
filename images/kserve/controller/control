@@ -1,0 +1,4 @@
+Package: kserve-controller
+Description: KServe Controller
+Depends: kserve-build
+Maintainer: Luca Toscano <ltoscano@wikimedia.org>

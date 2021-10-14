@@ -1,0 +1,9 @@
+FROM {{ "kserve-build" | image_tag }} as build
+
+FROM {{ seed_image }}
+
+USER root
+COPY --from=build --chown=root /go/github.com/kserve/kserve/cmd/agent/agent /usr/bin/agent
+
+USER {{ "nobody" | uid }}
+ENTRYPOINT ["/usr/bin/agent"]
