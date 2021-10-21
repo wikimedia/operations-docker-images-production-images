@@ -1,3 +1,9 @@
+php7.2-fpm-multiversion-base (1.0.4) wikimedia; urgency=medium
+
+  * Refresh for update in the parent image.
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 21 Oct 2021 09:49:01 +0200
+
 php7.2-fpm-multiversion-base (1.0.3-s1) wikimedia; urgency=high
 
    Refresh for update in parent image php7.2-cli:
