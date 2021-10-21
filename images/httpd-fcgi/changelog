@@ -1,3 +1,9 @@
+httpd-fcgi (2.4.38-6) wikimedia; urgency=medium
+
+  * Added cee_ecs_accesslog_170 log format
+
+ -- Cole White <cwhite@wikimedia.org>  Thu, 21 Oct 2021 10:35:09 -0600
+
 httpd-fcgi (2.4.38-5) wikimedia; urgency=medium
 
   * Switch to json format logging
