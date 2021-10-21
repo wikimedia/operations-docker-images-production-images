@@ -1,3 +1,9 @@
+php7.2-fpm (0.4.0) wikimedia; urgency=high
+
+   * Add settings to control debuggability
+
+ -- Ahmon Dancy <adancy@wikimedia.org>  Fri, 29 Oct 2021 11:29:39 -0700
+
 php7.2-fpm (0.3.1) wikimedia; urgency=medium
 
   * Rebuild for new PHP 7.2 (CVE-2021-21703)

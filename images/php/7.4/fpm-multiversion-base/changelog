@@ -1,3 +1,10 @@
+php7.4-fpm-multiversion-base (7.4.25-3) wikimedia; urgency=high
+
+   Refresh for update in parent image php7.4-fpm:
+   * Add settings to control debuggability
+
+ -- Ahmon Dancy <adancy@wikimedia.org>  Wed, 17 Nov 2021 10:08:25 +0100
+
 php7.4-fpm-multiversion-base (7.4.25-2) wikimedia; urgency=medium
 
   * T293568: cherry-pick "Partially fix handling of exceptions thrown

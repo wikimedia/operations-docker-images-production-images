@@ -1,3 +1,10 @@
+php7.2-fpm-multiversion-base (1.0.6) wikimedia; urgency=high
+
+   Refresh for update in parent image php7.2-fpm:
+   * Add settings to control debuggability
+
+ -- Ahmon Dancy <adancy@wikimedia.org>  Fri, 29 Oct 2021 11:29:39 -0700
+
 php7.2-fpm-multiversion-base (1.0.5) wikimedia; urgency=medium
 
   * Rebuild for new PHP 7.2 (CVE-2021-21703)
