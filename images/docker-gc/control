@@ -1,0 +1,4 @@
+Description: Docker image and volume garbage collection tool
+Maintainer: Ahmon Dancy <adancy@wikimedia.org>
+Package: docker-gc
+Depends: python3-buster

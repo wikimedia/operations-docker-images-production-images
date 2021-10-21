@@ -1,0 +1,12 @@
+FROM {{ "python3-buster" | image_tag }}
+
+RUN {{ "git ca-certificates wmf-certificates python3-pip" | apt_install }}
+
+# FIXME: Move once project naming discussion is settled
+RUN git clone https://gitlab.wikimedia.org/dancy/docker-gc.git
+
+RUN (cd docker-gc && pip3 install -r requirements.txt -r optional-requirements.txt)
+
+COPY entrypoint.sh /
+ENTRYPOINT ["/entrypoint.sh"]
+
