@@ -1,0 +1,5 @@
+php7.4-fpm (7.4.24-1) wikimedia; urgency=medium
+
+  * Initial release. (Closes: T293996)
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 21 Oct 2021 12:40:23 +0200

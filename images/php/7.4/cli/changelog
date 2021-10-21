@@ -1,0 +1,5 @@
+php7.4-cli (7.4.24-1) UNRELEASED; urgency=medium
+
+  * Initial release. (Closes: T293996)
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 21 Oct 2021 12:25:47 +0200
