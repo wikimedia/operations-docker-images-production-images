@@ -1,3 +1,9 @@
+php7.3-fpm (7.3.31-1) wikimedia; urgency=medium
+
+  * Rebuild for new PHP 7.3 (CVE-2021-21703)
+
+ -- Kunal Mehta <legoktm@debian.org>  Mon, 01 Nov 2021 10:17:02 -0700
+
 php7.3-fpm (7.3.19-5) wikimedia; urgency=medium
 
   * Allow changing the location of the log files from /dev/stderr

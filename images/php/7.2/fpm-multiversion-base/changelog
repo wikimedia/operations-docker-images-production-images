@@ -1,3 +1,9 @@
+php7.2-fpm-multiversion-base (1.0.5) wikimedia; urgency=medium
+
+  * Rebuild for new PHP 7.2 (CVE-2021-21703)
+
+ -- Kunal Mehta <legoktm@debian.org>  Mon, 01 Nov 2021 10:15:28 -0700
+
 php7.2-fpm-multiversion-base (1.0.4) wikimedia; urgency=medium
 
   * Refresh for update in the parent image.

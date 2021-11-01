@@ -1,3 +1,9 @@
+php7.2-cli (0.2.0-s3) wikimedia; urgency=medium
+
+  * Rebuild for new PHP 7.2 (CVE-2021-21703)
+
+ -- Kunal Mehta <legoktm@debian.org>  Mon, 01 Nov 2021 10:13:05 -0700
+
 php7.2-cli (0.2.0-s2) wikimedia; urgency=high
 
    New php 7.2 patch - T291052 - rebuild

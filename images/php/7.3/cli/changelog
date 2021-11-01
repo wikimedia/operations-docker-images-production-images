@@ -1,3 +1,9 @@
+php7.3-cli (7.3.31-1) wikimedia; urgency=medium
+
+  * Rebuild for new PHP 7.3 (CVE-2021-21703)
+
+ -- Kunal Mehta <legoktm@debian.org>  Mon, 01 Nov 2021 10:16:21 -0700
+
 php7.3-cli (7.3.19-3) wikimedia; urgency=high
 
    Adding ca-certificates
