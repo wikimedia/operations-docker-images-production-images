@@ -1,0 +1,5 @@
+docker-gc (1.0.0) wikimedia; urgency=medium
+
+  * Initial release.
+
+ -- Ahmon Dancy <adancy@wikimedia.org>  Wed, 20 Oct 2021 15:20:24 -0700
