@@ -1,0 +1,5 @@
+golang1.17 (1.17-1) wikimedia; urgency=high
+
+  * Golang 1.17 on Bullseye base image (bullseye backports)
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Fri, 05 Nov 2021 14:36:37 +0100
