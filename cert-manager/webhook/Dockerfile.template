@@ -1,4 +1,4 @@
-FROM docker-registry.wikimedia.org/cert-manager-build:latest as build
+FROM docker-registry.wikimedia.org/cert-manager/build:latest as build
 
 FROM {{ seed_image }}
 
