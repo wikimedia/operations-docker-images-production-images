@@ -30,7 +30,7 @@ For example (istio directory):
 Build the images
 ----------------
 
-The contents of the `./images` or `./istio` directories can be built using `docker-pkg` as follows:
+The contents of the `./images`, `cert-manager` and `./istio` directories can be built using `docker-pkg` as follows:
 
    $ docker-pkg -c <config-file> build <directory>
 

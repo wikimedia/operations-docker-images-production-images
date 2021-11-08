@@ -1,0 +1,4 @@
+Package: webhook
+Description: cert-manager webhook
+Depends: build
+Maintainer: Janis Meybohm <jmeybohm@wikimedia.org>

@@ -1,0 +1,15 @@
+FROM docker-registry.wikimedia.org/golang1.17 as build
+
+ENV CERT_MANAGER_VERSION_GIT_TAG=v1.5.4
+ENV CERT_MANAGER_SOURCE_REPO=https://github.com/jetstack/cert-manager.git
+ENV REPO_BASE=/go/github.com/jetstack
+
+USER nobody
+RUN mkdir -p $REPO_BASE \
+  && cd $REPO_BASE \
+  && git clone $CERT_MANAGER_SOURCE_REPO cert-manager \
+  && cd cert-manager \
+  && git checkout tags/$CERT_MANAGER_VERSION_GIT_TAG
+
+WORKDIR $REPO_BASE/cert-manager/cmd
+RUN cd cainjector && go build && cd ../webhook && go build && cd ../controller && go build
