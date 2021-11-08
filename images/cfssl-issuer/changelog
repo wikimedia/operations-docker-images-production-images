@@ -1,0 +1,5 @@
+cfssl-issuer (0.1.0-1) wikimedia; urgency=medium
+
+  * Initial release
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Mon, 08 Nov 2021 08:25:28 +0100
