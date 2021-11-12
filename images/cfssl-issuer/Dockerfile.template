@@ -11,7 +11,7 @@ RUN git clone $SOURCE_REPO && \
 
 FROM {{ seed_image }}
 
-COPY --from=build /go/cfss-issuer/bin/manager /usr/bin/
+COPY --from=build /go/cfssl-issuer/bin/manager /usr/bin/
 RUN {{ "wmf-certificates" | apt_install }}
 
 USER {{ "nobody" | uid }}
