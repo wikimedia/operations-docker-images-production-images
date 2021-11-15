@@ -1,3 +1,10 @@
+php7.4-fpm (7.4.25-2) wikimedia; urgency=medium
+
+  * T293568: cherry-pick "Partially fix handling of exceptions thrown
+    in interrupt handlers"
+
+ -- Kunal Mehta <legoktm@debian.org>  Mon, 15 Nov 2021 13:43:05 -0800
+
 php7.4-fpm (7.4.25-1) wikimedia; urgency=medium
 
   * Initial release. (Closes: T293996)
