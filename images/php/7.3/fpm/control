@@ -1,7 +1,0 @@
-Package: php7.3-fpm
-Description: php7.3 container to run php-fpm
- By default, this image will just execute a php script located at
- /srv/app/index.php. Please note this needs to coincide with the
- path in the httpd-fcgi image.
-Depends: php7.3-cli
-Maintainer: Giuseppe Lavagetto <glavagetto@wikimedia.org>
