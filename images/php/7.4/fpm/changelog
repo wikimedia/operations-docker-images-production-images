@@ -1,4 +1,4 @@
-php7.4-fpm (7.4.25-2) wikimedia; urgency=high
+php7.4-fpm (7.4.25-3) wikimedia; urgency=high
 
    * Add settings to control debuggability
 
