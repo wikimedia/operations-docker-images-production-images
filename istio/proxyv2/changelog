@@ -1,3 +1,9 @@
+proxyv2 (1.9.5-5) wikimedia; urgency=medium
+
+  * Update wmf-certificates package
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Thu, 18 Nov 2021 09:45:10 +0100
+
 proxyv2 (1.9.5-4) wikimedia; urgency=high
 
   * Add wmf-certificates package (puppet CA).
