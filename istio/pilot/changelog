@@ -1,3 +1,9 @@
+pilot (1.9.5-5) wikimedia; urgency=medium
+
+  * Artificial bump after proxyv2 image update.
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Thu, 18 Nov 2021 09:45:53 +0100
+
 pilot (1.9.5-4) wikimedia; urgency=high
 
   * Artificial bump after proxyv2 image update.
