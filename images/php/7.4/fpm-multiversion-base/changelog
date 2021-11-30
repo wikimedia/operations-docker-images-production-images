@@ -1,3 +1,9 @@
+php7.4-fpm-multiversion-base (7.4.25-4) wikimedia; urgency=medium
+
+  * T296331: Install php7.4-yaml
+
+ -- Kunal Mehta <legoktm@debian.org>  Tue, 30 Nov 2021 12:26:29 -0800
+
 php7.4-fpm-multiversion-base (7.4.25-3) wikimedia; urgency=high
 
    Refresh for update in parent image php7.4-fpm:

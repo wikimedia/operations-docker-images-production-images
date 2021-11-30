@@ -6,6 +6,7 @@ USER root
 # T288165).
 #
 # php-apcu, php-memcached, and php-redis are included in base image.
+# php-yaml is for SettingsLoader (T296331).
 #
 # php-geoip, php-igbinary, and php-msgpack are installed as dependencies of
 # other extensions.
@@ -17,6 +18,7 @@ php-excimer
 php-luasandbox
 php-wikidiff2
 php-wmerrors
+php-yaml
 {%- endset -%}
 RUN {{ packages | apt_install }}
 
