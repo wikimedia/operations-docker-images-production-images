@@ -1,6 +1,7 @@
 FROM {{ "bullseye" | image_tag }}
 
-RUN {{ "wmf-certificates rsyslog rsyslog-kafka" | apt_install }} && chown -R nobody. /var/spool/rsyslog
+RUN {{ "wmf-certificates rsyslog rsyslog-kafka" | apt_install }} && chown -R nobody. /var/spool/rsyslog \
+    && chmod 0777 /var/spool/rsyslog && chmod 0777 /var/run/rsyslog
 
 COPY rsyslog.conf /etc/rsyslog.conf
 

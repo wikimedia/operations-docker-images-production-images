@@ -1,3 +1,9 @@
+rsyslog (8.2102.0-2) wikimedia; urgency=medium
+
+  * Allow any user to run rsyslog using this image (as needed by mediawiki)
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 02 Dec 2021 16:22:13 +0100
+
 rsyslog (8.2102.0-1) wikimedia; urgency=medium
 
   * Initial release. (T288851)
