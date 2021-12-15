@@ -1,3 +1,9 @@
+mediawiki-httpd (0.1.3) wikimedia; urgency=medium
+
+  * Add mod_remoteip T297613
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Wed, 15 Dec 2021 14:49:34 +0100
+
 mediawiki-httpd (0.1.2) wikimedia; urgency=medium
 
   * Update to handle logging in the parent image

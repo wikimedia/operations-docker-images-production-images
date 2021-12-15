@@ -8,7 +8,8 @@ USER root
 # Copy the apache configuration and the other configurations we need to add
 COPY --chown=root:root apache2 /etc/apache2
 # Disable the deflate module, not used in MediaWiki. Also enable access_compat
-# as we still have some apache 2.2-compatible ACLs :/
-RUN a2dismod -f deflate && a2enmod access_compat
+# as we still have some apache 2.2-compatible ACLs.
+# Finally, enable remoteip for T297613
+RUN a2dismod -f deflate && a2enmod access_compat && a2enmod remoteip
 
 USER {{ "www-data" | uid }}
