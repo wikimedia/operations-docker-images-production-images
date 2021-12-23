@@ -1,3 +1,10 @@
+cfssl-issuer (0.2.0-1) wikimedia; urgency=medium
+
+  * Update to v0.2.0
+  * Add bundle support
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Thu, 23 Dec 2021 08:55:09 +0100
+
 cfssl-issuer (0.1.1-1) wikimedia; urgency=medium
 
   * Add liveness and readiness endpoints
