@@ -2,7 +2,7 @@ FROM {{ seed_image }}
 
 ADD envoy-future.list /etc/apt/sources.list.d/envoy-future.list
 
-RUN {{ "envoyproxy gettext-base" | apt_install }} && \
+RUN {{ "envoyproxy gettext-base wmf-certificates" | apt_install }} && \
     chown -R nobody:nogroup /etc/envoy /var/log/envoy
 
 COPY entrypoint.sh /bin/entrypoint.sh
