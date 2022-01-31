@@ -1,3 +1,9 @@
+echoserver (1.10.0-2) wikimedia; urgency=medium
+
+  * Allow to easily mount external secret as certificate source
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Mon, 31 Jan 2022 09:53:32 +0100
+
 echoserver (1.10.0-1) wikimedia; urgency=medium
 
   * Initial import of echoserver 1.10

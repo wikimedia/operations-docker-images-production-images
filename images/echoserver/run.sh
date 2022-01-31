@@ -15,12 +15,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-echo "Generating self-signed cert"
-mkdir -p /certs
-openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 \
--keyout /certs/privateKey.key \
--out /certs/certificate.crt \
--subj "/C=UK/ST=Warwickshire/L=Leamington/O=OrgName/OU=IT Department/CN=example.com"
+if [ ! -e /certs/tls.key -o ! -e /certs/tls.crt ]; then
+    echo "Generating self-signed cert"
+    mkdir -p /certs
+    openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /certs/tls.key \
+    -out /certs/tls.crt \
+    -subj "/C=UK/ST=Warwickshire/L=Leamington/O=OrgName/OU=IT Department/CN=example.com"
+fi
 
 echo "Starting nginx"
 nginx -g "daemon off;"
