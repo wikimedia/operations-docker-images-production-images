@@ -1,3 +1,9 @@
+prometheus-statsd-exporter (0.0.10) UNRELEASED; urgency=medium
+
+  * Run exporter with --log.level=warn by default (instead of info), Bug: T300629
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Tue, 01 Feb 2022 16:09:40 +0100
+
 prometheus-statsd-exporter (0.0.9) wikimedia; urgency=medium
 
   * Run as user nobody, Bug: T274254
