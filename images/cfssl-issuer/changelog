@@ -1,4 +1,4 @@
-cfssl-issuer (0.2.2-0) wikimedia; urgency=medium
+cfssl-issuer (0.2.2-1) wikimedia; urgency=medium
 
   * Update to v0.2.2
   * Ensure not to panic if root CA is not returned and update docs
