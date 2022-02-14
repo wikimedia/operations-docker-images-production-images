@@ -1,6 +1,6 @@
 FROM {{ registry }}/golang1.17 as build
 
-ENV SOURCE_VERSION=v0.2.1
+ENV SOURCE_VERSION=v0.2.2
 ENV SOURCE_REPO=https://gerrit.wikimedia.org/r/operations/software/cfssl-issuer.git
 ENV CGO_ENABLED=0 GOOS=linux
 
