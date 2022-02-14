@@ -1,4 +1,4 @@
-prometheus-statsd-exporter (0.0.10) UNRELEASED; urgency=medium
+prometheus-statsd-exporter (0.0.10) wikimedia; urgency=medium
 
   * Run exporter with --log.level=warn by default (instead of info), Bug: T300629
 
