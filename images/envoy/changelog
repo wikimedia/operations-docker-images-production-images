@@ -1,3 +1,9 @@
+envoy (1.18.3-1) wikimedia; urgency=medium
+
+  * New envoy upstream version 1.18.3 
+
+ -- Reuven Lazarus <rlazarus@wikimedia.org>  Tue, 08 Mar 2022 12:37:50 -0800
+
 envoy (1.15.5-1) wikimedia; urgency=medium
 
   * New envoy upstream version 1.15.5
