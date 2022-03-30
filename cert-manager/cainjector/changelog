@@ -1,3 +1,9 @@
+cainjector (1.5.4-3) wikimedia; urgency=medium
+
+  * Add controller_sync_error_count metric
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Wed, 30 Mar 2022 12:45:25 +0200
+
 cainjector (1.5.4-2) wikimedia; urgency=high
 
   * Use a numeric UID for nobody
