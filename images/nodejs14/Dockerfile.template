@@ -1,0 +1,3 @@
+FROM {{ "bullseye" | image_tag }}
+
+RUN echo "deb http://apt.wikimedia.org/wikimedia bullseye-wikimedia thirdparty/node14" > /etc/apt/sources.list.d/nodejs.list && {{ "nodejs wmf-certificates" | apt_install }}

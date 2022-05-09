@@ -1,0 +1,3 @@
+Package: nodejs14-slim
+Description: Base image for nodejs 14.x based applications on Debian Bullseye. Also includes npm.
+Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>

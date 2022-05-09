@@ -1,0 +1,5 @@
+nodejs14-slim (0.0.1) wikimedia; urgency=medium
+
+  * Initial Release. (closes: T306996)
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Mon, 09 May 2022 09:10:32 +0200
