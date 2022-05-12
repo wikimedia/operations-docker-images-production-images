@@ -1,0 +1,5 @@
+buildkitd (0.10.3) wikimedia; urgency=medium
+
+  * First version (0.10.3) of buildkitd for use with trusted GitLab runners
+
+ -- Dan Duvall <dduvall@wikimedia.org>  Thu, 12 May 2022 11:21:50 -0700

@@ -1,0 +1,57 @@
+FROM {{ "bullseye" | image_tag }} AS build
+ARG BUILDKIT_VERSION=0.10.3
+ARG ROOTLESSKIT_VERSION=1.0.1
+
+RUN {{ "ca-certificates curl" | apt_install }}
+
+WORKDIR /src
+COPY SHA256SUMS ./
+
+RUN curl --silent --fail --show-error --location \
+    https://github.com/moby/buildkit/releases/download/v$BUILDKIT_VERSION/buildkit-v$BUILDKIT_VERSION.linux-amd64.tar.gz \
+    | tar -zxf - bin/buildkitd
+
+RUN curl --silent --fail --show-error --location \
+    https://github.com/rootless-containers/rootlesskit/releases/download/v$ROOTLESSKIT_VERSION/rootlesskit-x86_64.tar.gz \
+    | tar -C bin -zxf - rootlesskit
+
+RUN sha256sum -c SHA256SUMS
+
+
+# This buildkitd image is intended for rootless mode execution using
+# rootlesskit. It must be run via:
+#   docker run --security-opt seccomp=unconfined --security-opt apparmor=unconfined
+# See https://github.com/moby/buildkit/blob/master/docs/rootless.md
+# See https://phabricator.wikimedia.org/T307810 for a brief evaluation of the
+# attack surface from build processes
+FROM {{ "bullseye" | image_tag }}
+ARG BUILDKIT_HOME=/var/lib/buildkit
+ARG BUILDKIT_UID=1000
+
+RUN {{ "ca-certificates git libcap2-bin runc uidmap" | apt_install }}
+
+COPY --from=build /src/bin/* /usr/local/sbin/
+COPY entrypoint.sh /usr/local/bin/
+
+# Much of this section was adapted from https://github.com/moby/buildkit/blob/v0.10/Dockerfile
+RUN groupadd -r -g $BUILDKIT_UID buildkit \
+    && useradd -r -u $BUILDKIT_UID -g $BUILDKIT_UID -d $BUILDKIT_HOME buildkit \
+    && mkdir -p /run/user/$BUILDKIT_UID $BUILDKIT_HOME/.local/tmp $BUILDKIT_HOME/.local/share/buildkit \
+    && chown -R buildkit /run/user/$BUILDKIT_UID $BUILDKIT_HOME \
+    && echo buildkit:100000:65536 | tee /etc/subuid | tee /etc/subgid
+
+# Remove suid from newuidmap and newgidmap commands and add
+# cap_setuid/cap_setgid. The latter is needed to allow writing to uid_map and
+# gid_map and for some strange reason suid seems to interfere. See
+# https://man7.org/linux/man-pages/man7/user_namespaces.7.html
+RUN chmod u-s /usr/bin/newuidmap /usr/bin/newgidmap \
+    && setcap cap_setuid=ep /usr/bin/newuidmap \
+    && setcap cap_setgid=ep /usr/bin/newgidmap
+
+USER $BUILDKIT_UID:$BUILDKIT_UID
+ENV HOME $BUILDKIT_HOME
+ENV USER buildkit
+ENV XDG_RUNTIME_DIR=/run/user/$BUILDKIT_UID
+ENV TMPDIR=$BUILDKIT_HOME/.local/tmp
+
+ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
