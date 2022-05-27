@@ -10,6 +10,6 @@ COPY --chown=root:root apache2 /etc/apache2
 # Disable the deflate module, not used in MediaWiki. Also enable access_compat
 # as we still have some apache 2.2-compatible ACLs.
 # Finally, enable remoteip for T297613
-RUN a2dismod -f deflate && a2enmod access_compat && a2enmod remoteip
+RUN a2dismod -f deflate && a2enmod access_compat && a2enmod remoteip && ln -s /etc/apache2/mods-available/expires.conf /etc/apache2/mods-enabled/expires.conf
 
 USER {{ "www-data" | uid }}
