@@ -1,0 +1,5 @@
+helm-state-metrics (0.1.0-1) wikimedia; urgency=medium
+
+  * Initial release
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Mon, 20 Jun 2022 12:41:53 +0200

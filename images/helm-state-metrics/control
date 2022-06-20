@@ -1,0 +1,3 @@
+Package: helm-state-metrics
+Description: Prometeus exporter for metrics about helm releases
+Maintainer: Janis Meybohm <jmeybohm@wikimedia.org>

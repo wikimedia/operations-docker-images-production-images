@@ -1,0 +1,18 @@
+FROM {{ registry }}/golang1.17 as build
+
+ENV SOURCE_VERSION=v0.1.0
+ENV SOURCE_REPO=https://gerrit.wikimedia.org/r/operations/software/helm-state-metrics.git
+ENV CGO_ENABLED=0 GOOS=linux
+
+RUN git clone $SOURCE_REPO && \
+    cd helm-state-metrics && \
+    git checkout $SOURCE_VERSION && \
+    VERSION=$SOURCE_VERSION make
+
+FROM {{ seed_image }}
+
+COPY --from=build /go/helm-state-metrics/bin/helm-state-metrics /usr/bin/
+RUN {{ "wmf-certificates" | apt_install }}
+
+USER {{ "nobody" | uid }}
+ENTRYPOINT ["/usr/bin/helm-state-metrics"]
