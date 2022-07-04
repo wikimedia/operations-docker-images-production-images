@@ -1,4 +1,4 @@
-FROM docker-registry.wikimedia.org/golang1.15 as build
+FROM docker-registry.wikimedia.org/golang1.17 as build
 
 {% set repo_base = '/go/github.com/kserve' %}
 
@@ -7,7 +7,7 @@ RUN mkdir -p {{ repo_base }} \
   && cd {{ repo_base }} \
   && git clone https://github.com/kserve/kserve.git kserve \
   && cd kserve \
-  && git checkout tags/v0.7.0
+  && git checkout tags/v0.8.0
 
 WORKDIR {{ repo_base }}/kserve/cmd
 RUN cd manager && go build && cd ../agent && go build
