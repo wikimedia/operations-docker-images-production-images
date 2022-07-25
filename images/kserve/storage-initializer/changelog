@@ -1,3 +1,9 @@
+kserve-storage-initializer (0.8.0-2) wikimedia; urgency=high
+
+  * Apply a manual fix for https://github.com/kserve/kserve/pull/2201
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Mon, 25 Jul 2022 16:05:43 +0100
+
 kserve-storage-initializer (0.8.0-1) wikimedia; urgency=high
 
   * Upstream release 0.8.0
