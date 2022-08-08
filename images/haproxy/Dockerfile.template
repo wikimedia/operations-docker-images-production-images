@@ -1,0 +1,8 @@
+FROM {{ seed_image }}
+
+ARG BASECONFIG=/etc/haproxy/haproxy.cfg
+ARG EXTRACONFIG=/etc/haproxy/conf.d
+RUN {{ "haproxy" | apt_install }}
+
+USER {{ "nobody" | uid }}
+ENTRYPOINT ["/usr/sbin/haproxy", "-f", "${CONFIG}", "-f", "${EXTRACONFIG}"]

@@ -1,0 +1,5 @@
+haproxy (1.8.19-1) wikimedia; urgency=medium
+
+  * Initial release. Bug: T233196
+
+ -- Hugh Nowlan <hnowlan@wikimedia.org>  Mon, 8 Aug 2022 17:22:43 +0100

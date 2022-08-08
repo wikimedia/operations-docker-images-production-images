@@ -1,0 +1,7 @@
+Package: haproxy
+Description: Basic haproxy container.
+ Basic container to run haproxy. No base config is provided and it is
+ assumed that the user will provide this. Config is loaded from
+ /etc/haproxy/haproxy.cfg and /etc/haproxy/conf.d.
+
+Maintainer: Hugh Nowlan <hnowlan@wikimedia.org>
