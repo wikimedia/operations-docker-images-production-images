@@ -1,0 +1,4 @@
+Package: dispatch
+Description: Dispatch helps us effectively manage security incidents by deeply
+ integrating with existing tools used throughout an organization.
+Maintainer: Filippo Giunchedi <fgiunchedi@wikimedia.org>
