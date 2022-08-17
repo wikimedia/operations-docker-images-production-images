@@ -1,0 +1,55 @@
+FROM {{ registry }}/bullseye:latest as build
+
+ENV DISPATCH_VERSION=v20220801
+ENV SOURCE_REPO=https://github.com/Netflix/dispatch
+ENV PROJECT_BASE=/tmp/dispatch
+
+# Do not build assets when this is set
+ARG DISPATCH_LIGHT_BUILD
+ENV DISPATCH_LIGHT_BUILD=${DISPATCH_LIGHT_BUILD}
+
+RUN echo "DISPATCH_LIGHT_BUILD=${DISPATCH_LIGHT_BUILD}"
+
+USER root
+RUN {{ "git python3-setuptools python3-wheel python3-all npm" | apt_install }}
+
+RUN export YARN_CACHE_FOLDER="$(mktemp -d)" \
+    && cd $(dirname $PROJECT_BASE) \
+    && git clone $SOURCE_REPO \
+    && cd $PROJECT_BASE \
+    && git checkout $DISPATCH_VERSION \
+    && python3 setup.py bdist_wheel \
+    && rm -r "$YARN_CACHE_FOLDER" \
+    && mv -v $PROJECT_BASE/dist /dist
+
+
+FROM {{ registry }}/bullseye:latest
+
+# Sane defaults for pip
+ENV PIP_NO_CACHE_DIR=off \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    # Dispatch config params
+    DISPATCH_CONF=/etc/dispatch
+
+RUN groupadd -o -g "900" -r "runuser" \
+  && useradd -l -o -m -d "/home/runuser" -r -g "runuser" -u "900" "runuser"
+
+COPY --from=build /dist/*.whl /tmp/dist/
+
+RUN {{ "pkg-config postgresql-client python3-pip npm" | apt_install }}
+
+# A non-root workdir needs to be set to avoid the following error:
+# 'npm ERR! Tracker "idealTree" already exists'
+WORKDIR /tmp/dist
+
+RUN set -x \
+    && pip install -U /tmp/dist/*.whl \
+    && npm install -g mjml \
+    && rm -v /tmp/dist/*.whl
+
+
+USER "runuser"
+ENV HOME="/home/runuser"
+ENV MJML_PATH="/usr/local/bin/mjml"
+EXPOSE 8000/tcp
+ENTRYPOINT ["dispatch"]
