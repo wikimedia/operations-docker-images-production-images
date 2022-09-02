@@ -1,3 +1,9 @@
+php7.4-cli (7.4.30) wikimedia; urgency=high
+
+   T316601
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Fri,  2 Sep 2022 16:33:06 +0200
+
 php7.4-cli (7.4.25-2) wikimedia; urgency=medium
 
   * T293568: cherry-pick "Partially fix handling of exceptions thrown
