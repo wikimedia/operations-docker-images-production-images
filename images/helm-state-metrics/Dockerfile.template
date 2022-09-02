@@ -1,6 +1,6 @@
 FROM {{ registry }}/golang1.17 as build
 
-ENV SOURCE_VERSION=v0.1.1
+ENV SOURCE_VERSION=v0.1.2
 ENV SOURCE_REPO=https://gerrit.wikimedia.org/r/operations/software/helm-state-metrics.git
 ENV CGO_ENABLED=0 GOOS=linux
 
