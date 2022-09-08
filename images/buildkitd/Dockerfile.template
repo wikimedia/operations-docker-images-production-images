@@ -1,5 +1,5 @@
 FROM {{ "bullseye" | image_tag }} AS build
-ARG BUILDKIT_VERSION=0.10.3
+ARG BUILDKIT_VERSION=0.10.4
 ARG ROOTLESSKIT_VERSION=1.0.1
 
 RUN {{ "ca-certificates curl" | apt_install }}

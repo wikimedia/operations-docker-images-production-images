@@ -1,3 +1,9 @@
+buildkitd (0.10.4-1) wikimedia; urgency=high
+
+   * Version bump to 0.10.4.
+
+ -- Dan Duvall <dduvall@wikimedia.org>  Wed,  7 Sep 2022 15:59:33 -0700
+
 buildkitd (0.10.3) wikimedia; urgency=medium
 
   * First version (0.10.3) of buildkitd for use with trusted GitLab runners
