@@ -28,7 +28,7 @@ FROM {{ "bullseye" | image_tag }}
 ARG BUILDKIT_HOME=/var/lib/buildkit
 ARG BUILDKIT_UID=1000
 
-RUN {{ "ca-certificates git libcap2-bin runc uidmap" | apt_install }}
+RUN {{ "ca-certificates wmf-certificates git libcap2-bin runc uidmap" | apt_install }}
 
 COPY --from=build /src/bin/* /usr/local/sbin/
 COPY entrypoint.sh /usr/local/bin/

@@ -1,3 +1,9 @@
+buildkitd (0.10.4-2) wikimedia; urgency=high
+
+   * Add wmf-certificates package for registry CA
+
+ -- Dan Duvall <dduvall@wikimedia.org>  Mon, 19 Sep 2022 10:54:42 -0700
+
 buildkitd (0.10.4-1) wikimedia; urgency=high
 
    * Version bump to 0.10.4.
