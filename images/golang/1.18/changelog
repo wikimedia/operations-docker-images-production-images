@@ -1,0 +1,5 @@
+golang1.18 (1.18-1) wikimedia; urgency=high
+
+  * Golang 1.18 on Bullseye base image (bullseye backports)
+
+ -- Taavi Väänänen <hi@taavi.wtf>  Wed, 22 Sep 2022 17:47:23 +0300
