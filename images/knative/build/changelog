@@ -1,3 +1,10 @@
+knative-build (0.18.1-2) wikimedia; urgency=high
+
+  * Backport https://github.com/knative/serving/pull/12897
+    from Knative 1.5.0
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Fri, 23 Sep 2022 11:13:43 +0100
+
 knative-build (0.18.1-1) wikimedia; urgency=high
 
   * Upstream release 0.18.1

@@ -1,3 +1,10 @@
+knative-serving-controller (0.18.1-5) wikimedia; urgency=high
+
+  * Backport https://github.com/knative/serving/pull/12897
+    from Knative 1.5.0
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Fri, 23 Sep 2022 11:14:43 +0100
+
 knative-serving-controller (0.18.1-4) wikimedia; urgency=high
 
   * Add the wmf-certificates debian package.
