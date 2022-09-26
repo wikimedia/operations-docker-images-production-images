@@ -1,0 +1,248 @@
+commit 2001415d016fdc1cb533af23bed1dd0cc85f819c
+Author: Luca Toscano <ltoscano@wikimedia.org>
+Date:   Sat Sep 24 09:06:10 2022 +0200
+
+    [PATCH] - Backport dnsConfig and dnsPolicy from Knative 1.5.0
+
+    In order to mitigate the problem listed in T313915#8252427,
+    we need to backport a Knative 1.5.0 feature to our version
+    to enable dnsConfig/dnsPolicy fields in Pod configs.
+    Kserve already supports them, but our version of Knative does
+    not. The idea is to allow people to tune the pods' resolv.conf
+    files with settings like ndots etc..
+
+    The new code passes unit tests.
+
+diff --git a/config/core/configmaps/features.yaml b/config/core/configmaps/features.yaml
+index 317e1b1d8..96e6281f0 100644
+--- a/config/core/configmaps/features.yaml
++++ b/config/core/configmaps/features.yaml
+@@ -20,7 +20,7 @@ metadata:
+   labels:
+     serving.knative.dev/release: devel
+   annotations:
+-    knative.dev/example-checksum: "6a69cdef"
++    knative.dev/example-checksum: "33b28a20"
+ data:
+   _example: |
+     ################################
+@@ -68,6 +68,18 @@ data:
+     # WARNING: Cannot safely be disabled once enabled.
+     kubernetes.podspec-runtimeclassname: "disabled"
+
++    # Indicates whether Kubernetes DNSPolicy support is enabled
++    #
++    # WARNING: Cannot safely be disabled once enabled.
++    # See: https://knative.dev/docs/serving/feature-flags/#kubernetes-dnspolicy
++    kubernetes.podspec-dnspolicy: "disabled"
++
++    # Indicates whether Kubernetes DNSConfig support is enabled
++    #
++    # WARNING: Cannot safely be disabled once enabled.
++    # See: https://knative.dev/docs/serving/feature-flags/#kubernetes-dnsconfig
++    kubernetes.podspec-dnsconfig: "disabled"
++
+     # This feature allows end-users to set a subset of fields on the Pod's SecurityContext
+     # in addition to expanding the allowable fields within a Container's SecurityContext.
+     #
+diff --git a/pkg/apis/config/features.go b/pkg/apis/config/features.go
+index 1b3972406..0e1d8bf10 100644
+--- a/pkg/apis/config/features.go
++++ b/pkg/apis/config/features.go
+@@ -48,6 +48,8 @@ func defaultFeaturesConfig() *Features {
+ 		PodSpecRuntimeClassName: Disabled,
+ 		PodSpecSecurityContext:  Disabled,
+ 		PodSpecTolerations:      Disabled,
++		PodSpecDNSPolicy:        Disabled,
++		PodSpecDNSConfig:        Disabled,
+ 		ResponsiveRevisionGC:    Allowed,
+ 		TagHeaderBasedRouting:   Disabled,
+ 	}
+@@ -66,6 +68,8 @@ func NewFeaturesConfigFromMap(data map[string]string) (*Features, error) {
+ 		asFlag("kubernetes.podspec-runtimeclassname", &nc.PodSpecRuntimeClassName),
+ 		asFlag("kubernetes.podspec-securitycontext", &nc.PodSpecSecurityContext),
+ 		asFlag("kubernetes.podspec-tolerations", &nc.PodSpecTolerations),
++		asFlag("kubernetes.podspec-dnspolicy", &nc.PodSpecDNSPolicy),
++		asFlag("kubernetes.podspec-dnsconfig", &nc.PodSpecDNSConfig),
+ 		asFlag("responsive-revision-gc", &nc.ResponsiveRevisionGC),
+ 		asFlag("tag-header-based-routing", &nc.TagHeaderBasedRouting)); err != nil {
+ 		return nil, err
+@@ -88,6 +92,8 @@ type Features struct {
+ 	PodSpecRuntimeClassName Flag
+ 	PodSpecSecurityContext  Flag
+ 	PodSpecTolerations      Flag
++	PodSpecDNSPolicy        Flag
++	PodSpecDNSConfig        Flag
+ 	ResponsiveRevisionGC    Flag
+ 	TagHeaderBasedRouting   Flag
+ }
+diff --git a/pkg/apis/config/features_test.go b/pkg/apis/config/features_test.go
+index f0e5629ef..1a9d6458e 100644
+--- a/pkg/apis/config/features_test.go
++++ b/pkg/apis/config/features_test.go
+@@ -66,6 +66,8 @@ func TestFeaturesConfiguration(t *testing.T) {
+ 			PodSpecRuntimeClassName: Enabled,
+ 			PodSpecSecurityContext:  Enabled,
+ 			PodSpecTolerations:      Enabled,
++			PodSpecDNSPolicy:        Enabled,
++			PodSpecDNSConfig:        Enabled,
+ 			ResponsiveRevisionGC:    Enabled,
+ 			TagHeaderBasedRouting:   Enabled,
+ 		}),
+@@ -77,6 +79,8 @@ func TestFeaturesConfiguration(t *testing.T) {
+ 			"kubernetes.podspec-runtimeclassname": "Enabled",
+ 			"kubernetes.podspec-securitycontext":  "Enabled",
+ 			"kubernetes.podspec-tolerations":      "Enabled",
++			"kubernetes.podspec-dnspolicy":        "Enabled",
++			"kubernetes.podspec-dnsconfig":        "Enabled",
+ 			"responsive-revision-gc":              "Enabled",
+ 			"tag-header-based-routing":            "Enabled",
+ 		},
+@@ -125,6 +129,60 @@ func TestFeaturesConfiguration(t *testing.T) {
+ 		data: map[string]string{
+ 			"kubernetes.podspec-affinity": "Disabled",
+ 		},
++	}, {
++		name:    "kubernetes.podspec-dnspolicy Allowed",
++		wantErr: false,
++		wantFeatures: defaultWith(&Features{
++			PodSpecDNSPolicy: Allowed,
++		}),
++		data: map[string]string{
++			"kubernetes.podspec-dnspolicy": "Allowed",
++		},
++	}, {
++		name:    "kubernetes.podspec-dnspolicy Enabled",
++		wantErr: false,
++		wantFeatures: defaultWith(&Features{
++			PodSpecDNSPolicy: Enabled,
++		}),
++		data: map[string]string{
++			"kubernetes.podspec-dnspolicy": "Enabled",
++		},
++	}, {
++		name:    "kubernetes.podspec-dnspolicy Disabled",
++		wantErr: false,
++		wantFeatures: defaultWith(&Features{
++			PodSpecDNSPolicy: Disabled,
++		}),
++		data: map[string]string{
++			"kubernetes.podspec-dnspolicy": "Disabled",
++		},
++	}, {
++		name:    "kubernetes.podspec-dnsconfig Allowed",
++		wantErr: false,
++		wantFeatures: defaultWith(&Features{
++			PodSpecDNSConfig: Allowed,
++		}),
++		data: map[string]string{
++			"kubernetes.podspec-dnsconfig": "Allowed",
++		},
++	}, {
++		name:    "kubernetes.podspec-dnsconfig Enabled",
++		wantErr: false,
++		wantFeatures: defaultWith(&Features{
++			PodSpecDNSConfig: Enabled,
++		}),
++		data: map[string]string{
++			"kubernetes.podspec-dnsconfig": "Enabled",
++		},
++	}, {
++		name:    "kubernetes.podspec-dnsconfig Disabled",
++		wantErr: false,
++		wantFeatures: defaultWith(&Features{
++			PodSpecDNSConfig: Disabled,
++		}),
++		data: map[string]string{
++			"kubernetes.podspec-dnsconfig": "Disabled",
++		},
+ 	}, {
+ 		name:    "kubernetes.podspec-fieldref Allowed",
+ 		wantErr: false,
+diff --git a/pkg/apis/serving/fieldmask.go b/pkg/apis/serving/fieldmask.go
+index 729de306a..d39aaf271 100644
+--- a/pkg/apis/serving/fieldmask.go
++++ b/pkg/apis/serving/fieldmask.go
+@@ -188,6 +188,12 @@ func PodSpecMask(ctx context.Context, in *corev1.PodSpec) *corev1.PodSpec {
+ 	if cfg.Features.PodSpecSecurityContext != config.Disabled {
+ 		out.SecurityContext = in.SecurityContext
+ 	}
++	if cfg.Features.PodSpecDNSPolicy != config.Disabled {
++			out.DNSPolicy = in.DNSPolicy
++	}
++	if cfg.Features.PodSpecDNSConfig != config.Disabled {
++			out.DNSConfig = in.DNSConfig
++	}
+
+ 	// Disallowed fields
+ 	// This list is unnecessary, but added here for clarity
+@@ -195,7 +201,6 @@ func PodSpecMask(ctx context.Context, in *corev1.PodSpec) *corev1.PodSpec {
+ 	out.RestartPolicy = ""
+ 	out.TerminationGracePeriodSeconds = nil
+ 	out.ActiveDeadlineSeconds = nil
+-	out.DNSPolicy = ""
+ 	out.AutomountServiceAccountToken = nil
+ 	out.NodeName = ""
+ 	out.HostNetwork = false
+@@ -208,7 +213,6 @@ func PodSpecMask(ctx context.Context, in *corev1.PodSpec) *corev1.PodSpec {
+ 	out.HostAliases = nil
+ 	out.PriorityClassName = ""
+ 	out.Priority = nil
+-	out.DNSConfig = nil
+ 	out.ReadinessGates = nil
+
+ 	return out
+diff --git a/pkg/apis/serving/k8s_validation_test.go b/pkg/apis/serving/k8s_validation_test.go
+index 614644c2f..df66e58a5 100644
+--- a/pkg/apis/serving/k8s_validation_test.go
++++ b/pkg/apis/serving/k8s_validation_test.go
+@@ -83,6 +83,20 @@ func withPodSpecSecurityContextEnabled() configOption {
+ 	}
+ }
+
++func withPodSpecDNSPolicyEnabled() configOption {
++	return func(cfg *config.Config) *config.Config {
++		cfg.Features.PodSpecDNSPolicy = config.Enabled
++		return cfg
++	}
++}
++
++func withPodSpecDNSConfigEnabled() configOption {
++	return func(cfg *config.Config) *config.Config {
++		cfg.Features.PodSpecDNSConfig = config.Enabled
++		return cfg
++	}
++}
++
+ func TestPodSpecValidation(t *testing.T) {
+ 	tests := []struct {
+ 		name    string
+@@ -616,6 +630,28 @@ func TestPodSpecFeatureValidation(t *testing.T) {
+ 			Paths:   []string{"runtimeClassName"},
+ 		},
+ 		cfgOpts: []configOption{withPodSpecRuntimeClassNameEnabled()},
++		}, {
++		name: "DNSPolicy",
++		featureSpec: corev1.PodSpec{
++			DNSPolicy: corev1.DNSDefault,
++		},
++		err: &apis.FieldError{
++			Message: "must not set the field(s)",
++			Paths:   []string{"dnsPolicy"},
++		},
++		cfgOpts: []configOption{withPodSpecDNSPolicyEnabled()},
++	}, {
++		name: "DNSConfig",
++		featureSpec: corev1.PodSpec{
++			DNSConfig: &corev1.PodDNSConfig{
++				Nameservers: []string{"1.2.3.4"},
++			},
++		},
++		err: &apis.FieldError{
++			Message: "must not set the field(s)",
++			Paths:   []string{"dnsConfig"},
++		},
++		cfgOpts: []configOption{withPodSpecDNSConfigEnabled()},
+ 	}, {
+ 		name: "PodSpecSecurityContext",
+ 		featureSpec: corev1.PodSpec{
