@@ -1,3 +1,10 @@
+knative-net-istio-controller (0.18.1-4) wikimedia; urgency=high
+
+  * Backport https://github.com/knative/serving/pull/12897
+    from Knative 1.5.0
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Mon, 26 Sep 2022 09:07:43 +0100
+
 knative-net-istio-controller (0.18.1-3) wikimedia; urgency=high
 
   * Use uid in USER directive instead of 'nobody'.
