@@ -1,3 +1,13 @@
+cfssl-issuer (0.3.0-1) wikimedia; urgency=medium
+
+    Update dependencies:
+    * Go 1.17
+    * cert-manager v1.8.0
+    * Kind 0.12.0
+    * kubernetes client v0.23.4
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Tue, 04 Oct 2022 14:10:52 +0200
+
 cfssl-issuer (0.2.2-1) wikimedia; urgency=medium
 
   * Update to v0.2.2
