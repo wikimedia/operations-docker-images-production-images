@@ -1,0 +1,6 @@
+spark (3.3.0) wikimedia; urgency=high
+
+  * Upstream Spark release 3.3.0
+
+ -- Ben Tullis <btullis@wikimedia.org>  Wed, 30 Sep 2022 16:12:00 +0100
+

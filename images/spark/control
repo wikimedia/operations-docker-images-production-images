@@ -1,0 +1,5 @@
+Package: spark
+Description: The spark binary distribution
+Depends: openjdk-11-jre
+Build-Depends: spark-build
+Maintainer: Ben Tullis <btullis@wikimedia.org>
