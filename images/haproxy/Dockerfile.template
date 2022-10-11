@@ -2,7 +2,7 @@ FROM {{ seed_image }}
 
 ARG BASECONFIG=/etc/haproxy/haproxy.cfg
 ARG EXTRACONFIG=/etc/haproxy/conf.d
-RUN echo "deb http://apt.wikimedia.org/wikimedia buster-wikimedia component/haproxy24" > /etc/apt/sources.list.d/haproxy.list \
+RUN echo "deb http://apt.wikimedia.org/wikimedia buster-wikimedia thirdparty/haproxy24" > /etc/apt/sources.list.d/haproxy.list \
        && {{ "haproxy" | apt_install }}
 
 USER {{ "nobody" | uid }}

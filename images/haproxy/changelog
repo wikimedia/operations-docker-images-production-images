@@ -1,3 +1,9 @@
+haproxy (2.4.18-2) wikimedia; urgency=medium
+
+  * Fix misnamed apt repository path.
+
+ -- Hugh Nowlan <hnowlan@wikimedia.org>  Mon, 15 Aug 2022 16:34:22 +0100
+
 haproxy (2.4.18-1) wikimedia; urgency=medium
 
   * Switch to using haproxy24 component.
