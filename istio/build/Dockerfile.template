@@ -15,13 +15,14 @@ USER root
 RUN {{ "curl ca-certificates go-bindata" | apt_install }}
 
 USER nobody
+COPY patches /go/patches
 RUN mkdir -p {{ repo_base }} \
   && cd {{ repo_base }} \
   && git clone https://github.com/istio/istio.git istio \
   && cd istio \
-# && git checkout tags/{{ istio_version_git_tag }}
-# Temporary workaround for https://github.com/istio/istio/issues/32978
-  && git checkout release-1.9.5-patch
+  && git checkout tags/{{ istio_version_git_tag }} \
+  && git apply /go/patches/*.patch
+
 
 WORKDIR {{ repo_base }}/istio
 # The gen-charts target is needed to add the Istio's default

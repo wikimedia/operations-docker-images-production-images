@@ -1,0 +1,742 @@
+commit 52c9f30d9f86cdc420c719cd4d9ba600acd32505
+Author: Luca Toscano <ltoscano@wikimedia.org>
+Date:   Tue Oct 11 15:17:19 2022 +0200
+
+    [PATCH] Backport bootstrap http2 settings
+    
+    The Envoy bootstrap settings for HTTP/2 are currently
+    causing a ton of log-spam to our logstash collectors.
+    
+    The commit [1] took care of the problem in later versions
+    of Istio, and the patch was easy enough to be adapted to
+    the 1.9.5 branch.
+    
+    [1]: https://github.com/istio/istio/commit/7bb5275ecdbef28b6b1c18a28b582233b669baa8
+    
+    Bug: T320468
+
+diff --git a/pkg/bootstrap/testdata/all_golden.json b/pkg/bootstrap/testdata/all_golden.json
+index 4b5f34fdba..746dcc92f1 100644
+--- a/pkg/bootstrap/testdata/all_golden.json
++++ b/pkg/bootstrap/testdata/all_golden.json
+@@ -315,7 +315,14 @@
+       {
+         "name": "sds-grpc",
+         "type": "STATIC",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+         "load_assignment": {
+@@ -410,7 +417,14 @@
+           }
+         },
+         "max_requests_per_connection": 1,
+-        "http2_protocol_options": { }
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        }
+       }
+       
+       
+@@ -446,7 +460,14 @@
+         "dns_lookup_family": "V4_ONLY",
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "load_assignment": {
+           "cluster_name": "envoy_metrics_service",
+           "endpoints": [{
+@@ -470,7 +491,14 @@
+         "dns_lookup_family": "V4_ONLY",
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "load_assignment": {
+           "cluster_name": "envoy_accesslog_service",
+           "endpoints": [{
+diff --git a/pkg/bootstrap/testdata/auth_golden.json b/pkg/bootstrap/testdata/auth_golden.json
+index 9b40506413..c06cb40c92 100644
+--- a/pkg/bootstrap/testdata/auth_golden.json
++++ b/pkg/bootstrap/testdata/auth_golden.json
+@@ -315,7 +315,14 @@
+       {
+         "name": "sds-grpc",
+         "type": "STATIC",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+         "load_assignment": {
+@@ -410,7 +417,14 @@
+           }
+         },
+         "max_requests_per_connection": 1,
+-        "http2_protocol_options": { }
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        }
+       }
+       
+       
+diff --git a/pkg/bootstrap/testdata/authsds_golden.json b/pkg/bootstrap/testdata/authsds_golden.json
+index 9f86453abe..616f5acb85 100644
+--- a/pkg/bootstrap/testdata/authsds_golden.json
++++ b/pkg/bootstrap/testdata/authsds_golden.json
+@@ -315,7 +315,14 @@
+       {
+         "name": "sds-grpc",
+         "type": "STATIC",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+         "load_assignment": {
+@@ -410,7 +417,14 @@
+           }
+         },
+         "max_requests_per_connection": 1,
+-        "http2_protocol_options": { }
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        }
+       }
+       
+       
+diff --git a/pkg/bootstrap/testdata/default_golden.json b/pkg/bootstrap/testdata/default_golden.json
+index bbc169b1a5..abd1250188 100644
+--- a/pkg/bootstrap/testdata/default_golden.json
++++ b/pkg/bootstrap/testdata/default_golden.json
+@@ -315,7 +315,14 @@
+       {
+         "name": "sds-grpc",
+         "type": "STATIC",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+         "load_assignment": {
+@@ -374,7 +381,14 @@
+           }
+         },
+         "max_requests_per_connection": 1,
+-        "http2_protocol_options": { }
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        }
+       }
+       
+       
+diff --git a/pkg/bootstrap/testdata/running_golden.json b/pkg/bootstrap/testdata/running_golden.json
+index b39da7a3b1..b947ccaf34 100644
+--- a/pkg/bootstrap/testdata/running_golden.json
++++ b/pkg/bootstrap/testdata/running_golden.json
+@@ -320,7 +320,14 @@
+       {
+         "name": "sds-grpc",
+         "type": "STATIC",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+         "load_assignment": {
+@@ -415,7 +422,14 @@
+           }
+         },
+         "max_requests_per_connection": 1,
+-        "http2_protocol_options": { }
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        }
+       }
+       
+       
+diff --git a/pkg/bootstrap/testdata/runningsds_golden.json b/pkg/bootstrap/testdata/runningsds_golden.json
+index 9e0ed517e7..a6a0664fa4 100644
+--- a/pkg/bootstrap/testdata/runningsds_golden.json
++++ b/pkg/bootstrap/testdata/runningsds_golden.json
+@@ -320,7 +320,14 @@
+       {
+         "name": "sds-grpc",
+         "type": "STATIC",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+         "load_assignment": {
+@@ -415,7 +422,14 @@
+           }
+         },
+         "max_requests_per_connection": 1,
+-        "http2_protocol_options": { }
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        }
+       }
+       
+       
+diff --git a/pkg/bootstrap/testdata/stats_inclusion_golden.json b/pkg/bootstrap/testdata/stats_inclusion_golden.json
+index eace23e301..48be77c97e 100644
+--- a/pkg/bootstrap/testdata/stats_inclusion_golden.json
++++ b/pkg/bootstrap/testdata/stats_inclusion_golden.json
+@@ -330,7 +330,14 @@
+       {
+         "name": "sds-grpc",
+         "type": "STATIC",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+         "load_assignment": {
+@@ -389,7 +396,14 @@
+           }
+         },
+         "max_requests_per_connection": 1,
+-        "http2_protocol_options": { }
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        }
+       }
+       
+       
+diff --git a/pkg/bootstrap/testdata/tracing_datadog_golden.json b/pkg/bootstrap/testdata/tracing_datadog_golden.json
+index f2f0d4b4da..57beb8aefd 100644
+--- a/pkg/bootstrap/testdata/tracing_datadog_golden.json
++++ b/pkg/bootstrap/testdata/tracing_datadog_golden.json
+@@ -315,7 +315,14 @@
+       {
+         "name": "sds-grpc",
+         "type": "STATIC",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+         "load_assignment": {
+@@ -374,7 +381,14 @@
+           }
+         },
+         "max_requests_per_connection": 1,
+-        "http2_protocol_options": { }
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        }
+       }
+       
+       
+diff --git a/pkg/bootstrap/testdata/tracing_lightstep_golden.json b/pkg/bootstrap/testdata/tracing_lightstep_golden.json
+index 8caf3db811..9da0876460 100644
+--- a/pkg/bootstrap/testdata/tracing_lightstep_golden.json
++++ b/pkg/bootstrap/testdata/tracing_lightstep_golden.json
+@@ -257,11 +257,11 @@
+       "transport_api_version": "V3",
+       "grpc_services": [
+         {
+-        
++
+           "envoy_grpc": {
+             "cluster_name": "xds-grpc"
+           }
+-        
++
+         }
+       ]
+     }
+@@ -315,7 +315,14 @@
+       {
+         "name": "sds-grpc",
+         "type": "STATIC",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+         "load_assignment": {
+@@ -332,7 +339,7 @@
+             }]
+           }]
+         }
+-      } 
++      }
+        , {
+         "name": "xds-grpc",
+         "type": "STRICT_DNS",
+@@ -374,14 +381,29 @@
+           }
+         },
+         "max_requests_per_connection": 1,
+-        "http2_protocol_options": { }
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        }
++
+       }
+-      
+-      
++
++
+       ,
+       {
+         "name": "lightstep",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "type": "STRICT_DNS",
+         "respect_dns_ttl": true,
+         "dns_lookup_family": "V4_ONLY",
+@@ -400,8 +422,8 @@
+           }]
+         }
+       }
+-      
+-      
++
++
+     ],
+     "listeners":[
+       {
+@@ -515,13 +537,13 @@
+       }
+     }
+   }
+-  
+-  
++
++
+   ,
+   "cluster_manager": {
+     "outlier_detection": {
+       "event_log_path": "/dev/stdout"
+     }
+   }
+-  
++
+ }
+diff --git a/pkg/bootstrap/testdata/tracing_opencensusagent_golden.json b/pkg/bootstrap/testdata/tracing_opencensusagent_golden.json
+index d771695a51..7528437c85 100644
+--- a/pkg/bootstrap/testdata/tracing_opencensusagent_golden.json
++++ b/pkg/bootstrap/testdata/tracing_opencensusagent_golden.json
+@@ -315,7 +315,14 @@
+       {
+         "name": "sds-grpc",
+         "type": "STATIC",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+         "load_assignment": {
+@@ -374,7 +381,14 @@
+           }
+         },
+         "max_requests_per_connection": 1,
+-        "http2_protocol_options": { }
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        }
+       }
+       
+       
+diff --git a/pkg/bootstrap/testdata/tracing_stackdriver_golden.json b/pkg/bootstrap/testdata/tracing_stackdriver_golden.json
+index 6d45660637..926269110c 100644
+--- a/pkg/bootstrap/testdata/tracing_stackdriver_golden.json
++++ b/pkg/bootstrap/testdata/tracing_stackdriver_golden.json
+@@ -315,7 +315,14 @@
+       {
+         "name": "sds-grpc",
+         "type": "STATIC",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+         "load_assignment": {
+@@ -374,7 +381,14 @@
+           }
+         },
+         "max_requests_per_connection": 1,
+-        "http2_protocol_options": { }
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        }
+       }
+       
+       
+diff --git a/pkg/bootstrap/testdata/tracing_tls_custom_sni_golden.json b/pkg/bootstrap/testdata/tracing_tls_custom_sni_golden.json
+index 3501428ba6..eba8e6016b 100644
+--- a/pkg/bootstrap/testdata/tracing_tls_custom_sni_golden.json
++++ b/pkg/bootstrap/testdata/tracing_tls_custom_sni_golden.json
+@@ -315,7 +315,14 @@
+       {
+         "name": "sds-grpc",
+         "type": "STATIC",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+         "load_assignment": {
+@@ -374,7 +381,14 @@
+           }
+         },
+         "max_requests_per_connection": 1,
+-        "http2_protocol_options": { }
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        }
+       }
+       
+       
+diff --git a/pkg/bootstrap/testdata/tracing_tls_golden.json b/pkg/bootstrap/testdata/tracing_tls_golden.json
+index 59101613c7..14b18037a2 100644
+--- a/pkg/bootstrap/testdata/tracing_tls_golden.json
++++ b/pkg/bootstrap/testdata/tracing_tls_golden.json
+@@ -315,7 +315,14 @@
+       {
+         "name": "sds-grpc",
+         "type": "STATIC",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+         "load_assignment": {
+@@ -374,7 +381,14 @@
+           }
+         },
+         "max_requests_per_connection": 1,
+-        "http2_protocol_options": { }
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        }
+       }
+       
+       
+diff --git a/pkg/bootstrap/testdata/tracing_zipkin_golden.json b/pkg/bootstrap/testdata/tracing_zipkin_golden.json
+index eef3d6e206..6216a82915 100644
+--- a/pkg/bootstrap/testdata/tracing_zipkin_golden.json
++++ b/pkg/bootstrap/testdata/tracing_zipkin_golden.json
+@@ -315,7 +315,14 @@
+       {
+         "name": "sds-grpc",
+         "type": "STATIC",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+         "load_assignment": {
+@@ -374,7 +381,14 @@
+           }
+         },
+         "max_requests_per_connection": 1,
+-        "http2_protocol_options": { }
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        }
+       }
+       
+       
+diff --git a/pkg/bootstrap/testdata/xdsproxy_golden.json b/pkg/bootstrap/testdata/xdsproxy_golden.json
+index 8be651e8fa..a502ba486a 100644
+--- a/pkg/bootstrap/testdata/xdsproxy_golden.json
++++ b/pkg/bootstrap/testdata/xdsproxy_golden.json
+@@ -315,7 +315,14 @@
+       {
+         "name": "sds-grpc",
+         "type": "STATIC",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+         "load_assignment": {
+@@ -374,7 +381,14 @@
+           }
+         },
+         "max_requests_per_connection": 1,
+-        "http2_protocol_options": { }
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        }
+       }
+       
+       
+diff --git a/tools/packaging/common/envoy_bootstrap.json b/tools/packaging/common/envoy_bootstrap.json
+index 7a280055d0..12fff01f36 100644
+--- a/tools/packaging/common/envoy_bootstrap.json
++++ b/tools/packaging/common/envoy_bootstrap.json
+@@ -245,7 +245,14 @@
+       {
+         "name": "sds-grpc",
+         "type": "STATIC",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+         "load_assignment": {
+@@ -354,7 +361,14 @@
+           }
+         },
+         "max_requests_per_connection": 1,
+-        "http2_protocol_options": { }
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        }
+       }
+       {{ end }}
+       {{ if .zipkin }}
+@@ -390,7 +404,14 @@
+         {{- if .tracing_tls }}
+         "transport_socket": {{ .tracing_tls }},
+         {{- end }}
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "type": "STRICT_DNS",
+         "respect_dns_ttl": true,
+         "dns_lookup_family": "{{ .dns_lookup_family }}",
+@@ -450,7 +471,14 @@
+         "dns_lookup_family": "{{ .dns_lookup_family }}",
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "load_assignment": {
+           "cluster_name": "envoy_metrics_service",
+           "endpoints": [{
+@@ -480,7 +508,14 @@
+         "dns_lookup_family": "{{ .dns_lookup_family }}",
+         "connect_timeout": "1s",
+         "lb_policy": "ROUND_ROBIN",
+-        "http2_protocol_options": {},
++        "typed_extension_protocol_options": {
++          "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
++           "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions",
++           "explicit_http_config": {
++            "http2_protocol_options": {}
++           }
++          }
++        },
+         "load_assignment": {
+           "cluster_name": "envoy_accesslog_service",
+           "endpoints": [{
