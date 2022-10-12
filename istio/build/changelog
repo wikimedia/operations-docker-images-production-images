@@ -1,3 +1,12 @@
+build (1.9.5-2) wikimedia; urgency=high
+
+  * Add patch https://github.com/istio/istio/pull/32387
+  * Add patch https://github.com/istio/istio/pull/32792
+  * Switch from building the 1.9.5-patch branch to 1.9.5 tag
+    plus the second patch aforementioned.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Tue, 15 Oct 2022 15:24:43 +0100
+
 build (1.9.5-1) wikimedia; urgency=high
 
   * Upstream release 1.9.5
