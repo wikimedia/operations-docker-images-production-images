@@ -1,0 +1,48 @@
+# Set variables
+{% set spark_dist_dir = '/usr/src/spark/dist' %}
+{% set spark_install_dir = '/opt/spark' %}
+# End variables
+
+# Start of production image creation
+FROM {{ "spark-build" | image_tag }} as build
+
+# Our seed image here is an openjdk-11-jre image that has itself been built from one of our base images
+FROM {{ "openjdk-11-jre" | image_tag  }}
+
+USER root
+
+RUN {{ "bash tini libc6 libpam-modules libpam-modules krb5-user libnss3 procps net-tools r-base r-base-dev python3 python3-pip" | apt_install }} && \
+    mkdir -p {{ spark_install_dir}}/examples {{ spark_install_dir}}/work-dir {{ spark_install_dir}}/R
+
+# Copy the base spark files from the binary distribution image into the target directory in this image
+COPY --from=build --chown=root {{ spark_dist_dir}}/jars {{ spark_install_dir}}/jars
+COPY --from=build --chown=root {{ spark_dist_dir}}/bin {{ spark_install_dir}}/bin
+COPY --from=build --chown=root {{ spark_dist_dir}}/sbin {{ spark_install_dir}}/sbin
+COPY --from=build --chown=root {{ spark_dist_dir}}/data {{ spark_install_dir}}/data
+COPY --from=build --chown=root {{ spark_dist_dir}}/examples {{ spark_install_dir}}/examples
+COPY --from=build --chown=root {{ spark_dist_dir}}/kubernetes/tests {{ spark_install_dir}}/tests
+
+# Copy the python and R bindings from the binary distribution image into the target directory in this image
+COPY --from=build --chown=root {{ spark_dist_dir}}/python/pyspark {{ spark_install_dir}}/python/pyspark
+COPY --from=build --chown=root {{ spark_dist_dir}}/python/lib {{ spark_install_dir}}/python/lib
+COPY --from=build --chown=root {{ spark_dist_dir}}/python/pyspark {{ spark_install_dir}}/python/pyspark
+COPY --from=build --chown=root {{ spark_dist_dir}}/R {{ spark_install_dir}}/R
+
+# Copy the docker specific parts of the binary distribution to this image
+COPY --from=build --chown=root {{ spark_dist_dir}}/kubernetes/dockerfiles/spark/entrypoint.sh {{ spark_dist_dir}}/kubernetes/dockerfiles/spark/decom.sh /opt/
+COPY --from=build --chown=root {{ spark_dist_dir}}/jars {{ spark_install_dir}}/jars
+
+ENV SPARK_HOME=/opt/spark \
+    R_HOME=/usr/lib/R
+
+WORKDIR '/opt/spark/work-dir'
+
+RUN chmod g+w /opt/spark/work-dir && \
+    chmod a+x /opt/decom.sh
+
+RUN {{ "spark" | add_user }}
+
+ENTRYPOINT [ "/opt/entrypoint.sh" ]
+
+USER {{ "spark" | uid }}
+# End of production image creation
