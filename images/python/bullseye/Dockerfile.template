@@ -1,5 +1,7 @@
 FROM {{ registry }}/bullseye:latest
 
-# python3-setuptools is needed to make this base image work with Blubber's
-# 'python' configuration which invokes `python3 -m easy_install pip`.
-RUN {{ "python3 python3-setuptools" | apt_install }}
+# We install pip from debian, then immediately upgrade it and install setuptools
+# Please note: this won't work with blubber, but neither would the old easy_install as that has been removed
+# from recent versions of setuptools.
+RUN {{ "python3 python3-pip python3-setuptools" | apt_install }}
+
