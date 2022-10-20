@@ -13,7 +13,7 @@
 # For now these are hard-coded to the values required in production
 {% if http_proxy %}
     {% set proxy_opts =  [
-        '-Dhttp.proxyHost=webproxy'
+        '-Dhttp.proxyHost=webproxy',
         '-Dhttps.proxyHost=webproxy',
         '-Dhttp.proxyPort=8080',
         '-Dhttps.proxyPort=8080',
