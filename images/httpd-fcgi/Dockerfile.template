@@ -14,6 +14,10 @@ USER root
 # * SERVERGROUP
 #   This variable is used already by MediaWiki, and should identify the deployment of the
 #   application.
+# * LOGFORMAT
+#   If set to "ecs", it will make apache output logs in ECS format.
+# * LOG_SKIP_SYSTEM
+#   If set to 1, it will make logs skip requests for the static endpoints like /metrics or /healthz
 # * DEBUG
 #   If set to 1, it will enable debug logging
 ENV FCGI_MODE="FCGI_TCP" \
