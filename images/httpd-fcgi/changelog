@@ -1,3 +1,11 @@
+httpd-fcgi (2.4.38-7) wikimedia; urgency=medium
+
+  * Drop the old non-json logging
+  * Allow selecting the log format at runtime
+  * Allow skipping system request from logs
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Mon, 24 Oct 2022 11:36:47 +0200
+
 httpd-fcgi (2.4.38-6) wikimedia; urgency=medium
 
   * Added cee_ecs_accesslog_170 log format
