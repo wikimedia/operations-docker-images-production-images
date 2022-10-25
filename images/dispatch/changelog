@@ -1,3 +1,10 @@
+dispatch (v20220915-1) wikimedia; urgency=medium
+
+  * New upstream release, includes header auth plugin
+  * Set auth plugin in frontend app
+
+ -- Filippo Giunchedi <filippo@debian.org>  Mon, 24 Oct 2022 11:24:29 +0200
+
 dispatch (v20220801-1) wikimedia; urgency=medium
 
   * Initial release.

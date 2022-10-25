@@ -1,12 +1,14 @@
 FROM {{ registry }}/bullseye:latest as build
 
-ENV DISPATCH_VERSION=v20220801
+ENV DISPATCH_VERSION=v20220915
 ENV SOURCE_REPO=https://github.com/Netflix/dispatch
 ENV PROJECT_BASE=/tmp/dispatch
 
 # Do not build assets when this is set
 ARG DISPATCH_LIGHT_BUILD
 ENV DISPATCH_LIGHT_BUILD=${DISPATCH_LIGHT_BUILD}
+
+ENV VUE_APP_DISPATCH_AUTHENTICATION_PROVIDER_SLUG=dispatch-auth-provider-header
 
 RUN echo "DISPATCH_LIGHT_BUILD=${DISPATCH_LIGHT_BUILD}"
 
