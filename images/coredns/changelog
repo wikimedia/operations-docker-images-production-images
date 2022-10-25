@@ -1,3 +1,11 @@
+coredns (1.8.7-1) wikimedia; urgency=high
+
+   * Import new upstream version 1.8.7
+   * Move from the coredns Debian package to a multi-stage build workflow
+     (use Go 1.18 to build the coredns binary).
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 19 Oct 2022 16:49:46 +0200
+
 coredns (1.5.2-4) wikimedia; urgency=high
 
    Refresh for update in parent image: switching to buster as seed image
