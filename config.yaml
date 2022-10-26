@@ -4,5 +4,10 @@ base_images:
   - docker-registry.wikimedia.org/wikimedia-stretch:latest
   - docker-registry.wikimedia.org/bullseye:latest
 
+# This list needs to include all UID mappings, and
+# should be kept in sync with production.
 known_uid_mappings:
+  root: 0
+  www-data: 33
   spark: 185
+  nobody: 65534
