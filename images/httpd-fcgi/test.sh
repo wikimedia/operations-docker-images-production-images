@@ -37,6 +37,16 @@ test_in_logs() {
     docker logs "$id" 2>&1 | grep -qF "$val"
 }
 
+test_system_calls() {
+    id=$1
+    for what in metrics healthz server-status; do
+        curl -Is http://localhost:8080/$what
+    done
+    if test_in_logs $1 "RequestTime"; then
+        failed_exit $id
+    fi
+}
+
 failed_exit() {
     id=$1
     shift
@@ -64,6 +74,10 @@ fi
 if ! test_in_logs $id "127.0.0.1:9000"; then
     failed_exit $id "The default proxy on localhost:9000 is not used"
 fi
+if ! test_in_logs $id "RequestTime"; then
+    failed_exit $id "The logs are not in wmfjson format"
+fi
+
 test_success $id
 
 # TEST 3: debug logs
@@ -91,3 +105,22 @@ if ! test_header 'Server: kubernetes1001/mediawiki'; then
     failed_exit $id "Didn't find the modifed Server: header"
 fi
 test_success $id
+
+# TEST 6: server logs
+id=$(docker_run -e LOG_SKIP_SYSTEM="1")
+for what in metrics healthz server-status; do
+    curl -Is http://localhost:8080/$what > /dev/null
+done
+if test_in_logs "$id" "RequestTime"; then
+    failed_exit "$id"
+fi
+test_success "$id"
+
+# TEST 7: log format
+id=$(docker_run -e LOG_FORMAT=ecs)
+curl localhost:8080 -Is > /dev/null
+if ! test_in_logs "$id" "ecs.version"; then
+    failed_exit "$id" "Didn't find logs in ECS format"
+fi
+test_success "$id"
+
