@@ -107,9 +107,9 @@ fi
 test_success $id
 
 # TEST 6: server logs
-id=$(docker_run -e LOG_SKIP_SYSTEM="1")
+id=$(docker_run -e LOG_SKIP_SYSTEM="1" -e LOG_FORMAT=wmfjson)
 for what in metrics healthz server-status; do
-    curl -Is http://localhost:8080/$what > /dev/null
+    curl -Is http://localhost:9181/$what > /dev/null
 done
 if test_in_logs "$id" "RequestTime"; then
     failed_exit "$id"

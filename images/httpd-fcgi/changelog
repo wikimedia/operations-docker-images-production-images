@@ -1,3 +1,9 @@
+httpd-fcgi (2.4.38-8) wikimedia; urgency=medium
+
+  * Moved log suppression to the monitoring vhost
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Wed, 26 Oct 2022 13:13:41 +0200
+
 httpd-fcgi (2.4.38-7) wikimedia; urgency=medium
 
   * Drop the old non-json logging
