@@ -48,7 +48,7 @@ FROM {{ 'openjdk-11-jdk' | image_tag }}
 USER root
 
 # Download the source tarball along with its sha512 checksum and GPG signature. Then verify both checksum and signature before extracting the source.
-RUN {{ "curl gpg gpg-agent coreutils python3 python3-pip python3-setuptools r-base r-base-dev r-cran-knitr r-cran-rmarkdown r-cran-e1071 \
+RUN {{ "curl gpg gpg-agent git coreutils python3 python3-pip python3-setuptools r-base r-base-dev r-cran-knitr r-cran-rmarkdown r-cran-e1071 \
     texlive-latex-base texinfo texlive-fonts-extra texlive-latex-recommended texlive-fonts-recommended" | apt_install }} && cd /tmp && \
     curl --remote-name-all https://archive.apache.org/dist/spark/spark-{{ spark_version }}/spark-{{ spark_version }}.tgz && \
     curl --remote-name-all "https://archive.apache.org/dist/spark/spark-{{ spark_version }}/spark-{{ spark_version }}.tgz.{asc,sha512}" && \
@@ -70,8 +70,8 @@ RUN ./dev/make-distribution.sh --name {{ spark_distro_name }} {{ spark_common_ar
     -Phadoop-2 \
     -Dhadoop.version={{ hadoop_version }}
 
-# Copy the spark-operator binary and its entrypoint script to the spark-build image
+# Copy the spark-operator binary and a supporting script to the spark-build image
 COPY --from=spark-operator-build --chown=root:root /usr/bin/spark-operator /usr/bin/spark-operator
-COPY --from=spark-operator-build {{ operator_src_dir }}/entrypoint.sh /usr/bin/
+COPY --from=spark-operator-build --chown=root:root {{ operator_src_dir }}/hack/gencerts.sh /usr/bin/gencerts.sh
 
 # End of spark-build stage
