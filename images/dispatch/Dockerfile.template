@@ -38,7 +38,7 @@ RUN groupadd -o -g "900" -r "runuser" \
 
 COPY --from=build /dist/*.whl /tmp/dist/
 
-RUN {{ "pkg-config postgresql-client python3-pip npm" | apt_install }}
+RUN {{ "pkg-config postgresql-client python3-pip python3-ipython npm" | apt_install }}
 
 # A non-root workdir needs to be set to avoid the following error:
 # 'npm ERR! Tracker "idealTree" already exists'

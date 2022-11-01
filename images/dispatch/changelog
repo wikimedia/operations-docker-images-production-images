@@ -1,3 +1,9 @@
+dispatch (v20220915-2) wikimedia; urgency=medium
+
+  * Add python3-ipython for 'dispatch server shell' support
+
+ -- Filippo Giunchedi <filippo@debian.org>  Tue, 01 Nov 2022 13:53:07 +0100
+
 dispatch (v20220915-1) wikimedia; urgency=medium
 
   * New upstream release, includes header auth plugin
