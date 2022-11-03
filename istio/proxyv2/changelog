@@ -1,3 +1,9 @@
+proxyv2 (1.15.3-1) wikimedia; urgency=high
+
+  * Upstream release 1.15.3
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Thu, 3 Nov 2022 11:43:00 +0100
+
 proxyv2 (1.9.5-6) wikimedia; urgency=high
 
   * Artificial bump after build image update.
