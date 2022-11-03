@@ -1,0 +1,5 @@
+golang1.19 (1.19-1) wikimedia; urgency=high
+
+  * Golang 1.19 on Bullseye base image (bullseye backports)
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Thu, 3 Nov 2022 11:55:00 +0100
