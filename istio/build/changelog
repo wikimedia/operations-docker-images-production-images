@@ -1,3 +1,11 @@
+build (1.15.3-1) wikimedia; urgency=high
+
+  * Upstream release 1.15.3
+  * Use golang1.19 as base image.
+  * Delete the patches directory (not needed anymore).
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Thu, 3 Nov 2022 11:43:00 +0100
+
 build (1.9.5-2) wikimedia; urgency=high
 
   * Add patch https://github.com/istio/istio/pull/32387

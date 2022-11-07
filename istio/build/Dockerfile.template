@@ -1,13 +1,13 @@
-FROM docker-registry.wikimedia.org/golang1.15 as build
+FROM docker-registry.wikimedia.org/golang1.19 as build
 
 # The VERSION env value is injected in pilot's binary to allow it to answer
 # to /version API calls. The istioctl tool calls /version when trying to figure
 # out the version of istiod (pilot is part of it), in order to decide what upgrade
 # path is needed. By default version is something like 1.9.0-dev, and it doesn't
 # track patch versions but only major.minor.
-{% set istio_make_variables = 'VERSION=1.9.5 BUILD_WITH_CONTAINER=0' %}
+{% set istio_make_variables = 'VERSION=1.15.3 BUILD_WITH_CONTAINER=0' %}
 {% set repo_base = '/go/github.com/istio' %}
-{% set istio_version_git_tag = '1.9.5' %}
+{% set istio_version_git_tag = '1.15.3' %}
 
 WORKDIR /go
 
@@ -15,13 +15,11 @@ USER root
 RUN {{ "curl ca-certificates go-bindata" | apt_install }}
 
 USER nobody
-COPY patches /go/patches
 RUN mkdir -p {{ repo_base }} \
   && cd {{ repo_base }} \
   && git clone https://github.com/istio/istio.git istio \
   && cd istio \
-  && git checkout tags/{{ istio_version_git_tag }} \
-  && git apply /go/patches/*.patch
+  && git checkout tags/{{ istio_version_git_tag }}
 
 
 WORKDIR {{ repo_base }}/istio
