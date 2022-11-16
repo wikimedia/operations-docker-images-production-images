@@ -1,0 +1,17 @@
+FROM {{ registry }}/bullseye:latest
+
+ARG USER_UID=10001
+
+RUN echo "deb http://apt.wikimedia.org/wikimedia bullseye-wikimedia thirdparty/otelcol-contrib" > /etc/apt/sources.list.d/otelcol-contrib.list && \
+	useradd --system --user-group --no-create-home --shell /sbin/nologin otelcol-contrib --uid ${USER_UID} && \
+	{{ "otelcol-contrib ca-certificates wmf-certificates" | apt_install }}
+COPY config.yaml /etc/otelcol-contrib/config.yaml
+
+USER ${USER_UID}
+
+ENTRYPOINT ["/usr/bin/otelcol-contrib"]
+CMD ["--config", "/etc/otelcol-contrib/config.yaml"]
+
+# 4317: otel grpc
+# 13133: healthcheck
+EXPOSE 4317 13133

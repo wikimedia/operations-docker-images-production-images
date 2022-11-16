@@ -11,3 +11,4 @@ known_uid_mappings:
   www-data: 33
   spark: 185
   nobody: 65534
+  otelcol-contrib: 10001
