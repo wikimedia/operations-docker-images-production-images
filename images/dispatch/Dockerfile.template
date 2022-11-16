@@ -1,6 +1,6 @@
 FROM {{ registry }}/bullseye:latest as build
 
-ENV DISPATCH_VERSION=v20220915
+ENV DISPATCH_VERSION=v20221110
 ENV SOURCE_REPO=https://github.com/Netflix/dispatch
 ENV PROJECT_BASE=/tmp/dispatch
 
@@ -19,7 +19,16 @@ RUN export YARN_CACHE_FOLDER="$(mktemp -d)" \
     && cd $(dirname $PROJECT_BASE) \
     && git clone $SOURCE_REPO \
     && cd $PROJECT_BASE \
-    && git checkout $DISPATCH_VERSION \
+    && git checkout $DISPATCH_VERSION
+
+# use our own config.js to set root redirect to our org name and
+# print a diff (this should only change one line. if it changes
+# more our config.js needs to be rebased)
+COPY config.js $PROJECT_BASE/src/dispatch/static/dispatch/src/router/config.js
+RUN cd $PROJECT_BASE && git diff
+
+RUN export YARN_CACHE_FOLDER="$(mktemp -d)" \
+    && cd $PROJECT_BASE \
     && python3 setup.py bdist_wheel \
     && rm -r "$YARN_CACHE_FOLDER" \
     && mv -v $PROJECT_BASE/dist /dist
