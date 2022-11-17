@@ -1,0 +1,33 @@
+FROM {{ "bullseye" | image_tag }} AS build
+
+# Instead of pulling the whole Kubernetes repository, we just import pause.c
+# and we build it with gcc. When you update the values below, check the related
+# Makefile (in this case https://github.com/kubernetes/kubernetes/blob/release-1.23/build/pause/Makefile)
+# The gcc version used on Debian upstream should be enough for the simple pause.c
+# use case, but to be extra sure one can compare versions checking what's
+# installed for 'x86_64-linux-gnu-gcc' in the build image (see Makefile).
+
+{% set kubernetes_version = '1.23' %}
+# The VERSION is composed by the target pause value plus
+# the result of `git describe --contains --always --match='v*'`
+# executed in the Kubernetes git repository (swithing to the kubernetes_version
+# branch beforehand).
+{% set CFLAGS = '-Os -Wall -Werror -static -DVERSION=v3.6-2b8076aad0e' %}
+{% set workdir = '/srv/workdir' %}
+
+USER root
+RUN {{ "gcc binutils libc6-dev ca-certificates wget" | apt_install }} && \
+  mkdir {{ workdir }} && chmod 777 {{ workdir }} && cd {{ workdir }} && \
+  wget "https://raw.githubusercontent.com/kubernetes/kubernetes/release-{{ kubernetes_version }}/build/pause/linux/pause.c"
+
+WORKDIR {{ workdir }}
+USER {{ "nobody" | uid }}
+RUN /usr/bin/gcc {{ CFLAGS }} -o {{ workdir }}/pause {{ workdir }}/pause.c && /usr/bin/strip {{ workdir }}/pause
+
+FROM scratch
+
+USER root
+COPY --from=build {{ workdir }}/pause /usr/bin/pause
+
+USER {{ "nobody" | uid }}
+ENTRYPOINT ["/usr/bin/pause"]
