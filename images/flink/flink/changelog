@@ -1,0 +1,5 @@
+flink (1.16.0-wmf0) wikimedia; urgency=high
+
+  * Upstream Flink release 1.16.0
+
+ -- Andrew Otto <otto@wikimedia.org>  Wed, 16 Nov 2022 15:38:00 -0500

@@ -10,5 +10,6 @@ known_uid_mappings:
   root: 0
   www-data: 33
   spark: 185
+  flink: 186
   nobody: 65534
   otelcol-contrib: 10001

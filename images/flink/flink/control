@@ -1,0 +1,4 @@
+Package: flink
+Description: The Flink binary distribution
+Depends: openjdk-11-jre
+Maintainer: Andrew Otto <otto@wikimedia.org>

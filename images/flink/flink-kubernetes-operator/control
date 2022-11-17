@@ -1,0 +1,4 @@
+Package: flink-kubernetes-operator
+Description: The Flink kubernetes operator
+Depends: openjdk-11-jre
+Maintainer: Andrew Otto <otto@wikimedia.org>

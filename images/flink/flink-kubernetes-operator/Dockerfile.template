@@ -1,0 +1,134 @@
+# == Set variables ==
+{% set flink_kubernetes_operator_version = '1.3.0' %}
+# Elastic Common Schema logging version.  Used for structured logging.
+{% set ecs_version = '1.5.0' %}
+{% set flink_mirror_base_uri = 'https://dlcdn.apache.org/flink' %}
+{% set maven_mirror_base_uri = 'https://repo1.maven.org/maven2' %}
+{# PGP Keyserver for verifying signatures of .jars downloaded from maven. #}
+{# Maven central uses keyserver.ubuntu.com. #}
+{% set maven_keyserver = 'hkp://keyserver.ubuntu.com' %}
+{% set src_dir = '/tmp/flink-kubernetes-operator-src' %}
+{% set install_dir = '/opt/flink-kubernetes-operator' %}
+# == End variables ==
+
+# == Beginning of build stage ==
+
+# NOTE: build stage does not consoladate RUN commands to take advantage
+#       of more cached RUN layers. production image stage below DOES consolodate
+#       RUN commands in order to have fewer layers there.
+
+FROM {{ "openjdk-11-jdk" | image_tag  }} as build
+USER root
+
+# Download the distribution tarball along with its sha512 checksum and GPG signature. Then verify both checksum and signature before extracting the source.
+RUN {{ "curl gpg gpg-agent dirmngr coreutils ca-certificates maven" | apt_install }}
+WORKDIR /tmp
+
+# Download source release distribution and checksums
+RUN curl --remote-name-all "{{ flink_mirror_base_uri }}/flink-kubernetes-operator-{{ flink_kubernetes_operator_version }}/flink-kubernetes-operator-{{ flink_kubernetes_operator_version }}-src.tgz"
+RUN curl --remote-name-all "{{ flink_mirror_base_uri }}/flink-kubernetes-operator-{{ flink_kubernetes_operator_version }}/flink-kubernetes-operator-{{ flink_kubernetes_operator_version }}-src.tgz.{asc,sha512}"
+# Verify source release distribution file checksum
+RUN cat flink-kubernetes-operator-{{ flink_kubernetes_operator_version }}-src.tgz.sha512 flink-kubernetes-operator-{{ flink_kubernetes_operator_version }}-src.tgz | sha512sum --check --status
+# Verify source release distribution file signature
+RUN curl https://downloads.apache.org/flink/KEYS | gpg --import
+RUN gpg --verify flink-kubernetes-operator-{{ flink_kubernetes_operator_version }}-src.tgz.asc flink-kubernetes-operator-{{ flink_kubernetes_operator_version }}-src.tgz
+# Unpack the source release distribution
+RUN mkdir {{ src_dir }}
+RUN tar xz -C {{ src_dir }} --strip-components=1 -f flink-kubernetes-operator-{{ flink_kubernetes_operator_version }}-src.tgz
+
+# Download and verify ECS jars, and place them in the flink/lib directory.
+# TODO: This is copy/pasted from flink/Dockerfile.template.
+#       Should we use a common build/ image?  Or a DRY download and verify script?
+
+# ecs-logging-core
+RUN curl --remote-name-all "{{ maven_mirror_base_uri }}/co/elastic/logging/ecs-logging-core/{{ ecs_version }}/ecs-logging-core-{{ ecs_version }}.jar"
+RUN curl --remote-name-all "{{ maven_mirror_base_uri }}/co/elastic/logging/ecs-logging-core/{{ ecs_version }}/ecs-logging-core-{{ ecs_version }}.jar.{asc,sha1}"
+# Verify checksum
+# NOTE: jar.sha1 file is not in expected sha sum format; it only has the sum.
+# Echo the expected format into file.
+RUN echo "$(cat ecs-logging-core-{{ ecs_version }}.jar.sha1)  ecs-logging-core-{{ ecs_version }}.jar" > ecs-logging-core-{{ ecs_version }}.jar.sha1
+RUN sha1sum --check -c ecs-logging-core-{{ ecs_version }}.jar.sha1 --status
+# Verify the signature
+RUN gpg --auto-key-locate keyserver --keyserver {{ maven_keyserver }} --keyserver-options auto-key-retrieve --verify \
+    ecs-logging-core-{{ ecs_version }}.jar.asc ecs-logging-core-{{ ecs_version }}.jar
+
+# log4j-ecs-layout
+RUN curl --remote-name-all "{{ maven_mirror_base_uri }}/co/elastic/logging/log4j2-ecs-layout/{{ ecs_version }}/log4j2-ecs-layout-{{ ecs_version }}.jar"
+RUN curl --remote-name-all "{{ maven_mirror_base_uri }}/co/elastic/logging/log4j2-ecs-layout/{{ ecs_version }}/log4j2-ecs-layout-{{ ecs_version }}.jar.{asc,sha1}"
+# Verify checksum
+# NOTE: jar.sha1 file is not in expected sha sum format; it only has the sum.
+# Echo the expected format into file.
+RUN echo "$(cat log4j2-ecs-layout-{{ ecs_version }}.jar.sha1)  log4j2-ecs-layout-{{ ecs_version }}.jar" > log4j2-ecs-layout-{{ ecs_version }}.jar.sha1
+RUN sha1sum --check -c log4j2-ecs-layout-{{ ecs_version }}.jar.sha1 --status
+# Verify the signature
+RUN gpg --auto-key-locate keyserver --keyserver pgp.mit.edu --keyserver-options auto-key-retrieve --verify \
+    log4j2-ecs-layout-{{ ecs_version }}.jar.asc log4j2-ecs-layout-{{ ecs_version }}.jar
+
+
+# Build flink-kubernetes-operator from source using maven.
+WORKDIR {{ src_dir }}
+RUN mvn -Djava.net.useSystemProxies --batch-mode clean package -pl !flink-kubernetes-docs -DskipTests=true
+
+# TODO: Do we need these?  Not totally sure why the k8s operator needs the flink plugins:
+# https://github.com/apache/flink-kubernetes-operator/blob/main/flink-kubernetes-operator/pom.xml#L246-L289
+#     cp -r /app/flink-kubernetes-operator/target/plugins ./plugins && \
+#     cd ../ && ./collect_license_files.sh ./jars ./licenses-output
+
+# == End of build stage ==
+
+# == Start of production image creation ==
+FROM {{ "openjdk-11-jre" | image_tag  }}
+USER root
+
+# FLINK_KUBERNETES_OPERATOR_HOME will be used by docker-entrypoint.sh
+# add lib/*.jar and webhook/*.jar files to the classpath.
+#
+# Set 'FLINK_HOME' to /opt/flink.  Even though we won't be installing the
+# Flink distribution here, flink-kubernetes-operator (and helm chart) default
+# to loading things like plugins and conf from FLINK_HOME, and
+# /opt/flink is a little hardcoded into the upstram flink-kubernetes-operator helm chart.
+ENV FLINK_KUBERNETES_OPERATOR_HOME={{ install_dir }} \
+    FLINK_HOME=/opt/flink
+
+RUN {{ "bash wmf-certificates" | apt_install }} && \
+    mkdir -p \
+        $FLINK_KUBERNETES_OPERATOR_HOME/lib \
+        $FLINK_KUBERNETES_OPERATOR_HOME/webhook \
+        $FLINK_HOME/conf \
+        $FLINK_HOME/plugins
+
+
+# Copy common operator jars into $FLINK_KUBERNETES_OPERATOR_HOME/lib/
+COPY --from=build --chown=root \
+    {{ src_dir }}/flink-kubernetes-operator/target/flink-kubernetes-operator-{{ flink_kubernetes_operator_version }}-shaded.jar \
+    {{ src_dir }}/flink-kubernetes-standalone/target/flink-kubernetes-standalone-{{ flink_kubernetes_operator_version }}-shaded.jar \
+    /tmp/ecs-logging-core-{{ ecs_version }}.jar \
+    /tmp/log4j2-ecs-layout-{{ ecs_version }}.jar \
+    $FLINK_KUBERNETES_OPERATOR_HOME/lib/
+
+# Copy webhook jar into $FLINK_KUBERNETES_OPERATOR_HOME/webhook/
+COPY --from=build --chown=root \
+    {{ src_dir }}/flink-kubernetes-webhook/target/flink-kubernetes-webhook-{{ flink_kubernetes_operator_version }}-shaded.jar \
+    $FLINK_KUBERNETES_OPERATOR_HOME/webhook
+
+# Copy any plugins we want into $FLINK_HOME/plugins/
+# NOTE: available plugins in the src build are put in place by
+# maven-dependency-plugin:
+# https://github.com/apache/flink-kubernetes-operator/blob/main/flink-kubernetes-operator/pom.xml#L246-L289
+COPY --from=build --chown=root \
+    {{ src_dir }}/flink-kubernetes-operator/target/plugins/flink-metrics-prometheus \
+    $FLINK_HOME/plugins/flink-metrics-prometheus
+
+
+WORKDIR $FLINK_KUBERNETES_OPERATOR_HOME
+
+COPY docker-entrypoint.sh /
+
+RUN {{ "flink" | add_user }}
+USER {{ "flink" | uid }}
+
+# NOTE: flink-kubernetes-operator helm chart will always directly run command
+# /docker-entrypoint.sh with args, overriding ENTRYPOINT. We set it here anyway to avoid confusion.
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+# == End of image creation ==
