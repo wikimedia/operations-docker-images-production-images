@@ -1,3 +1,9 @@
+dispatch (v20220915-3) wikimedia; urgency=medium
+
+  * Manage config.js locally to override hardcoded redirect
+
+ -- Keith Herron <kherron@wikimedia.org>  Fri, 18 Nov 2022 10:39:36 -0500
+
 dispatch (v20220915-2) wikimedia; urgency=medium
 
   * Add python3-ipython for 'dispatch server shell' support
