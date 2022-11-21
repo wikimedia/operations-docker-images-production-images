@@ -1,0 +1,3 @@
+Package: pause
+Description: pause container for k8s
+Maintainer: Luca Toscano <ltoscano@wikimedia.org>

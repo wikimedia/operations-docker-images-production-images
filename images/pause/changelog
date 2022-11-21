@@ -1,0 +1,5 @@
+pause (3.6-1) wikimedia; urgency=high
+
+   * Import upstream version 3.6 (shipped with Kubernetes 1.23)
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Thu, 17 Nov 2022 11:00:00 +0100
