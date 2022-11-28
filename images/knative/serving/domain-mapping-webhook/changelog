@@ -1,0 +1,5 @@
+knative-serving-domain-mapping-webhook (1.7.2-1) wikimedia; urgency=high
+
+  * Upstream release 1.7.2
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Mon, 28 Nov 2022 09:30:00 +0100

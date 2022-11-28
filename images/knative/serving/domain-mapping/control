@@ -1,0 +1,4 @@
+Package: knative-serving-domain-mapping
+Description: Knative Serving Domain Mapping
+Build-Depends: knative-build
+Maintainer: Luca Toscano <ltoscano@wikimedia.org>

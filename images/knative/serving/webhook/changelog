@@ -1,3 +1,9 @@
+knative-serving-webhook (1.7.2-1) wikimedia; urgency=high
+
+  * Upstream release 1.7.2
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Mon, 28 Nov 2022 09:30:00 +0100
+
 knative-serving-webhook (0.18.1-4) wikimedia; urgency=high
 
   * Backport https://github.com/knative/serving/pull/12897

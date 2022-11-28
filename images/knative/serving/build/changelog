@@ -1,0 +1,21 @@
+knative-build (1.7.2-1) wikimedia; urgency=high
+
+  * Upstream release 1.7.2
+  * Upgrade base image to use golang 1.18
+  * Add Build-Depends for golang 1.18 to control.
+  * Move net-istio bits to a separate build image.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Mon, 28 Nov 2022 09:30:00 +0100
+
+knative-build (0.18.1-2) wikimedia; urgency=high
+
+  * Backport https://github.com/knative/serving/pull/12897
+    from Knative 1.5.0
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Fri, 23 Sep 2022 11:13:43 +0100
+
+knative-build (0.18.1-1) wikimedia; urgency=high
+
+  * Upstream release 0.18.1
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Thu, 6 May 2021 16:39:43 +0100

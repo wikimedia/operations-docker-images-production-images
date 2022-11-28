@@ -1,4 +1,4 @@
-FROM {{ "knative-build" | image_tag }} as build
+FROM {{ "knative-net-istio-build" | image_tag }} as build
 
 FROM {{ seed_image }}
 

@@ -1,0 +1,8 @@
+knative-net-istio-build (1.7.0-1) wikimedia; urgency=high
+
+  * Split build image from the knative-serving one.
+  * Upstream release 1.7.0
+  * Upgrade base image to use golang 1.18
+  * Add Build-Depends for golang 1.18 to control.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Mon, 28 Nov 2022 09:30:00 +0100

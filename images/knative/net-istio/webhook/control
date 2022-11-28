@@ -1,4 +1,4 @@
 Package: knative-net-istio-webhook
 Description: Knative Net Istio Webhook
-Depends: knative-build
+Build-Depends: knative-net-istio-build
 Maintainer: Luca Toscano <ltoscano@wikimedia.org>

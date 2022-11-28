@@ -1,4 +1,4 @@
 Package: knative-serving-controller
 Description: Knative Serving Controller
-Depends: knative-build
+Build-Depends: knative-build
 Maintainer: Luca Toscano <ltoscano@wikimedia.org>

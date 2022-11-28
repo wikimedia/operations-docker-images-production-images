@@ -5,29 +5,21 @@
 # This script represents a quick way to avoid all boilderplate commands needed
 # to just go-build some binaries.
 #
-set -e
+set -ex
 
 usage() {
-    echo "Usage: $0 <knative-base-repo-full-path> <serving-repo-name> <net-istio-repo-name>"
+    echo "Usage: $0 <knative-base-repo-full-path> <serving-repo-name>"
     exit 1
 }
 
-if [ $# -ne 3 ]; then
+if [ $# -ne 2 ]; then
     usage
 fi
 
 # knative serving binaries
-for target in activator autoscaler controller webhook queue
+for target in activator autoscaler controller webhook queue domain-mapping domain-mapping-webhook
 do
     pushd $1/$2/cmd/$target
-    go build
-    popd
-done
-
-# net-istio binaries
-for target in webhook controller
-do
-    pushd $1/$3/cmd/$target
     go build
     popd
 done
