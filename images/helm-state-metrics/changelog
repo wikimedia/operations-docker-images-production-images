@@ -1,3 +1,10 @@
+helm-state-metrics (0.2.0-1) wikimedia; urgency=medium
+
+  * Update to v0.2.0
+  * helm-state-metrics controller rewrite
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Mon, 28 Nov 2022 11:48:21 +0100
+
 helm-state-metrics (0.1.2-1) wikimedia; urgency=medium
 
   * Cache helm list results for one minute
