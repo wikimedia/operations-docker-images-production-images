@@ -2,7 +2,6 @@ FROM {{ 'spark-build' | image_tag }} as build
 FROM {{ 'spark' | image_tag }}
 
 COPY --from=build --chown=root:root /usr/bin/spark-operator /usr/bin/spark-operator
-COPY --from=build --chown=root:root /usr/bin/gencerts.sh /usr/bin/gencerts.sh
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 
 USER root

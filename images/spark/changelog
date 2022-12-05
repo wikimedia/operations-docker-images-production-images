@@ -1,3 +1,10 @@
+spark (3.3.0-3) wikimedia; urgency=medium
+
+  * Tidy up several aspects of the entrypoint.sh script
+  * Build from the image that no longer contains the gencerts.sh script
+
+ -- Ben Tullis <btullis@wikimedia.org>  Mon, 05 Dec 2022 11:47:41 +0000
+
 spark (3.3.0-2) wikimedia; urgency=medium
 
   * Added local build suffix indicating that this is our second build

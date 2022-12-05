@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 #
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
@@ -20,7 +20,7 @@
 set -ex
 
 if [ -z "$JAVA_HOME" ]; then
-  JAVA_HOME=$(java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | awk '{print $3}')
+  JAVA_HOME=$(java -XshowSettings:properties -version 2>&1 > /dev/null | awk '/java.home/ {print $3}')
 fi
 
 SPARK_CLASSPATH="$SPARK_CLASSPATH:${SPARK_HOME}/jars/*"
@@ -58,6 +58,9 @@ elif ! [ -z ${SPARK_HOME+x} ]; then
   SPARK_CLASSPATH="$SPARK_HOME/conf:$SPARK_CLASSPATH";
 fi
 
+# Spark has two modes of operating when using its native kubernetes integration. These two modes are known
+# as 'driver' and 'executor' modes and have similar meanings to their use in a YARN cluster. We restrict the
+# command-line arguments permitted as arguments in this image, such that only these two spark modes may be used.
 case "$1" in
   driver)
     shift 1
@@ -88,8 +91,8 @@ case "$1" in
     ;;
 
   *)
-    echo "Non-spark-on-k8s command provided, proceeding in pass-through mode..."
-    CMD=("$@")
+    echo "Error: Neither driver nor executor was specified as the mode of operation."
+    exit 22
     ;;
 esac
 
