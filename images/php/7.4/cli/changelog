@@ -1,3 +1,9 @@
+php7.4-cli (7.4.33-1) wikimedia; urgency=high
+
+   New php version
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Mon,  5 Dec 2022 11:02:43 +0100
+
 php7.4-cli (7.4.30) wikimedia; urgency=high
 
    T316601

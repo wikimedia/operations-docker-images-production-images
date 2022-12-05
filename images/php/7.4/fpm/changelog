@@ -1,3 +1,10 @@
+php7.4-fpm (7.4.33-1) wikimedia; urgency=high
+
+   Refresh for update in parent image php7.4-cli:
+   New php version
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Mon,  5 Dec 2022 11:02:43 +0100
+
 php7.4-fpm (7.4.30) wikimedia; urgency=high
 
    Refresh for update in parent image php7.4-cli:
