@@ -1,4 +1,10 @@
-mediawiki-httpd (0.1.4) UNRELEASED; urgency=medium
+mediawiki-httpd (0.1.5) wikimedia; urgency=medium
+
+  * Update to pick up changes from parent image
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Mon, 05 Dec 2022 07:34:02 +0100
+
+mediawiki-httpd (0.1.4) wikimedia; urgency=medium
 
   * Link expires.conf in mods-enabled T309358
 
