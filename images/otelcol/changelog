@@ -1,0 +1,5 @@
+otelcol (0.66.0-1) wikimedia; urgency=medium
+
+  * Initial release.
+
+ -- Clément Goubert <cgoubert@wikimedia.org>  Wed, 16 Nov 2022 14:08:33 +0100
