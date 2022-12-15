@@ -1,9 +1,9 @@
-FROM docker-registry.wikimedia.org/cert-manager/build:latest as build
+FROM {{ "build" | image_tag }} as build
 
 FROM {{ seed_image }}
 
 USER root
-COPY --from=build --chown=root /go/github.com/jetstack/cert-manager/cmd/webhook/webhook /usr/bin/webhook
+COPY --from=build --chown=root /go/github.com/cert-manager/cert-manager/_bin/server/webhook /usr/bin/webhook
 
 USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/bin/webhook"]
