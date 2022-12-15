@@ -1,3 +1,9 @@
+php7.4-fpm-multiversion-base (7.4.33-2) wikimedia; urgency=medium
+
+  * add a simple sendmail agent (T325131)
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 15 Dec 2022 16:09:19 +0100
+
 php7.4-fpm-multiversion-base (7.4.33-1) wikimedia; urgency=high
 
    Refresh for update in parent image php7.4-cli:

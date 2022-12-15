@@ -19,8 +19,11 @@ php7.4-luasandbox
 php7.4-wikidiff2
 php7.4-wmerrors
 php7.4-yaml
+msmtp
+msmtp-mta
 {%- endset -%}
-RUN {{ packages | apt_install }}
+# We create the www-data homedir so that we can add the msmtp configuration later
+RUN {{ packages | apt_install }} && mkdir -p /var/www && chown -R www-data:www-data /var/www
 
 COPY conf/wmerrors.ini /etc/php/7.4/mods-available/wmerrors.ini
 
