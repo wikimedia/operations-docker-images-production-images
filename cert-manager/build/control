@@ -1,3 +1,4 @@
 Package: build
-Description: Build image for Jetstack's cert-manager.
+Description: Build image for cert-manager's cert-manager.
 Maintainer: Janis Meybohm <jmeybohm@wikimedia.org>
+Build-Depends: golang1.19
