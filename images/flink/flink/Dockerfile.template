@@ -7,7 +7,7 @@
 {% set maven_mirror_base_uri = 'https://repo1.maven.org/maven2' %}
 {# PGP Keyserver for verifying signatures of .jars downloaded from maven #}
 {# Maven central uses keyserver.ubuntu.com. #}
-{% set maven_keyserver = 'hkp://keyserver.ubuntu.com' %}
+{% set maven_keyserver = 'hkps://keyserver.ubuntu.com' %}
 {% set flink_dist_dir = '/tmp/flink_dist' %}
 {% set flink_install_dir = '/opt/flink' %}
 {# End variables #}
@@ -40,6 +40,10 @@ RUN gpg --verify flink-{{ flink_version }}-bin-scala_{{ scala_version }}.tgz.asc
 RUN mkdir {{ flink_dist_dir }}
 RUN tar xz -C {{ flink_dist_dir }} --strip-components=1 -f flink-{{ flink_version }}-bin-scala_{{ scala_version }}.tgz
 
+# Conditionally set GPG_HTTP_PROXY_OPTION if $http_proxy is set.
+# gpg needs this set in --keyserver-options if an http proxy needs
+# to be used when retrieving keys.
+ENV GPG_HTTP_PROXY_OPTION=${http_proxy:+"http-proxy=${http_proxy}"}
 
 # Download and verify ECS jars, and place them in the flink/lib directory.
 
@@ -52,8 +56,8 @@ RUN curl --remote-name-all "{{ maven_mirror_base_uri }}/co/elastic/logging/ecs-l
 RUN echo "$(cat ecs-logging-core-{{ ecs_version }}.jar.sha1)  ecs-logging-core-{{ ecs_version }}.jar" > ecs-logging-core-{{ ecs_version }}.jar.sha1
 RUN sha1sum --check -c ecs-logging-core-{{ ecs_version }}.jar.sha1 --status
 # Verify the signature
-RUN gpg --auto-key-locate keyserver --keyserver {{ maven_keyserver }} --keyserver-options auto-key-retrieve --verify \
-    ecs-logging-core-{{ ecs_version }}.jar.asc ecs-logging-core-{{ ecs_version }}.jar
+RUN gpg --auto-key-locate keyserver --keyserver {{ maven_keyserver }} --keyserver-options "auto-key-retrieve ${GPG_HTTP_PROXY_OPTION}" \
+    --verify ecs-logging-core-{{ ecs_version }}.jar.asc ecs-logging-core-{{ ecs_version }}.jar
 # mv jar into flink/lib
 RUN mv ecs-logging-core-{{ ecs_version }}.jar {{ flink_dist_dir }}/lib/
 
@@ -66,8 +70,8 @@ RUN curl --remote-name-all "{{ maven_mirror_base_uri }}/co/elastic/logging/log4j
 RUN echo "$(cat log4j2-ecs-layout-{{ ecs_version }}.jar.sha1)  log4j2-ecs-layout-{{ ecs_version }}.jar" > log4j2-ecs-layout-{{ ecs_version }}.jar.sha1
 RUN sha1sum --check -c log4j2-ecs-layout-{{ ecs_version }}.jar.sha1 --status
 # Verify the signature
-RUN gpg --auto-key-locate keyserver --keyserver pgp.mit.edu --keyserver-options auto-key-retrieve --verify \
-    log4j2-ecs-layout-{{ ecs_version }}.jar.asc log4j2-ecs-layout-{{ ecs_version }}.jar
+RUN gpg --auto-key-locate keyserver --keyserver pgp.mit.edu --keyserver-options "auto-key-retrieve ${GPG_HTTP_PROXY_OPTION}" \
+    --verify log4j2-ecs-layout-{{ ecs_version }}.jar.asc log4j2-ecs-layout-{{ ecs_version }}.jar
 # mv jar into flink/lib
 RUN mv log4j2-ecs-layout-{{ ecs_version }}.jar {{ flink_dist_dir }}/lib/
 
