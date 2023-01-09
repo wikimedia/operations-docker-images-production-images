@@ -6,6 +6,9 @@ base_images:
 
 # This list needs to include all UID mappings, and
 # should be kept in sync with production.
+# NOTE: If you modify this list, you must also modify
+# profile::docker::builder::known_uid_mappings
+# in WMF operations/puppet repository.
 known_uid_mappings:
   root: 0
   www-data: 33
