@@ -75,9 +75,12 @@ WORKDIR {{ src_dir }}
 # Conditionally set and use MVN_HTTP(S)_PROXY_OPTION if $http(s)_proxy is set.
 # NOTE: We need to extract the host and port out of the URI, so we do so in the run command with awk.
 # This does not work in an ENV declaration.
+# NOTE: We need -Dmaven.antrun.skip=true because flink-kubernetes-operator has an antrun step that
+#       tries to download old CRD files and enforce compatiblity.  This fails because
+#       of our proxy setup in production.
 RUN export MVN_HTTP_PROXY_OPTION=${http_proxy:+"-Dhttp.proxyHost=$(echo $http_proxy | awk -F ':' '{print $(NF-1)}' | tr -d '/') -Dhttp.proxyPort=$(echo $http_proxy | awk -F ':' '{print $NF}')"} && \
     export MVN_HTTPS_PROXY_OPTION=${https_proxy:+"-Dhttps.proxyHost=$(echo $https_proxy | awk -F ':' '{print $(NF-1)}' | tr -d '/') -Dhttps.proxyPort=$(echo $https_proxy | awk -F ':' '{print $NF}')"} && \
-    mvn ${MVN_HTTP_PROXY_OPTION} ${MVN_HTTPS_PROXY_OPTION} --batch-mode clean package -pl '!flink-kubernetes-docs' -DskipTests=true
+    mvn ${MVN_HTTP_PROXY_OPTION} ${MVN_HTTPS_PROXY_OPTION} --batch-mode clean package -pl '!flink-kubernetes-docs' -DskipTests=true -Dmaven.antrun.skip=true
 
 # TODO: Do we need these?  Not totally sure why the k8s operator needs the flink plugins:
 # https://github.com/apache/flink-kubernetes-operator/blob/main/flink-kubernetes-operator/pom.xml#L246-L289
