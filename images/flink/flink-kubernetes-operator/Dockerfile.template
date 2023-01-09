@@ -72,7 +72,12 @@ RUN gpg --auto-key-locate keyserver --keyserver pgp.mit.edu --keyserver-options 
 
 # Build flink-kubernetes-operator from source using maven.
 WORKDIR {{ src_dir }}
-RUN mvn -Djava.net.useSystemProxies --batch-mode clean package -pl !flink-kubernetes-docs -DskipTests=true
+# Conditionally set and use MVN_HTTP(S)_PROXY_OPTION if $http(s)_proxy is set.
+# (This uses some fancy bash var manipulation to extract host as
+# e.g.  http://webproxy.eqiad.wmnet and port as 8080.  This does not work in an ENV declaration).
+RUN MVN_HTTP_PROXY_OPTION=${http_proxy:+"-Dhttp.proxyHost=${http_proxy%:*} -Dhttp.proxyPort=${http_proxy##*:}"} && \
+    MVN_HTTPS_PROXY_OPTION=${https_proxy:+"-Dhttps.proxyHost=${https_proxy%:*} -Dhttps.proxyPort=${https_proxy##*:}"} && \
+    mvn ${MVN_HTTP_PROXY_OPTION} ${MVN_HTTPS_PROXY_OPTION} --batch-mode clean package -pl '!flink-kubernetes-docs' -DskipTests=true
 
 # TODO: Do we need these?  Not totally sure why the k8s operator needs the flink plugins:
 # https://github.com/apache/flink-kubernetes-operator/blob/main/flink-kubernetes-operator/pom.xml#L246-L289
