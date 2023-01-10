@@ -91,6 +91,8 @@ RUN mkdir -p {{ flink_install_dir }}/conf {{ flink_install_dir }}/plugins
 COPY --from=build --chown=root {{ flink_dist_dir }}/lib {{ flink_install_dir }}/lib
 COPY --from=build --chown=root {{ flink_dist_dir }}/bin {{ flink_install_dir }}/bin
 COPY --from=build --chown=root {{ flink_dist_dir }}/opt {{ flink_install_dir }}/opt
+# Examples are useful for testing this image without custom application code.
+COPY --from=build --chown=root {{ flink_dist_dir }}/examples {{ flink_install_dir }}/examples
 COPY --from=build --chown=root {{ flink_dist_dir }}/plugins/external-resource-gpu {{ flink_install_dir }}/plugins/external-resource-gpu
 COPY --from=build --chown=root {{ flink_dist_dir }}/plugins/metrics-prometheus {{ flink_install_dir }}/plugins/metrics-prometheus
 COPY --from=build --chown=root {{ flink_dist_dir }}/plugins/metrics-jmx {{ flink_install_dir }}/plugins/metrics-jmx

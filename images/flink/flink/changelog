@@ -1,3 +1,9 @@
+flink (1.16.0-wmf1) wikimedia; urgency=high
+
+  * Include flink examples in image
+
+ -- Andrew Otto <otto@wikimedia.org>  Tue, 10 Jan 2023 14:07:00 -0500
+
 flink (1.16.0-wmf0) wikimedia; urgency=high
 
   * Upstream Flink release 1.16.0
