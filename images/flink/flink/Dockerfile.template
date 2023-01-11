@@ -40,6 +40,10 @@ RUN gpg --verify flink-{{ flink_version }}-bin-scala_{{ scala_version }}.tgz.asc
 RUN mkdir {{ flink_dist_dir }}
 RUN tar xz -C {{ flink_dist_dir }} --strip-components=1 -f flink-{{ flink_version }}-bin-scala_{{ scala_version }}.tgz
 
+# Copy any extra custom examples WMF adds into examples/wikimedia
+# This pyflink datagen example runs forever, which makes it more useful for testing flink apps.
+COPY --chown=root  examples/wikimedia {{ flink_dist_dir }}/examples/wikimedia
+
 # Conditionally set GPG_HTTP_PROXY_OPTION if $http_proxy is set.
 # gpg needs this set in --keyserver-options if an http proxy needs
 # to be used when retrieving keys.
