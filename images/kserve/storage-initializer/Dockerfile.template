@@ -13,11 +13,9 @@ USER root
 # - 'cpp' is needed to when installing kfserving since some dependencies require it.
 # - pip upgrade is needed to avoid failures in downloading dependencies (like ray),
 #   see: https://github.com/ray-project/ray/issues/5444#issuecomment-520991458
-# - protobuf needs to be explicitly installed due to https://github.com/kserve/kserve/pull/2201,
-#   otherwise the storage-initializer fails to start with KServe 0.8+.
 COPY --from=build --chown=root /go/github.com/kserve/kserve/python/storage-initializer/scripts/initializer-entrypoint /usr/bin/storage-initializer-entrypoint
 RUN chmod +x /usr/bin/storage-initializer-entrypoint && {{ "python3-pip cpp wmf-certificates" | apt_install }} \
-  && python3 -m pip --no-cache-dir install --upgrade pip && python3 -m pip --no-cache-dir install kserve==0.8.0 protobuf~=3.19.0
+  && python3 -m pip --no-cache-dir install --upgrade pip && python3 -m pip --no-cache-dir install kserve==0.9.0
 
 USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/bin/storage-initializer-entrypoint"]
