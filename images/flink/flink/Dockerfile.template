@@ -90,18 +90,6 @@ FROM {{ "openjdk-11-jre" | image_tag }}
 
 USER root
 
-# Copy the base flink files from the binary distribution image into the target directory in this image
-RUN mkdir -p {{ flink_install_dir }}/conf {{ flink_install_dir }}/plugins
-COPY --from=build --chown=root {{ flink_dist_dir }}/lib {{ flink_install_dir }}/lib
-COPY --from=build --chown=root {{ flink_dist_dir }}/bin {{ flink_install_dir }}/bin
-COPY --from=build --chown=root {{ flink_dist_dir }}/opt {{ flink_install_dir }}/opt
-# Examples are useful for testing this image without custom application code.
-COPY --from=build --chown=root {{ flink_dist_dir }}/examples {{ flink_install_dir }}/examples
-COPY --from=build --chown=root {{ flink_dist_dir }}/plugins/external-resource-gpu {{ flink_install_dir }}/plugins/external-resource-gpu
-COPY --from=build --chown=root {{ flink_dist_dir }}/plugins/metrics-prometheus {{ flink_install_dir }}/plugins/metrics-prometheus
-COPY --from=build --chown=root {{ flink_dist_dir }}/plugins/metrics-jmx {{ flink_install_dir }}/plugins/metrics-jmx
-COPY --from=build --chown=root {{ flink_dist_dir }}/plugins/metrics-slf4j {{ flink_install_dir }}/plugins/metrics-slf4j
-# TODO: kafka clients, flink-kafka, other connectors, etc.
 
 
 # RUN:
@@ -112,11 +100,39 @@ COPY --from=build --chown=root {{ flink_dist_dir }}/plugins/metrics-slf4j {{ fli
 #   When openjdk-11-jre is upgraded to bullsye, we can use python-is-python3 .deb package.
 #   This allows flink apps to not have to overridde -pyclientexec if they want to use the system python.
 #
-# - Remove flink scala deps -- we run scala free!
-#   If you want to use scala in your Flink app, make it part of your application jar's included dependencies.
+# - Create the flink user.
+#
+# - Allow flink user to create files in conf, plugins and logs.
+#   (even though we create a writable logs dir, our production flink-kubernetes-operator use
+#   of this image will cause all logs to be printed to stdout on the console.)
+#
+# - Create an empty flink-conf.yaml that can be overridden by sub-images or the flink-kubernetes-operator
+#   flink-conf.yaml must exist for flink to run, but it can be empty to just use Flink defaults.
 RUN {{ "bash krb5-user libnss3 procps net-tools libsnappy1v5 gettext-base libjemalloc-dev python3 wmf-certificates" | apt_install }} && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3 10 && \
-    rm -fv {{ flink_dist_dir }}/lib/flink-scala*
+    {{ "flink" | add_user }} && \
+    mkdir -p {{ flink_install_dir }}/conf {{ flink_install_dir }}/plugins {{ flink_install_dir }}/log && \
+    chown flink:flink {{ flink_install_dir }}/conf {{ flink_install_dir }}/plugins {{ flink_install_dir }}/log
+
+# Copy base default flink-conf.yaml file.
+COPY --from=build --chown=flink {{ flink_dist_dir }}/conf/flink-conf.yaml {{ flink_install_dir }}/conf/flink-conf.yaml
+
+# Copy the base flink files from the binary distribution image into the target directory in this image.
+# NOTE: /opt/flink/lib/ is not writeable.  To add other .jar dependencies, put them in your sub-image's
+# application specific directory and add them with flink run args or application code addJars.
+COPY --from=build --chown=root {{ flink_dist_dir }}/lib {{ flink_install_dir }}/lib
+COPY --from=build --chown=root {{ flink_dist_dir }}/bin {{ flink_install_dir }}/bin
+COPY --from=build --chown=root {{ flink_dist_dir }}/opt {{ flink_install_dir }}/opt
+# Examples are useful for testing this image without custom application code.
+COPY --from=build --chown=root {{ flink_dist_dir }}/examples {{ flink_install_dir }}/examples
+COPY --from=build --chown=root {{ flink_dist_dir }}/plugins/external-resource-gpu {{ flink_install_dir }}/plugins/external-resource-gpu
+COPY --from=build --chown=root {{ flink_dist_dir }}/plugins/metrics-prometheus {{ flink_install_dir }}/plugins/metrics-prometheus
+COPY --from=build --chown=root {{ flink_dist_dir }}/plugins/metrics-jmx {{ flink_install_dir }}/plugins/metrics-jmx
+COPY --from=build --chown=root {{ flink_dist_dir }}/plugins/metrics-slf4j {{ flink_install_dir }}/plugins/metrics-slf4j
+
+# Remove flink scala deps -- we run scala free!
+# If you want to use scala in your Flink app, make it part of your application jar's included dependencies.
+RUN rm -fv {{ flink_install_dir }}/lib/flink-scala*
 
 # ENV:
 # - Add libjemalloc.so to LD_PRELOAD.
@@ -143,7 +159,6 @@ WORKDIR $FLINK_HOME
 #  but the default is fine.  See comment in docker-entrypoint.sh for more info.)
 COPY docker-entrypoint.sh /
 
-RUN {{ "flink" | add_user }}
 USER {{ "flink" | uid }}
 
 # NOTE: flink native kubernetes will always run this image with a command constructed using the
