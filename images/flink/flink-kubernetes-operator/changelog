@@ -1,5 +1,12 @@
+flink-kubernetes-operator (1.3.1-wmf0) wikimedia; urgency=high
+
+  * Upstream Flink Kubernetes Operator release 1.3.1
+
+ -- Brian King <bking@wikimedia.org>  Fri Jan 20 11:28:35 -0600
+
 flink-kubernetes-operator (1.3.0-wmf1) wikimedia; urgency=high
 
   * Upstream Flink Kubernetes Operator release 1.3.0
 
  -- Andrew Otto <otto@wikimedia.org>  Wed, 16 Nov 2022 15:38:00 -0500
+
