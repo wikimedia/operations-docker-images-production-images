@@ -1,3 +1,24 @@
+flink (1.16.0-wmf4) wikimedia; urgency=high
+
+  * Install flink via `pip install apache-flink`.
+    Use pip instead of installing from a flink distribution tarball
+    because doing so also installs required transitive python dependencies
+    of pyflink.  pyflink includes the .jar files that usually come with a
+    flink distribution, so using it to run JVM based apps should be fine.
+
+    pyflink does not include most of the usual Flink opt/ dir,
+    so we download from maven only what we need often at WMF.
+    As of this version, we need the flink-s3-fs-presto
+    plugin for storing Flink checkpoints.  Other application
+    dependencies should be installed in application images
+    build starting with this image.
+
+    We also download from maven the flink example .jar files
+    That pyflink does not include, incase we want to use them
+    to test various deployments of this image, without writing application code.
+
+ -- Andrew Otto <otto@wikimedia.org>  Wed, 25 Jan 2023 14:57:00 -0500
+
 flink (1.16.0-wmf3) wikimedia; urgency=high
 
   * Include default flink-conf.yaml

@@ -1,85 +1,101 @@
 {# Set variables #}
+
 {% set flink_version = '1.16.0' %}
+
+{# scala_version is only used when downloading example artifacts.
+   We do not include flink-scala in this distribution.  If you want
+   to use scala, include it in your application dependencies. #}
 {% set scala_version = '2.12' %}
-{# Elastic Common Schema logging version.  Used for structured logging. #}
+
+{# python_version is hardcoded here to know the directory
+   from which to copy pip installed dependecies to the production image
+   This does not control the version of python installed.
+   You must update this if you upgrade the version of python that is installed. #}
+{% set python_version = '3.7' %}
+
+{# Elastic Common Schema logging version. Used for structured logging. #}
 {% set ecs_version = '1.5.0' %}
-{% set flink_mirror_base_uri = 'https://dlcdn.apache.org/flink' %}
-{% set maven_mirror_base_uri = 'https://repo1.maven.org/maven2' %}
-{# PGP Keyserver for verifying signatures of .jars downloaded from maven #}
-{# Maven central uses keyserver.ubuntu.com. #}
-{% set maven_keyserver = 'hkps://keyserver.ubuntu.com' %}
-{% set flink_dist_dir = '/tmp/flink_dist' %}
-{% set flink_install_dir = '/opt/flink' %}
+
+{% set flink_home = '/opt/flink' %}
+
 {# End variables #}
+
+#
+# This Dockerfile installs Apache Flink using python pip.
+#
+# We use pip instead of installing from a flink distribution tarball
+# because doing so also installs required transitive python dependencies
+# of pyflink.  pyflink includes the .jar files that usually come with a
+# flink distribution, so using it to run JVM based apps should be fine.
+#
+
 
 # == Beginning of build stage ==
 
 # NOTE: build stage does not consoladate RUN commands to take advantage
-#       of more cached RUN layers. production image stage below DOES consolodate
+#       of more cached RUN layers. production image stage below does consolodate
 #       RUN commands in order to have fewer layers there.
 
 FROM {{ seed_image }} as build
 USER root
 
-RUN {{ "curl gpg gpg-agent dirmngr coreutils ca-certificates" | apt_install }}
+RUN {{ "curl gpg gpg-agent dirmngr coreutils ca-certificates build-essential python3 python3-pip" | apt_install }}
 WORKDIR /tmp
 
 
-# TODO: reduce individual RUN steps to limit the number of layers we have to keep when building.
+# We need a newer pip in order to install packages from .wheels.
+# Otherwise, transitive dependency 'maturin' fails with:
+#
+#   error: can't find Rust compiler
+#   If you are using an outdated pip version, it is possible a prebuilt wheel is available for this package but pip is not able to install from it. Installing from the wheel would avoid the need for a Rust compiler.
+#   To update pip, run:
+#       pip install --upgrade pip
+#   and then retry package installation.
+#
+# When we upgrade to newer python in newer debian (>3.7?) we should not need this anymore.
+RUN pip3 install --upgrade pip
+RUN /usr/local/bin/pip install setuptools apache-flink=={{ flink_version }}
 
-# Download flink distribution and sha512 checksum and GPG signature
-# Then verify both checksum and signature before extracting the source.
-RUN curl --remote-name-all "{{ flink_mirror_base_uri }}/flink-{{ flink_version }}/flink-{{ flink_version }}-bin-scala_{{ scala_version }}.tgz"
-RUN curl --remote-name-all "{{ flink_mirror_base_uri }}/flink-{{ flink_version }}/flink-{{ flink_version }}-bin-scala_{{ scala_version }}.tgz.{asc,sha512}"
-# Verify Flink distribution file checksum
-RUN cat flink-{{ flink_version }}-bin-scala_{{ scala_version }}.tgz.sha512 flink-{{ flink_version }}-bin-scala_{{ scala_version }}.tgz | sha512sum --check --status
-# Verify the Flink distribution file signature
-RUN curl https://downloads.apache.org/flink/KEYS | gpg --import
-RUN gpg --verify flink-{{ flink_version }}-bin-scala_{{ scala_version }}.tgz.asc flink-{{ flink_version }}-bin-scala_{{ scala_version }}.tgz
-# Unpack the Flink distribution
-RUN mkdir {{ flink_dist_dir }}
-RUN tar xz -C {{ flink_dist_dir }} --strip-components=1 -f flink-{{ flink_version }}-bin-scala_{{ scala_version }}.tgz
+# Symlink the installed pyflink module directory to {{ flink_home }}.
+# This will give us a consistent and easier to find path for FLINK_HOME,
+# independent of python version changes.
+RUN ln -sv $(python3 -c 'import pyflink, os; print(os.path.dirname(pyflink.__file__))') {{ flink_home }}
+
+# Remove flink scala deps -- we run scala free!
+# If you want to use scala in your Flink app, make it part of your application jar's included dependencies.
+RUN rm -fv {{ flink_home }}/lib/flink-scala*
+
+
+# Download and verify extra .jars we want in our base Flink image.
+COPY maven-download.sh /tmp/maven-download.sh
+
+# ecs-logging-core -> lib/
+RUN /tmp/maven-download.sh co.elastic.logging ecs-logging-core {{ ecs_version }} {{ flink_home }}/lib
+
+# log4j-ecs-layout -> lib/
+RUN /tmp/maven-download.sh co.elastic.logging log4j2-ecs-layout {{ ecs_version }} {{ flink_home }}/lib
+
+# flink-s3-fs-presto -> opt/
+# This is used for Flink checkpointing.
+# Since install into opt/, as the Flink tarball distribution would, users of this image must
+# install this into plugins/ as described at
+# https://nightlies.apache.org/flink/flink-docs-master/docs/deployment/filesystems/plugins/#file-systems
+RUN /tmp/maven-download.sh org.apache.flink flink-s3-fs-presto {{ flink_version }} {{ flink_home }}/opt
+
+# pyflink doesn't include some of the java based examples, but we want them for easier testing!
+# Download their jars and put them in the right place.
+# Move the python examples into examples/python
+RUN mkdir /tmp/python-examples && mv {{ flink_home }}/examples/* /tmp/python-examples && mv /tmp/python-examples {{ flink_home }}/examples/python
+# Download the examples we want to include from maven
+RUN mkdir {{ flink_home }}/examples/streaming {{ flink_home }}/examples/table {{ flink_home }}/examples/batch
+RUN /tmp/maven-download.sh org.apache.flink flink-examples-streaming_{{ scala_version }} {{ flink_version }} {{ flink_home }}/examples/streaming
+RUN /tmp/maven-download.sh org.apache.flink flink-examples-table_{{ scala_version }} {{ flink_version }} {{ flink_home }}/examples/table
+RUN /tmp/maven-download.sh org.apache.flink flink-examples-batch_{{ scala_version }} {{ flink_version }} {{ flink_home }}/examples/batch
 
 # Copy any extra custom examples WMF adds into examples/wikimedia
-# This pyflink datagen example runs forever, which makes it more useful for testing flink apps.
-COPY --chown=root  examples/wikimedia {{ flink_dist_dir }}/examples/wikimedia
-
-# Conditionally set GPG_HTTP_PROXY_OPTION if $http_proxy is set.
-# gpg needs this set in --keyserver-options if an http proxy needs
-# to be used when retrieving keys.
-ENV GPG_HTTP_PROXY_OPTION=${http_proxy:+"http-proxy=${http_proxy}"}
-
-# Download and verify ECS jars, and place them in the flink/lib directory.
-
-# ecs-logging-core
-RUN curl --remote-name-all "{{ maven_mirror_base_uri }}/co/elastic/logging/ecs-logging-core/{{ ecs_version }}/ecs-logging-core-{{ ecs_version }}.jar"
-RUN curl --remote-name-all "{{ maven_mirror_base_uri }}/co/elastic/logging/ecs-logging-core/{{ ecs_version }}/ecs-logging-core-{{ ecs_version }}.jar.{asc,sha1}"
-# Verify checksum
-# NOTE: jar.sha1 file is not in expected sha sum format; it only has the sum.
-# Echo the expected format into file.
-RUN echo "$(cat ecs-logging-core-{{ ecs_version }}.jar.sha1)  ecs-logging-core-{{ ecs_version }}.jar" > ecs-logging-core-{{ ecs_version }}.jar.sha1
-RUN sha1sum --check -c ecs-logging-core-{{ ecs_version }}.jar.sha1 --status
-# Verify the signature
-RUN gpg --auto-key-locate keyserver --keyserver {{ maven_keyserver }} --keyserver-options "auto-key-retrieve ${GPG_HTTP_PROXY_OPTION}" \
-    --verify ecs-logging-core-{{ ecs_version }}.jar.asc ecs-logging-core-{{ ecs_version }}.jar
-# mv jar into flink/lib
-RUN mv ecs-logging-core-{{ ecs_version }}.jar {{ flink_dist_dir }}/lib/
-
-# log4j-ecs-layout
-RUN curl --remote-name-all "{{ maven_mirror_base_uri }}/co/elastic/logging/log4j2-ecs-layout/{{ ecs_version }}/log4j2-ecs-layout-{{ ecs_version }}.jar"
-RUN curl --remote-name-all "{{ maven_mirror_base_uri }}/co/elastic/logging/log4j2-ecs-layout/{{ ecs_version }}/log4j2-ecs-layout-{{ ecs_version }}.jar.{asc,sha1}"
-# Verify checksum
-# NOTE: jar.sha1 file is not in expected sha sum format; it only has the sum.
-# Echo the expected format into file.
-RUN echo "$(cat log4j2-ecs-layout-{{ ecs_version }}.jar.sha1)  log4j2-ecs-layout-{{ ecs_version }}.jar" > log4j2-ecs-layout-{{ ecs_version }}.jar.sha1
-RUN sha1sum --check -c log4j2-ecs-layout-{{ ecs_version }}.jar.sha1 --status
-# Verify the signature
-RUN gpg --auto-key-locate keyserver --keyserver pgp.mit.edu --keyserver-options "auto-key-retrieve ${GPG_HTTP_PROXY_OPTION}" \
-    --verify log4j2-ecs-layout-{{ ecs_version }}.jar.asc log4j2-ecs-layout-{{ ecs_version }}.jar
-# mv jar into flink/lib
-RUN mv log4j2-ecs-layout-{{ ecs_version }}.jar {{ flink_dist_dir }}/lib/
-
-
+# Our python/table_datagen.py example runs forever,
+# which makes it more useful for testing deployment of long lived streaming flink apps.
+COPY --chown=root  examples/wikimedia {{ flink_home }}/examples/wikimedia
 
 # == End of build stage ==
 
@@ -90,7 +106,8 @@ FROM {{ "openjdk-11-jre" | image_tag }}
 
 USER root
 
-
+# Copy the pip installed packages from the build images, including pyflink.
+COPY --from=build /usr/local/lib/python{{ python_version }} /usr/local/lib/python{{ python_version }}
 
 # RUN:
 # - Install debian packages.
@@ -102,37 +119,12 @@ USER root
 #
 # - Create the flink user.
 #
-# - Allow flink user to create files in conf, plugins and logs.
-#   (even though we create a writable logs dir, our production flink-kubernetes-operator use
-#   of this image will cause all logs to be printed to stdout on the console.)
-#
-# - Create an empty flink-conf.yaml that can be overridden by sub-images or the flink-kubernetes-operator
-#   flink-conf.yaml must exist for flink to run, but it can be empty to just use Flink defaults.
+# - Symlink the installed pyflink module directory to {{ flink_home }} in the production image.
 RUN {{ "bash krb5-user libnss3 procps net-tools libsnappy1v5 gettext-base libjemalloc-dev python3 wmf-certificates" | apt_install }} && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3 10 && \
     {{ "flink" | add_user }} && \
-    mkdir -p {{ flink_install_dir }}/conf {{ flink_install_dir }}/plugins {{ flink_install_dir }}/log && \
-    chown flink:flink {{ flink_install_dir }}/conf {{ flink_install_dir }}/plugins {{ flink_install_dir }}/log
-
-# Copy base default flink-conf.yaml file.
-COPY --from=build --chown=flink {{ flink_dist_dir }}/conf/flink-conf.yaml {{ flink_install_dir }}/conf/flink-conf.yaml
-
-# Copy the base flink files from the binary distribution image into the target directory in this image.
-# NOTE: /opt/flink/lib/ is not writeable.  To add other .jar dependencies, put them in your sub-image's
-# application specific directory and add them with flink run args or application code addJars.
-COPY --from=build --chown=root {{ flink_dist_dir }}/lib {{ flink_install_dir }}/lib
-COPY --from=build --chown=root {{ flink_dist_dir }}/bin {{ flink_install_dir }}/bin
-COPY --from=build --chown=root {{ flink_dist_dir }}/opt {{ flink_install_dir }}/opt
-# Examples are useful for testing this image without custom application code.
-COPY --from=build --chown=root {{ flink_dist_dir }}/examples {{ flink_install_dir }}/examples
-COPY --from=build --chown=root {{ flink_dist_dir }}/plugins/external-resource-gpu {{ flink_install_dir }}/plugins/external-resource-gpu
-COPY --from=build --chown=root {{ flink_dist_dir }}/plugins/metrics-prometheus {{ flink_install_dir }}/plugins/metrics-prometheus
-COPY --from=build --chown=root {{ flink_dist_dir }}/plugins/metrics-jmx {{ flink_install_dir }}/plugins/metrics-jmx
-COPY --from=build --chown=root {{ flink_dist_dir }}/plugins/metrics-slf4j {{ flink_install_dir }}/plugins/metrics-slf4j
-
-# Remove flink scala deps -- we run scala free!
-# If you want to use scala in your Flink app, make it part of your application jar's included dependencies.
-RUN rm -fv {{ flink_install_dir }}/lib/flink-scala*
+    ln -sv $(python3 -c 'import pyflink, os; print(os.path.dirname(pyflink.__file__))') {{ flink_home }} && \
+    chown flink:flink {{ flink_home }}/conf {{ flink_home }}/plugins {{ flink_home }}/log
 
 # ENV:
 # - Add libjemalloc.so to LD_PRELOAD.
@@ -148,8 +140,8 @@ RUN rm -fv {{ flink_install_dir }}/lib/flink-scala*
 #   'kubernetes-jobmanager.sh' is in Flink's bin/ directory.
 #
 ENV LD_PRELOAD=$LD_PRELOAD:/usr/lib/x86_64-linux-gnu/libjemalloc.so \
-    FLINK_HOME={{ flink_install_dir }} \
-    PATH={{ flink_install_dir }}/bin:$PATH
+    FLINK_HOME={{ flink_home }} \
+    PATH={{ flink_home }}/bin:$PATH
 
 WORKDIR $FLINK_HOME
 
@@ -157,7 +149,7 @@ WORKDIR $FLINK_HOME
 # Flink kubernetes native will run this by default.
 # (This is overridable by setting kubernetes.entry.path in flink-conf.yaml
 #  but the default is fine.  See comment in docker-entrypoint.sh for more info.)
-COPY docker-entrypoint.sh /
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 USER {{ "flink" | uid }}
 
