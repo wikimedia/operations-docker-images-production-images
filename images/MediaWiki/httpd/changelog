@@ -1,3 +1,10 @@
+mediawiki-httpd (0.1.5-s1) wikimedia; urgency=high
+
+   Refresh for update in parent image httpd-fcgi:
+   * Updating ECS format to 1.11.0
+
+ -- cgoubert <cgoubert@wikimedia.org>  Tue, 24 Jan 2023 17:37:02 +0100
+
 mediawiki-httpd (0.1.5) wikimedia; urgency=medium
 
   * Update to pick up changes from parent image
