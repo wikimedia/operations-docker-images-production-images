@@ -19,7 +19,7 @@ IMAGE=$1
 export http_proxy=
 
 docker_run() {
-    docker run -d --rm $@ -p 8080:8080 "$IMAGE"
+    docker run -d --rm $@ -p 8080:8080 -p 9181:9181 "$IMAGE"
     if [ $? -ne 0 ]; then
         exit 1
     fi
@@ -107,6 +107,7 @@ fi
 test_success $id
 
 # TEST 6: server logs
+echo -n "## Server logs test"
 id=$(docker_run -e LOG_SKIP_SYSTEM="1" -e LOG_FORMAT=wmfjson)
 for what in metrics healthz server-status; do
     curl -Is http://localhost:9181/$what > /dev/null
@@ -117,6 +118,7 @@ fi
 test_success "$id"
 
 # TEST 7: log format
+echo -n "## Test logs in ECS format"
 id=$(docker_run -e LOG_FORMAT=ecs)
 curl localhost:8080 -Is > /dev/null
 if ! test_in_logs "$id" "ecs.version"; then
