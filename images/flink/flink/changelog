@@ -1,3 +1,9 @@
+flink (1.16.0-wmf5) wikimedia; urgency=medium
+
+  * Update to JRE 11.0.16
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Fri, 27 Jan 2023 17:29:23 +0100
+
 flink (1.16.0-wmf4) wikimedia; urgency=high
 
   * Install flink via `pip install apache-flink`.
