@@ -1,3 +1,9 @@
+openjdk-11-jre (0.1-s2) wikimedia; urgency=medium
+
+  * Update to JRE 11.0.16
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Fri, 27 Jan 2023 10:29:49 +0100
+
 openjdk-11-jre (0.1-s1) wikimedia; urgency=high
 
    Upgrade base buster image T268612
