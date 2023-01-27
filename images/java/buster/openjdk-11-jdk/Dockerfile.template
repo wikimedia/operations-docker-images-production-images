@@ -1,3 +1,7 @@
 FROM {{ registry }}/wikimedia-buster:latest
 
-RUN {{ "openjdk-11-jdk-headless" | apt_install }}
+# openjdk-11-jre-headless:amd64 (11.0.16+8-1~deb10u1) fails post-inst like:
+# update-alternatives: error: error creating symbolic link '/usr/share/man/man1/java.1.gz.dpkg-tmp': No such file or directory
+# Just create the directory to make it happy.
+RUN mkdir -p /usr/share/man/man1/ &&
+    {{ "openjdk-11-jdk-headless" | apt_install }}
