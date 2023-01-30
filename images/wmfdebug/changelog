@@ -1,3 +1,9 @@
+wmfdebug (0.0.6) wikimedia; urgency=medium
+
+   Include wmf-certificates package.
+
+ -- Ahmon Dancy <adancy@wikimedia.org>  Wed, 04 Jan 2023 13:25:45 -0800
+
 wmfdebug (0.0.5) wikimedia; urgency=high
 
    Refresh for update in parent image: switching to buster as seed image
