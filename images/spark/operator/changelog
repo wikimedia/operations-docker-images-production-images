@@ -1,3 +1,9 @@
+spark-operator (1.3.7-3.3.0-3) wikimedia; urgency=medium
+
+  * Remove the gencerts.sh script since we no are no longer using the webhook
+
+ -- Ben Tullis <btullis@wikimedia.org>  Mon, 05 Dec 2022 11:44:15 +0000
+
 spark-operator (1.3.7-3.3.0-2) wikimedia; urgency=medium
 
   * Added local build suffix indicating that this is our second build

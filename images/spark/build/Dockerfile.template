@@ -9,17 +9,9 @@
 {% set operator_version_git_tag = 'v1beta2-1.3.7-3.1.1' %}
 # End variables
 
-# Maven needs additional arguments in production to use the proxy
-# For now these are hard-coded to the values required in production
+# Maven needs an additional argument in production to use the proxy
 {% if http_proxy %}
-    {% set proxy_opts =  [
-        '-Dhttp.proxyHost=webproxy',
-        '-Dhttps.proxyHost=webproxy',
-        '-Dhttp.proxyPort=8080',
-        '-Dhttps.proxyPort=8080',
-        '-Dhttp.nonProxyHosts=127.0.0.1|::1|localhost|.wmnet|.wikimedia.org'
-        ] | join(' ') %}
-    {% set maven_opts = maven_opts ~ ' ' ~ proxy_opts %}
+    {% set maven_opts = maven_opts ~ ' -Djava.net.useSystemProxies' %}
 {% endif %}
 
 # Beginning of spark-operator-build stage
@@ -70,8 +62,7 @@ RUN ./dev/make-distribution.sh --name {{ spark_distro_name }} {{ spark_common_ar
     -Phadoop-2 \
     -Dhadoop.version={{ hadoop_version }}
 
-# Copy the spark-operator binary and a supporting script to the spark-build image
+# Copy the spark-operator binary to the spark-build image
 COPY --from=spark-operator-build --chown=root:root /usr/bin/spark-operator /usr/bin/spark-operator
-COPY --from=spark-operator-build --chown=root:root {{ operator_src_dir }}/hack/gencerts.sh /usr/bin/gencerts.sh
 
 # End of spark-build stage
