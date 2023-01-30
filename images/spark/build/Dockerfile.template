@@ -9,9 +9,16 @@
 {% set operator_version_git_tag = 'v1beta2-1.3.7-3.1.1' %}
 # End variables
 
-# Maven needs an additional argument in production to use the proxy
+# Maven needs a additional arguments in production to use the proxy
 {% if http_proxy %}
-    {% set maven_opts = maven_opts ~ ' -Djava.net.useSystemProxies' %}
+    {% set proxy_opts =  [
+        '-Dhttp.proxyHost=webproxy',
+        '-Dhttps.proxyHost=webproxy',
+        '-Dhttp.proxyPort=8080',
+        '-Dhttps.proxyPort=8080',
+        '-Dhttp.nonProxyHosts=127.0.0.1|::1|localhost|.wmnet|.wikimedia.org'
+        ] | join(' ') %}
+    {% set maven_opts = maven_opts ~ ' ' ~ proxy_opts %}
 {% endif %}
 
 # Beginning of spark-operator-build stage
