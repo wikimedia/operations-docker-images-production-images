@@ -1,0 +1,5 @@
+jaeger-es-index-cleaner (1.41-1) wikimedia; urgency=medium
+
+  * Initial release.
+
+ -- Jesse Hathaway <jhathaway@wikimedia.org>  Tue, 07 Feb 2023 14:04:51 -0600

@@ -1,0 +1,4 @@
+Package: jaeger-es-index-cleaner
+Description: Jaeger OpenSearch or Elasticsearch index cleaner
+Build-Depends: golang1.19
+Maintainer: Jesse Hathaway <jhathaway@wikimedia.org>
