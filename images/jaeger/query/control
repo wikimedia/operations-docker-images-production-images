@@ -1,0 +1,4 @@
+Package: jaeger-query
+Description: Jaeger Query UI
+Build-Depends: jaeger-builder
+Maintainer: Jesse Hathaway <jhathaway@wikimedia.org>

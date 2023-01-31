@@ -1,0 +1,13 @@
+FROM {{ "jaeger-builder" | image_tag }} as build
+FROM {{ seed_image }}
+COPY --from=build /build/jaeger-query /bin/
+USER {{ "nobody" | uid }}
+EXPOSE 16686/tcp
+# jaeger-query is configured via cli flags which may also be set via
+# environment variables. In addition a config file may be passed to configure
+# the UI. We intend to intially use the helm chart values to drive the env vars
+# and the UI config.
+# - https://www.jaegertracing.io/docs/1.41/frontend-ui/#configuration
+# - https://www.jaegertracing.io/docs/1.41/cli/#jaeger-query
+# - https://github.com/jaegertracing/helm-charts/blob/main/charts/jaeger/values.yaml
+ENTRYPOINT ["jaeger-query"]

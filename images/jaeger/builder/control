@@ -1,0 +1,3 @@
+Package: jaeger-builder
+Description: Build image for Jaeger
+Maintainer: Jesse Hathaway <jhathaway@wikimedia.org>

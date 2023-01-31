@@ -1,0 +1,13 @@
+FROM {{ "jaeger-builder" | image_tag }} as build
+FROM {{ seed_image }}
+USER root
+COPY --from=build /build/jaeger-collector /bin/
+USER {{ "nobody" | uid }}
+EXPOSE 14250/tcp
+# jaeger-collector is configured via cli flags which may also be set via
+# environment variables. A sampling config file may also be supplied as a
+# configmap. We intend to intially use the helm chart values to drive the env
+# vars and sampling config:
+# - https://www.jaegertracing.io/docs/1.41/cli/#jaeger-collector
+# - https://github.com/jaegertracing/helm-charts/blob/main/charts/jaeger/values.yaml
+ENTRYPOINT ["jaeger-collector"]

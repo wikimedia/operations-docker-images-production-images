@@ -1,0 +1,20 @@
+FROM {{ "bullseye" | image_tag }}
+
+ARG VER='1.41.0'
+ARG URL='https://github.com/jaegertracing/jaeger/releases/download'
+ARG BASE="jaeger-${VER}-linux-amd64"
+ARG FILE="${BASE}.tar.gz"
+
+WORKDIR /build
+# Jaeger signing key, B42D1DB0F079690F, pulled from,
+# https://www.jaegertracing.io/download/#signed-artifacts
+COPY jaeger.pub.asc ./
+# gpg-agent is required for import to work correctly, :(
+RUN {{ "ca-certificates curl gpg gpg-agent gpgv" | apt_install }} \
+    && curl --silent --location --remote-name-all \
+        "${URL}/v${VER}/${FILE}" \
+        "${URL}/v${VER}/${FILE}.asc" \
+    && gpg --import jaeger.pub.asc \
+    && gpgv --keyring ~/.gnupg/pubring.kbx "${FILE}.asc" "${FILE}" \
+    && tar xf "${FILE}" \
+    && cp ${BASE}/* ./

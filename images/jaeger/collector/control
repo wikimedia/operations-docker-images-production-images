@@ -1,0 +1,4 @@
+Package: jaeger-collector
+Description: Jaeger Collector
+Build-Depends: jaeger-builder
+Maintainer: Jesse Hathaway <jhathaway@wikimedia.org>
