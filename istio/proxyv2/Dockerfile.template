@@ -8,7 +8,7 @@ ENV BUILD_DIR=/go/github.com/istio/istio \
     # and then use the istio.deps's lastStableSHA value.
     ISTIO_META_ISTIO_PROXY_SHA="66da2bf864bde982351ee0ca2cae0a4e931f923c" \
     # Environment variable indicating the exact build, for debugging
-    ISTIO_META_ISTIO_VERSION=1.9.5
+    ISTIO_META_ISTIO_VERSION=1.15.3
 
 USER root
 RUN {{ "istio" | add_user }}

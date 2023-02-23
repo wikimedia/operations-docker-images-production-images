@@ -1,3 +1,9 @@
+operator (1.15.3-2) wikimedia; urgency=high
+
+  * Artificial bump to keep versions in sync.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Thu, 23 Nov 2023 11:52:00 +0100
+
 operator (1.15.3-1) wikimedia; urgency=high
 
   * Upstream release 1.15.3
