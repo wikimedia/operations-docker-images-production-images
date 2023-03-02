@@ -2,6 +2,7 @@ FROM {{ "jaeger-builder" | image_tag }} as build
 FROM {{ seed_image }}
 USER root
 COPY --from=build /build/jaeger-collector /bin/
+RUN {{ "wmf-certificates" | apt_install }}
 USER {{ "nobody" | uid }}
 EXPOSE 14250/tcp
 # jaeger-collector is configured via cli flags which may also be set via

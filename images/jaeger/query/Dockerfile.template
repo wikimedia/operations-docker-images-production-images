@@ -1,6 +1,7 @@
 FROM {{ "jaeger-builder" | image_tag }} as build
 FROM {{ seed_image }}
 COPY --from=build /build/jaeger-query /bin/
+RUN {{ "wmf-certificates" | apt_install }}
 USER {{ "nobody" | uid }}
 EXPOSE 16686/tcp
 # jaeger-query is configured via cli flags which may also be set via

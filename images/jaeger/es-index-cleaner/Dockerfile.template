@@ -10,5 +10,6 @@ FROM {{ seed_image }}
 COPY --from=build \
   /go/jaeger/cmd/es-index-cleaner/es-index-cleaner-linux-amd64 \
   /bin/jaeger-es-index-cleaner
+RUN {{ "wmf-certificates" | apt_install }}
 USER {{ "nobody" | uid }}
 ENTRYPOINT ["jaeger-es-index-cleaner"]
