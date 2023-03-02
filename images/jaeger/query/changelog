@@ -1,3 +1,9 @@
+jaeger-query (1.41-2) wikimedia; urgency=medium
+
+  * add wmf-certificates
+
+ -- Jesse Hathaway <jhathaway@wikimedia.org>  Thu, 02 Mar 2023 14:39:43 -0600
+
 jaeger-query (1.41-1) wikimedia; urgency=medium
 
   * Initial release.

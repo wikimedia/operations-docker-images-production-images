@@ -1,3 +1,9 @@
+jaeger-es-index-cleaner (1.41-2) wikimedia; urgency=medium
+
+  * add wmf-certificates
+
+ -- Jesse Hathaway <jhathaway@wikimedia.org>  Thu, 02 Mar 2023 14:39:19 -0600
+
 jaeger-es-index-cleaner (1.41-1) wikimedia; urgency=medium
 
   * Initial release.
