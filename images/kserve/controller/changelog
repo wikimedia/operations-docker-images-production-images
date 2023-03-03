@@ -1,3 +1,9 @@
+kserve-controller (0.10.0-1) wikimedia; urgency=high
+
+  * Upstream release 0.10.0
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Fri, 3 Mar 2023 12:13:00 +0100
+
 kserve-controller (0.9.0-1) wikimedia; urgency=high
 
   * Upstream release 0.9.0
