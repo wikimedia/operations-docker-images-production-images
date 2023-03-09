@@ -1,3 +1,9 @@
+spark-operator (1.3.7-3.3.0-4) wikimedia; urgency=medium
+
+  * spark-operator: rely on exec entrypoint instead of shell one
+
+ -- Nicolas Fraison <nfraison@wikimedia.org>  Thu Mar 9 11:41:33 2023 +0100
+
 spark-operator (1.3.7-3.3.0-3) wikimedia; urgency=medium
 
   * Remove the gencerts.sh script since we no are no longer using the webhook

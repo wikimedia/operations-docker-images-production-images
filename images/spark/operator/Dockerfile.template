@@ -10,4 +10,4 @@ RUN {{ "wmf-certificates" | apt_install }}
 RUN chmod a+x /usr/bin/entrypoint.sh
 
 USER {{ "nobody" | uid }}
-ENTRYPOINT /usr/bin/entrypoint.sh
+ENTRYPOINT [ "/usr/bin/entrypoint.sh" ]
