@@ -1,3 +1,13 @@
+php7.4-cli (7.4.33-1-s1) wikimedia; urgency=high
+
+   * New PHP version 7.4.33-1+0~20221108.73+debian10~1.gbpa00350a+wmf10u2
+   * curl 7.64.0-4+deb10u5
+   * openssl 1.1.1n-0+deb10u4
+   * tiff 4.1.0+git191117-2~deb10u7
+
+
+ -- Clément Goubert <cgoubert@wikimedia.org>  Wed, 15 Mar 2023 13:28:40 +0100
+
 php7.4-cli (7.4.33-1) wikimedia; urgency=high
 
    New php version
