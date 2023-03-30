@@ -1,6 +1,6 @@
 FROM {{ seed_image }}
 
-RUN {{ "envoyproxy gettext-base" | apt_install }} && \
+RUN {{ "envoyproxy gettext-base wmf-certificates" | apt_install }} && \
     chown -R nobody:nogroup /etc/envoy /var/log/envoy
 
 COPY entrypoint.sh /bin/entrypoint.sh
