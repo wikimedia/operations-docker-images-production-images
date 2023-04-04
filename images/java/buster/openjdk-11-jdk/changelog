@@ -1,3 +1,9 @@
+openjdk-11-jdk (0.1-s3) wikimedia; urgency=medium
+
+  * Update to OpenJDK 11.0.19 (plus various other updates/bugfixes)
+
+ -- Moritz Muehlenhoff <moritz@wikimedia.org>  Tue, 04 Apr 2023 10:51:51 +0100
+
 openjdk-11-jdk (0.1-s2) wikimedia; urgency=medium
 
   * Update to JDK 11.0.16
