@@ -5,9 +5,9 @@ FROM docker-registry.wikimedia.org/golang1.19 as build
 # out the version of istiod (pilot is part of it), in order to decide what upgrade
 # path is needed. By default version is something like 1.9.0-dev, and it doesn't
 # track patch versions but only major.minor.
-{% set istio_make_variables = 'VERSION=1.15.3 BUILD_WITH_CONTAINER=0' %}
+{% set istio_make_variables = 'VERSION=1.15.7 BUILD_WITH_CONTAINER=0' %}
 {% set repo_base = '/go/github.com/istio' %}
-{% set istio_version_git_tag = '1.15.3' %}
+{% set istio_version_git_tag = '1.15.7' %}
 
 WORKDIR /go
 
