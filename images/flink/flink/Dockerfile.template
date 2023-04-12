@@ -127,10 +127,6 @@ RUN {{ "bash krb5-user libnss3 procps net-tools libsnappy1v5 gettext-base libjem
     chown flink:flink {{ flink_home }}/conf {{ flink_home }}/plugins {{ flink_home }}/log
 
 # ENV:
-# - Add libjemalloc.so to LD_PRELOAD.
-#   NOTE: Upstream flink-docker's docker-entrypoint.sh does this conditionally,
-#   but we've explicitly installed libjemalloc-dev, so we can be sure this is
-#   installed and can be enabled.
 #
 # - Set FLINK_HOME.
 #
@@ -139,8 +135,10 @@ RUN {{ "bash krb5-user libnss3 procps net-tools libsnappy1v5 gettext-base libjem
 #   'kubernetes-jobmanager.sh kubernetes-application', and
 #   'kubernetes-jobmanager.sh' is in Flink's bin/ directory.
 #
-ENV LD_PRELOAD=$LD_PRELOAD:/usr/lib/x86_64-linux-gnu/libjemalloc.so \
-    FLINK_HOME={{ flink_home }} \
+#   NOTE: docker-entrypoint.sh will enable jemalloc by default.
+#   Set DISABLE_JEMALLOC=true to use default (glibc) malloc instead.
+#
+ENV FLINK_HOME={{ flink_home }} \
     PATH={{ flink_home }}/bin:$PATH
 
 WORKDIR $FLINK_HOME

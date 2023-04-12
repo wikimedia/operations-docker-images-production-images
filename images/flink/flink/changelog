@@ -1,3 +1,12 @@
+flink (1.16.0-wmf6) wikimedia; urgency=medium
+
+  * Allow for conditionally disabling jemalloc by setting
+    DISABLE_JEMALLOC=true, just as upstream Flink docker image does.
+    This will allow us to debug some memory issues we are seeing,
+    in case they are relatetd to jemalloc.
+
+ -- Andrew Otto <otto@wikimedia.org>  Wed, 25 Jan 2023 11:07:00 -0500
+
 flink (1.16.0-wmf5) wikimedia; urgency=medium
 
   * Update to JRE 11.0.16
