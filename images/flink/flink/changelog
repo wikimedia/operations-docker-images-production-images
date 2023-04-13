@@ -1,3 +1,9 @@
+flink (1.16.1-wmf0) wikimedia; urgency=medium
+
+  * Upgrade to flink 1.16.1
+
+ -- David Causse <dcausse@wikimedia.org>  Wed, 13 Apr 2023 11:46:00 +0200
+
 flink (1.16.0-wmf6) wikimedia; urgency=medium
 
   * Allow for conditionally disabling jemalloc by setting
