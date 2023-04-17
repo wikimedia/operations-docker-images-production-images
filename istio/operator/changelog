@@ -2,7 +2,7 @@ operator (1.15.7-1) wikimedia; urgency=high
 
   * Upstream release 1.15.7
 
--- Luca Toscano <ltoscano@wikimedia.org>  Wed, 5 Apr 2023 11:46:00 +0100
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 5 Apr 2023 11:46:00 +0100
 
 operator (1.15.3-2) wikimedia; urgency=high
 
