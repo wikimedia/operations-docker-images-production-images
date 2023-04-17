@@ -1,3 +1,11 @@
+amd-gpu-tester (0.0.2-1) wikimedia; urgency=high
+
+  * Set the tensorflow-rocm version to keep compatibility with the current ROCm
+    version deployed.
+  * Move to python3-bullseye as base image, since python3-devel is too old.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Mon, 17 Apr 2023 15:30:00 +0100
+
 amd-gpu-tester (0.0.1-1) wikimedia; urgency=high
 
   * First release.
