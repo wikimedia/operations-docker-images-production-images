@@ -1,0 +1,3 @@
+Package: amd-gpu-tester
+Description: Simple collection of tests to run on AMD GPUs.
+Maintainer: Luca Toscano <ltoscano@wikimedia.org>
