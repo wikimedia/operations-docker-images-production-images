@@ -1,3 +1,9 @@
+amd-gpu-tester (0.0.3-1) wikimedia; urgency=high
+
+  * Add execute perms to /tests/run-tests.sh
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Mon, 17 Apr 2023 16:30:00 +0100
+
 amd-gpu-tester (0.0.2-1) wikimedia; urgency=high
 
   * Set the tensorflow-rocm version to keep compatibility with the current ROCm
