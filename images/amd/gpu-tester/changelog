@@ -1,3 +1,9 @@
+amd-gpu-tester (0.0.4-1) wikimedia; urgency=high
+
+  * Add ROCm repository and install base ROCm packages.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Mon, 17 Apr 2023 17:10:00 +0100
+
 amd-gpu-tester (0.0.3-1) wikimedia; urgency=high
 
   * Add execute perms to /tests/run-tests.sh
