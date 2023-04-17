@@ -1,3 +1,9 @@
+amd-gpu-tester (0.0.5-1) wikimedia; urgency=high
+
+  * Reduce the ROCm packages installed to decrease the final image size.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Mon, 17 Apr 2023 18:10:00 +0100
+
 amd-gpu-tester (0.0.4-1) wikimedia; urgency=high
 
   * Add ROCm repository and install base ROCm packages.

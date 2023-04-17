@@ -4,7 +4,7 @@ USER root
 COPY run-tests.sh /tests/run-tests.sh
 COPY amd-rocm54.list /etc/apt/sources.list.d/amd-rocm54.list
 RUN apt-get update -y \
-    && {{ "git python3-pip python3-venv rocm-dev rocm-utils rocm-libs rccl" | apt_install }} \
+    && {{ "git python3-pip python3-venv rocm-dev" | apt_install }} \
     && mkdir -p /tests && chown nobody /tests \
     && chmod +x /tests/run-tests.sh
 
