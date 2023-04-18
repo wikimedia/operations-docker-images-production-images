@@ -1,3 +1,9 @@
+amd-gpu-tester (0.0.6-1) wikimedia; urgency=high
+
+  * Add rccl to the ROCm packages installed (required to run the tests).
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Tue, 18 Apr 2023 09:51:00 +0100
+
 amd-gpu-tester (0.0.5-1) wikimedia; urgency=high
 
   * Reduce the ROCm packages installed to decrease the final image size.
