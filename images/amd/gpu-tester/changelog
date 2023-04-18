@@ -1,3 +1,13 @@
+amd-gpu-tester (0.0.7-1) wikimedia; urgency=high
+
+  * Add rocminfo to the ROCm packages installed.
+  * Modify the run-tests.sh script to show /dev/kfd's permissions
+    and run rocminfo to show basic info about the GPU and the ROCm suite.
+  * Add the 'render' group to be able to add the user 'nobody' to it.
+  * Add nobody to the group 'render' to allow it to access the /dev/kfd device.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Tue, 18 Apr 2023 10:56:00 +0100
+
 amd-gpu-tester (0.0.6-1) wikimedia; urgency=high
 
   * Add rccl to the ROCm packages installed (required to run the tests).
