@@ -4,11 +4,9 @@ USER root
 COPY run-tests.sh /tests/run-tests.sh
 COPY amd-rocm54.list /etc/apt/sources.list.d/amd-rocm54.list
 RUN apt-get update -y \
-    && groupadd render \
-    && {{ "git python3-pip python3-venv rocm-dev rccl rocminfo" | apt_install }} \
+    && {{ "git python3-pip python3-venv rocm-dev rccl rocblas miopen-hip hipfft rocrand rocminfo" | apt_install }} \
     && mkdir -p /tests && chown nobody /tests \
-    && chmod +x /tests/run-tests.sh \
-    && usermod -a -G render nobody
+    && chmod +x /tests/run-tests.sh
 
 USER {{ "nobody" | uid }}
 WORKDIR /tests
