@@ -1,3 +1,10 @@
+amd-gpu-tester (0.0.10-1) wikimedia; urgency=high
+
+  * Replace rocrand with rocrand-dev, miopen-hip with miopen-hip-dev.
+  * Add rocfft.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Thu, 20 Apr 2023 12:26:00 +0100
+
 amd-gpu-tester (0.0.9-1) wikimedia; urgency=high
 
   * Replace rocblas with rocblas-dev.
