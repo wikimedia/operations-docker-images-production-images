@@ -1,9 +1,15 @@
+amd-gpu-tester (0.0.9-1) wikimedia; urgency=high
+
+  * Replace rocblas with rocblas-dev.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Thu, 20 Apr 2023 10:12:00 +0100
+
 amd-gpu-tester (0.0.8-1) wikimedia; urgency=high
 
   * Add rocblas, miopen-hip, hipfft and rocrand to the ROCm packages installed.
   * Remove the ad-hoc creation of the 'render' group.
 
- -- Luca Toscano <ltoscano@wikimedia.org>  Tue, 19 Apr 2023 11:37:00 +0100
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 19 Apr 2023 11:37:00 +0100
 
 amd-gpu-tester (0.0.7-1) wikimedia; urgency=high
 
