@@ -1,3 +1,10 @@
+amd-gpu-tester (0.0.11-1) wikimedia; urgency=high
+
+  * Reduce the size of the image removing AMD ROCm packages.
+  * Add and use the ml-runner user instead of nobody.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 26 Apr 2023 09:26:00 +0100
+
 amd-gpu-tester (0.0.10-1) wikimedia; urgency=high
 
   * Replace rocrand with rocrand-dev, miopen-hip with miopen-hip-dev.

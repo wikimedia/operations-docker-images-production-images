@@ -2,13 +2,13 @@ FROM {{ "python3-bullseye" | image_tag }}
 
 USER root
 COPY run-tests.sh /tests/run-tests.sh
-COPY amd-rocm54.list /etc/apt/sources.list.d/amd-rocm54.list
-RUN apt-get update -y \
-    && {{ "git python3-pip python3-venv rocm-dev rccl rocblas-dev miopen-hip-dev hipfft rocrand-dev rocfft rocminfo" | apt_install }} \
-    && mkdir -p /tests && chown nobody /tests \
+RUN {{ "ml-runner" | add_user }} \
+    && apt-get update -y \
+    && {{ "git python3-pip python3-venv" | apt_install }} \
+    && mkdir -p /tests && chown ml-runner /tests \
     && chmod +x /tests/run-tests.sh
 
-USER {{ "nobody" | uid }}
+USER {{ "ml-runner" | uid }}
 WORKDIR /tests
 
 SHELL ["/bin/bash", "-c"]

@@ -16,3 +16,4 @@ known_uid_mappings:
   flink: 186
   nobody: 65534
   otelcol-contrib: 10001
+  ml-runner: 22222
