@@ -1,3 +1,0 @@
-Package: nodejs
-Description: Base image for nodejs-based applications
-Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>
