@@ -1,3 +1,9 @@
+openjdk-11-jre (11.0.18-s0) wikimedia; urgency=medium
+
+  * Base on Debian Bullsye image, which has openjdk 11.0.18
+
+ -- Andrew Otto <otto@wikimedia.org>  Tue, 18 Apr 2023 11:56:00 -0500
+
 openjdk-11-jre (0.1-s3) wikimedia; urgency=medium
 
   * Update to OpenJDK 11.0.19 (plus various other updates/bugfixes)

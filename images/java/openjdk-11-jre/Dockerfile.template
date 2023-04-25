@@ -1,4 +1,4 @@
-FROM {{ registry }}/wikimedia-buster:latest
+FROM {{ registry }}/bullseye:latest
 
 # openjdk-11-jre-headless:amd64 (11.0.16+8-1~deb10u1) fails post-inst like:
 # update-alternatives: error: error creating symbolic link '/usr/share/man/man1/java.1.gz.dpkg-tmp': No such file or directory
