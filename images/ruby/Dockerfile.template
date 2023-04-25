@@ -1,3 +1,0 @@
-FROM {{ "wikimedia-stretch" | image_tag }}
-
-RUN {{ "ruby ruby-all-dev" | apt_install }}
