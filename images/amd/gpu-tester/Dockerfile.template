@@ -4,7 +4,7 @@ USER root
 COPY run-tests.sh /tests/run-tests.sh
 RUN {{ "ml-runner" | add_user }} \
     && apt-get update -y \
-    && {{ "git python3-pip python3-venv libelf-dev" | apt_install }} \
+    && {{ "git python3-pip python3-venv libelf-dev libdrm2" | apt_install }} \
     && mkdir -p /tests && chown ml-runner /tests \
     && chmod +x /tests/run-tests.sh
 
