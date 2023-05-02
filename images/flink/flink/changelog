@@ -1,3 +1,11 @@
+flink (1.17.0-wmf0) wikimedia; urgency=medium
+
+  * Upgrade to flink 1.17.0
+  * Upgrade to python 3.9
+  * Upgrade base image to Debian Bullsye
+
+ -- Andrew Otto <otto@wikimedia.org>  Tue, 02 JMay 2023 08:53:00 -0500
+
 flink (1.16.1-wmf0) wikimedia; urgency=medium
 
   * Upgrade to flink 1.16.1

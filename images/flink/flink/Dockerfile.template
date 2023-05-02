@@ -1,6 +1,6 @@
 {# Set variables #}
 
-{% set flink_version = '1.16.1' %}
+{% set flink_version = '1.17.0' %}
 
 {# scala_version is only used when downloading example artifacts.
    We do not include flink-scala in this distribution.  If you want
@@ -11,7 +11,7 @@
    from which to copy pip installed dependecies to the production image
    This does not control the version of python installed.
    You must update this if you upgrade the version of python that is installed. #}
-{% set python_version = '3.7' %}
+{% set python_version = '3.9' %}
 
 {# Elastic Common Schema logging version. Used for structured logging. #}
 {% set ecs_version = '1.5.0' %}
@@ -36,25 +36,13 @@
 #       of more cached RUN layers. production image stage below does consolodate
 #       RUN commands in order to have fewer layers there.
 
-FROM {{ seed_image }} as build
+FROM {{ registry }}/bullseye:latest as build
 USER root
 
-RUN {{ "curl gpg gpg-agent dirmngr coreutils ca-certificates build-essential python3 python3-pip" | apt_install }}
+RUN {{ "curl gpg gpg-agent dirmngr coreutils ca-certificates build-essential python3 python3-setuptools python3-pip" | apt_install }}
 WORKDIR /tmp
 
-
-# We need a newer pip in order to install packages from .wheels.
-# Otherwise, transitive dependency 'maturin' fails with:
-#
-#   error: can't find Rust compiler
-#   If you are using an outdated pip version, it is possible a prebuilt wheel is available for this package but pip is not able to install from it. Installing from the wheel would avoid the need for a Rust compiler.
-#   To update pip, run:
-#       pip install --upgrade pip
-#   and then retry package installation.
-#
-# When we upgrade to newer python in newer debian (>3.7?) we should not need this anymore.
-RUN pip3 install --upgrade pip
-RUN /usr/local/bin/pip install setuptools apache-flink=={{ flink_version }}
+RUN pip install apache-flink=={{ flink_version }}
 
 # Symlink the installed pyflink module directory to {{ flink_home }}.
 # This will give us a consistent and easier to find path for FLINK_HOME,
@@ -112,16 +100,10 @@ COPY --from=build /usr/local/lib/python{{ python_version }} /usr/local/lib/pytho
 # RUN:
 # - Install debian packages.
 #
-# - Flink's default python interpreter is 'python', which in <= buster is python2.
-#   We don't install python (2), so use update-alternatives to create a symlink to python3.
-#   When openjdk-11-jre is upgraded to bullsye, we can use python-is-python3 .deb package.
-#   This allows flink apps to not have to overridde -pyclientexec if they want to use the system python.
-#
 # - Create the flink user.
 #
 # - Symlink the installed pyflink module directory to {{ flink_home }} in the production image.
-RUN {{ "bash krb5-user libnss3 procps net-tools libsnappy1v5 gettext-base libjemalloc-dev python3 wmf-certificates" | apt_install }} && \
-    update-alternatives --install /usr/bin/python python /usr/bin/python3 10 && \
+RUN {{ "bash krb5-user libnss3 procps net-tools libsnappy1v5 gettext-base libjemalloc-dev python3 python3-setuptools python-is-python3 wmf-certificates" | apt_install }} && \
     {{ "flink" | add_user }} && \
     ln -sv $(python3 -c 'import pyflink, os; print(os.path.dirname(pyflink.__file__))') {{ flink_home }} && \
     chown flink:flink {{ flink_home }}/conf {{ flink_home }}/plugins {{ flink_home }}/log
