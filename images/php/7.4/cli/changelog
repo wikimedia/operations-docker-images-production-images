@@ -1,3 +1,9 @@
+php7.4-fpm-multiversion-base (7.4.33-3) wikimedia; urgency=medium
+
+   * Add librsvg2-bin package (T336025)
+
+ -- Effie Mouzeli <effie@wikimedia.org>  Tue, 16 May 2023 12:20:29 +0300
+
 php7.4-cli (7.4.33-1-s1) wikimedia; urgency=high
 
    * New PHP version 7.4.33-1+0~20221108.73+debian10~1.gbpa00350a+wmf10u2
