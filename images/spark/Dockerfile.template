@@ -12,7 +12,7 @@ FROM {{ "openjdk-11-jre" | image_tag  }}
 USER root
 
 RUN {{ "bash curl tini libc6 libpam-modules libpam-modules krb5-user libnss3 procps net-tools r-base r-base-dev python3 python3-pip" | apt_install }} && \
-    mkdir -p {{ spark_install_dir}}/examples {{ spark_install_dir}}/work-dir {{ spark_install_dir}}/R
+    mkdir -p {{ spark_install_dir}}/examples {{ spark_install_dir}}/work-dir
 
 # Copy the base spark files from the binary distribution image into the target directory in this image
 COPY --from=build --chown=root {{ spark_dist_dir}}/jars {{ spark_install_dir}}/jars
@@ -26,7 +26,6 @@ COPY --from=build --chown=root {{ spark_dist_dir}}/kubernetes/tests {{ spark_ins
 COPY --from=build --chown=root {{ spark_dist_dir}}/python/pyspark {{ spark_install_dir}}/python/pyspark
 COPY --from=build --chown=root {{ spark_dist_dir}}/python/lib {{ spark_install_dir}}/python/lib
 COPY --from=build --chown=root {{ spark_dist_dir}}/python/pyspark {{ spark_install_dir}}/python/pyspark
-COPY --from=build --chown=root {{ spark_dist_dir}}/R {{ spark_install_dir}}/R
 COPY --from=build --chown=root {{ spark_dist_dir}}/jars {{ spark_install_dir}}/jars
 
 # Copy the decom script from the binary distribution to this image
@@ -35,8 +34,7 @@ COPY --from=build --chown=root {{ spark_dist_dir}}/kubernetes/dockerfiles/spark/
 # Copy our custom entrypoint script to this image
 COPY entrypoint.sh /opt/
 
-ENV SPARK_HOME=/opt/spark \
-    R_HOME=/usr/lib/R
+ENV SPARK_HOME=/opt/spark
 
 WORKDIR '/opt/spark/work-dir'
 

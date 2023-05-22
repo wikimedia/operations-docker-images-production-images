@@ -1,8 +1,8 @@
 # Set variables
 {% set spark_src_dir = '/usr/src/spark' %}
-{% set spark_version = '3.3.0' %}
+{% set spark_version = '3.1.2' %}
 {% set spark_distro_name = 'wmf' %}
-{% set spark_common_args = '--pip --r' %}
+{% set spark_common_args = '--pip' %}
 {% set hadoop_version = '2.10.2' %}
 {% set maven_opts = '-Xss64m -Xmx2g -XX:ReservedCodeCacheSize=1g' %}
 {% set operator_src_dir = '/go/spark-on-k8s-operator' %}
@@ -61,12 +61,11 @@ WORKDIR {{ spark_src_dir }}
 ENV MAVEN_OPTS="{{ maven_opts }}"
 # The following command creates a binary distribution of Spark and saves it to a directory named ./dist beneath the source
 RUN ./dev/make-distribution.sh --name {{ spark_distro_name }} {{ spark_common_args }} \
-    -Psparkr \
     -Phive \
     -Phive-thriftserver \
     -Pyarn \
     -Pkubernetes \
-    -Phadoop-2 \
+    -Phadoop-2.7 \
     -Dhadoop.version={{ hadoop_version }}
 
 # Copy the spark-operator binary to the spark-build image
