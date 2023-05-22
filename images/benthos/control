@@ -1,0 +1,3 @@
+Package: benthos
+Description: Basic Benthos stream processor container
+Maintainer: Kamila Souckova <ksouckova@wikimedia.org>
