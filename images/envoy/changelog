@@ -1,3 +1,11 @@
+envoy (1.18.3-2-s1) wikimedia; urgency=medium
+
+  * Add DRAIN_TIME_S, DRAIN_STRATEGY, and ADMIN_PORT env variables
+  * Add drain-envoy.sh script
+  * Bug: T338014
+
+ -- Clément Goubert <Clément Goubert <cgoubert@wikimedia.org>>  Thu,  1 Jun 2023 17:11:54 +0200
+
 envoy (1.18.3-2) wikimedia; urgency=medium
 
   * Add wmf-certificates package; Bug: T333551 
