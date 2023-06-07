@@ -1,3 +1,9 @@
+envoy (1.18.3-2-s2) wikimedia; urgency=high
+
+  * Add connection monitoring to drain-envoy.sh
+
+ -- Clément Goubert <Clément Goubert <cgoubert@wikimedia.org>>  Wed,  7 Jun 2023 12:04:01 +0200
+
 envoy (1.18.3-2-s1) wikimedia; urgency=medium
 
   * Add DRAIN_TIME_S, DRAIN_STRATEGY, and ADMIN_PORT env variables
