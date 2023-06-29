@@ -6,6 +6,7 @@ RUN {{ "envoyproxy gettext-base wmf-certificates" | apt_install }} && \
     chown -R nobody:nogroup /etc/envoy /var/log/envoy
 
 COPY entrypoint.sh /bin/entrypoint.sh
+COPY drain-envoy.sh /bin/drain-envoy.sh
 
 USER {{ "nobody" | uid }}
 COPY envoy-basic-config.yaml /etc/envoy/envoy.yaml.tpl
