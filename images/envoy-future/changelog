@@ -1,3 +1,10 @@
+envoy-future (1.23.10-1-s1) wikimedia; urgency=medium
+
+  * Fix envoy-basic-config.yaml
+  * Add test file
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Fri, 30 Jun 2023 12:52:52 +0200
+
 envoy-future (1.23.10-1) wikimedia; urgency=medium
 
   * New upstream version 1.23.10

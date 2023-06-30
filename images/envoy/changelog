@@ -1,3 +1,10 @@
+envoy (1.18.3-2-s3) wikimedia; urgency=medium
+
+  * Fix envoy-basic-config.yaml
+  * Add test file
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Fri, 30 Jun 2023 12:52:01 +0200
+
 envoy (1.18.3-2-s2) wikimedia; urgency=high
 
   * Add connection monitoring to drain-envoy.sh
