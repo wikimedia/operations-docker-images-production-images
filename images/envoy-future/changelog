@@ -1,6 +1,6 @@
-envoy-future (1.26.1-1) wikimedia; urgency=medium
+envoy-future (1.23.10-1) wikimedia; urgency=medium
 
-  * New upstream version 1.26.1
+  * New upstream version 1.23.10
   * Add draining script and configuration (backport from envoy 1.18)
   * Add type URL to http filter in envoy-basic-config
   * Bug: T300324
