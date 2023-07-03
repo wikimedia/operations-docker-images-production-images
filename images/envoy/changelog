@@ -1,3 +1,10 @@
+envoy (1.23.10-1) wikimedia; urgency=medium
+
+  * New envoy upstream version 1.23.10
+  * Bug: T300324
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Mon, 03 Jul 2023 16:06:27 +0200
+
 envoy (1.18.3-2-s3) wikimedia; urgency=medium
 
   * Fix envoy-basic-config.yaml
