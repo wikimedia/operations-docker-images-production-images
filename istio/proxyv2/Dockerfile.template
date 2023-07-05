@@ -1,6 +1,6 @@
 FROM {{ "build" | image_tag }} as build
 
-FROM {{ seed_image }}
+FROM {{ "buster" | image_tag }}
 
 ENV BUILD_DIR=/go/github.com/istio/istio \
     # Environment variable indicating the exact proxy sha - for debugging or version-specific configs
