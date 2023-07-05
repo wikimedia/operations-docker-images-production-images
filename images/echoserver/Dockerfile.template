@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM {{ seed_image }}
+FROM {{ "buster" | image_tag }}
 
 RUN {{ "openssl nginx-light libnginx-mod-http-lua" | apt_install }} && \
     ln -sf /dev/stdout /var/log/nginx/access.log && \

@@ -9,7 +9,7 @@ RUN git clone $SOURCE_REPO && \
     git checkout $SOURCE_VERSION && \
     VERSION=$SOURCE_VERSION make
 
-FROM {{ seed_image }}
+FROM {{ "buster" | image_tag }}
 
 COPY --from=build /go/helm-state-metrics/bin/manager /usr/bin/
 RUN {{ "wmf-certificates" | apt_install }}

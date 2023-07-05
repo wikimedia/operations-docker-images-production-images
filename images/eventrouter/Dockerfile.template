@@ -9,7 +9,7 @@ RUN git clone $SOURCE_REPO && \
     git checkout $SOURCE_VERSION && \
     go build -ldflags="-w -s"
 
-FROM {{ seed_image }}
+FROM {{ "buster" | image_tag }}
 
 COPY --from=build /go/eventrouter/config.json /etc/eventrouter/
 COPY --from=build /go/eventrouter/eventrouter /usr/bin/

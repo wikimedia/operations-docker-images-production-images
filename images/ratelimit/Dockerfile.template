@@ -19,7 +19,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o $WORK_BASE/ratelimiter/ratelimit_config
 RUN mv $WORK_BASE/ratelimiter/ratelimit /work/ratelimit.cmd
 RUN mv $WORK_BASE/ratelimiter/ratelimit_config_check /work/ratelimit_config_check.cmd
 
-FROM {{ seed_image }}
+FROM {{ "buster" | image_tag }}
 
 COPY --from=build /work/ratelimit.cmd /usr/bin/ratelimit
 COPY --from=build /work/ratelimit_config_check.cmd /usr/bin/ratelimit_config_check

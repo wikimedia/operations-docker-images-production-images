@@ -13,7 +13,7 @@ RUN mkdir -p {{ repo_base }} \
 WORKDIR {{ repo_base }}/coredns
 RUN make coredns
 
-FROM {{ seed_image }}
+FROM {{ "buster" | image_tag }}
 
 USER root
 COPY --from=build {{ repo_base }}/coredns/coredns /usr/bin/coredns

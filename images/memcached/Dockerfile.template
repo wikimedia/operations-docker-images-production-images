@@ -1,4 +1,4 @@
-FROM {{ seed_image }}
+FROM {{ "buster" | image_tag }}
 
 ENV MEMC_VERBOSITY="" \
         MEMC_MEMORY=64 \

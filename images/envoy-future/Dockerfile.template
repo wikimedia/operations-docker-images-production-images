@@ -1,4 +1,4 @@
-FROM {{ seed_image }}
+FROM {{ "buster" | image_tag }}
 
 ADD envoy-future.list /etc/apt/sources.list.d/envoy-future.list
 

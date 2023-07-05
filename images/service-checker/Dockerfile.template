@@ -1,4 +1,4 @@
-FROM {{ seed_image }}
+FROM {{ "buster" | image_tag }}
 
 RUN {{ "python3-service-checker" | apt_install }}
 

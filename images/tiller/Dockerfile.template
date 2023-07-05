@@ -1,4 +1,4 @@
-FROM {{ seed_image }}
+FROM {{ "buster" | image_tag }}
 
 RUN {{ "tiller" | apt_install }}
 ENV TILLER_HISTORY_MAX=100

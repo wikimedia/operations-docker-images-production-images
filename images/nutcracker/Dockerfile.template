@@ -1,4 +1,4 @@
-FROM {{ seed_image }}
+FROM {{ "buster" | image_tag }}
 
 RUN {{ "nutcracker" | apt_install }} && \
     chown -R nobody /var/log/nutcracker

@@ -1,4 +1,4 @@
-FROM {{ seed_image }}
+FROM {{ "buster" | image_tag }}
 
 RUN {{ "prometheus-apache-exporter" | apt_install }} \
    && rm -rf /usr/share/gocode/src/github.com/prometheus

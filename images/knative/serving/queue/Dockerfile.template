@@ -1,6 +1,6 @@
 FROM {{ "knative-build" | image_tag }} as build
 
-FROM {{ seed_image }}
+FROM {{ "buster" | image_tag }}
 
 USER root
 
