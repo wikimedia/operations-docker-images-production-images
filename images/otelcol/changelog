@@ -1,3 +1,9 @@
+otelcol (0.81.0-1) wikimedia; urgency=medium
+
+  * Bump to version 0.81.0.
+
+ -- Reuven Lazarus <rlazarus@wikimedia.org>  Mon, 10 Jul 2023 22:31:57 -0700
+
 otelcol (0.66.0-1) wikimedia; urgency=medium
 
   * Initial release.
