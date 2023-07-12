@@ -1,3 +1,9 @@
+fluent-bit (1.5.3-4) wikimedia; urgency=medium
+
+  * Install wmf-certificates
+
+ -- Hugh Nowlan <hnowlan@wikimedia.org>  Wed, 25 Jan 2023 16:44:25 +0000
+
 fluent-bit (1.5.3-3) wikimedia; urgency=medium
 
   * Use seed_image
