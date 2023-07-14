@@ -1,3 +1,9 @@
+php7.4-fpm (7.4.33-2) wikimedia; urgency=medium
+
+  * Configure file max upload size (T341825)
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Fri, 14 Jul 2023 07:51:33 +0200
+
 php7.4-fpm (7.4.33-1-s1) wikimedia; urgency=high
 
    Refresh for update in parent image php7.4-cli:
