@@ -1,3 +1,13 @@
+envoy-future (1.23.10-2) wikimedia; urgency=medium
+
+  * Add --service-node argument to envoy (defaults to $HOSTNAME)
+    This defines the local service nodes name and is required for local file
+    SDS config to work.
+    The default may overridden via the $SERVICE_NODE env variable.
+  * Bug: T300033
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Tue, 18 Jul 2023 12:02:43 +0200
+
 envoy-future (1.23.10-1-s1) wikimedia; urgency=medium
 
   * Fix envoy-basic-config.yaml
