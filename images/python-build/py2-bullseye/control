@@ -1,0 +1,3 @@
+Package: python2-build-bullseye
+Description: Image for building tar archives with python wheels for an application
+
