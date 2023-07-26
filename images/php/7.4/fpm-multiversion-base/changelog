@@ -1,3 +1,9 @@
+php7.4-fpm-multiversion-base (7.4.33-5) wikimedia; urgency=medium
+
+  * Re-build for T340087
+
+ -- Alexandros Kosiaris <akosiaris@wikimedia.org>  Wed, 26 Jul 2023 10:06:49 +0300
+
 php7.4-fpm-multiversion-base (7.4.33-4) wikimedia; urgency=medium
 
   * Re-build for T341825
