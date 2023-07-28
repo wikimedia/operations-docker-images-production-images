@@ -1,3 +1,0 @@
-FROM {{ registry }}/bullseye:latest
-
-RUN echo "deb http://apt.wikimedia.org/wikimedia bullseye-wikimedia thirdparty/node14" > /etc/apt/sources.list.d/nodejs.list && {{ "nodejs npm wmf-certificates" | apt_install }}

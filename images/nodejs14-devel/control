@@ -1,3 +1,0 @@
-Package: nodejs14-devel
-Description: Base image for nodejs 14.x based applications on Debian Bullseye. Contains npm
-Maintainer: Luca Toscano <ltoscano@wikimedia.org>
