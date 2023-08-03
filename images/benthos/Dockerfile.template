@@ -3,7 +3,7 @@
 # install just that one script. Should be changed back to `{{ seed_image }}` once we're on Bullseye.
 FROM docker-registry.wikimedia.org/bullseye:latest
 
-RUN {{ "opensysusers benthos" | apt_install }}
+RUN {{ "opensysusers benthos wmf-certificates" | apt_install }}
 
 USER {{ "nobody" | uid }}
 
