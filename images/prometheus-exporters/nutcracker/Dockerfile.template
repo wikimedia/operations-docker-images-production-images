@@ -1,4 +1,4 @@
-FROM {{ "python3" | image_tag }}
+FROM {{ "python3-bullseye" | image_tag }}
 RUN {{ "prometheus-nutcracker-exporter" | apt_install }}
 
 USER {{ "nobody" | uid }}

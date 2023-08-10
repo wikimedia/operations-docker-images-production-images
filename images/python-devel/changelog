@@ -1,3 +1,9 @@
+python3-devel (0.0.3) wikimedia; urgency=medium
+
+  * Move to bullseye
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 10 Aug 2023 14:57:54 +0200
+
 python3-devel (0.0.2) wikimedia; urgency=high
 
    * T228196

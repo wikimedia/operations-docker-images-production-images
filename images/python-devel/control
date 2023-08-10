@@ -1,4 +1,4 @@
 Package: python3-devel
 Description: Lightweight base image for python application building/development
 Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>
-Depends: python3
+Depends: python3-bullseye
