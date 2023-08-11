@@ -1,3 +1,11 @@
+httpd-fcgi (2.4.38-10u1) wikimedia; urgency=high
+
+  * Remove stdout logging when rsyslog is used
+  * Fix bad json shipped from apache T340935
+
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 10 Aug 2023 15:00:06 +0200
+
 httpd-fcgi (2.4.38-10) wikimedia; urgency=high
 
    * Updating ECS format to 1.11.0

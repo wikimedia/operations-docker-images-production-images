@@ -1,3 +1,11 @@
+mediawiki-httpd (0.1.6) wikimedia; urgency=high
+
+   Refresh for update in parent image httpd-fcgi:
+   * Remove stdout logging when rsyslog is used
+   * Fix bad json shipped from apache T340935
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 10 Aug 2023 15:00:06 +0200
+
 mediawiki-httpd (0.1.5-s1) wikimedia; urgency=high
 
    Refresh for update in parent image httpd-fcgi:

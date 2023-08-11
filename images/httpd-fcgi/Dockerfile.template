@@ -1,3 +1,9 @@
+# TODO: use the packages published on gitlab?
+FROM {{ "golang1.19" | image_tag }} as build
+
+RUN git clone https://gitlab.wikimedia.org/repos/sre/glogger.git && cd glogger \
+    && GOOS=linux GOARCH=amd64 go build -ldflags="-s -w"
+
 FROM {{ "httpd" | image_tag }}
 
 USER root
@@ -31,8 +37,10 @@ ENV FCGI_MODE="FCGI_TCP" \
 # Add the configuration we want to use.
 COPY config /tmp/config
 COPY apply-config.sh /bin
-# Execute the script.
-RUN  chmod 0544 /bin/apply-config.sh && /bin/apply-config.sh
+# Also copy the logger wrapper, see T340935
+COPY --from=build /go/glogger/glogger /usr/bin/glogger
+# Execute the script, finish installing glogger
+RUN  chmod 0544 /bin/apply-config.sh && /bin/apply-config.sh && chmod 0555 /usr/bin/glogger && rm /bin/apply-config.sh
 
 USER {{ "www-data" | uid }}
 
