@@ -1,3 +1,9 @@
+httpd-fcgi (2.4.38-10-u2) wikimedia; urgency=medium
+
+  * T344438
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 17 Aug 2023 15:55:30 +0200
+
 httpd-fcgi (2.4.38-10u1) wikimedia; urgency=high
 
   * Remove stdout logging when rsyslog is used
