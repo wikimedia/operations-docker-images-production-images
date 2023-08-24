@@ -1,6 +1,12 @@
-mediawiki-httpd (0.1.7) UNRELEASED; urgency=medium
+mediawiki-httpd (0.1.8) wikimedia; urgency=medium
 
-  * T344438 
+  * Fix event.duration type in ecs logging.
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 24 Aug 2023 14:10:46 +0200
+
+mediawiki-httpd (0.1.7) wikimedia; urgency=medium
+
+  * T344438
 
  -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 17 Aug 2023 15:56:08 +0200
 

@@ -1,3 +1,9 @@
+httpd-fcgi (2.4.38-10-u3) UNRELEASED; urgency=medium
+
+  * Fix event.duration format in ECS logs
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 24 Aug 2023 14:08:25 +0200
+
 httpd-fcgi (2.4.38-10-u2) wikimedia; urgency=medium
 
   * T344438

@@ -1,3 +1,9 @@
+httpd (2.4.38-10-u2) wikimedia; urgency=medium
+
+  * Fix event.duration type in ecs logging.
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 24 Aug 2023 14:07:43 +0200
+
 httpd (2.4.38-10-u1) wikimedia; urgency=high
 
    T344438
