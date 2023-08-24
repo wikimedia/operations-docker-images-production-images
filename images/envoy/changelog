@@ -1,3 +1,10 @@
+envoy (1.23.10-2-s1) wikimedia; urgency=high
+
+  * Add CONCURRENCY environment variable support to configure number of workers
+  * Bug: T344814
+
+ -- Clément Goubert <Clément Goubert <cgoubert@wikimedia.org>>  Thu, 24 Aug 2023 11:14:27 +0200
+
 envoy (1.23.10-2) wikimedia; urgency=medium
 
   * Add --service-node argument to envoy (defaults to $HOSTNAME)
