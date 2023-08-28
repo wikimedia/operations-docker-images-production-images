@@ -1,7 +1,8 @@
 FROM {{ "buster" | image_tag }}
 
 RUN {{ "envoyproxy gettext-base wmf-certificates" | apt_install }} && \
-    chown -R nobody:nogroup /etc/envoy /var/log/envoy
+    mkdir -p /var/run/envoy && \
+    chown -R nobody:nogroup /etc/envoy /var/log/envoy /var/run/envoy
 
 COPY entrypoint.sh /bin/entrypoint.sh
 COPY drain-envoy.sh /bin/drain-envoy.sh

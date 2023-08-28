@@ -1,3 +1,10 @@
+envoy (1.23.10-2-s2) wikimedia; urgency=medium
+
+  * Create /var/run/envoy (owned by nobody:nogroup) to create the admin UNIX
+    socket in
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Mon, 28 Aug 2023 15:58:13 +0200
+
 envoy (1.23.10-2-s1) wikimedia; urgency=high
 
   * Add CONCURRENCY environment variable support to configure number of workers
