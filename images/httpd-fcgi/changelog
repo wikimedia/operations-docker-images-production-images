@@ -1,3 +1,9 @@
+httpd-fcgi (2.4.38-10-u4) wikimedia; urgency=high
+
+   Increase logger packet size to avoid truncating logs
+
+ -- Kamila Součková <ksouckova@wikimedia.org>  Mon, 28 Aug 2023 12:27:00 +0200
+
 httpd-fcgi (2.4.38-10-u3) UNRELEASED; urgency=medium
 
   * Fix event.duration format in ECS logs
