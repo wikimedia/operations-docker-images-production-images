@@ -1,3 +1,9 @@
+openjdk-11-jdk (11.0.20-s0) wikimedia; urgency=medium
+
+  * Bump to OpenJDK 11.0.20
+
+ -- Moritz Mühlenhoff <mmuhlenhoff@wikimedia.org>  Mon, 04 Sep 2023 13:47:52 +0200
+
 openjdk-11-jdk (11.0.18-s0) wikimedia; urgency=medium
 
   * Base on Debian Bullsye image, which has openjdk 11.0.18
