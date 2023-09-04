@@ -1,3 +1,10 @@
+spark-build (3.3.3-1) wikimedia; urgency=medium
+
+  * Build upstream spark version 3.3.3
+  * Re-enable SparkR
+
+ -- Ben Tullis <btullis@wikimedia.org>  Fri, 25 Aug 2023 11:18:00 +0100
+
 spark-build (3.1.2-1) wikimedia; urgency=medium
 
   * Build a version supporting spark 3.1.2
