@@ -1,4 +1,4 @@
-FROM { 'golang1.19' | image_tag }} as build
+FROM {{ 'golang1.19' | image_tag }} as build
 
 ENV SOURCE_VERSION=v0.4-wmf
 ENV SOURCE_REPO=https://gerrit.wikimedia.org/r/operations/software/heptiolabs/eventrouter.git
