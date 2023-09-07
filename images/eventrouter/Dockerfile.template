@@ -1,6 +1,6 @@
-FROM {{ registry }}/golang:1.13-3-s1 as build
+FROM { 'golang1.19' | image_tag }} as build
 
-ENV SOURCE_VERSION=v0.3-wmf
+ENV SOURCE_VERSION=v0.4-wmf
 ENV SOURCE_REPO=https://gerrit.wikimedia.org/r/operations/software/heptiolabs/eventrouter.git
 ENV CGO_ENABLED=0 GOOS=linux
 
@@ -9,7 +9,7 @@ RUN git clone $SOURCE_REPO && \
     git checkout $SOURCE_VERSION && \
     go build -ldflags="-w -s"
 
-FROM {{ "buster" | image_tag }}
+FROM {{ "bookworm" | image_tag }}
 
 COPY --from=build /go/eventrouter/config.json /etc/eventrouter/
 COPY --from=build /go/eventrouter/eventrouter /usr/bin/
