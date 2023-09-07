@@ -1,0 +1,6 @@
+php7.4-cli-icu67 (7.4.33-1-s1) wikimedia; urgency=high
+
+  * Temporary image for php7.4 compiled with ICU67
+  * Keep the versioning identical with the buster php7.4 images
+
+ -- Alexandros Kosiaris <akosiaris@wikimedia.org>  Mon,  4 Sep 2023 13:51:33 +0300
