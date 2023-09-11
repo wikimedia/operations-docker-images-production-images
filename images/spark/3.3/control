@@ -1,5 +1,5 @@
-Package: spark
+Package: spark3.3
 Description: The spark binary distribution
 Depends: openjdk-11-jre
-Build-Depends: spark-build
+Build-Depends: spark3.3-build
 Maintainer: Ben Tullis <btullis@wikimedia.org>

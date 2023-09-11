@@ -1,0 +1,11 @@
+spark3.1-build (3.1.3-1) wikimedia; urgency=medium
+
+  * Build a version supporting spark 3.1.2
+
+ -- Ben Tullis <btullis@wikimedia.org>  Thu, 7 Sep 2023 14:45:00 +0100
+
+spark3.1-build (3.1.2-1) wikimedia; urgency=medium
+
+  * Build a version supporting spark 3.1.2
+
+ -- Ben Tullis <btullis@wikimedia.org>  Thu, 7 Sep 2023 14:45:00 +0100
