@@ -1,5 +1,5 @@
-FROM {{ 'spark-build' | image_tag }} as build
-FROM {{ 'spark' | image_tag }}
+FROM {{ 'spark3.4-build' | image_tag }} as build
+FROM {{ 'spark3.4' | image_tag }}
 
 COPY --from=build --chown=root:root /usr/bin/spark-operator /usr/bin/spark-operator
 COPY entrypoint.sh /usr/bin/entrypoint.sh

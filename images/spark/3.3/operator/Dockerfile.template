@@ -1,0 +1,13 @@
+FROM {{ 'spark3.3-build' | image_tag }} as build
+FROM {{ 'spark3.3' | image_tag }}
+
+COPY --from=build --chown=root:root /usr/bin/spark-operator /usr/bin/spark-operator
+COPY entrypoint.sh /usr/bin/entrypoint.sh
+
+USER root
+
+RUN {{ "wmf-certificates" | apt_install }}
+RUN chmod a+x /usr/bin/entrypoint.sh
+
+USER {{ "nobody" | uid }}
+ENTRYPOINT [ "/usr/bin/entrypoint.sh" ]

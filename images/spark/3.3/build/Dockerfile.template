@@ -1,0 +1,74 @@
+# Set variables
+{% set spark_src_dir = '/usr/src/spark' %}
+{% set spark_version = '3.3.2' %}
+{% set spark_distro_name = 'wmf' %}
+{% set spark_common_args = '--pip --r' %}
+{% set hadoop_version = '2.10.2' %}
+{% set maven_opts = '-Xss64m -Xmx2g -XX:ReservedCodeCacheSize=1g' %}
+{% set operator_src_dir = '/go/spark-on-k8s-operator' %}
+{% set operator_version_git_tag = 'v1beta2-1.3.8-3.1.1' %}
+# End variables
+
+# Maven needs a additional arguments in production to use the proxy
+{% if http_proxy %}
+    {% set proxy_opts =  [
+        '-Dhttp.proxyHost=webproxy',
+        '-Dhttps.proxyHost=webproxy',
+        '-Dhttp.proxyPort=8080',
+        '-Dhttps.proxyPort=8080',
+        '-Dhttp.nonProxyHosts=127.0.0.1|::1|localhost|.wmnet|.wikimedia.org'
+        ] | join(' ') %}
+    {% set maven_opts = maven_opts ~ ' ' ~ proxy_opts %}
+{% endif %}
+
+# Beginning of spark-operator-build stage
+
+FROM {{ 'golang1.18' | image_tag }} as spark-operator-build
+
+USER root
+RUN {{ "git curl" | apt_install }} && \
+    git clone https://github.com/GoogleCloudPlatform/spark-on-k8s-operator {{ operator_src_dir }} && \
+    cd {{ operator_src_dir }} && git checkout tags/{{ operator_version_git_tag }}
+
+ENV CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64 \
+    GO111MODULE=on
+
+WORKDIR {{ operator_src_dir }}
+RUN go mod download
+
+RUN go build -a -o /usr/bin/spark-operator main.go
+# End of spark-operator-build stage
+
+# Beginning of spark-build stage
+FROM {{ 'openjdk-11-jdk' | image_tag }}
+
+USER root
+
+# Download the source tarball along with its sha512 checksum and GPG signature. Then verify both checksum and signature before extracting the source.
+RUN {{ "curl gpg gpg-agent git coreutils python3 python3-pip python3-setuptools r-base r-base-dev r-cran-knitr r-cran-rmarkdown r-cran-e1071 \
+    texlive-latex-base texinfo texlive-fonts-extra texlive-latex-recommended texlive-fonts-recommended" | apt_install }} && cd /tmp && \
+    curl --remote-name-all https://archive.apache.org/dist/spark/spark-{{ spark_version }}/spark-{{ spark_version }}.tgz && \
+    curl --remote-name-all "https://archive.apache.org/dist/spark/spark-{{ spark_version }}/spark-{{ spark_version }}.tgz.{asc,sha512}" && \
+    cat spark-{{ spark_version }}.tgz.sha512 spark-{{ spark_version }}.tgz | sha512sum --check --status && \
+    curl https://downloads.apache.org/spark/KEYS | gpg --import && \
+    gpg --verify spark-{{ spark_version }}.tgz.asc spark-{{ spark_version }}.tgz && \
+    mkdir {{ spark_src_dir }} && tar xz -C {{ spark_src_dir }} --strip-components=1 -f spark-{{ spark_version }}.tgz
+
+WORKDIR {{ spark_src_dir }}
+
+ENV MAVEN_OPTS="{{ maven_opts }}"
+# The following command creates a binary distribution of Spark and saves it to a directory named ./dist beneath the source
+RUN ./dev/make-distribution.sh --name {{ spark_distro_name }} {{ spark_common_args }} \
+    -Phive \
+    -Phive-thriftserver \
+    -Pyarn \
+    -Pkubernetes \
+    -Phadoop-2 \
+    -Dhadoop.version={{ hadoop_version }}
+
+# Copy the spark-operator binary to the spark-build image
+COPY --from=spark-operator-build --chown=root:root /usr/bin/spark-operator /usr/bin/spark-operator
+
+# End of spark-build stage

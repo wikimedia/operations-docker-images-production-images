@@ -1,0 +1,5 @@
+Package: spark3.3-operator
+Description: The spark image with added spark-operator binary
+Depends: spark3.3
+Build-Depends: spark3.3-build
+Maintainer: Ben Tullis <btullis@wikimedia.org>

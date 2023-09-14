@@ -1,6 +1,6 @@
 # Set variables
 {% set spark_src_dir = '/usr/src/spark' %}
-{% set spark_version = '3.3.3' %}
+{% set spark_version = '3.4.1' %}
 {% set spark_distro_name = 'wmf' %}
 {% set spark_common_args = '--pip --r' %}
 {% set hadoop_version = '2.10.2' %}
