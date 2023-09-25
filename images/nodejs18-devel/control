@@ -1,0 +1,3 @@
+Package: nodejs18-devel
+Description: Base image for nodejs 18.x based applications on Debian Bookworm. It also includes npm.
+Maintainer: Luca Toscano <ltoscano@wikimedia.org>

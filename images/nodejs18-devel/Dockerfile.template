@@ -1,0 +1,3 @@
+FROM {{ "bookworm" | image_tag }}
+
+RUN {{ "nodejs npm wmf-certificates" | apt_install }}
