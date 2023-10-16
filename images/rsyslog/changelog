@@ -1,3 +1,9 @@
+rsyslog (8.2102.0-3) wikimedia; urgency=medium
+
+  * CVE-2023-4911; T348647
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Mon, 16 Oct 2023 10:55:46 +0200
+
 rsyslog (8.2102.0-2) wikimedia; urgency=medium
 
   * Allow any user to run rsyslog using this image (as needed by mediawiki)

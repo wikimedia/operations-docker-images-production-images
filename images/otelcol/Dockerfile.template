@@ -1,4 +1,4 @@
-FROM {{ registry }}/bullseye:latest
+FROM {{ "bullseye" | image_tag }}
 
 ARG USER_UID=10001
 
