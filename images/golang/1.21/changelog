@@ -1,0 +1,5 @@
+golang1.21 (1.21) wikimedia; urgency=high
+
+  * Golang 1.21 on Bookworm base image
+
+ -- Tobias Klausmann <tklausmann@wikimedia.org>  Thu, 19 Oct 2023 16:20:00 +0100
