@@ -1,4 +1,4 @@
-FROM {{ 'golang1.18' | image_tag }} as build
+FROM {{ 'golang1.21' | image_tag }} as build
 
 {% set repo_base = '/go/github.com/kserve' %}
 
@@ -7,7 +7,7 @@ RUN mkdir -p {{ repo_base }} \
   && cd {{ repo_base }} \
   && git clone https://github.com/kserve/kserve.git kserve \
   && cd kserve \
-  && git checkout tags/v0.10.0
+  && git checkout tags/v0.11.1
 
 WORKDIR {{ repo_base }}/kserve/cmd
 RUN cd manager && go build && cd ../agent && go build

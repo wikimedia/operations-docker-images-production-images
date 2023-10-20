@@ -10,12 +10,9 @@ USER root
 # Notes:
 # - This is a trade-off to keep the Docker image as slim as possible, but of course it forces us
 #   to wait for a pip package release before upgrading Kserve.
-# - 'cpp' is needed to when installing kfserving since some dependencies require it.
-# - pip upgrade is needed to avoid failures in downloading dependencies (like ray),
-#   see: https://github.com/ray-project/ray/issues/5444#issuecomment-520991458
 COPY --from=build --chown=root /go/github.com/kserve/kserve/python/storage-initializer/scripts/initializer-entrypoint /usr/bin/storage-initializer-entrypoint
-RUN chmod +x /usr/bin/storage-initializer-entrypoint && {{ "python3-pip cpp wmf-certificates" | apt_install }} \
-  && python3 -m pip --no-cache-dir install --upgrade pip && python3 -m pip --no-cache-dir install kserve==0.10.0
+RUN chmod +x /usr/bin/storage-initializer-entrypoint && {{ "wmf-certificates" | apt_install }} \
+  && python3 -m pip --no-cache-dir install --upgrade pip && python3 -m pip --no-cache-dir install kserve==0.11.1
 
 USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/bin/storage-initializer-entrypoint"]
