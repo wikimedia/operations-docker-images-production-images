@@ -1,3 +1,9 @@
+mediawiki-httpd (0.1.8-s2) wikimedia; urgency=medium
+
+  * Refresh for update in the parent image: glogger
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Wed, 25 Oct 2023 11:39:48 +0200
+
 mediawiki-httpd (0.1.8-s1) wikimedia; urgency=high
 
    Refresh for update in parent image httpd-fcgi:

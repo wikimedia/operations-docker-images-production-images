@@ -1,3 +1,9 @@
+httpd-fcgi (2.4.38-10-u5) wikimedia; urgency=medium
+
+  * Fix encoding of non-utf8 byte sequences
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Wed, 25 Oct 2023 11:38:34 +0200
+
 httpd-fcgi (2.4.38-10-u4) wikimedia; urgency=high
 
    Increase logger packet size to avoid truncating logs

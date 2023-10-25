@@ -1,3 +1,9 @@
+httpd (2.4.38-10-u3) wikimedia; urgency=medium
+
+  * Update to ensure the rebuild of its child image is up to date.
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Wed, 25 Oct 2023 11:41:28 +0200
+
 httpd (2.4.38-10-u2) wikimedia; urgency=medium
 
   * Fix event.duration type in ecs logging.
