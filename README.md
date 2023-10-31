@@ -36,3 +36,8 @@ The contents of the `./images`, `cert-manager` and `./istio` directories can be 
 
 If your configuration includes the login credentials for docker, the generated
 images will be automatically pushed to the registry.
+
+Weekly rebuild
+--------------
+
+Images are rebuilt weekly making use of the weekly-update.sh script
