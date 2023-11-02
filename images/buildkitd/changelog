@@ -1,3 +1,9 @@
+buildkitd (0.10.4-2-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:14 +0000
+
 buildkitd (0.10.4-2) wikimedia; urgency=high
 
    * Add wmf-certificates package for registry CA

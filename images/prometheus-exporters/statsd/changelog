@@ -1,3 +1,9 @@
+prometheus-statsd-exporter (0.0.10-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:13 +0000
+
 prometheus-statsd-exporter (0.0.10) wikimedia; urgency=medium
 
   * Run exporter with --log.level=warn by default (instead of info), Bug: T300629

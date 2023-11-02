@@ -1,3 +1,9 @@
+httpd-fcgi (2.4.38-10-u5-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:24 +0000
+
 httpd-fcgi (2.4.38-10-u5) wikimedia; urgency=medium
 
   * Fix encoding of non-utf8 byte sequences

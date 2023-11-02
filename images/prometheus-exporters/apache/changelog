@@ -1,3 +1,9 @@
+prometheus-apache-exporter (0.0.3-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:14 +0000
+
 prometheus-apache-exporter (0.0.3) wikimedia; urgency=medium
 
   * Don't use unsupported -log.format flag (T283861)

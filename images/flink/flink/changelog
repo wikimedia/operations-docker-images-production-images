@@ -1,3 +1,9 @@
+flink (1.17.1-wmf0-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:23 +0000
+
 flink (1.17.1-wmf0) wikimedia; urgency=medium
 
   * Upgrade to flink 1.17.1

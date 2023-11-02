@@ -1,8 +1,12 @@
-python3-bullseye (0.0.2) UNRELEASED; urgency=medium
+python3-bullseye (0.0.2-20231102) wikimedia; urgency=medium
 
+  [ Giuseppe Lavagetto ]
   * Also install pip as easy_install has been removed from setuptools 
 
- -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Wed, 19 Oct 2022 08:05:49 +0200
+  [ Image build Bot ]
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:25 +0000
 
 python3-bullseye (0.0.1) wikimedia; urgency=high
 

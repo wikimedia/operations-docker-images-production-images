@@ -1,3 +1,9 @@
+tiller (2.16.7-3-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:19 +0000
+
 tiller (2.16.7-3) wikimedia; urgency=medium
 
   * Rebuild for T274254

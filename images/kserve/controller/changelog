@@ -1,3 +1,9 @@
+kserve-controller (0.11.1-1-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:09 +0000
+
 kserve-controller (0.11.1-1) wikimedia; urgency=high
 
   * Upstream release 0.11.1

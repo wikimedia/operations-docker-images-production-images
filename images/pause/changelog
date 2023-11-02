@@ -1,3 +1,9 @@
+pause (3.6-1-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:03 +0000
+
 pause (3.6-1) wikimedia; urgency=high
 
    * Import upstream version 3.6 (shipped with Kubernetes 1.23)

@@ -1,3 +1,9 @@
+golang1.21 (1.21-1-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:10 +0000
+
 golang1.21 (1.21-1) wikimedia; urgency=high
 
   * Golang 1.21 on Bookworm base image, now with correct version tag

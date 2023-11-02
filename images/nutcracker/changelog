@@ -1,3 +1,9 @@
+nutcracker (0.0.4-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:04 +0000
+
 nutcracker (0.0.4) wikimedia; urgency=medium
 
   * Run as user nobody, Bug: T274254

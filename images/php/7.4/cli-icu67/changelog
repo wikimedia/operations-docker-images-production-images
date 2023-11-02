@@ -1,3 +1,9 @@
+php7.4-cli-icu67 (7.4.33-1-s2-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:18 +0000
+
 php7.4-cli-icu67 (7.4.33-1-s2) wikimedia; urgency=medium
 
   * Bump for libxml2 sec update

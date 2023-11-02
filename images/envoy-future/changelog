@@ -1,3 +1,9 @@
+envoy-future (1.23.10-2-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:17 +0000
+
 envoy-future (1.23.10-2) wikimedia; urgency=medium
 
   * Add --service-node argument to envoy (defaults to $HOSTNAME)

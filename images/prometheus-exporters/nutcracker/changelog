@@ -1,8 +1,12 @@
-prometheus-nutcracker-exporter (0.0.3) UNRELEASED; urgency=medium
+prometheus-nutcracker-exporter (0.0.3-20231102) wikimedia; urgency=medium
 
+  [ Giuseppe Lavagetto ]
   * Switch to python3-bullseye
 
- -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 10 Aug 2023 14:37:12 +0200
+  [ Image build Bot ]
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:13 +0000
 
 prometheus-nutcracker-exporter (0.0.2) wikimedia; urgency=medium
 

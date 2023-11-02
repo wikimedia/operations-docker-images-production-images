@@ -1,3 +1,9 @@
+memcached (1.6.6-1-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:05 +0000
+
 memcached (1.6.6-1) wikimedia; urgency=medium
 
   * Initial release.

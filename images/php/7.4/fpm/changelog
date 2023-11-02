@@ -1,3 +1,9 @@
+php7.4-fpm (7.4.33-2-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:19 +0000
+
 php7.4-fpm (7.4.33-2) wikimedia; urgency=medium
 
   * Configure file max upload size (T341825)

@@ -1,3 +1,9 @@
+spark3.4 (3.4.1-1-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:22 +0000
+
 spark3.4 (3.4.1-1) wikimedia; urgency=medium
 
   * Build upstream spark version 3.4.1

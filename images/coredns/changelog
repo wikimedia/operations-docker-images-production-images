@@ -1,3 +1,9 @@
+coredns (1.8.7-1-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:25 +0000
+
 coredns (1.8.7-1) wikimedia; urgency=high
 
    * Import new upstream version 1.8.7

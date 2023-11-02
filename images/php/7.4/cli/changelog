@@ -1,3 +1,9 @@
+php7.4-cli (7.4.33-1-s1-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:19 +0000
+
 php7.4-cli (7.4.33-1-s1) wikimedia; urgency=high
 
    * New PHP version 7.4.33-1+0~20221108.73+debian10~1.gbpa00350a+wmf10u2

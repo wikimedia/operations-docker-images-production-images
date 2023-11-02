@@ -1,3 +1,9 @@
+haproxy (2.4.18-2-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:17 +0000
+
 haproxy (2.4.18-2) wikimedia; urgency=medium
 
   * Fix misnamed apt repository path.

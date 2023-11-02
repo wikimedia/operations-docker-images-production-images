@@ -1,3 +1,9 @@
+otelcol (0.81.0-2-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:23 +0000
+
 otelcol (0.81.0-2) wikimedia; urgency=medium
 
   * CVE-2023-4911; T348647

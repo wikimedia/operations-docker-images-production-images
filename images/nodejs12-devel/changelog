@@ -1,3 +1,9 @@
+nodejs12-devel (0.0.1-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:03 +0000
+
 nodejs12-devel (0.0.1) wikimedia; urgency=high
 
    * Initial release.

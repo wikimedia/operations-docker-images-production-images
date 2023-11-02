@@ -1,3 +1,9 @@
+nodejs16-slim (0.0.2-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:17 +0000
+
 nodejs16-slim (0.0.2) wikimedia; urgency=medium
 
    * Add symlink from /bin/node to /bin/nodejs for backwards compatibility

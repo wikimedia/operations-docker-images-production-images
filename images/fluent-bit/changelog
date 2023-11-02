@@ -1,3 +1,9 @@
+fluent-bit (1.5.3-4-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:04 +0000
+
 fluent-bit (1.5.3-4) wikimedia; urgency=medium
 
   * Install wmf-certificates

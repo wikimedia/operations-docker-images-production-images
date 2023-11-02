@@ -1,3 +1,9 @@
+ratelimit (1.5.1-s4-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:04 +0000
+
 ratelimit (1.5.1-s4) wikimedia; urgency=high
 
    Update to upstream commit c03723f

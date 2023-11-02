@@ -1,3 +1,9 @@
+python3-build-buster (0.1.0-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:16 +0000
+
 python3-build-buster (0.1.0) wikimedia; urgency=medium
 
   * Remove the harmful (and useless) pip upgrade instruction

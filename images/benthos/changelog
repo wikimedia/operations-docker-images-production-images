@@ -1,3 +1,9 @@
+benthos (4.15.0-2-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:02 +0000
+
 benthos (4.15.0-2) wikimedia; urgency=high
 
    Add wmf-certificates for connecting to Kafka

@@ -1,8 +1,12 @@
-mcrouter (0.41.0-4) UNRELEASED; urgency=medium
+mcrouter (0.41.0-4-20231102) wikimedia; urgency=medium
 
+  [ Giuseppe Lavagetto ]
   * Fix test.sh to work with docker-pkg
 
- -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Sat, 29 May 2021 18:43:43 +0200
+  [ Image build Bot ]
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:12 +0000
 
 mcrouter (0.41.0-3) wikimedia; urgency=medium
 

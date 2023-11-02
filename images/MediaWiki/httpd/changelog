@@ -1,3 +1,9 @@
+mediawiki-httpd (0.1.8-s2-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:24 +0000
+
 mediawiki-httpd (0.1.8-s2) wikimedia; urgency=medium
 
   * Refresh for update in the parent image: glogger

@@ -1,3 +1,9 @@
+knative-net-istio-build (1.7.0-1-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:08 +0000
+
 knative-net-istio-build (1.7.0-1) wikimedia; urgency=high
 
   * Split build image from the knative-serving one.
