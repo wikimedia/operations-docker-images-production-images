@@ -1,4 +1,4 @@
-FROM {{ "php7.4-fpm" | image_tag }}
+FROM {{ "php7.4-fpm-icu67" | image_tag }}
 
 USER root
 

@@ -1,3 +1,9 @@
+php7.4-fpm-multiversion-base (7.4.33-6) wikimedia; urgency=medium
+
+  * Switch to icu67 base image; T345561
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Thu, 02 Nov 2023 09:52:22 +0100
+
 php7.4-fpm-multiversion-base (7.4.33-5) wikimedia; urgency=medium
 
   * Re-build for T340087
