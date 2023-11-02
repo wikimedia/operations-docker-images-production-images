@@ -40,7 +40,7 @@ php7.4-memcached
 php7.4-msgpack
 php7.4-redis
 {%- endset -%}
-RUN echo 'deb http://apt.wikimedia.org/wikimedia buster-wikimedia component/php74' > /etc/apt/sources.list.d/php74.list &&\
+RUN echo 'deb http://apt.wikimedia.org/wikimedia buster-wikimedia component/icu67' > /etc/apt/sources.list.d/icu67.list &&\
     {{ packages | apt_install }} && \
     echo 'memcached.store_retry_count=0' >> /etc/php/7.4/mods-available/memcached.ini && \
     sed -i"" s/compact_strings=On/compact_strings=Off/ /etc/php/7.4/mods-available/igbinary.ini && \

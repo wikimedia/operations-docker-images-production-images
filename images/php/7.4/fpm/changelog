@@ -1,3 +1,9 @@
+php7.4-fpm (7.4.33-3) wikimedia; urgency=medium
+
+  * Use php7.4 compiled with ICU67; T345561
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Mon, 06 Nov 2023 10:00:25 +0100
+
 php7.4-fpm (7.4.33-2-20231106) wikimedia; urgency=medium
 
   * Weekly rebuild.

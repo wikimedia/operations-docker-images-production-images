@@ -1,5 +1,5 @@
 Package: php7.4-fpm
-Description: php7.4 container to run php-fpm
+Description: php7.4 container to run php-fpm with ICU 67
  By default, this image will just execute a php script located at
  /srv/app/index.php. Please note this needs to coincide with the
  path in the httpd-fcgi image.

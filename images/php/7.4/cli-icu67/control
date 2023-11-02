@@ -1,5 +1,0 @@
-Package: php7.4-cli-icu67
-Description: Basic php7.4 container with icu67. Temporary image
- By default, this image will just execute a php script located at
- /bin/entrypoint.php
-Maintainer: Alexandros Kosiaris
