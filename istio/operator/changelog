@@ -1,3 +1,9 @@
+operator (1.15.7-1-20231102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 02 Nov 2023 09:57:27 +0000
+
 operator (1.15.7-1) wikimedia; urgency=high
 
   * Upstream release 1.15.7
