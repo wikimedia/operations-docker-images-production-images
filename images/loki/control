@@ -1,4 +1,0 @@
-Package: loki
-Description: a horizontally-scalable, highly-available,
- multi-tenant log aggregation system inspired by Prometheus.
-Maintainer: Cole White <cwhite@wikimedia.org>
