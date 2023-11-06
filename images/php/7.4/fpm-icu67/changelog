@@ -1,3 +1,9 @@
+php7.4-fpm-icu67 (7.4.33-3-20231106) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Mon, 06 Nov 2023 09:22:07 +0000
+
 php7.4-fpm-icu67 (7.4.33-3-20231102) wikimedia; urgency=medium
 
   * Weekly rebuild.
