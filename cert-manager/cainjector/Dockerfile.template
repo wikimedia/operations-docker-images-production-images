@@ -1,6 +1,6 @@
 FROM {{ "build" | image_tag }} as build
 
-FROM {{ "buster" | image_tag }}
+FROM docker-registry.discovery.wmnet/buster:latest
 
 USER root
 COPY --from=build --chown=root /go/github.com/cert-manager/cert-manager/_bin/server/cainjector /usr/bin/cainjector

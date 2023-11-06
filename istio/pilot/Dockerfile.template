@@ -1,6 +1,6 @@
 FROM {{ "build" | image_tag }} as build
 
-FROM {{ "buster" | image_tag }}
+FROM docker-registry.discovery.wmnet/buster:latest
 
 USER root
 RUN {{ "istio" | add_user }}

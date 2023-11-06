@@ -1,6 +1,6 @@
 FROM {{ "build" | image_tag }} as build
 
-FROM {{ "buster" | image_tag }}
+FROM docker-registry.discovery.wmnet/buster:latest
 
 ENV BUILD_DIR=/go/github.com/istio/istio \
     # Environment variable indicating the exact proxy sha - for debugging or version-specific configs
@@ -19,7 +19,7 @@ RUN {{ "iptables iproute2 wmf-certificates" | apt_install }}; \
     # echo "istio-proxy ALL=NOPASSWD: /usr/sbin/iptables * " >> /etc/sudoers
     # The version below is tailored for our use case (namely allowing only iptables commands).
     echo "istio ALL=NOPASSWD: /usr/sbin/iptables * " >> /etc/sudoers \
-        && echo "istio ALL=NOPASSWD: /usr/sbin/ip6tables * "
+    && echo "istio ALL=NOPASSWD: /usr/sbin/ip6tables * "
 
 # Copy Envoy bootstrap templates used by pilot-agent
 COPY --from=build --chown=root $BUILD_DIR/tools/packaging/common/envoy_bootstrap.json /var/lib/istio/envoy/envoy_bootstrap_tmpl.json
