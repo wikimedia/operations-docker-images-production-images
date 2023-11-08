@@ -1,0 +1,17 @@
+FROM {{ "golang1.21" | image_tag }} as build
+USER nobody
+RUN mkdir -p /go/gitlab.wikimedia.org/repos/sre/k8s-controller-sidecars \
+  && cd /go/gitlab.wikimedia.org/repos/sre/k8s-controller-sidecars \
+  && git clone https://gitlab.wikimedia.org/repos/sre/k8s-controller-sidecars.git k8s-controller-sidecars \
+  && cd k8s-controller-sidecars \
+  && git checkout tags/wikimedia-1.0.2 \
+  && CGO_ENABLED=0 go build -a -installsuffix cgo -mod vendor \
+  && cp k8s-controller-sidecars /go/bin
+
+
+FROM {{ "bookworm" | image_tag }}
+
+COPY --from=build /go/bin/k8s-controller-sidecars /usr/bin/k8s-controller-sidecars
+
+USER {{ "nobody" | uid }}
+ENTRYPOINT ["/usr/bin/k8s-controller-sidecars"]

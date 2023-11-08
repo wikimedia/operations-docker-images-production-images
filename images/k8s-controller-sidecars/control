@@ -1,0 +1,4 @@
+Package: k8s-controller-sidecars
+Description: Kubernetes controller to terminate sidecar containers
+Maintainer: Reuven Lazarus <rlazarus@wikimedia.org>
+Build-Depends: golang1.21

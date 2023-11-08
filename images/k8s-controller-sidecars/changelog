@@ -1,0 +1,5 @@
+k8s-controller-sidecars (0.0.1) wikimedia; urgency=medium
+
+  * Initial release
+
+ -- Reuven Lazarus <rlazarus@wikimedia.org>  Tue, 7 Nov 2023 20:20:35 -0800
