@@ -1,3 +1,4 @@
 Package: kube-state-metrics
 Description: Service that listens to the Kubernetes API server and generates metrics about the state of the objects
 Maintainer: Kamila Součková <ksouckova@wikimedia.org>
+Build-Depends: golang1.19
