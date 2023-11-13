@@ -19,4 +19,5 @@ exec /usr/bin/envoy -c /etc/envoy/envoy.yaml \
     --service-zone "$SERVICE_ZONE" \
     --drain-time-s "$DRAIN_TIME_S" \
     --drain-strategy "$DRAIN_STRATEGY" \
-    ${CONCURRENCY_CLI_SWITCH}
+    ${CONCURRENCY_CLI_SWITCH} \
+    "$@"

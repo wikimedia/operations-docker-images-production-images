@@ -1,3 +1,9 @@
+envoy (1.23.10-2-s3) wikimedia; urgency=medium
+
+  * Allow to pass additional arguments to envoy though the entrypoint
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Mon, 13 Nov 2023 09:51:49 +0100
+
 envoy (1.23.10-2-s2-20231112) wikimedia; urgency=medium
 
   * Weekly rebuild.
