@@ -10,4 +10,4 @@ COPY drain-envoy.sh /bin/drain-envoy.sh
 USER {{ "nobody" | uid }}
 COPY envoy-basic-config.yaml /etc/envoy/envoy.yaml.tpl
 
-CMD ["/bin/entrypoint.sh"]
+ENTRYPOINT ["/bin/entrypoint.sh"]
