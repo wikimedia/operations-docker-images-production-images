@@ -12,7 +12,7 @@ USER root
 #   to wait for a pip package release before upgrading Kserve.
 COPY --from=build --chown=root /go/github.com/kserve/kserve/python/storage-initializer/scripts/initializer-entrypoint /usr/bin/storage-initializer-entrypoint
 RUN chmod +x /usr/bin/storage-initializer-entrypoint && {{ "wmf-certificates" | apt_install }} \
-  && python3 -m pip --no-cache-dir install --upgrade pip && python3 -m pip --no-cache-dir install kserve==0.11.1
+  && python3 -m pip --no-cache-dir install --upgrade pip && python3 -m pip --no-cache-dir install kserve==0.11.2
 
 USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/bin/storage-initializer-entrypoint"]

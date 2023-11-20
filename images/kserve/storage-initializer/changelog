@@ -1,3 +1,9 @@
+kserve-storage-initializer (0.11.2-1) wikimedia; urgency=high
+
+  * Upstream release 0.11.2
+
+ -- Tobias Klausmann <tklausmann@wikimedia.org>  Mon, 20 Nov 2023 16:11:11 +0100
+
 kserve-storage-initializer (0.11.1-1-20231119) wikimedia; urgency=medium
 
   * Weekly rebuild.
