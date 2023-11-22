@@ -1,3 +1,9 @@
+knative-serving-webhook (1.7.2-1-20231122) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Wed, 22 Nov 2023 14:46:59 +0000
+
 knative-serving-webhook (1.7.2-1-20231119) wikimedia; urgency=medium
 
   * Weekly rebuild.

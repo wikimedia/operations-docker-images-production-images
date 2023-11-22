@@ -1,3 +1,9 @@
+flink-kubernetes-operator (1.4.0-wmf1-20231122) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Wed, 22 Nov 2023 14:47:15 +0000
+
 flink-kubernetes-operator (1.4.0-wmf1-20231119) wikimedia; urgency=medium
 
   * Weekly rebuild.

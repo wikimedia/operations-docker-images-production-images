@@ -1,3 +1,9 @@
+spark3.4 (3.4.1-2-20231122) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Wed, 22 Nov 2023 14:47:14 +0000
+
 spark3.4 (3.4.1-2-20231121) wikimedia; urgency=medium
 
   * Add support for Spark History Server to the final spark image
