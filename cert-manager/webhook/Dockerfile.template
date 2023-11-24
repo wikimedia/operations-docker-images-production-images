@@ -1,6 +1,6 @@
 FROM {{ "build" | image_tag }} as build
 
-FROM docker-registry.discovery.wmnet/buster:latest
+FROM {{ registry }}/bullseye:latest
 
 USER root
 COPY --from=build --chown=root /go/github.com/cert-manager/cert-manager/_bin/server/webhook /usr/bin/webhook

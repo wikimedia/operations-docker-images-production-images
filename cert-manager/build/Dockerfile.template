@@ -1,4 +1,4 @@
-FROM docker-registry.discovery.wmnet/golang1.19 as build
+FROM {{ registry }}/golang1.19 as build
 
 # This Dockerfile reimplements building the binaries as the upstream Makefile
 # does always build multiple architectures.

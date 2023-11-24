@@ -1,3 +1,9 @@
+webhook (1.10.1-2) wikimedia; urgency=medium
+
+  * Upgrade to Bullseye
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Mon, 27 Nov 2022 16:04:00 +0100
+
 webhook (1.10.1-1-20231126) wikimedia; urgency=medium
 
   * Weekly rebuild.
