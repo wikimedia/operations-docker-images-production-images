@@ -1,3 +1,10 @@
+build (1.15.7-2) wikimedia; urgency=high
+
+  * Upgrade to Bullseye (artificial bump to keep all versions in sync).
+  * Use registry placeholder instead of plain URL.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Mon, 27 Nov 2023 15:31:00 +0100
+
 build (1.15.7-1-20231126) wikimedia; urgency=medium
 
   * Weekly rebuild.

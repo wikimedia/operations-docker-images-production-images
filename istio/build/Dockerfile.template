@@ -1,4 +1,4 @@
-FROM docker-registry.wikimedia.org/golang1.19 as build
+FROM {{ registry }}/golang1.19 as build
 
 # The VERSION env value is injected in pilot's binary to allow it to answer
 # to /version API calls. The istioctl tool calls /version when trying to figure

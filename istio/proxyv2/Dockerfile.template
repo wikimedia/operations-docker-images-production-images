@@ -1,6 +1,6 @@
 FROM {{ "build" | image_tag }} as build
 
-FROM docker-registry.discovery.wmnet/buster:latest
+FROM {{ registry }}/bullseye:latest
 
 ENV BUILD_DIR=/go/github.com/istio/istio \
     # Environment variable indicating the exact proxy sha - for debugging or version-specific configs
