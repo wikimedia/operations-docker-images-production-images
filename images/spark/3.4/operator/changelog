@@ -1,3 +1,9 @@
+spark3.4-operator (1.3.8-3.4.1-1-20231126) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 26 Nov 2023 06:00:20 +0000
+
 spark3.4-operator (1.3.8-3.4.1-1-20231122) wikimedia; urgency=medium
 
   * Weekly rebuild.
