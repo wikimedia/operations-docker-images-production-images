@@ -103,7 +103,7 @@ case "$1" in
     )
     ;;
   *)
-    echo "Error: Neither driver nor executor was specified as the mode of operation."
+    echo "Error: Neither driver, executor nor history was specified as the mode of operation."
     exit 22
     ;;
 esac
