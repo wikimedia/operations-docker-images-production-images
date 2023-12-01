@@ -1,0 +1,3 @@
+Package: wmf-debci-buster
+Description: Base image used by wmf-debci for Debian package builds in GitLab CI
+Maintainer: Jelto Wodstrcil <jwodstrcil@wikimedia.org>

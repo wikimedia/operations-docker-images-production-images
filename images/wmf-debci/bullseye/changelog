@@ -1,0 +1,5 @@
+wmf-debci-bullseye (0.0.1) wikimedia; urgency=medium
+
+   * Initial release.
+
+ -- Jelto Wodstrcil <jwodstrcil@wikimedia.org>  Fri, 1 Dec 2023 14:50:04 +0100

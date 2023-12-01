@@ -1,0 +1,4 @@
+FROM {{ registry }}/bullseye:latest
+
+# Install basic tools for Debian package building
+RUN {{ "build-essential devscripts" | apt_install }}
