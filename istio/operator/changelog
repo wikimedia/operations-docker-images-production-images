@@ -1,3 +1,9 @@
+operator (1.15.7-2-20231203) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 03 Dec 2023 06:00:30 +0000
+
 operator (1.15.7-2) wikimedia; urgency=high
 
   * Upgrade to Bullseye.

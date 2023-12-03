@@ -1,3 +1,9 @@
+build (1.15.7-2-20231203) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 03 Dec 2023 06:00:31 +0000
+
 build (1.15.7-2) wikimedia; urgency=high
 
   * Upgrade to Bullseye (artificial bump to keep all versions in sync).
