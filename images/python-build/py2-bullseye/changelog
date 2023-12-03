@@ -1,3 +1,9 @@
+python2-build-bullseye (0.1.0-20231203) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 03 Dec 2023 06:00:19 +0000
+
 python2-build-bullseye (0.1.0-20231126) wikimedia; urgency=medium
 
   * Weekly rebuild.

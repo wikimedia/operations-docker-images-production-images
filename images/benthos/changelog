@@ -1,3 +1,9 @@
+benthos (4.15.0-2-20231203) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 03 Dec 2023 06:00:06 +0000
+
 benthos (4.15.0-2-20231126) wikimedia; urgency=medium
 
   * Weekly rebuild.

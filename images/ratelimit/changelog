@@ -1,3 +1,9 @@
+ratelimit (1.5.1-s4-20231203) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 03 Dec 2023 06:00:08 +0000
+
 ratelimit (1.5.1-s4-20231126) wikimedia; urgency=medium
 
   * Weekly rebuild.

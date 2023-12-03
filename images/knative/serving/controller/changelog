@@ -1,3 +1,9 @@
+knative-serving-controller (1.7.2-1-20231203) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 03 Dec 2023 06:00:10 +0000
+
 knative-serving-controller (1.7.2-1-20231126) wikimedia; urgency=medium
 
   * Weekly rebuild.

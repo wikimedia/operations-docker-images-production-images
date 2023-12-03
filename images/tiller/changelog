@@ -1,3 +1,9 @@
+tiller (2.16.7-3-20231203) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 03 Dec 2023 06:00:23 +0000
+
 tiller (2.16.7-3-20231126) wikimedia; urgency=medium
 
   * Weekly rebuild.

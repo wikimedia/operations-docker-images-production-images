@@ -1,3 +1,9 @@
+prometheus-apache-exporter (0.0.3-20231203) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 03 Dec 2023 06:00:18 +0000
+
 prometheus-apache-exporter (0.0.3-20231126) wikimedia; urgency=medium
 
   * Weekly rebuild.
