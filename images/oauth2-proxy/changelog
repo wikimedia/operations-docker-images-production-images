@@ -1,0 +1,5 @@
+oauth2-proxy (7.5.1-1) wikimedia; urgency=medium
+
+  * First image. See T320555
+
+ -- Filippo Giunchedi <fgiunchedi@wikimedia.org>  Wed, 06 Dec 2023 09:12:42 +0000

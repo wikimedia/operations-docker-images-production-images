@@ -1,0 +1,7 @@
+FROM {{ registry }}/bookworm:latest
+
+RUN {{ "oauth2-proxy" | apt_install }}
+
+USER oauth2-proxy
+
+ENTRYPOINT ["/usr/bin/oauth2-proxy", "--config", "/etc/oauth2-proxy/config"]
