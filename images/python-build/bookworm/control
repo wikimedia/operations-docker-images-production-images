@@ -1,0 +1,3 @@
+Package: python3-build-bookworm
+Description: Image for building tar archives with python wheels for an application
+Maintainer: Riccardo Coccioli <rcoccioli@wikimedia.org>
