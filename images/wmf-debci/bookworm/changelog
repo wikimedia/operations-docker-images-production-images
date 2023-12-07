@@ -1,3 +1,9 @@
+wmf-debci-bookworm (0.0.2) wikimedia; urgency=medium
+
+  * Install recommended packages, create /usr/share/man by hand
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 07 Dec 2023 09:38:12 +0100
+
 wmf-debci-bookworm (0.0.1-20231210) wikimedia; urgency=medium
 
   * Weekly rebuild.

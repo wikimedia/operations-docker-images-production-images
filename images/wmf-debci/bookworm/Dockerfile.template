@@ -1,4 +1,8 @@
 FROM {{ registry }}/bookworm:latest
 
-# Install basic tools for Debian package building
-RUN {{ "build-essential devscripts" | apt_install }}
+# Install basic tools for Debian package building. We don't use apt_install as we want recommended packages.
+# Also create /usr/share/man to help ease a bug with java packaging on debian
+RUN {{%- if apt_only_proxy -%}}echo 'Acquire::http::Proxy "{{ apt_only_proxy }}";' > /etc/apt/apt.conf.d/80_proxy && {{%- endif %-}} apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install --install-recommends --yes build-essential devscripts && rm -f /etc/apt/apt.conf.d/80_proxy \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /usr/share/man
