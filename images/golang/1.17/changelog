@@ -1,3 +1,9 @@
+golang1.17 (1.17-1-20231210) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 10 Dec 2023 06:00:14 +0000
+
 golang1.17 (1.17-1-20231203) wikimedia; urgency=medium
 
   * Weekly rebuild.
