@@ -1,3 +1,9 @@
+wmf-debci-buster (0.0.3) wikimedia; urgency=medium
+
+  * fix templating in Dockerfile RUN command
+
+ -- Jelto Wodstrcil <jwodstrcil@wikimedia.org>  Mon, 11 Dec 2023 11:18:14 +0100
+
 wmf-debci-buster (0.0.2) wikimedia; urgency=medium
 
   * Install recommended packages, create /usr/share/man by hand
