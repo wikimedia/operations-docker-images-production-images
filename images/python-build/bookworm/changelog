@@ -1,0 +1,5 @@
+python3-build-bookworm (0.0.1) wikimedia; urgency=low
+
+  * Initial bookworm image.
+
+ -- Kartik Mistry <kmistry@wikimedia.org>  Wed, 06 Dec 2023 18:32:03 +0530
