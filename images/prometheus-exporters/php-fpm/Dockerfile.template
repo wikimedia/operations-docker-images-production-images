@@ -1,15 +1,14 @@
-FROM {{ "golang" | image_tag }} as build
-USER root
-RUN {{ "upx-ucl" | apt_install }}
-USER nobody
-RUN go get -d github.com/bakins/php-fpm-exporter && cd /go/src/github.com/bakins/php-fpm-exporter && \
-   GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" ./cmd/php-fpm-exporter && \
-   upx --brute php-fpm-exporter && cp php-fpm-exporter /go/bin
+FROM {{ "golang1.15" | image_tag }} as build
+ENV SOURCE_REPO=https://github.com/olivierbeytrison/php-fpm-exporter
 
+USER nobody
+RUN git clone $SOURCE_REPO && \
+    cd php-fpm-exporter && \
+    ./script/build
 
 FROM {{ registry }}/wikimedia-buster:latest
 
-COPY --from=build /go/bin/php-fpm-exporter /usr/bin/prometheus-php-fpm-exporter
+COPY --from=build /go/php-fpm-exporter/php-fpm-exporter.linux.amd64 /usr/bin/prometheus-php-fpm-exporter
 
 USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/bin/prometheus-php-fpm-exporter"]

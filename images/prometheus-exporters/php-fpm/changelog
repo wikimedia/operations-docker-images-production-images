@@ -1,3 +1,11 @@
+prometheus-php-fpm-exporter (0.0.3) wikimedia; urgency=high
+
+  * Use upstream build script
+  * Switch to olivierbeytrison's fork that fixes build process
+  * Update to bullseye
+
+ -- Clément Goubert <Clément Goubert <cgoubert@wikimedia.org>>  Mon, 11 Dec 2023 14:34:04 +0100
+
 prometheus-php-fpm-exporter (0.0.2-20231210) wikimedia; urgency=medium
 
   * Weekly rebuild.
