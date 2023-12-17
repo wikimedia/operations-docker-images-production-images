@@ -1,3 +1,9 @@
+amd-gpu-tester (0.0.15-1-20231217) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 17 Dec 2023 06:00:16 +0000
+
 amd-gpu-tester (0.0.15-1-20231210) wikimedia; urgency=medium
 
   * Weekly rebuild.
