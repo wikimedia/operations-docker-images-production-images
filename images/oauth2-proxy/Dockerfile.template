@@ -4,4 +4,4 @@ RUN {{ "oauth2-proxy" | apt_install }}
 
 USER oauth2-proxy
 
-ENTRYPOINT ["/usr/bin/oauth2-proxy", "--config", "/etc/oauth2-proxy/config"]
+ENTRYPOINT ["/usr/bin/oauth2-proxy", "--config", "/etc/oauth2-proxy/oauth2-proxy.cfg"]
