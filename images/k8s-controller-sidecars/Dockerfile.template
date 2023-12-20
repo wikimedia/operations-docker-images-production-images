@@ -4,7 +4,7 @@ RUN mkdir -p /go/gitlab.wikimedia.org/repos/sre/k8s-controller-sidecars \
   && cd /go/gitlab.wikimedia.org/repos/sre/k8s-controller-sidecars \
   && git clone https://gitlab.wikimedia.org/repos/sre/k8s-controller-sidecars.git k8s-controller-sidecars \
   && cd k8s-controller-sidecars \
-  && git checkout tags/wikimedia-1.0.2 \
+  && git checkout tags/wikimedia-1.0.2-1 \
   && CGO_ENABLED=0 go build -a -installsuffix cgo -mod vendor \
   && cp k8s-controller-sidecars /go/bin
 
