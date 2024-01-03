@@ -1,4 +1,4 @@
 Package: prometheus-php-fpm-exporter
 Description: php-fpm prometheus exporter
 Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>
-Build-Depends: golang1.15
+Build-Depends: golang1.21

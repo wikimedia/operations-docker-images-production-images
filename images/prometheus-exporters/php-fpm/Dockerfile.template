@@ -1,4 +1,4 @@
-FROM {{ "golang1.15" | image_tag }} as build
+FROM {{ "golang1.21" | image_tag }} as build
 ENV SOURCE_REPO=https://github.com/olivierbeytrison/php-fpm-exporter
 
 USER nobody
@@ -6,7 +6,7 @@ RUN git clone $SOURCE_REPO && \
     cd php-fpm-exporter && \
     ./script/build
 
-FROM {{ registry }}/wikimedia-buster:latest
+FROM {{ "bookworm" | image_tag }}
 
 COPY --from=build /go/php-fpm-exporter/php-fpm-exporter.linux.amd64 /usr/bin/prometheus-php-fpm-exporter
 
