@@ -1,7 +1,7 @@
-FROM {{ "buster" | image_tag }}
+FROM {{ "bookworm" | image_tag }}
 
 RUN {{ "prometheus-apache-exporter" | apt_install }} \
    && rm -rf /usr/share/gocode/src/github.com/prometheus
 
 USER {{ "nobody" | uid }}
-ENTRYPOINT ["/usr/bin/prometheus-apache-exporter"]
+ENTRYPOINT ["/usr/bin/prometheus-apache-exporter", "--log.format", "json"]

@@ -1,3 +1,10 @@
+prometheus-apache-exporter (0.0.4) wikimedia; urgency=medium
+
+  * Update to bookworm T283861
+  * Output logs in json
+
+ -- Clément Goubert <Clément Goubert <cgoubert@wikimedia.org>>  Wed, 5 Feb 2024 16:02:38 +0000
+
 prometheus-apache-exporter (0.0.3-20240204) wikimedia; urgency=medium
 
   * Weekly rebuild.
