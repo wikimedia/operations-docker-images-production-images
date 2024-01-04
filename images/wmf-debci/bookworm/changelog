@@ -1,3 +1,10 @@
+wmf-debci-bookworm (0.0.3-20240104) wikimedia; urgency=medium
+
+  * wmf-debci: Also create man1 dir
+  * Manual rebuild.
+
+ -- Brett Cornwall <bcornwall@wikimedia.org>  Thu, 04 Jan 2024 13:37:00 -0800
+
 wmf-debci-bookworm (0.0.3-20231231) wikimedia; urgency=medium
 
   * Weekly rebuild.
