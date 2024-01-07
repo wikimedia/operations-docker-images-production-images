@@ -1,3 +1,9 @@
+echoserver (1.10.0-2-20240107) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 07 Jan 2024 06:00:18 +0000
+
 echoserver (1.10.0-2-20231231) wikimedia; urgency=medium
 
   * Weekly rebuild.

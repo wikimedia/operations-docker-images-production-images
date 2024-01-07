@@ -1,3 +1,9 @@
+wmf-debci-bullseye (0.0.3-20240107) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 07 Jan 2024 06:00:12 +0000
+
 wmf-debci-bullseye (0.0.3-20240104) wikimedia; urgency=medium
 
   * wmf-debci: Also create man1 dir
