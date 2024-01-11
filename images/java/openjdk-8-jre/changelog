@@ -1,0 +1,5 @@
+openjdk-8-jre (8.392-1-20240111) wikimedia; urgency=medium
+
+  * Initial build of Java 8 JRE image.
+
+ -- Ben Tullis <btullis@wikimedia.org>  Thu, 11 Jan 2024 11:29:00 +0000
