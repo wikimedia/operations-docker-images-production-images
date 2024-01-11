@@ -1,3 +1,9 @@
+spark3.3-build (3.3.2-2-20240116) wikimedia; urgency=medium
+
+  * Use Java 8 instead of Java 11 as the basis for building and running Spark.
+
+ -- Ben Tullis <btullis@wikimedia.org>  Tue, 16 Jan 2024 10:43:00 +0000
+
 spark3.3-build (3.3.2-1-20240114) wikimedia; urgency=medium
 
   * Weekly rebuild.

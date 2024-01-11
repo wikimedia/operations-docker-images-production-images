@@ -1,4 +1,4 @@
 Package: spark3.1-build
 Description: A build image containing spark and spark-controller
-Build-Depends: openjdk-11-jdk,golang1.18
+Build-Depends: openjdk-8-jdk,golang1.18
 Maintainer: Ben Tullis <btullis@wikimedia.org>
