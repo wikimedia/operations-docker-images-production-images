@@ -1,3 +1,9 @@
+fluent-bit (1.5.3-4-20240114) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 14 Jan 2024 06:00:03 +0000
+
 fluent-bit (1.5.3-4-20240107) wikimedia; urgency=medium
 
   * Weekly rebuild.

@@ -1,3 +1,9 @@
+prometheus-php-fpm-exporter (0.0.3-20240114) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 14 Jan 2024 06:00:13 +0000
+
 prometheus-php-fpm-exporter (0.0.3-20240107) wikimedia; urgency=medium
 
   * Weekly rebuild.
