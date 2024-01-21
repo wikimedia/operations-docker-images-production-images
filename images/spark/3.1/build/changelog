@@ -1,3 +1,9 @@
+spark3.1-build (3.1.2-2-20240121) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 21 Jan 2024 06:00:27 +0000
+
 spark3.1-build (3.1.2-2-20240116) wikimedia; urgency=medium
 
   * Use Java 8 instead of Java 11 as the basis for building and running Spark.
