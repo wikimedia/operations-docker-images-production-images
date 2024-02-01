@@ -1,3 +1,9 @@
+oauth2-proxy (7.5.1-1-20240201) wikimedia; urgency=medium
+
+  * Install 'ca-certificates' to be able to talk to idp.w.o
+
+ -- Filippo Giunchedi <filippo@debian.org>  Thu, 01 Feb 2024 10:12:39 +0100
+
 oauth2-proxy (7.5.1-1-20240131) wikimedia; urgency=medium
 
   * Run as nobody or explicit uid
