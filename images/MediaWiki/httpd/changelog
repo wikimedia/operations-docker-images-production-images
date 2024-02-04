@@ -1,3 +1,9 @@
+mediawiki-httpd (0.1.8-s2-20240204) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 04 Feb 2024 06:00:30 +0000
+
 mediawiki-httpd (0.1.8-s2-20240128) wikimedia; urgency=medium
 
   * Weekly rebuild.

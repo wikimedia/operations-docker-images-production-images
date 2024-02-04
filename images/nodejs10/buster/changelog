@@ -1,3 +1,9 @@
+buster-nodejs10-slim (0.0.1-s1-20240204) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 04 Feb 2024 06:00:24 +0000
+
 buster-nodejs10-slim (0.0.1-s1-20240128) wikimedia; urgency=medium
 
   * Weekly rebuild.
