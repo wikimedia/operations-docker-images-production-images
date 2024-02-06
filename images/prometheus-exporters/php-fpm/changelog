@@ -1,3 +1,10 @@
+prometheus-php-fpm-exporter (0.0.4) wikimedia; urgency=medium
+
+  * Actually update to bookworm
+  * Update build image to golang1.21
+
+ -- Clément Goubert <Clément Goubert <cgoubert@wikimedia.org>>  Wed,  5 Feb 2024 15:44:38 +0000
+
 prometheus-php-fpm-exporter (0.0.3-20240204) wikimedia; urgency=medium
 
   * Weekly rebuild.
