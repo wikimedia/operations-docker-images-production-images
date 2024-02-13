@@ -16,7 +16,7 @@ FROM {{ registry }}/bullseye:latest
 
 ENV PYTHON_SUFFIX=2
 
-RUN {{ "python2 python2-dev python-setuptools git" | apt_install }} \
+RUN {{ "python2 python2-dev python-setuptools git lsb-release make virtualenv" | apt_install }} \
     && mkdir -p /opt/pip-install
 
 COPY --from=downloader /downloads/pip-20.3.4.tar.gz /opt/pip-install

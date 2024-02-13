@@ -2,7 +2,7 @@ FROM {{ registry }}/wikimedia-buster:latest
 
 ENV PYTHON_SUFFIX=2
 
-RUN {{ "python2 python2-dev python-pip python-setuptools git" | apt_install }} \
+RUN {{ "python2 python2-dev python-pip python-setuptools git lsb-release make virtualenv" | apt_install }} \
     && pip2 install --upgrade pip \
     && mkdir /wheels && pip2 install wheel
 
