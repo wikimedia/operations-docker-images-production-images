@@ -8,4 +8,8 @@ COPY run.sh /bin/run.sh
 # These volumes are respectively where the wheels will be built, and where the code for the application resides
 VOLUME ["/wheels", "/deploy"]
 
+USER nobody
+
+WORKDIR /deploy
+
 CMD ["/bin/run.sh"]
