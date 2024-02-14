@@ -1,3 +1,17 @@
+python3-build-bullseye (0.1.0) wikimedia; urgency=medium
+
+  * Set default container working directory to /deploy which is where the
+    deployment repository is supposed to be mounted at.
+  * Set default user to `nobody` instead of `root` which is inherited from the
+    base image.
+  * Add `lsb-release`, `make` and `virtualenv` packages to ease development
+    of deployment and build makefiles.
+  * Set SOURCE_DATE_EPOCH to committer date of HEAD to improve build
+    reproducibility.
+  * Ensure frozen-requirements.txt is exhaustive.
+
+ -- Antoine Musso <hashar@free.fr>  Wed, 14 Feb 2024 18:56:50 +0100
+
 python3-build-bullseye (0.0.1-20240211) wikimedia; urgency=medium
 
   * Weekly rebuild.
