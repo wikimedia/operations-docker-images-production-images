@@ -1,0 +1,5 @@
+python3-bookworm (0.0.1) wikimedia; urgency=medium
+
+   * Initial release.
+
+ -- Taavi Väänänen <taavi@wikimedia.org>  Mon, 05 Feb 2024 20:28:03 +0300
