@@ -1,3 +1,9 @@
+python2-build-bullseye (0.3.0) wikimedia; urgency=medium
+
+  * use `pip` of current Python installation in common `run.sh`
+
+ -- Jaime Nuche <jnuche@wikimedia.org>  Tue, 20 Feb 2024 11:04:45 +0100
+
 python2-build-bullseye (0.2.0-20240218) wikimedia; urgency=medium
 
   * Weekly rebuild.

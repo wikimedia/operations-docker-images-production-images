@@ -26,7 +26,7 @@ RUN tar --directory /opt/pip-install -xzvf /opt/pip-install/pip-20.3.4.tar.gz \
     && python2.7 setup.py install \
     && rm -fR /opt/pip-install
 
-RUN mkdir /wheels && pip2 install wheel
+RUN mkdir /wheels && python2 -m pip install wheel
 
 COPY run.sh /bin/run.sh
 

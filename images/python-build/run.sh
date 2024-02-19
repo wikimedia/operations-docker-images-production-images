@@ -1,13 +1,12 @@
 #!/bin/bash
 
 PYTHON_SUFFIX=${PYTHON_SUFFIX:-3}
-PIP=/usr/bin/pip"$PYTHON_SUFFIX"
 PYTHON=python"$PYTHON_SUFFIX"
 
 set -eu
 
 echo "Creating wheels (without transitive dependencies)"
-$PIP wheel --no-deps -r /deploy/frozen-requirements.txt -w /wheels
+$PYTHON -m pip wheel --no-deps -r /deploy/frozen-requirements.txt -w /wheels
 
 echo "Verifying generated wheels fullfil frozen requirements"
 verif_dir=$(mktemp -d --tmpdir python-build-verif.XXXX)
@@ -21,7 +20,7 @@ mkdir -p "$verif_dir"
 #
 # If a dependency is missing somehow, the build will fail indicating
 # frozen-requirements.txt misses an entry.
-$PIP wheel \
+$PYTHON -m pip wheel \
 	--quiet --isolated \
 	--no-index \
 	--find-links /wheels \
