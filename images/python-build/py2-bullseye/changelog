@@ -1,3 +1,9 @@
+python2-build-bullseye (0.3.0-20240225) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 25 Feb 2024 06:00:22 +0000
+
 python2-build-bullseye (0.3.0) wikimedia; urgency=medium
 
   * use `pip` of current Python installation in common `run.sh`
