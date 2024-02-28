@@ -1,3 +1,13 @@
+kserve-storage-initializer (0.11.2-2) wikimedia; urgency=high
+
+  * Use Bookworm for agent, controller and storage-initializer.
+  * Move to venvs to simplify the install process (they are required now
+    in Bookworm).
+  * Add another final image in the multi-build process
+    to drop venv's binaries and improve overall security.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 28 Feb 2024 17:25:00 +0100
+
 kserve-storage-initializer (0.11.2-1-20240225) wikimedia; urgency=medium
 
   * Weekly rebuild.

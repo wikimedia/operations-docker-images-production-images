@@ -10,4 +10,5 @@ RUN mkdir -p {{ repo_base }} \
   && git checkout tags/v0.11.2
 
 WORKDIR {{ repo_base }}/kserve/cmd
+ENV CGO_ENABLED=0
 RUN cd manager && go build && cd ../agent && go build

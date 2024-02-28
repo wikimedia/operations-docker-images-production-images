@@ -1,18 +1,42 @@
 FROM {{ "kserve-build" | image_tag }} as build
 
-FROM {{ registry }}/python3-bullseye:latest
+FROM {{ registry }}/python3-bookworm:latest as python_build
 
 USER root
 
-# The Docker image follows what upstream does in:
-# https://github.com/kserve/kserve/blob/release-0.10/python/storage-initializer.Dockerfile
+# The Docker image follow a different path from what upstream does in [1]
 # Rather than copying over the files to build, we just pip install the package.
 # Notes:
-# - This is a trade-off to keep the Docker image as slim as possible, but of course it forces us
-#   to wait for a pip package release before upgrading Kserve.
-COPY --from=build --chown=root /go/github.com/kserve/kserve/python/storage-initializer/scripts/initializer-entrypoint /usr/bin/storage-initializer-entrypoint
-RUN chmod +x /usr/bin/storage-initializer-entrypoint && {{ "wmf-certificates" | apt_install }} \
-  && python3 -m pip --no-cache-dir install --upgrade pip && python3 -m pip --no-cache-dir install kserve==0.11.2
+# - This is a trade-off to keep the Docker image as slim as possible,
+#   but of course it forces us to wait for a pip package release
+#   before upgrading Kserve.
+# - Due to [2] we could use pip directly with --break-system-packages,
+#   python's venv or pipx. The choice fell to venvs since pipx required
+#   the running user to have a writable home dir (there may be another
+#   way but it wasn't really clear how to do it).
+#
+# References:
+# [1]: https://github.com/kserve/kserve/blob/release-0.11/python/storage-initializer.Dockerfile
+# [2]: https://www.debian.org/releases/bookworm/amd64/release-notes/ch-information.en.html#python3-pep-668
+
+RUN {{ "python3-venv wmf-certificates" | apt_install }} && \
+    mkdir -p /kserve && chown nobody /kserve
 
 USER {{ "nobody" | uid }}
+RUN python3 -m venv /kserve && /kserve/bin/python3 -m pip install kserve[storage]==0.11.2
+
+# To avoid having venvs binaries on the final image,
+# we only copy lib/site-packages over and we modify PYTHONPATH
+# accordingly.
+
+FROM {{ registry }}/python3-bookworm:latest
+
+USER root
+COPY --from=build --chown=root /go/github.com/kserve/kserve/python/storage-initializer/scripts/initializer-entrypoint /usr/bin/storage-initializer-entrypoint
+RUN mkdir -m 755 /kserve && \
+    chmod +x /usr/bin/storage-initializer-entrypoint
+COPY --from=python_build --chown=root /kserve/lib/python3*/site-packages /kserve/site-packages
+
+USER nobody
+ENV PYTHONPATH=/kserve/site-packages
 ENTRYPOINT ["/usr/bin/storage-initializer-entrypoint"]

@@ -1,3 +1,9 @@
+kserve-agent (0.11.2-2) wikimedia; urgency=high
+
+  * Use Bookworm for agent, controller and storage-initializer.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 28 Feb 2024 17:25:00 +0100
+
 kserve-agent (0.11.2-1-20240225) wikimedia; urgency=medium
 
   * Weekly rebuild.
