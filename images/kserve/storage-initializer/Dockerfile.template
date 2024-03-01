@@ -37,6 +37,6 @@ RUN mkdir -m 755 /kserve && \
     chmod +x /usr/bin/storage-initializer-entrypoint
 COPY --from=python_build --chown=root /kserve/lib/python3*/site-packages /kserve/site-packages
 
-USER nobody
+USER {{ "nobody" | uid }}
 ENV PYTHONPATH=/kserve/site-packages
 ENTRYPOINT ["/usr/bin/storage-initializer-entrypoint"]
