@@ -19,7 +19,7 @@ USER root
 # [1]: https://github.com/kserve/kserve/blob/release-0.11/python/storage-initializer.Dockerfile
 # [2]: https://www.debian.org/releases/bookworm/amd64/release-notes/ch-information.en.html#python3-pep-668
 
-RUN {{ "python3-venv wmf-certificates" | apt_install }} && \
+RUN {{ "python3-venv ca-certificates" | apt_install }} && \
     mkdir -p /kserve && chown nobody /kserve
 
 USER {{ "nobody" | uid }}
@@ -34,7 +34,8 @@ FROM {{ registry }}/python3-bookworm:latest
 USER root
 COPY --from=build --chown=root /go/github.com/kserve/kserve/python/storage-initializer/scripts/initializer-entrypoint /usr/bin/storage-initializer-entrypoint
 RUN mkdir -m 755 /kserve && \
-    chmod +x /usr/bin/storage-initializer-entrypoint
+    chmod +x /usr/bin/storage-initializer-entrypoint && \
+    {{ "wmf-certificates" | apt_install }}
 COPY --from=python_build --chown=root /kserve/lib/python3*/site-packages /kserve/site-packages
 
 USER {{ "nobody" | uid }}
