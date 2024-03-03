@@ -1,3 +1,9 @@
+kserve-build (0.11.2-2-20240303) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 03 Mar 2024 06:00:15 +0000
+
 kserve-build (0.11.2-2) wikimedia; urgency=high
 
   * Set CGO_ENABLED=0 to avoid binding to specific Glibc versions.
