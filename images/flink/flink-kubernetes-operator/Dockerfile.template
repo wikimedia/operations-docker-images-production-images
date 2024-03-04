@@ -2,7 +2,7 @@
 {% set flink_kubernetes_operator_version = '1.4.0' %}
 # Elastic Common Schema logging version.  Used for structured logging.
 {% set ecs_version = '1.5.0' %}
-{% set flink_mirror_base_uri = 'https://dlcdn.apache.org/flink' %}
+{% set flink_mirror_base_uri = 'https://archive.apache.org/dist/flink' %}
 {% set maven_mirror_base_uri = 'https://repo1.maven.org/maven2' %}
 {# PGP Keyserver for verifying signatures of .jars downloaded from maven. #}
 {# Maven central uses keyserver.ubuntu.com. #}
