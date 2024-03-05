@@ -1,3 +1,9 @@
+php7.4-fpm-multiversion-base (7.4.33-8-s1) wikimedia; urgency=medium
+
+  * Rebuild for update to php-fpm image
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 05 Mar 2024 13:58:51 +0100
+
 php7.4-fpm-multiversion-base (7.4.33-8) wikimedia; urgency=high
 
   * Rebuild with new php-luasandbox version (T353414, T358867)
