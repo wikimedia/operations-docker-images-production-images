@@ -1,0 +1,3 @@
+Package: ceph
+Description: local Debian-based Ceph container image for cephadm use
+Maintainer: Matthew Vernon <mvernon@wikimedia.org>
