@@ -1,3 +1,9 @@
+wmf-debci-buster (0.0.3-20240310) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 10 Mar 2024 06:00:12 +0000
+
 wmf-debci-buster (0.0.3-20240303) wikimedia; urgency=medium
 
   * Weekly rebuild.
