@@ -1,0 +1,5 @@
+amd-pytorch22 (2.2.1rocm5.7-1) wikimedia; urgency=high
+
+  * First release with AMD ROCm 5.7 and Pytorch 2.2.1
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Thu, 21 Mar 2024 17:00:00 +0100

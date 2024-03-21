@@ -1,0 +1,10 @@
+FROM {{ "python3-bookworm" | image_tag }}
+
+# The usage of --break-system-packages follows how Blubber currently works
+# on Debian Bookworm, see https://phabricator.wikimedia.org/T346090
+#
+# The goal is to create a base image already equipped with Pytorch and ROCm
+# libraries, to share it as a common layer more easily. The size of the ROCm
+# Pytorch version is currently big, and this is a compromise that we decided
+# to take in https://phabricator.wikimedia.org/T360638.
+RUN /usr/bin/pip3 install --break-system-packages torch==2.2.1 --extra-index-url https://download.pytorch.org/whl/rocm5.7
