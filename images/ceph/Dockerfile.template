@@ -1,0 +1,24 @@
+FROM {{ "bookworm" | image_tag }}
+
+# Install the necessary packages
+# And take upstream's tweaks to disable udev sync since container
+# cannot contact udev
+{% set packages|replace('\n', ' ') -%}
+jq
+nvme-cli
+smartmontools
+ceph
+ceph-common
+ceph-mgr-cephadm
+ceph-mgr-dashboard
+ceph-mgr-diskprediction-local
+ceph-volume
+radosgw
+{%- endset -%}
+RUN echo 'deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia thirdparty/ceph-reef' > /etc/apt/sources.list.d/cephreef.list && \
+  {{ packages | apt_install }} && \
+  sed -i -e 's/^\([[:space:]]*udev_rules =\) 1$/\1 0/' \
+         -e 's/^\([[:space:]]*udev_sync =\) 1$/\1 0/' \
+         -e 's/^\([[:space:]]*obtain_device_list_from_udev =\) 1$/\1 0/' \
+         /etc/lvm/lvm.conf && \
+  /usr/sbin/lvmconfig --validate

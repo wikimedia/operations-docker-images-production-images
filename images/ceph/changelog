@@ -1,0 +1,5 @@
+ceph (18.2.2-wmf1) wikimedia; urgency=medium
+
+  * First version of a ceph/ceph container for WMF
+
+ -- Matthew Vernon <mvernon@wikimedia.org>  Thu, 21 Mar 2024 10:07:54 +0000
