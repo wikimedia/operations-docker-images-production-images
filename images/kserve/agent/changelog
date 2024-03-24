@@ -1,3 +1,9 @@
+kserve-agent (0.11.2-2-20240324) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 24 Mar 2024 06:00:09 +0000
+
 kserve-agent (0.11.2-2-20240317) wikimedia; urgency=medium
 
   * Weekly rebuild.

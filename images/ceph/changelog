@@ -1,3 +1,9 @@
+ceph (18.2.2-wmf1-20240324) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 24 Mar 2024 06:00:12 +0000
+
 ceph (18.2.2-wmf1) wikimedia; urgency=medium
 
   * First version of a ceph/ceph container for WMF
