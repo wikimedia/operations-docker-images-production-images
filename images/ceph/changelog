@@ -1,3 +1,9 @@
+ceph (18.2.2-wmf2) wikimedia; urgency=medium
+
+  * Add udev to container (needed by ceph-volume)
+
+ -- Matthew Vernon <mvernon@wikimedia.org>  Tue, 26 Mar 2024 15:01:36 +0000
+
 ceph (18.2.2-wmf1-20240324) wikimedia; urgency=medium
 
   * Weekly rebuild.
