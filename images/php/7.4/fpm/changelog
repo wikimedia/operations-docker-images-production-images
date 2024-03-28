@@ -1,3 +1,9 @@
+php7.4-fpm (7.4.33-4) wikimedia; urgency=medium
+
+  * T346690: Add env[MCROUTER_SERVER] in pool configuration
+
+ -- Effie Mouzeli <effie@wikimedia.org>  Tue, 09 Apr 2024 7:29:22 +0000
+
 php7.4-fpm (7.4.33-3-20240303-s1-20240407) wikimedia; urgency=medium
 
   * Weekly rebuild.
@@ -30,7 +36,7 @@ php7.4-fpm (7.4.33-3-20240303-s1-20240310) wikimedia; urgency=medium
 
 php7.4-fpm (7.4.33-3-20240303-s1) wikimedia; urgency=medium
 
-  * Reverted adding env[MCROUTER_SERVER] in php-fpm.conf 
+  * Reverted adding env[MCROUTER_SERVER] in php-fpm.conf
 
  -- Effie Mouzeli <effie@wikimedia.org>  Tue, 05 Mar 2024 12:34:00 +0000
 

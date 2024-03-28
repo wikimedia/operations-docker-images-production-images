@@ -17,6 +17,8 @@ ENV PHP__opcache__enable=1 \
     FPM__error_log=/dev/stderr \
     FPM__slowlog=/dev/stderr \
     FPM__catch_workers_output= \
+    # This is the default value for mcrouter, as defined in wmf-config/mc.php
+    MW__MCROUTER_SERVER=127.0.0.1:11213 \
     FCGI_MODE=FCGI_TCP \
     FCGI_URL=127.0.0.1:9000 \
     FCGI_ALLOW=127.0.0.1
