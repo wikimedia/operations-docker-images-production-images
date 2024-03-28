@@ -1,0 +1,5 @@
+amd-pytorch21 (2.1.2rocm5.5-1) wikimedia; urgency=high
+
+   * Push torch 2.1.2 with rocm5.5 as required for huggingface model server
+
+ -- Ilias Sarantopoulos <isarantopoulos@wikimedia.org>  Mon,  1 Apr 2024 17:58:01 +0300

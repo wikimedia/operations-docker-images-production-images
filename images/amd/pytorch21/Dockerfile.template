@@ -1,0 +1,20 @@
+FROM {{ "python3-bookworm" | image_tag }}
+# Please check the README.md documentation for more info about
+# what we are doing and why with the Pytorch base images.
+
+RUN {{ "libdrm-amdgpu1 wmf-certificates" | apt_install }} && \
+    (groupadd -o -g {{ "somebody" | uid }} -r "somebody") && \
+    (getent passwd {{ "somebody" | uid }} || \
+     useradd -l -m -d "/home/somebody" -r -g "somebody" \
+     -u {{ "somebody" | uid }} "somebody") && \
+    mkdir -p /opt/lib && \
+    chown {{ "somebody" | uid }}:{{ "somebody" | uid }} /opt/lib
+
+# Note: the usage of --break-system-packages in pip follows how Blubber
+# currently works on Debian Bookworm,
+# see https://phabricator.wikimedia.org/T346090
+
+USER {{ "somebody" | uid }}
+RUN /usr/bin/pip3 install --target /opt/lib/python/base-packages --break-system-packages torch==2.1.2 --extra-index-url https://download.pytorch.org/whl/rocm5.5 && \
+    mkdir -p /opt/lib/python/site-packages && \
+    /bin/bash -c 'for file in $(ls /opt/lib/python/base-packages | egrep -v "bin|share|__pycache__"); do ln -s "/opt/lib/python/base-packages/${file}" "/opt/lib/python/site-packages/${file}"; done'
