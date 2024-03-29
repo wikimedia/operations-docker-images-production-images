@@ -15,5 +15,6 @@ known_uid_mappings:
   spark: 185
   flink: 186
   nobody: 65534
+  somebody: 65533
   otelcol-contrib: 10001
   ml-runner: 22222

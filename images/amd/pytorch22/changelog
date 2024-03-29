@@ -1,3 +1,14 @@
+amd-pytorch22 (2.2.1rocm5.7-2) wikimedia; urgency=high
+
+  * Add the "somebody" user and configure it exactly as Blubber does it.
+  * Install the Pytorch dependency as Blubber would do
+    (under /opt/lib/python).
+  * Link the torch Python package to /opt/lib/python
+    to make it visible to Blubber's pip.
+  * Install libdrm and wmf-certificates packages.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 03 Apr 2024 14:00:00 +0100
+
 amd-pytorch22 (2.2.1rocm5.7-1-20240331) wikimedia; urgency=medium
 
   * Weekly rebuild.
