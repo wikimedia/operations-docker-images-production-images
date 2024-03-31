@@ -1,3 +1,9 @@
+envoy-future (1.23.10-2-20240331) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 31 Mar 2024 06:00:17 +0000
+
 envoy-future (1.23.10-2-20240324) wikimedia; urgency=medium
 
   * Weekly rebuild.

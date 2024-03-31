@@ -1,3 +1,9 @@
+ceph (18.2.2-wmf2-20240331) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 31 Mar 2024 06:00:12 +0000
+
 ceph (18.2.2-wmf2) wikimedia; urgency=medium
 
   * Add udev to container (needed by ceph-volume)
