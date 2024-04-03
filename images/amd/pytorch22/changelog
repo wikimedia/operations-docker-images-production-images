@@ -1,3 +1,10 @@
+amd-pytorch22 (2.2.1rocm5.7-3) wikimedia; urgency=high
+
+  * Remove the comments and add a specific README file outside
+    the Docker file.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 03 Apr 2024 18:00:00 +0100
+
 amd-pytorch22 (2.2.1rocm5.7-2) wikimedia; urgency=high
 
   * Add the "somebody" user and configure it exactly as Blubber does it.
