@@ -1,3 +1,9 @@
+amd-pytorch21 (2.1.2rocm5.5-1-20240407) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 07 Apr 2024 06:00:16 +0000
+
 amd-pytorch21 (2.1.2rocm5.5-1) wikimedia; urgency=high
 
    * Push torch 2.1.2 with rocm5.5 as required for huggingface model server
