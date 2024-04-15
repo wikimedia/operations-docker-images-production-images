@@ -1,8 +1,0 @@
-FROM {{ "buster" | image_tag }}
-
-RUN {{ "tiller" | apt_install }}
-ENV TILLER_HISTORY_MAX=100
-
-USER {{ "nobody" | uid }}
-CMD /usr/sbin/tiller
-EXPOSE 44134
