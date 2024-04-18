@@ -1,3 +1,9 @@
+php7.4-fpm (7.4.33-5) wikimedia; urgency=high
+
+   Actually use FPM__request_terminate_timeout
+
+ -- Clément Goubert <Clément Goubert <cgoubert@wikimedia.org>>  Thu, 18 Apr 2024 12:07:44 +0200
+
 php7.4-fpm (7.4.33-4-20240415) wikimedia; urgency=medium
 
   * Weekly rebuild.
