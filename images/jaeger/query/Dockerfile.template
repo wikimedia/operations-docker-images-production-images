@@ -1,5 +1,5 @@
 FROM {{ "jaeger-builder" | image_tag }} as build
-FROM {{ "buster" | image_tag }}
+FROM {{ "bookworm" | image_tag }}
 COPY --from=build /build/jaeger-query /bin/
 RUN {{ "wmf-certificates" | apt_install }}
 USER {{ "nobody" | uid }}

@@ -1,3 +1,10 @@
+jaeger-query (1.56-1) wikimedia; urgency=medium
+
+  * New upstream version; build using Bookworm.
+  ** https://phabricator.wikimedia.org/T362719
+
+ -- Filippo Giunchedi <filippo@wikimedia.org>  Wed, 17 Apr 2024 11:34:08 +0000
+
 jaeger-query (1.41-2-20240415) wikimedia; urgency=medium
 
   * Weekly rebuild.
