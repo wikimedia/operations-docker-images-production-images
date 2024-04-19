@@ -1,3 +1,9 @@
+mcrouter (0.41.0-5) wikimedia; urgency=medium
+
+  * Move from deprecated wikimedia-buster to buster
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Fri, 19 Apr 2024 11:20:35 +0200
+
 mcrouter (0.41.0-4-20240421) wikimedia; urgency=medium
 
   * Weekly rebuild.

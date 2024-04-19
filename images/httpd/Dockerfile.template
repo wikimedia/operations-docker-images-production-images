@@ -1,4 +1,4 @@
-FROM {{ registry }}/wikimedia-buster:latest
+FROM {{ registry }}/buster:latest
 
 # Variables to be defined at build time
 ARG APACHE_RUN_USER=www-data

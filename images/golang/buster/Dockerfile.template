@@ -1,4 +1,4 @@
-FROM {{ registry }}/wikimedia-buster
+FROM {{ registry }}/buster
 
 USER root
 # installed from backports

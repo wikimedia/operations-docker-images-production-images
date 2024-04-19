@@ -1,4 +1,4 @@
-FROM {{ registry }}/wikimedia-buster:latest
+FROM {{ registry }}/buster:latest
 LABEL Description="mcrouter images" \
       maintainer="joe@wikimedia.org"
 
