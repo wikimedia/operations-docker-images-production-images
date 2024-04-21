@@ -1,3 +1,9 @@
+jaeger-query (1.56-1-20240421) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 21 Apr 2024 06:00:12 +0000
+
 jaeger-query (1.56-1) wikimedia; urgency=medium
 
   * New upstream version; build using Bookworm.

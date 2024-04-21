@@ -1,3 +1,9 @@
+jaeger-es-index-cleaner (1.41-2-20240421) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 21 Apr 2024 06:00:11 +0000
+
 jaeger-es-index-cleaner (1.41-2-20240415) wikimedia; urgency=medium
 
   * Weekly rebuild.
