@@ -1,3 +1,9 @@
+service-checker (0.0.6-20240428) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 28 Apr 2024 06:00:11 +0000
+
 service-checker (0.0.6-20240421) wikimedia; urgency=medium
 
   * Weekly rebuild.

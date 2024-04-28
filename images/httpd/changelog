@@ -1,3 +1,9 @@
+httpd (2.4.38-10-u4-20240428) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 28 Apr 2024 06:00:24 +0000
+
 httpd (2.4.38-10-u4) wikimedia; urgency=medium
 
   * Move from deprecated wikimedia-buster to buster
