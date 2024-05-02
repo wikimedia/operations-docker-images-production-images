@@ -1,3 +1,9 @@
+ceph (18.2.2-wmf3) wikimedia; urgency=medium
+
+  * Add python3-bcrypt (workround, should be fixed in 18.2.3 upstream)
+
+ -- Matthew Vernon <mvernon@wikimedia.org>  Thu, 02 May 2024 11:41:12 +0100
+
 ceph (18.2.2-wmf2-20240428) wikimedia; urgency=medium
 
   * Weekly rebuild.
