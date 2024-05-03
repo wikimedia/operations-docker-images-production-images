@@ -1,0 +1,3 @@
+Package: nodejs20-slim
+Description: Base image for nodejs 20.x based applications on Debian Bookworm.
+Maintainer: Moritz Muehlenhoff <moritz@wikimedia.org>
