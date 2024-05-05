@@ -1,3 +1,9 @@
+ceph (18.2.2-wmf3-20240505) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 05 May 2024 06:00:12 +0000
+
 ceph (18.2.2-wmf3) wikimedia; urgency=medium
 
   * Add python3-bcrypt (workround, should be fixed in 18.2.3 upstream)
