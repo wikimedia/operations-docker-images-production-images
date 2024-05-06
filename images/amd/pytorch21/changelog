@@ -1,14 +1,8 @@
-amd-pytorch21 (2.1.2rocm5.7-1-20240505) wikimedia; urgency=medium
+amd-pytorch21 (2.1.2rocm5.6-1) wikimedia; urgency=high
 
-  * Weekly rebuild.
+   * Upgrade the ROCm version to 5.6
 
- -- Image build Bot <root@wikimedia.org>  Sun, 05 May 2024 06:00:17 +0000
-
-amd-pytorch21 (2.1.2rocm5.7-1) wikimedia; urgency=high
-
-   * Update ROCm version to 5.7
-
- -- Luca Toscano <ltoscano@wikimedia.org>  Fri,  3 May 2024 16:51:01 +0100
+ -- Luca Toscano <ltoscano@wikimedia.org>  Mon,  6 May 2024 16:51:01 +0100
 
 amd-pytorch21 (2.1.2rocm5.5-1-20240428) wikimedia; urgency=medium
 
