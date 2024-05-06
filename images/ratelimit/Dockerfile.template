@@ -1,13 +1,13 @@
-FROM {{ registry }}/golang:1.13-3-s1 as build
+FROM {{ "golang1.21" | image_tag }} as build
 
-ENV RATELIMIT_VERSION=v1.5.0-1-vendor
+ENV RATELIMIT_VERSION=git20240505.3fcc360-vendor
 ENV SOURCE_REPO=https://gerrit.wikimedia.org/r/operations/software/envoyproxy/ratelimiter
 ENV WORK_BASE=/work/repo
 
 USER root
 
 WORKDIR $WORK_BASE
-RUN git clone $SOURCE_REPO && \
+RUN git clone $SOURCE_REPO ratelimiter && \
     cd ratelimiter && \
     git checkout $RATELIMIT_VERSION
 
@@ -19,14 +19,14 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o $WORK_BASE/ratelimiter/ratelimit_config
 RUN mv $WORK_BASE/ratelimiter/ratelimit /work/ratelimit.cmd
 RUN mv $WORK_BASE/ratelimiter/ratelimit_config_check /work/ratelimit_config_check.cmd
 
-FROM {{ "buster" | image_tag }}
+FROM {{ "bookworm" | image_tag }}
 
 COPY --from=build /work/ratelimit.cmd /usr/bin/ratelimit
 COPY --from=build /work/ratelimit_config_check.cmd /usr/bin/ratelimit_config_check
-
-RUN {{ "ca-certificates" | apt_install }}
-
 COPY entrypoint.sh /bin/entrypoint.sh
+
+RUN {{ "wmf-certificates" | apt_install }}
+
 USER {{ "nobody" | uid }}
 
 ENTRYPOINT ["/bin/entrypoint.sh"]

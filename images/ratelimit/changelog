@@ -1,3 +1,10 @@
+ratelimit (9.0.1-20240503.3fcc360) wikimedia; urgency=medium
+
+  * Update to main branch 3fcc360
+  * Bump to verion 9.x.x to make it clear that this is no upstream release
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Mon, 06 May 2024 17:27:23 +0200
+
 ratelimit (1.5.1-s4-20240505) wikimedia; urgency=medium
 
   * Weekly rebuild.
