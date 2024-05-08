@@ -1,0 +1,3 @@
+FROM {{ "bookworm" | image_tag }}
+
+RUN echo "deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia thirdparty/node20" > /etc/apt/sources.list.d/nodejs.list && {{ "nodejs wmf-certificates" | apt_install }} && ln -s /bin/node /bin/nodejs
