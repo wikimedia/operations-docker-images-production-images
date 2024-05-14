@@ -1,3 +1,9 @@
+otelcol (v0.100.0-1) wikimedia; urgency=high
+
+   * Bump version
+
+ -- Chris Danis <cdanis@wikimedia.org>  Tue, 14 May 2024 15:28:43 -0400
+
 otelcol (0.81.0-2-20240512) wikimedia; urgency=medium
 
   * Weekly rebuild.
