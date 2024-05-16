@@ -1,3 +1,10 @@
+ratelimit (9.0.2-20240503.3fcc360) wikimedia; urgency=medium
+
+  * Add CertProvider to hot reload TLS certs for gRPC service
+    Change-Id: I24ca45820021744670d204c6bea41dd1b8303ac8
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Thu, 16 May 2024 09:15:48 +0200
+
 ratelimit (9.0.1-20240503.3fcc360-20240512) wikimedia; urgency=medium
 
   * Weekly rebuild.
