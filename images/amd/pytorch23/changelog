@@ -1,0 +1,5 @@
+amd-pytorch23 (2.3.0rocm6.0-1) wikimedia; urgency=high
+
+  * First release with AMD ROCm 6.0 and Pytorch 2.3.0
+
+ -- Ilias Sarantopoulos <isarantopoulos@wikimedia.org>  Fri, 17 May 2024 12:30:00 +0300
