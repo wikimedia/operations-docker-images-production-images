@@ -15,6 +15,6 @@ RUN {{ "libdrm-amdgpu1 wmf-certificates" | apt_install }} && \
 # currently works on Debian Bookworm,
 # see https://phabricator.wikimedia.org/T346090
 USER {{ "somebody" | uid }}
-RUN  /usr/bin/pip3 install --target /opt/lib/python/base-packages --break-system-packages torch==2.3.0 --extra-index-url https://download.pytorch.org/whl/rocm6.0 && \
+RUN  /usr/bin/pip3 install --target /opt/lib/python/base-packages --no-cache-dir --break-system-packages torch==2.3.0 --extra-index-url https://download.pytorch.org/whl/rocm6.0 && \
 mkdir /opt/lib/python/site-packages && \
 /bin/bash -c 'for file in $(ls /opt/lib/python/base-packages | egrep -v "bin|share|__pycache__"); do ln -s "/opt/lib/python/base-packages/${file}" "/opt/lib/python/site-packages/${file}"; done'
