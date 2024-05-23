@@ -1,0 +1,5 @@
+amd-pytorch-common (0.0.1-1) wikimedia; urgency=medium
+
+  * Initial version of the image.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Thu, 23 May 2024 16:00:01 +0100

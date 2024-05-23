@@ -1,3 +1,9 @@
+amd-pytorch21 (2.1.2rocm5.6-2) wikimedia; urgency=high
+
+   * Refactor the Dockerfile template to use the new amd-pytorch-common image.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Thu,  23 May 2024 16:00:01 +0100
+
 amd-pytorch21 (2.1.2rocm5.6-1-20240519) wikimedia; urgency=medium
 
   * Weekly rebuild.

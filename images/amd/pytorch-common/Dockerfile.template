@@ -1,0 +1,15 @@
+FROM {{ "python3-bookworm" | image_tag }}
+# Please check the README.md documentation for more info about
+# what we are doing and why with the Pytorch base images.
+
+# This image acts as common baseline between all the Pytorch
+# ones, to avoid copy/paste repetitions. Ideally in the future
+# there will be one image that both ML and Releng uses, so this
+# one will be good to be removed.
+RUN {{ "libdrm-amdgpu1 wmf-certificates" | apt_install }} && \
+    (groupadd -o -g {{ "somebody" | uid }} -r "somebody") && \
+    (getent passwd {{ "somebody" | uid }} || \
+     useradd -l -m -d "/home/somebody" -r -g "somebody" \
+     -u {{ "somebody" | uid }} "somebody") && \
+    mkdir -m 0755 -p /opt/lib/python/site-packages && \
+    chown -R {{ "somebody" | uid }}:{{ "somebody" | uid }} /opt/lib

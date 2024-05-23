@@ -1,3 +1,4 @@
 Package: amd-pytorch22
 Description: Base image with Pytorch bundled with AMD ROCm libraries.
 Maintainer: Luca Toscano <ltoscano@wikimedia.org>
+Build-Depends: amd-pytorch-common
