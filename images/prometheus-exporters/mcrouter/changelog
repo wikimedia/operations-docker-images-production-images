@@ -1,3 +1,9 @@
+prometheus-mcrouter-exporter (0.0.1-2-20240526) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 26 May 2024 06:00:22 +0000
+
 prometheus-mcrouter-exporter (0.0.1-2-20240519) wikimedia; urgency=medium
 
   * Weekly rebuild.

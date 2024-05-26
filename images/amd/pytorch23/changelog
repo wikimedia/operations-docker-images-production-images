@@ -1,3 +1,9 @@
+amd-pytorch23 (2.3.0rocm6.0-2-20240526) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 26 May 2024 06:00:23 +0000
+
 amd-pytorch23 (2.3.0rocm6.0-2) wikimedia; urgency=high
 
    * Refactor the Dockerfile template to use the new amd-pytorch-common image.

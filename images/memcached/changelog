@@ -1,3 +1,9 @@
+memcached (1.6.6-1-20240526) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 26 May 2024 06:00:06 +0000
+
 memcached (1.6.6-1-20240519) wikimedia; urgency=medium
 
   * Weekly rebuild.
