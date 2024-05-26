@@ -1,3 +1,9 @@
+controller (1.10.1-2-20240526) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 26 May 2024 06:00:38 +0000
+
 controller (1.10.1-2-20240519) wikimedia; urgency=medium
 
   * Weekly rebuild.
