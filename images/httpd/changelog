@@ -1,3 +1,9 @@
+httpd (2.4.38-10-u4-20240602) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 02 Jun 2024 06:00:28 +0000
+
 httpd (2.4.38-10-u4-20240526) wikimedia; urgency=medium
 
   * Weekly rebuild.
