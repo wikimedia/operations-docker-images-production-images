@@ -16,6 +16,7 @@ ceph-mgr-diskprediction-local
 ceph-volume
 radosgw
 python3-bcrypt
+systemctl
 {%- endset -%}
 RUN echo 'deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia thirdparty/ceph-reef' > /etc/apt/sources.list.d/cephreef.list && \
   {{ packages | apt_install }} && \

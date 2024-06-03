@@ -1,3 +1,9 @@
+ceph (18.2.2-wmf5) wikimedia; urgency=medium
+
+  * Install systemctl (needed for some OSD operations)
+
+ -- Matthew Vernon <mvernon@wikimedia.org>  Mon, 03 Jun 2024 16:14:27 +0100
+
 ceph (18.2.2-wmf4) wikimedia; urgency=medium
 
   * Install missing rgw mgr module (workaround for upstream bug)
