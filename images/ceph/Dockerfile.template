@@ -24,3 +24,7 @@ RUN echo 'deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia thirdparty/c
          -e 's/^\([[:space:]]*obtain_device_list_from_udev =\) 1$/\1 0/' \
          /etc/lvm/lvm.conf && \
   /usr/sbin/lvmconfig --validate
+
+# Copy in the two missing files for the rgw mgr module
+# cf https://tracker.ceph.com/issues/66326
+COPY --chown=root:root rgw /usr/share/ceph/mgr/rgw
