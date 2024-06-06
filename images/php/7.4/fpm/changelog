@@ -1,3 +1,11 @@
+php7.4-fpm (7.4.33-6) wikimedia; urgency=medium
+
+  * Add a directory for php-fpm configuration includes to be easily
+    overridable in kubernetes. Adding a new environment variable shouldn't
+    require an image rebuild.
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Thu, 06 Jun 2024 11:48:45 +0200
+
 php7.4-fpm (7.4.33-5-20240609) wikimedia; urgency=medium
 
   * Weekly rebuild.

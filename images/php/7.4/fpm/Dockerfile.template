@@ -34,6 +34,7 @@ RUN {{ "php7.4-fpm" | apt_install }} && \
 # COPY the configurations
 COPY conf/php.ini conf/php-fpm.conf /etc/php/7.4/fpm/
 COPY conf/pool.d/ /etc/php/7.4/fpm/pool.d/
+COPY conf/env/ /etc/php/7.4/fpm/env/
 # Copy the monitoring scripts.
 COPY --chown=www-data:www-data monitoring /srv/monitoring
 # Copy the live-test script
