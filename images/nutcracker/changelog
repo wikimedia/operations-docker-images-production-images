@@ -1,3 +1,9 @@
+nutcracker (0.0.4-20240609) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 09 Jun 2024 06:00:04 +0000
+
 nutcracker (0.0.4-20240602) wikimedia; urgency=medium
 
   * Weekly rebuild.

@@ -1,3 +1,9 @@
+golang1.18 (1.18-1-20240609) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 09 Jun 2024 06:00:11 +0000
+
 golang1.18 (1.18-1-20240602) wikimedia; urgency=medium
 
   * Weekly rebuild.

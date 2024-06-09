@@ -1,3 +1,9 @@
+ceph (18.2.2-wmf5-20240609) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 09 Jun 2024 06:00:13 +0000
+
 ceph (18.2.2-wmf5) wikimedia; urgency=medium
 
   * Install systemctl (needed for some OSD operations)
