@@ -1,3 +1,9 @@
+prometheus-statsd-exporter (0.26.1-20240610) wikimedia; urgency=medium
+
+  * Upgrade statsd-exporter T302373
+
+ -- Filippo Giunchedi <filippo@debian.org>  Mon, 10 Jun 2024 11:49:30 +0200
+
 prometheus-statsd-exporter (0.0.10-20240609) wikimedia; urgency=medium
 
   * Weekly rebuild.
