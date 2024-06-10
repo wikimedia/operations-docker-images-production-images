@@ -11,6 +11,7 @@ while IFS= read -r -d '' changelog; do
     # Exclude spark images, they're too big to rebuild every week.
     if [[ "$obj" == *"spark"* ]]; then
         echo "skipping rebuild of $obj"
+        continue
     fi
     cur_version=$(dpkg-parsechangelog -l "$changelog" --show-field Version)
     version=$(echo "$cur_version" | sed -E 's/\-[0-9]{8}$//')
