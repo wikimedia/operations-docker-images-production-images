@@ -1,3 +1,9 @@
+otelcol (0.102.0-1) wikimedia; urgency=high
+
+   * Bump version
+
+ -- Chris Danis <cdanis@wikimedia.org>  Wed, 12 Jun 2024 10:58:19 -0400
+
 otelcol (v0.100.0-1) wikimedia; urgency=high
 
    * Bump version
