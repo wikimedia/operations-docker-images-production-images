@@ -1,0 +1,15 @@
+FROM {{ 'bookworm' | image_tag }}
+
+USER root
+ENV GOPATH=/go \
+    GOLANG_VERSION=1.22
+ENV GOCACHE=$GOPATH/.cache/go-build \
+    GOENV=$GOPATH/.config/go/env \
+    PATH=$GOPATH/bin:/usr/lib/go-$GOLANG_VERSION/bin:$PATH
+
+RUN {{ "golang-1.22 ca-certificates git build-essential" | apt_install }} \
+    && mkdir -p "$GOPATH/src" "$GOPATH/bin" "$GOPATH/.cache" "$GOPATH/.config" \
+    && chmod -R 777 "$GOPATH"
+
+USER nobody
+WORKDIR $GOPATH
