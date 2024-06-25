@@ -1,4 +1,4 @@
-FROM {{ "buster" | image_tag }}
+FROM {{ "bookworm" | image_tag }}
 RUN {{ "prometheus-statsd-exporter" | apt_install }} \
    && rm -rf /usr/share/gocode/src/github.com/prometheus
 

@@ -1,3 +1,9 @@
+prometheus-statsd-exporter (0.26.1-2) wikimedia; urgency=medium
+
+  * Upgrade to Bookworm.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Tue, 25 Jun 2024 17:15:00 +0100
+
 prometheus-statsd-exporter (0.26.1-20240623) wikimedia; urgency=medium
 
   * Weekly rebuild.
