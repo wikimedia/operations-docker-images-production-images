@@ -1,4 +1,4 @@
-FROM {{ "buster" | image_tag }}
+FROM {{ "bookworm" | image_tag }}
 
 RUN {{ "envoyproxy gettext-base wmf-certificates" | apt_install }} && \
     mkdir -p /var/run/envoy && \
