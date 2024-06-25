@@ -1,4 +1,4 @@
-FROM {{ registry }}/buster:latest
+FROM {{ "bookworm" | image_tag }}
 LABEL Description="mcrouter images" \
       maintainer="joe@wikimedia.org"
 
@@ -13,16 +13,18 @@ ENV PORT=5000 \
       USE_SSL="no" \
       SSL_PORT=5001
 
-
-RUN {{ "mcrouter ca-certificates" | apt_install }} && mkdir -p /etc/mcrouter/ssl && \
-      chown mcrouter:mcrouter /etc/mcrouter/ssl && mkdir -p /var/mcrouter && chown mcrouter:mcrouter /var/mcrouter && \
-      # Check that mcrouter has the correct uid. We need to use numeric UIDs to enable pod security policies.
-      id mcrouter | grep -qF uid=999
+# As of June 2024, the mcrouter package requires systemd and it uses systemd-sysusers
+# to create the mcrouter uid. To have a more predictable uid, a special config
+# under /etc/sysuser.d is created (that takes the priority over the rest).
+RUN mkdir /etc/sysusers.d && /usr/bin/echo -e "u\tmcrouter\t"{{ "mcrouter" | uid }} > /etc/sysusers.d/mcrouter.conf && \
+    {{ "mcrouter ca-certificates" | apt_install }} && mkdir -p /etc/mcrouter/ssl && \
+    chown mcrouter:mcrouter  /etc/mcrouter/ssl && \
+    mkdir -p /var/mcrouter && chown mcrouter:mcrouter /var/mcrouter
 COPY entrypoint.sh /bin/entrypoint
 COPY healthz.sh /bin/healthz
 
 # This is the mcrouter user in this container.
-USER 999
+USER {{ "mcrouter" | uid }}
 
 # Entry point
 CMD ["/bin/entrypoint"]

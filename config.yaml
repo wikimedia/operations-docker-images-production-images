@@ -17,3 +17,4 @@ known_uid_mappings:
   somebody: 65533
   otelcol-contrib: 10001
   ml-runner: 22222
+  mcrouter: 778

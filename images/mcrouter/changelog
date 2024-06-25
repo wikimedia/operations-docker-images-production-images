@@ -1,3 +1,12 @@
+mcrouter (2023.07.17.00-1) wikimedia; urgency=medium
+
+  * Upgrade to Bookworm.
+  * Upgrade version number to reflect our internal packaging,
+    and what upstream currently does.
+  * Add a more-predictable/fixed uid for mcrouter.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Tue, 25 Jun 2024 17:15:00 +0100
+
 mcrouter (0.41.0-5-20240623) wikimedia; urgency=medium
 
   * Weekly rebuild.
