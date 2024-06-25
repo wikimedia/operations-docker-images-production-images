@@ -1,3 +1,9 @@
+helm-state-metrics (0.2.0-2) wikimedia; urgency=medium
+
+  * Upgrade to Bookworm.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Tue, 25 Jun 2024 17:07:00 +0200
+
 helm-state-metrics (0.2.0-1-20240623) wikimedia; urgency=medium
 
   * Weekly rebuild.
