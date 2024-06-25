@@ -1,3 +1,9 @@
+nutcracker (0.0.5) wikimedia; urgency=medium
+
+  * Upgrade to Bookworm.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Tue, 25 Jun 2024 17:33:00 +0100
+
 nutcracker (0.0.4-20240623) wikimedia; urgency=medium
 
   * Weekly rebuild.
