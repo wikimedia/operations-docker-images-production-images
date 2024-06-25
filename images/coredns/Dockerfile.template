@@ -1,4 +1,4 @@
-FROM {{ 'golang1.18' | image_tag }} as build
+FROM {{ 'golang1.19' | image_tag }} as build
 
 {% set repo_base = '/go/github.com/coredns' %}
 {% set coredns_version_git_tag = 'v1.8.7' %}
@@ -13,7 +13,7 @@ RUN mkdir -p {{ repo_base }} \
 WORKDIR {{ repo_base }}/coredns
 RUN make coredns
 
-FROM {{ "buster" | image_tag }}
+FROM {{ "bookworm" | image_tag }}
 
 USER root
 COPY --from=build {{ repo_base }}/coredns/coredns /usr/bin/coredns

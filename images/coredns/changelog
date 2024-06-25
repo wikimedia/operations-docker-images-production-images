@@ -1,3 +1,9 @@
+coredns (1.8.7-2) wikimedia; urgency=high
+
+   * Upgrade to Bookworm and golang 1.19.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Tue, 25 Jun 2024 16:27:00 +0200
+
 coredns (1.8.7-1-20240623) wikimedia; urgency=medium
 
   * Weekly rebuild.
