@@ -1,3 +1,10 @@
+cfssl-issuer (0.3.1-0) wikimedia; urgency=medium
+
+  * Upgrade to Bookworm and golang 1.19
+  * Upgrade cfssl-issuer version to 0.3.1
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 26 Jun 2024 10:06:20 +0100
+
 cfssl-issuer (0.3.0-1-20240623) wikimedia; urgency=medium
 
   * Weekly rebuild.

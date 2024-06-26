@@ -1,6 +1,6 @@
-FROM {{ registry }}/golang1.17 as build
+FROM {{ registry }}/golang1.19 as build
 
-ENV SOURCE_VERSION=v0.3.0
+ENV SOURCE_VERSION=v0.3.1
 ENV SOURCE_REPO=https://gerrit.wikimedia.org/r/operations/software/cfssl-issuer.git
 ENV CGO_ENABLED=0 GOOS=linux
 
@@ -9,7 +9,7 @@ RUN git clone $SOURCE_REPO && \
     git checkout $SOURCE_VERSION && \
     make
 
-FROM {{ "buster" | image_tag }}
+FROM {{ "bookworm" | image_tag }}
 
 COPY --from=build /go/cfssl-issuer/bin/manager /usr/bin/
 RUN {{ "wmf-certificates" | apt_install }}
