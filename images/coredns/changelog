@@ -1,3 +1,9 @@
+coredns (1.8.7-2-20240630) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 30 Jun 2024 06:00:27 +0000
+
 coredns (1.8.7-2) wikimedia; urgency=high
 
    * Upgrade to Bookworm and golang 1.19.

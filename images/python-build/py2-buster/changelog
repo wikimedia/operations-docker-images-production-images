@@ -1,3 +1,9 @@
+python2-build-buster (0.1.1-20240630) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 30 Jun 2024 06:00:20 +0000
+
 python2-build-buster (0.1.1-20240623) wikimedia; urgency=medium
 
   * Weekly rebuild.

@@ -1,3 +1,9 @@
+helm-state-metrics (0.2.0-2-20240630) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 30 Jun 2024 06:00:08 +0000
+
 helm-state-metrics (0.2.0-2) wikimedia; urgency=medium
 
   * Upgrade to Bookworm.
