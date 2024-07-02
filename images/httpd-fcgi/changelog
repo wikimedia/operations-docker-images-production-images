@@ -1,3 +1,9 @@
+httpd-fcgi (2.4.38-10-u6) wikimedia; urgency=medium
+
+  * Rebuild for new version of glogger (T363342, T368640)
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 02 Jul 2024 07:38:40 +0200
+
 httpd-fcgi (2.4.38-10-u5-20240630) wikimedia; urgency=medium
 
   * Weekly rebuild.

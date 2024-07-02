@@ -1,3 +1,9 @@
+mediawiki-httpd (0.1.8-u2) wikimedia; urgency=medium
+
+  * Rebuild to pick up a new version of glogger 
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 02 Jul 2024 07:41:24 +0200
+
 mediawiki-httpd (0.1.8-s2-20240630) wikimedia; urgency=medium
 
   * Weekly rebuild.
