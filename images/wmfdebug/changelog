@@ -1,3 +1,9 @@
+wmfdebug (0.0.7) wikimedia; urgency=medium
+
+  * Upgrade to Bookworm.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Tue, 02 Jul 2024 17:39:00 +0200
+
 wmfdebug (0.0.6-20240630) wikimedia; urgency=medium
 
   * Weekly rebuild.
