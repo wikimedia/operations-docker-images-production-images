@@ -1,3 +1,7 @@
 FROM {{ "bookworm" | image_tag }}
 
-RUN {{ "openjdk-17-jre-headless" | apt_install }}
+# openjdk-17-jre-headless:amd64 (17.0.11+9-1~deb12u1) fails post-inst like:
+# update-alternatives: error: error creating symbolic link '/usr/share/man/man1/java.1.gz.dpkg-tmp': No such file or directory
+# Just create the directory to make it happy.
+RUN mkdir -p /usr/share/man/man1/ && \
+    {{ "openjdk-17-jre-headless" | apt_install }}
