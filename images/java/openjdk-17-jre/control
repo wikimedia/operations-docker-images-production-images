@@ -1,0 +1,6 @@
+Package: openjdk-17-jre
+Description: base image for running Java 17 applications.
+ An image used to build images to be used in the WMF
+ pipeline. Contains the just the JRE for version 17,
+ not the entire JDK
+Maintainer: Balthazar Rouberol <brouberol@wikimedia.org>
