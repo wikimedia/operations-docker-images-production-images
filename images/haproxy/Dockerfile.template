@@ -1,8 +1,8 @@
-FROM {{ "buster" | image_tag }}
+FROM {{ "bookworm" | image_tag }}
 
 ARG BASECONFIG=/etc/haproxy/haproxy.cfg
 ARG EXTRACONFIG=/etc/haproxy/conf.d
-RUN echo "deb http://apt.wikimedia.org/wikimedia buster-wikimedia thirdparty/haproxy24" > /etc/apt/sources.list.d/haproxy.list \
+RUN echo "deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia thirdparty/haproxy28" > /etc/apt/sources.list.d/haproxy.list \
        && {{ "haproxy" | apt_install }}
 
 USER {{ "nobody" | uid }}
