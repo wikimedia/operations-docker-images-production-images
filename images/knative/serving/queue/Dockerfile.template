@@ -1,6 +1,6 @@
 FROM {{ "knative-build" | image_tag }} as build
 
-FROM {{ "buster" | image_tag }}
+FROM {{ "bookworm" | image_tag }}
 
 USER root
 
