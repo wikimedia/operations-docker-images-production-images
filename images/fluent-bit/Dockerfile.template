@@ -1,6 +1,0 @@
-FROM {{ "buster" | image_tag }}
-
-RUN {{ "td-agent-bit wmf-certificates" | apt_install }}
-
-USER {{ "nobody" | uid }}
-ENTRYPOINT ["/usr/bin/td-agent-bit"]
