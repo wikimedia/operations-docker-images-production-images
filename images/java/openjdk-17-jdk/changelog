@@ -1,3 +1,9 @@
+openjdk-17-jdk (0.2-20240707) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 07 Jul 2024 06:00:05 +0000
+
 openjdk-17-jdk (0.2) wikimedia; urgency=medium
 
   * Sync the version with openjdk-17-jre to enable the FROM image to resolve
