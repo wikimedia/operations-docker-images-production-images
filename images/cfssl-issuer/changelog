@@ -1,3 +1,9 @@
+cfssl-issuer (0.3.1-0-20240714) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 14 Jul 2024 06:00:28 +0000
+
 cfssl-issuer (0.3.1-0-20240707) wikimedia; urgency=medium
 
   * Weekly rebuild.
