@@ -1,3 +1,9 @@
+php7.4-fpm (7.4.33-6-20240721) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 21 Jul 2024 06:00:20 +0000
+
 php7.4-fpm (7.4.33-6-20240714) wikimedia; urgency=medium
 
   * Weekly rebuild.
