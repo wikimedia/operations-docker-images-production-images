@@ -325,8 +325,23 @@ function show_prometheus_metrics() {
 	}
 }
 
-// TODO: make this more intelligent in the future.
+// If the min_avail_workers query parameter is set,
+// an error will be returned to the client.
+// This is useful to check if the service is overloaded
+// and specifically to ensure we don't send more requests
+// to a pod that is already almost fully busy.
 function healthz() {
+	$min_avail_workers = intval($_GET['min_avail_workers']) ?? -1;
+	if ($min_avail_workers > 0) {
+		$fpm_status = fpm_get_status();
+		$pm = $fpm_status['idle-processes'];
+		if ($pm < $min_avail_workers) {
+			header("HTTP/1.1 503 Service Unavailable");
+			print("Service Unavailable");
+			return;
+		}
+	}
+
 	header("Content-Type: text/plain");
 	print("OK");
 }

@@ -1,3 +1,11 @@
+php7.4-fpm-multiversion-base (7.4.33-11) wikimedia; urgency=medium
+
+  * Add min_avail_workers parameter to healthz endpoint to
+    allow healthchecking on services that are close to fully
+    busy while trying to keep a single worker free for answering healthchecks.
+
+ -- Hugh Nowlan <hnowlan@wikimedia.org>  Mon, 12 Aug 2024 11:49:23 +0000
+
 php7.4-fpm-multiversion-base (7.4.33-10-20240811) wikimedia; urgency=medium
 
   * Weekly rebuild.
