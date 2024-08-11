@@ -1,3 +1,9 @@
+php7.4-cli (7.4.33-1-s3-20240811) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 11 Aug 2024 06:00:25 +0000
+
 php7.4-cli (7.4.33-1-s3-20240804) wikimedia; urgency=medium
 
   * Weekly rebuild.

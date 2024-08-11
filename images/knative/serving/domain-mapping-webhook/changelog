@@ -1,3 +1,9 @@
+knative-serving-domain-mapping-webhook (1.7.2-2-20240811) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 11 Aug 2024 06:00:11 +0000
+
 knative-serving-domain-mapping-webhook (1.7.2-2-20240804) wikimedia; urgency=medium
 
   * Weekly rebuild.

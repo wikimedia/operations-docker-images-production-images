@@ -1,3 +1,9 @@
+kserve-build (0.11.2-2-20240811) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 11 Aug 2024 06:00:13 +0000
+
 kserve-build (0.11.2-2-20240804) wikimedia; urgency=medium
 
   * Weekly rebuild.
