@@ -331,7 +331,7 @@ function show_prometheus_metrics() {
 // and specifically to ensure we don't send more requests
 // to a pod that is already almost fully busy.
 function healthz() {
-	$min_avail_workers = intval($_GET['min_avail_workers']) ?? -1;
+	$min_avail_workers = intval($_GET['min_avail_workers'] ?? -1);
 	if ($min_avail_workers > 0) {
 		$fpm_status = fpm_get_status();
 		$pm = $fpm_status['idle-processes'];
