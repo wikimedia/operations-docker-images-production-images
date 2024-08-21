@@ -16,14 +16,14 @@ USER root
 #   way but it wasn't really clear how to do it).
 #
 # References:
-# [1]: https://github.com/kserve/kserve/blob/release-0.11/python/storage-initializer.Dockerfile
+# [1]: https://github.com/kserve/kserve/blob/release-0.13/python/storage-initializer.Dockerfile
 # [2]: https://www.debian.org/releases/bookworm/amd64/release-notes/ch-information.en.html#python3-pep-668
 
 RUN {{ "python3-venv ca-certificates" | apt_install }} && \
     mkdir -p /kserve && chown nobody /kserve
 
 USER {{ "nobody" | uid }}
-RUN python3 -m venv /kserve && /kserve/bin/python3 -m pip install kserve[storage]==0.11.2
+RUN python3 -m venv /kserve && /kserve/bin/python3 -m pip install kserve[storage]==0.13.0
 
 # To avoid having venvs binaries on the final image,
 # we only copy lib/site-packages over and we modify PYTHONPATH

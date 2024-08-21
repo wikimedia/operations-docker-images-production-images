@@ -1,3 +1,10 @@
+kserve-storage-initializer (0.13.0-0) wikimedia; urgency=high
+
+   Refresh for update in parent image kserve-build:
+   * Version bump.
+
+ -- Tobias Klausmann <tklausmann@wikimedia.org>  Wed, 28 Aug 2024 11:04:18 +0200
+
 kserve-storage-initializer (0.11.2-4-20240825) wikimedia; urgency=medium
 
   * Weekly rebuild.

@@ -1,4 +1,4 @@
-FROM {{ 'golang1.21' | image_tag }} as build
+FROM {{ 'golang1.22' | image_tag }} as build
 
 {% set repo_base = '/go/github.com/kserve' %}
 
@@ -7,7 +7,7 @@ RUN mkdir -p {{ repo_base }} \
   && cd {{ repo_base }} \
   && git clone https://github.com/kserve/kserve.git kserve \
   && cd kserve \
-  && git checkout tags/v0.11.2
+  && git checkout tags/v0.13.0
 
 WORKDIR {{ repo_base }}/kserve/cmd
 ENV CGO_ENABLED=0

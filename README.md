@@ -72,9 +72,11 @@ the changelog using `docker-pkg`:
 
     $ docker-pkg -c <config-file> update <name> --version <version> --reason '* <to be added to changelog>' ./images/<name>
 
-For example (images directory):
+For example (images directory), note how we specify only images/ as the dir, and `kserve/build` becomes `kserve-build`:
 
-    $ docker-pkg -c config.yaml update golang --version 1.14-1 --reason '* Version bump.' ./images/golang
+    $ docker-pkg -c config.yaml update kserve-build --version 0.13.0 --reason '* Version bump.' ./images
+
+The reason for not using ./images/kserve is that using that path, docker-pkg would be unable to see the golang dependency.
 
 For example (istio directory):
 

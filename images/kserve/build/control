@@ -1,4 +1,4 @@
 Package: kserve-build
 Description: Build image for Kserve.
-Maintainer: Luca Toscano <ltoscano@wikimedia.org>
-Build-Depends: golang1.21
+Maintainer: Machine Learning Team <ml@wikimedia.org>
+Build-Depends: golang1.22

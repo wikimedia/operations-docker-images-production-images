@@ -1,4 +1,4 @@
 Package: kserve-storage-initializer
 Description: KServe Storage Initializer
 Depends: kserve-build
-Maintainer: Luca Toscano <ltoscano@wikimedia.org>
+Maintainer: Machine Learning Team <ml@wikimedia.org>
