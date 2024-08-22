@@ -1,0 +1,5 @@
+Package: php8.1-cli
+Description: Basic php8.1 container (icu67)
+ By default, this image will just execute a php script located at
+ /bin/entrypoint.php
+Maintainer: Scott French <swfrench@wikimedia.org>
