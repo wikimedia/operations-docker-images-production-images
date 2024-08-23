@@ -1,4 +1,6 @@
 FROM {{ "bookworm" | image_tag }}
+# Needed so cephadm shell will consider this as an image to use
+LABEL ceph="True"
 
 # Install the necessary packages
 # And take upstream's tweaks to disable udev sync since container

@@ -1,3 +1,9 @@
+ceph (18.2.2-wmf7) wikimedia; urgency=medium
+
+  * add the LABEL ceph=True
+
+ -- Matthew Vernon <mvernon@wikimedia.org>  Fri, 23 Aug 2024 12:11:48 +0100
+
 ceph (18.2.2-wmf6-20240818) wikimedia; urgency=medium
 
   * Weekly rebuild.
