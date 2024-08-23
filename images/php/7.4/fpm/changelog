@@ -8,7 +8,7 @@ php7.4-fpm (7.4.33-8) wikimedia; urgency=medium
 
   * Fix a bug where leaving min_avail_workers undefined would result in an error.
 
-  -- Hugh Nowlan <hnowlan@wikimedia.org>  Thu, 15 Aug 2024 09:54:23 +0000
+ -- Hugh Nowlan <hnowlan@wikimedia.org>  Thu, 15 Aug 2024 09:54:23 +0000
 
 php7.4-fpm (7.4.33-7) wikimedia; urgency=medium
 
