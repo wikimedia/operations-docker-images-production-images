@@ -1,3 +1,10 @@
+cfssl-issuer (0.4.0-1) wikimedia; urgency=medium
+
+  * Update cfssl-issuer to v0.4.0
+  * Bug: T337928
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Wed, 28 Aug 2024 16:19:43 +0200
+
 cfssl-issuer (0.3.1-0-20240825) wikimedia; urgency=medium
 
   * Weekly rebuild.

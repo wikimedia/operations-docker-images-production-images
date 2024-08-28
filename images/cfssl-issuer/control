@@ -1,3 +1,3 @@
 Package: cfssl-issuer
 Description: Cert-manager issuer for CFSSL multirootca API
-Maintainer: Janis Meybohm <jmeybohm@wikimedia.org>
+Maintainer: SRE Service Operations <sre-service-ops@wikimedia.org>
