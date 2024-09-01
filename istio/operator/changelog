@@ -1,3 +1,9 @@
+operator (1.15.7-2-20240901) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 01 Sep 2024 06:00:35 +0000
+
 operator (1.15.7-2-20240825) wikimedia; urgency=medium
 
   * Weekly rebuild.
