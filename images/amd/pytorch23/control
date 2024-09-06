@@ -1,4 +1,4 @@
 Package: amd-pytorch23
 Description: Base image with Pytorch bundled with AMD ROCm libraries.
-Maintainer: Ilias Sarantopoulos <isarantopoulos@wikimedia.org>
+Maintainer: Machine Learning Team <ml@wikimedia.org>
 Build-Depends: amd-pytorch-common

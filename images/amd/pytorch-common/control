@@ -1,3 +1,3 @@
 Package: amd-pytorch-common
 Description: Common image for Pytorch base images.
-Maintainer: Luca Toscano <ltoscano@wikimedia.org>
+Maintainer: Machine Learning Team <ml@wikimedia.org>
