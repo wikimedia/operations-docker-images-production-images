@@ -1,4 +1,4 @@
 Package: knative-net-istio-webhook
 Description: Knative Net Istio Webhook
 Build-Depends: knative-net-istio-build
-Maintainer: Luca Toscano <ltoscano@wikimedia.org>
+Maintainer: Machine Learning Team <ml@wikimedia.org>

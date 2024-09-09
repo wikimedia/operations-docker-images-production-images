@@ -1,4 +1,4 @@
 Package: knative-serving-activator
 Description: Knative Serving Activator
 Depends: knative-build
-Maintainer: Luca Toscano <ltoscano@wikimedia.org>
+Maintainer: Machine Learning Team <ml@wikimedia.org>

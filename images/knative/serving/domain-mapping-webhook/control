@@ -1,4 +1,4 @@
 Package: knative-serving-domain-mapping-webhook
 Description: Knative Serving Domain Mapping Webhook
 Build-Depends: knative-build
-Maintainer: Luca Toscano <ltoscano@wikimedia.org>
+Maintainer: Machine Learning Team <ml@wikimedia.org>
