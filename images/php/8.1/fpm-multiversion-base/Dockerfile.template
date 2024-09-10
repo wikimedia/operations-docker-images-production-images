@@ -1,0 +1,34 @@
+FROM {{ "php8.1-fpm" | image_tag }}
+
+USER root
+
+# Install the WMF internal CAs (T284417) and the php extensions (T285309,
+# T288165).
+#
+# php-apcu, php-memcached, and php-redis are included in base image.
+# php-yaml is for SettingsLoader (T296331).
+#
+# php-igbinary and php-msgpack are installed as dependencies of other
+# extensions.
+#
+# php-geoip is no longer installed (does not support 8.x - T372507).
+#
+# php-tideways-xhprof is added only to debug images (T287495).
+{% set packages|replace('\n', ' ') -%}
+wmf-certificates
+php8.1-excimer
+php8.1-luasandbox
+php8.1-wikidiff2
+php8.1-wmerrors
+php8.1-yaml
+msmtp
+msmtp-mta
+librsvg2-bin
+{%- endset -%}
+# We create the www-data homedir so that we can add the msmtp configuration later
+RUN {{ packages | apt_install }} && mkdir -p /var/www && chown -R www-data:www-data /var/www
+
+COPY conf/wmerrors.ini /etc/php/8.1/mods-available/wmerrors.ini
+COPY conf/mcrouter.inc /etc/php/8.1/fpm/env/mcrouter.inc
+
+USER {{ "www-data" | uid }}
