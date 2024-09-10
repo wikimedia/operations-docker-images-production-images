@@ -1,0 +1,6 @@
+This directory is separate from pool.d to allow overrides/environment variables
+to be injected via a configmap inside kubernetes.
+
+This directory should always include at least one file with .inc extension or
+php-fpm will issue a warning on startup if someone is running the vanilla
+container.
