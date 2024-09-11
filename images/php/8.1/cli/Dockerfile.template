@@ -38,6 +38,7 @@ php8.1-igbinary
 php8.1-memcached
 php8.1-msgpack
 php8.1-redis
+php8.1-uuid
 {%- endset -%}
 RUN echo 'deb http://apt.wikimedia.org/wikimedia bullseye-wikimedia component/php81' > /etc/apt/sources.list.d/php81.list &&\
     {{ packages | apt_install }} && \
