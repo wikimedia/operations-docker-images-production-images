@@ -333,6 +333,9 @@ function show_prometheus_metrics() {
 function healthz() {
 	$min_avail_workers = intval($_GET['min_avail_workers'] ?? -1);
 	if ($min_avail_workers > 0) {
+		// Sleep briefly to allow php-fpm to see that we have a busy
+		// worker
+        usleep(200000);
 		$fpm_status = fpm_get_status();
 		$pm = $fpm_status['idle-processes'];
 		if ($pm < $min_avail_workers) {
