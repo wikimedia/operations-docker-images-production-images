@@ -1,4 +1,4 @@
-php7.4-fpm (7.4.35) wikimedia; urgency=medium
+php7.4-fpm-multiversion-base (7.4.35) wikimedia; urgency=medium
 
  * Fix indentation issue.
 
