@@ -1,3 +1,9 @@
+php8.1-cli (8.1.29-1-s1-20240915) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 15 Sep 2024 06:00:23 +0000
+
 php8.1-cli (8.1.29-1-s1) wikimedia; urgency=medium
 
    * Add php8.1-uuid to support 8.1 migration (T372602, T372507, T373752)

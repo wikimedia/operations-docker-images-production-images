@@ -1,3 +1,9 @@
+knative-serving-queue (1.7.2-3-20240915) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 15 Sep 2024 06:00:08 +0000
+
 knative-serving-queue (1.7.2-3) wikimedia; urgency=medium
 
    Update maintainer to Machine Learning Team
