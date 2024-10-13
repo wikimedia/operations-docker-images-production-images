@@ -1,3 +1,9 @@
+httpd-fcgi (2.4.38-10-u6-20241013) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 13 Oct 2024 06:00:32 +0000
+
 httpd-fcgi (2.4.38-10-u6-20241006) wikimedia; urgency=medium
 
   * Weekly rebuild.
