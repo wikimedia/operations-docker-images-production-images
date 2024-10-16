@@ -1,3 +1,9 @@
+jaeger-query (1.62-1) wikimedia; urgency=medium
+
+  * New upstream release
+
+ -- Keith Herron <kherron@wikimedia.org>  Wed, 16 Oct 2024 10:01:12 -0400
+
 jaeger-query (1.56-1-20241013) wikimedia; urgency=medium
 
   * Weekly rebuild.
