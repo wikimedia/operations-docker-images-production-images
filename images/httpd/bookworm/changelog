@@ -1,0 +1,6 @@
+httpd-bookworm (2.4.62-1) wikimedia; urgency=medium
+
+  * Initial release on bookworm, branched from httpd:2.4.38-10-u4. Note that
+    the latter is actually running 2.4.59 (not 2.4.38).
+
+ -- Scott French <swfrench@wikimedia.org>  Fri, 18 Oct 2024 23:20:24 +0000

@@ -1,0 +1,8 @@
+Package: httpd-fcgi-bookworm
+Description: httpd container for running fcgi applications, bookworm-release track.
+ Apache runs as www-data in this image. It is expected that the configuration
+ This image installs all the modules needed to run a fastcgi application,
+ but doesn't include anything useless to this end, like perl or other httpd dependencies.
+Depends: httpd-bookworm
+Maintainer: SRE Service Operations <sre-service-ops@wikimedia.org>
+

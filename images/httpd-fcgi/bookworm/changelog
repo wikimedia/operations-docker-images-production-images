@@ -1,0 +1,6 @@
+httpd-fcgi-bookworm (2.4.62-1) wikimedia; urgency=medium
+
+  * Initial release tracking httpd-bookworm, branched from
+    httpd-fcgi:2.4.38-10-u6.
+
+ -- Scott French <swfrench@wikimedia.org>  Fri, 18 Oct 2024 23:20:24 +0000

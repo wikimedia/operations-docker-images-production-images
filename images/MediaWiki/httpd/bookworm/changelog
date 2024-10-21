@@ -1,0 +1,6 @@
+mediawiki-httpd-bookworm (0.1.8-u2) wikimedia; urgency=medium
+
+  * Initial release tracking httpd-fcgi-bookworm, branched from
+    mediawiki-httpd:0.1.8-u2.
+
+ -- Scott French <swfrench@wikimedia.org>  Fri, 18 Oct 2024 23:20:24 +0000
