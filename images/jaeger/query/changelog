@@ -1,4 +1,4 @@
-jaeger-builder (1.62-2) wikimedia; urgency=medium
+jaeger-query (1.62-2) wikimedia; urgency=medium
 
   * fix jaeger builder version to 1.62.0
 
