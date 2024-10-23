@@ -1,3 +1,9 @@
+php8.1-fpm-multiversion-base (8.1.30-2-s1) wikimedia; urgency=high
+
+   * Add helper scripts for mwcron and mwscript
+
+ -- Clément Goubert <cgoubert@wikimedia.org>  Thu, 24 Oct 2024 12:34:36 +0200
+
 php8.1-fpm-multiversion-base (8.1.30-2-20241027) wikimedia; urgency=medium
 
   * Weekly rebuild.

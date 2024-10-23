@@ -23,8 +23,14 @@ msmtp
 msmtp-mta
 librsvg2-bin
 {%- endset -%}
+# Copy cli scripts
+COPY scripts/expanddblist scripts/mwscript /usr/local/bin/
 # We create the www-data homedir so that we can add the msmtp configuration later
-RUN {{ packages | apt_install }} && mkdir -p /var/www && chown -R www-data:www-data /var/www
+RUN {{ packages | apt_install }} && \
+    mkdir -p /var/www && chown -R www-data:www-data /var/www && \
+    ln -s /usr/local/bin/mwscript /usr/local/bin/mwscriptwikiset && \
+    ln -s /usr/local/bin/mwscript /usr/local/bin/foreachwiki && \
+    ln -s /usr/local/bin/mwscript /usr/local/bin/foreachwikiindblist
 
 COPY conf/wmerrors.ini /etc/php/7.4/mods-available/wmerrors.ini
 COPY conf/mcrouter.inc /etc/php/7.4/fpm/env/mcrouter.inc

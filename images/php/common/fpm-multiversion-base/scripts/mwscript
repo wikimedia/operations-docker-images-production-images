@@ -1,0 +1,84 @@
+#!/bin/bash
+
+usage() {
+    echo "Usage: $0 [options]"
+    echo "Bash runner for mediawiki maintenance script, replaces mwscript, foreachwiki, foreachwikiindblist and mwscriptwikiset."
+    echo "Behaviour is set by the script name:"
+    echo "  'foreachwiki' will loop on all wikis, using the 'all.dblist' file."
+    echo "  'foreachwikiindblist' or 'mwscriptwikiset' will loop on all wikis in the supplied dblist file or expression."
+    echo "  'mwscript' will run the given maintenance script."
+    echo "Options:"
+    echo "  -h, --help    Show this help message and exit"
+    echo "Examples:"
+    echo "  foreachwiki maintenance/script.php"
+    echo "  foreachwikiindblist testwikis.dblist maintenance/script.php --test"
+    echo "  mwscriptwikiset 's3 - testwikis'  maintenance/script.php --test"
+    echo "  mwscript maintenance/script.php --wiki=testwiki --test"
+}
+
+# Check for help option
+if [[ "${1}" == "-h" || "${1}" == "--help" ]]; then
+    usage
+    exit 0
+fi
+
+# Check for minimum number of arguments, at the very least there should be a script to execute.
+if [[ -z ${1} ]]; then
+    usage
+    exit 1
+fi
+
+# Get the script name
+SCRIPT_NAME=$(basename "${0}")
+
+# Set the mediawiki base directory and runner
+MEDIAWIKI_DEPLOYMENT_DIR="/srv/mediawiki"
+RUNNER="php -ddisplay_errors=On ${MEDIAWIKI_DEPLOYMENT_DIR}/multiversion/MWScript.php"
+
+# Behavior based on script name
+# foreachwiki was just a wrapper around foreachwikiindblist using the all.dblist file.
+# foreachwikiindblist and mwscriptwikiset used to be two scripts with the same end-behavior
+# but different ways to achieve it. Since using a dblist expression and a dblist file are supported
+# by expanddblist, we can use the same internals.
+# TODO: Move all jobs to use foreachwikiindblist instead of mwscriptwikiset and deprecate it.
+
+case "$SCRIPT_NAME" in
+foreachwiki)
+    DBLIST_EXPR="${MEDIAWIKI_DEPLOYMENT_DIR}/dblists/all.dblist"
+    ;;
+foreachwikiindblist | mwscriptwikiset)
+    # These invocations need at least a dblist or dblist expression, and the script to execute
+    if [ $# -lt 2 ]; then
+        usage
+        exit 1
+    fi
+    DBLIST_EXPR="${1}"
+    shift
+    ;;
+mwscript)
+    ;;
+*)
+    echo "Unknown invocation: ${SCRIPT_NAME}"
+    usage
+    exit 1
+    ;;
+esac
+
+CMD="${1}"
+shift
+
+# PHP spits errors on unknown terminals before falling back to "dumb"
+if [ -z "${TERM}" ] || [ "${TERM}" = unknown ] || [ "${TERM}" = dumb ]; then
+    export TERM=dumb
+fi
+
+# Check if DBLIST_EXPR is unset, naked mwscript invocation
+if [ -z "${DBLIST_EXPR}" ]; then
+    ${RUNNER} ${CMD} "${@}"
+# If DBLIST_EXPR is set, foreachwiki or foreachwikiindblist invocation
+else
+    DBLIST=$(/usr/local/bin/expanddblist "${DBLIST_EXPR}")
+    for wiki in ${DBLIST}; do
+        ${RUNNER} ${CMD} ${wiki} "${@}" | sed -u "s/^/${wiki}:  /"
+    done
+fi
