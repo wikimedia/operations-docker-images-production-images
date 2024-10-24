@@ -1,3 +1,10 @@
+openjdk-8-jdk (8.412-1) wikimedia; urgency=medium
+
+  * Update maintainership information - See T373534
+  * Update image version tag to match the java version numer
+
+ -- Ben Tullis <btullis@wikimedia.org>  Thu, 24 Oct 2024 10:30:00 +0000
+
 openjdk-8-jdk (8.392-1-20241020) wikimedia; urgency=medium
 
   * Weekly rebuild.

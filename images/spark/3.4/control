@@ -2,4 +2,4 @@ Package: spark3.4
 Description: The spark binary distribution
 Depends: openjdk-8-jre
 Build-Depends: spark3.4-build
-Maintainer: Ben Tullis <btullis@wikimedia.org>
+Maintainer: Data Platform Engineering <data-platform-engineering@wikimedia.org>

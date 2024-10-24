@@ -3,4 +3,4 @@ Description: base image for running Java 8 applications.
  An image used to build images to be used in the WMF
  pipeline. Contains the just the JRE for version 8,
  not the entire JDK
-Maintainer: Ben Tullis <btullis@wikimedia.org>
+Maintainer: SRE Infrastructure Foundations <sre-foundations@wikimedia.org>

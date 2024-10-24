@@ -2,4 +2,4 @@ Package: openjdk-17-jdk
 Description: base image for building Java 17 applications.
  An image used to build images to be used in the WMF
  pipeline. Contains the entire JDK for version 17
-Maintainer: Balthazar Rouberol <brouberol@wikimedia.org>
+Maintainer: SRE Infrastructure Foundations <sre-foundations@wikimedia.org>

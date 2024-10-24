@@ -2,4 +2,4 @@ Package: spark3.4-operator
 Description: The spark image with added spark-operator binary
 Depends: spark3.4
 Build-Depends: spark3.4-build
-Maintainer: Ben Tullis <btullis@wikimedia.org>
+Maintainer: Data Platform Engineering <data-platform-engineering@wikimedia.org>

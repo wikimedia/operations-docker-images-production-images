@@ -1,3 +1,10 @@
+openjdk-17-jdk (17.0.13-1) wikimedia; urgency=medium
+
+  * Update maintainership information - See T373534
+  * Update image version tag to match the java version numer
+
+ -- Ben Tullis <btullis@wikimedia.org>  Thu, 24 Oct 2024 10:30:00 +0000
+
 openjdk-17-jdk (0.2-20241020) wikimedia; urgency=medium
 
   * Weekly rebuild.

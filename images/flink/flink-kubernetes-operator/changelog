@@ -1,3 +1,9 @@
+flink-kubernetes-operator (1.4.0-wmf2) wikimedia; urgency=medium
+
+  * Update maintainership information - See T373534
+
+ -- Ben Tullis <btullis@wikimedia.org>  Thu, 24 Oct 2024 10:30:00 +0000
+
 flink-kubernetes-operator (1.4.0-wmf1-20241020) wikimedia; urgency=medium
 
   * Weekly rebuild.
