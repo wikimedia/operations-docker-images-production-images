@@ -1,3 +1,9 @@
+wmf-debci-bookworm (0.0.3-20241027) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 27 Oct 2024 06:00:13 +0000
+
 wmf-debci-bookworm (0.0.3-20241020) wikimedia; urgency=medium
 
   * Weekly rebuild.
