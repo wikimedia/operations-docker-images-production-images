@@ -1,0 +1,5 @@
+openjdk-8-jre-bookworm (8u422-b05-1-20241030) wikimedia; urgency=medium
+
+  * Initial build of Java 8 JRE image for Debian Bookworm.
+
+ -- Balthazar Rouberol <brouberol@wikimedia.org>  Wed, 30 Oct 2024 15:59:00 +0000

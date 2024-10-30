@@ -1,0 +1,5 @@
+Package: openjdk-8-jdk-bookworm
+Description: base image for building Java 8 applications in Debian Bookworm.
+ An image used to build images to be used in the WMF
+ pipeline. Contains the entire JDK for version 8
+Maintainer: SRE Infrastructure Foundations <sre-foundations@wikimedia.org>
