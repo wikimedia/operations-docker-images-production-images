@@ -1,3 +1,9 @@
+openjdk-8-jdk (8.432-1) wikimedia; urgency=medium
+
+  * Update image version tag to match the java version of latest sec updates
+
+ -- Moritz Muehlenhoff <moritz@wikimedia.org>  Thu, 07 Nov 2024 10:25:02 +0000
+
 openjdk-8-jdk (8.412-1-20241103) wikimedia; urgency=medium
 
   * Weekly rebuild.
