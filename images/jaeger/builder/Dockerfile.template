@@ -1,6 +1,6 @@
 FROM {{ "bookworm" | image_tag }}
 
-ARG VER='1.62.0'
+ARG VER='{{ "jaeger-builder" | image_tag | upstream_version }}'
 ARG URL='https://github.com/jaegertracing/jaeger/releases/download'
 ARG BASE="jaeger-${VER}-linux-amd64"
 ARG FILE="${BASE}.tar.gz"

@@ -1,3 +1,9 @@
+jaeger-collector (1.63.0-1) wikimedia; urgency=medium
+
+  * New upstream version 1.63.0 fixes T375123
+
+ -- Chris Danis <cdanis@wikimedia.org>  Wed, 13 Nov 2024 13:53:49 -0500
+
 jaeger-collector (1.62-2-20241110) wikimedia; urgency=medium
 
   * Weekly rebuild.
