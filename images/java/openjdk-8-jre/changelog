@@ -1,3 +1,9 @@
+openjdk-8-jre (8.432-1) wikimedia; urgency=medium
+
+  * Update image version tag to match the java version of latest sec updates
+
+ -- Image build Bot <root@wikimedia.org>  Fri, 15 Nov 2024 14:03:01 +0100
+
 openjdk-8-jre (8.412-1-20241110) wikimedia; urgency=medium
 
   * Weekly rebuild.
