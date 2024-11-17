@@ -1,3 +1,9 @@
+proxyv2 (1.15.7-2-20241117) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 17 Nov 2024 06:00:27 +0000
+
 proxyv2 (1.15.7-2-20241110) wikimedia; urgency=medium
 
   * Weekly rebuild.
