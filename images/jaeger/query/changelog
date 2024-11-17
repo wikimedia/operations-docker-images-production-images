@@ -1,3 +1,9 @@
+jaeger-query (1.63.0-1-20241117) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 17 Nov 2024 06:00:06 +0000
+
 jaeger-query (1.63.0-1) wikimedia; urgency=medium
 
   * New upstream version 1.63.0 fixes T375123

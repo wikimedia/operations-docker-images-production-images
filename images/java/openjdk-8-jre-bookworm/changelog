@@ -1,3 +1,9 @@
+openjdk-8-jre-bookworm (8.432-1-20241117) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 17 Nov 2024 06:00:03 +0000
+
 openjdk-8-jre-bookworm (8.432-1) wikimedia; urgency=medium
 
   * Update image version tag to match the java version of latest sec updates
