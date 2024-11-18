@@ -1,3 +1,10 @@
+prometheus-mcrouter-exporter (0.4.0-1) wikimedia; urgency=medium
+
+  * package version 0.4.0+git20241118-1~wmf1
+  * includes Export fiber pool size stat patch
+
+ -- Effie Mouzeli <effie@wikimedia.org>  Mon, 18 Nov 2024 22:10:08 +0000
+
 prometheus-mcrouter-exporter (0.0.1-3-20241117) wikimedia; urgency=medium
 
   * Weekly rebuild.
