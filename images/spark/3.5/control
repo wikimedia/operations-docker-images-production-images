@@ -1,0 +1,5 @@
+Package: spark3.5
+Description: The spark binary distribution
+Depends: openjdk-8-jre
+Build-Depends: spark3.5-build
+Maintainer: Data Platform Engineering <data-platform-engineering@wikimedia.org>

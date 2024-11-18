@@ -1,0 +1,6 @@
+spark3.5-operator (1.0.2-3.5.3-1) wikimedia; urgency=medium
+
+  * Add spark 3.5.3 - See T380035
+  * Upgrade to spark-operator v2.0.2
+
+ -- Ben Tullis <btullis@wikimedia.org>  Thu, 15 Nov 2024 12:32:00 +0000

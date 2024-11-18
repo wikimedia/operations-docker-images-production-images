@@ -4,7 +4,7 @@
 # End variables
 
 # Start of production image creation
-FROM {{ "spark3.4-build" | image_tag }} as build
+FROM {{ "spark3.5-build" | image_tag }} as build
 
 # Our seed image here is an openjdk-8-jre image that has itself been built from one of our base images
 FROM {{ "openjdk-8-jre" | image_tag  }}

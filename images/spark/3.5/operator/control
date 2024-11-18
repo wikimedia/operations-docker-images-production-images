@@ -1,0 +1,5 @@
+Package: spark3.5-operator
+Description: The spark image with added spark-operator binary
+Depends: spark3.5
+Build-Depends: spark3.5-build
+Maintainer: Data Platform Engineering <data-platform-engineering@wikimedia.org>
