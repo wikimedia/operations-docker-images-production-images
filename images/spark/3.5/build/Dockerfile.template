@@ -57,6 +57,7 @@ RUN {{ "curl gpg gpg-agent git coreutils python3 python3-pip python3-setuptools 
 WORKDIR {{ spark_src_dir }}
 
 ENV MAVEN_OPTS="{{ maven_opts }}"
+COPY mvn_settings.xml /root/.m2/settings.xml
 # The following command creates a binary distribution of Spark and saves it to a directory named ./dist beneath the source
 RUN ./dev/make-distribution.sh --name {{ spark_distro_name }} {{ spark_common_args }} \
     -Phive \

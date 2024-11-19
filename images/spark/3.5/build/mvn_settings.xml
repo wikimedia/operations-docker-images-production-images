@@ -1,0 +1,20 @@
+<settings>
+  <proxies>
+    <proxy>
+      <id>webproxyHttp</id>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host>webproxy</host>
+      <port>8080</port>
+      <nonProxyHosts>127.0.0.1|::1|localhost|.wmnet|.wikimedia.org</nonProxyHosts>
+    </proxy>
+    <proxy>
+      <id>webproxyHttps</id>
+      <active>true</active>
+      <protocol>https</protocol>
+      <host>webproxy</host>
+      <port>8080</port>
+      <nonProxyHosts>127.0.0.1|::1|localhost|.wmnet|.wikimedia.org</nonProxyHosts>
+    </proxy>
+ </proxies>
+</settings>
