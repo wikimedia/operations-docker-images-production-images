@@ -1,3 +1,9 @@
+php8.1-fpm-multiversion-base (8.1.30-2-s1-20241124) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 24 Nov 2024 06:00:23 +0000
+
 php8.1-fpm-multiversion-base (8.1.30-2-s1-20241117) wikimedia; urgency=medium
 
   * Weekly rebuild.
