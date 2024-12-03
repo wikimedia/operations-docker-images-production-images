@@ -44,7 +44,7 @@ jaeger-query (1.62-2) wikimedia; urgency=medium
 
   * fix jaeger builder version to 1.62.0
 
- -- Keith Herron <kherron@wikimedia.org>  Mon 21 Oct 2024 11:58:17 -0400
+ -- Keith Herron <kherron@wikimedia.org>  Mon, 21 Oct 2024 11:58:17 -0400
 
 jaeger-query (1.62-1-20241020) wikimedia; urgency=medium
 
