@@ -1,0 +1,29 @@
+FROM {{ "python3-bookworm" | image_tag }} as build
+USER root
+
+# The mapnik library is used to power the Kartotherian service.
+# The context of the following procedure can be found in:
+# https://phabricator.wikimedia.org/T327396
+# Having a separate base image allows to avoid rebuilding the mapnik library
+# for every change of Kartotherian.
+#
+# We tried to create a separate Debian package
+# (https://phabricator.wikimedia.org/T216826#10367643) but
+# due to https://phabricator.wikimedia.org/T327396#10133862 we preferred
+# to use a dedicated Docker image.
+# The use of Debian upstream packages instead of this image needs to be
+# re-evaluated when migrating to Trixie.
+#
+RUN {{ "build-essential git libboost-all-dev libharfbuzz-dev libtiff-dev libicu-dev zlib1g-dev libfreetype-dev libxml2-dev libpng-dev libwebp-dev libproj-dev libcairo2-dev libjpeg-dev libgdal-dev" | apt_install }} && \
+    /usr/bin/git clone https://github.com/mapnik/mapnik.git /srv/mapnik && \
+    cd /srv/mapnik && \
+    git checkout "v4.0.2" && \
+    git submodule update --init && \
+    /usr/bin/python3 ./scons/scons.py configure PREFIX=/srv && \
+    /usr/bin/python3 ./scons/scons.py install -j8 && \
+    # Note: we avoid to deploy directly to /usr/local since downstream
+    # Docker image may need to copy the bin/include/lib artifacts,
+    # and we don't want to mix them with others that may be present.
+    cp -r /srv/bin/* /usr/local/bin/ && \
+    cp -r /srv/include/* /usr/local/include/ && \
+    cp -r /srv/lib/* /usr/local/lib/

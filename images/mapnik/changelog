@@ -1,0 +1,5 @@
+mapnik (4.0.2-1) wikimedia; urgency=medium
+
+  * Build and package upstream release 4.0.2
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Tue, 29 Oct 2024 13:15:00 +0100
