@@ -1,3 +1,9 @@
+php8.1-fpm-multiversion-base (8.1.32-1) wikimedia; urgency=medium
+
+  * Rebuild to pick up mercurius 1.0.2
+
+ -- Hugh Nowlan <hnowlan@wikimedia.org>  Wed, 04 Dec 2024 14:39:46 +0000
+
 php8.1-fpm-multiversion-base (8.1.31-1-20241201) wikimedia; urgency=medium
 
   * Weekly rebuild.
