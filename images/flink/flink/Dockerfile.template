@@ -1,6 +1,6 @@
 {# Set variables #}
 
-{% set flink_version = '1.17.1' %}
+{% set flink_version = '1.20.0' %}
 
 {# scala_version is only used when downloading example artifacts.
    We do not include flink-scala in this distribution.  If you want
@@ -76,9 +76,9 @@ RUN /tmp/maven-download.sh org.apache.flink flink-s3-fs-presto {{ flink_version 
 RUN mkdir /tmp/python-examples && mv {{ flink_home }}/examples/* /tmp/python-examples && mv /tmp/python-examples {{ flink_home }}/examples/python
 # Download the examples we want to include from maven
 RUN mkdir {{ flink_home }}/examples/streaming {{ flink_home }}/examples/table {{ flink_home }}/examples/batch
-RUN /tmp/maven-download.sh org.apache.flink flink-examples-streaming_{{ scala_version }} {{ flink_version }} {{ flink_home }}/examples/streaming
+RUN /tmp/maven-download.sh org.apache.flink flink-examples-streaming {{ flink_version }} {{ flink_home }}/examples/streaming
 RUN /tmp/maven-download.sh org.apache.flink flink-examples-table_{{ scala_version }} {{ flink_version }} {{ flink_home }}/examples/table
-RUN /tmp/maven-download.sh org.apache.flink flink-examples-batch_{{ scala_version }} {{ flink_version }} {{ flink_home }}/examples/batch
+RUN /tmp/maven-download.sh org.apache.flink flink-examples-batch {{ flink_version }} {{ flink_home }}/examples/batch
 
 # Copy any extra custom examples WMF adds into examples/wikimedia
 # Our python/table_datagen.py example runs forever,

@@ -1,3 +1,9 @@
+flink (1.20.0-wmf1-20241206) wikimedia; urgency=medium
+
+  * Upgrade flink to 1.20.0.
+
+ -- Balthazar Rouberol <brouberol@wikimedia.org>  Fri, 06 Dec 2024 10:30:00 +0000
+
 flink (1.17.1-wmf1-20241201) wikimedia; urgency=medium
 
   * Weekly rebuild.
