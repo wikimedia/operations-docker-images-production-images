@@ -1,3 +1,9 @@
+mapnik (4.0.2-1-20241208) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 08 Dec 2024 06:00:24 +0000
+
 mapnik (4.0.2-1) wikimedia; urgency=medium
 
   * Build and package upstream release 4.0.2
