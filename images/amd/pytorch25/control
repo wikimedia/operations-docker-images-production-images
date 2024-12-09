@@ -1,0 +1,4 @@
+Package: amd-pytorch25
+Description: Base image with Pytorch bundled with AMD ROCm libraries.
+Maintainer: Machine Learning Team <ml@wikimedia.org>
+Build-Depends: amd-pytorch-common
