@@ -1,0 +1,11 @@
+FROM {{ "amd-pytorch-common" | image_tag }}
+
+# Please check the README.md documentation for more info about
+# what we are doing and why with the Pytorch base images.
+
+# Note: the usage of --break-system-packages in pip follows how Blubber
+# currently works on Debian Bookworm,
+# see https://phabricator.wikimedia.org/T346090
+USER {{ "somebody" | uid }}
+RUN  /usr/bin/pip3 install --target /opt/lib/python/base-packages --no-cache-dir --break-system-packages torch==2.5.1 --extra-index-url https://download.pytorch.org/whl/rocm6.1 && \
+/bin/bash -c 'for file in $(ls /opt/lib/python/base-packages | egrep -v "bin|share|__pycache__"); do ln -s "/opt/lib/python/base-packages/${file}" "/opt/lib/python/site-packages/${file}"; done'

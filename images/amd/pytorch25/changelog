@@ -1,0 +1,5 @@
+amd-pytorch25 (2.5.1rocm6.1-1) wikimedia; urgency=high
+
+  * First release with AMD ROCm 6.1 and Pytorch 2.5.1
+
+ -- Ilias Sarantopoulos <isarantopoulos@wikimedia.org>  Fri, 9 Dec 2024 12:30:00 +0300
