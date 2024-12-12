@@ -1,0 +1,5 @@
+rust-web (1.78) wikimedia; urgency=high
+
+  * Rust 1.78 on Bookworm, base image using 'rustc-web' from Debian
+
+ -- James D. Forrester <jforrester@wikimedia.org>  Thu, 12 Dec 2024 16:28:35 -0500

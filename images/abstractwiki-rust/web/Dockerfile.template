@@ -1,0 +1,6 @@
+FROM {{ 'bookworm' | image_tag }}
+
+USER root
+RUN {{ "rustc-web cargo-web rustfmt-web ca-certificates git build-essential" | apt_install }}
+
+USER nobody

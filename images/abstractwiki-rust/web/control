@@ -1,0 +1,5 @@
+Package: abstractwiki-rust-web
+Depends: bookworm
+Description: Base image for building Rust applications.
+  Using the 'rustc-web' package from Debian, so version of Rust will upgrade over time.
+Maintainer: James D. Forrester <jforrester@wikimedia.org>
