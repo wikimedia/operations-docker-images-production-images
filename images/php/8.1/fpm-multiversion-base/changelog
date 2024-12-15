@@ -1,3 +1,9 @@
+php8.1-fpm-multiversion-base (8.1.33-1-20241215) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 15 Dec 2024 06:00:22 +0000
+
 php8.1-fpm-multiversion-base (8.1.33-1) wikimedia; urgency=medium
 
   * Rebuild to pick up new mercurius.
