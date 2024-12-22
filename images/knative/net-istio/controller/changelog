@@ -1,3 +1,9 @@
+knative-net-istio-controller (1.7.0-3-20241222) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 22 Dec 2024 06:00:10 +0000
+
 knative-net-istio-controller (1.7.0-3-20241215) wikimedia; urgency=medium
 
   * Weekly rebuild.
