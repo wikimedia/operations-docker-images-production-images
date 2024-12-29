@@ -1,3 +1,9 @@
+oauth2-proxy (7.5.1-1-20241229) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 29 Dec 2024 06:00:24 +0000
+
 oauth2-proxy (7.5.1-1-20241222) wikimedia; urgency=medium
 
   * Weekly rebuild.
