@@ -1,0 +1,4 @@
+FROM {{ "bookworm" | image_tag }}
+
+RUN echo "deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia component/kubernetes123" > /etc/apt/sources.list.d/kubernetes.list \
+    && {{ "kubernetes-client" | apt_install }}
