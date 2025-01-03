@@ -1,0 +1,5 @@
+kubectl (1.23.14-4) wikimedia; urgency=medium
+
+  * Initial release
+
+ -- Arnold Okoth <aokoth@wikimedia.org>  Fri, 3 Jan 2025 20:23:00 +0300
