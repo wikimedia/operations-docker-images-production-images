@@ -1,3 +1,9 @@
+ceph (18.2.2-wmf7-20250112) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 12 Jan 2025 06:00:12 +0000
+
 ceph (18.2.2-wmf7-20250105) wikimedia; urgency=medium
 
   * Weekly rebuild.
