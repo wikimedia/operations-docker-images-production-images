@@ -1,3 +1,9 @@
+jaeger-query (1.63.0-1-20250119) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 19 Jan 2025 06:00:07 +0000
+
 jaeger-query (1.63.0-1-20250112) wikimedia; urgency=medium
 
   * Weekly rebuild.
