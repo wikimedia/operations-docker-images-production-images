@@ -1,3 +1,9 @@
+mapnik (4.0.2-2) wikimedia; urgency=medium
+
+  * Fix mapnik's final directories path to match what the lib expects.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Tue, 21 Jan 2025 13:11:00 +0100
+
 mapnik (4.0.2-1-20250119) wikimedia; urgency=medium
 
   * Weekly rebuild.

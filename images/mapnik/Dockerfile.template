@@ -24,6 +24,6 @@ RUN {{ "build-essential git libboost-all-dev libharfbuzz-dev libtiff-dev libicu-
     # Note: we avoid to deploy directly to /usr/local since downstream
     # Docker image may need to copy the bin/include/lib artifacts,
     # and we don't want to mix them with others that may be present.
-    cp -r /srv/bin/* /usr/local/bin/ && \
-    cp -r /srv/include/* /usr/local/include/ && \
-    cp -r /srv/lib/* /usr/local/lib/
+    cp -r /srv/bin/. /usr/local/bin && \
+    cp -r /srv/include/. /usr/local/include && \
+    cp -r /srv/lib/. /usr/local/lib
