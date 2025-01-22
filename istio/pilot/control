@@ -1,4 +1,4 @@
 Package: pilot
 Description: Istio component responsible for configuring the proxies at runtime.
 Depends: build
-Maintainer: Luca Toscano <ltoscano@wikimedia.org>
+Maintainer: Kubernetes SIG <kubernetes-sig@lists.wikimedia.org>

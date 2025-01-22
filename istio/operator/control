@@ -1,4 +1,0 @@
-Package: operator
-Description: Istio component implementing the Istio Operator to support istioctl.
-Depends: build
-Maintainer: Luca Toscano <ltoscano@wikimedia.org>
