@@ -1,3 +1,9 @@
+mapnik (4.0.2-3) wikimedia; urgency=medium
+
+  * Skip copying mapnik build files to /usr/local.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 22 Jan 2025 15:11:00 +0100
+
 mapnik (4.0.2-2) wikimedia; urgency=medium
 
   * Fix mapnik's final directories path to match what the lib expects.
