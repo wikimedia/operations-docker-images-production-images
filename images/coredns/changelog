@@ -1,3 +1,12 @@
+coredns (1.11.3-1) wikimedia; urgency=medium
+
+  * Import new upstream version 1.11.3; Bug: T341984
+  * Build with go1.21 (like upstream)
+  * Change maintainer to the Kubernetes SIG,
+    kubernetes-sig@lists.wikimedia.org; Bug: T373526
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Wed, 22 Jan 2025 12:19:07 +0100
+
 coredns (1.8.7-2-20250119) wikimedia; urgency=medium
 
   * Weekly rebuild.
