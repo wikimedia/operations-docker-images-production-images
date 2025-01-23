@@ -1,0 +1,6 @@
+startupapicheck (1.16.3-1) wikimedia; urgency=medium
+
+  * Release startupapicheck for 1.16.3
+  * Bug: T341984
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Thu, 23 Jan 2025 10:32:30 +0100

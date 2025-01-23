@@ -1,15 +1,14 @@
-FROM {{ registry }}/golang1.19 as build
+FROM {{ registry }}/golang1.22 as build
 
 # This Dockerfile reimplements building the binaries as the upstream Makefile
 # does always build multiple architectures.
-ENV CERT_MANAGER_VERSION_GIT_TAG=v1.10.1 \
+ENV CERT_MANAGER_VERSION_GIT_TAG=v1.16.3 \
     CERT_MANAGER_SOURCE_REPO=https://github.com/cert-manager/cert-manager.git \
-    REPO_BASE=/go/github.com/cert-manager \
-    GOOS=linux \
-    GOARCH=amd64 \
-    CGO_ENABLED=0 \
-    GOFLAGS=-trimpath \
-    GOLDFLAGS="-w -s -X github.com/cert-manager/cert-manager/pkg/util.AppVersion=$CERT_MANAGER_VERSION_GIT_TAG -X github.com/cert-manager/cert-manager/pkg/util.AppGitCommit=wmf"
+    REPO_BASE=/go/github.com/cert-manager
+
+# Satisfy the Makefile dependencies
+USER root
+RUN {{ "curl rsync" | apt_install }}
 
 USER nobody
 RUN mkdir -p $REPO_BASE \
@@ -17,6 +16,7 @@ RUN mkdir -p $REPO_BASE \
   && git clone $CERT_MANAGER_SOURCE_REPO cert-manager \
   && cd cert-manager \
   && git -c advice.detachedHead=false checkout tags/$CERT_MANAGER_VERSION_GIT_TAG \
-  && go build -o _bin/server/controller $GOFLAGS -ldflags "$GOLDFLAGS" cmd/controller/main.go \
-  && go build -o _bin/server/webhook $GOFLAGS -ldflags "$GOLDFLAGS" cmd/webhook/main.go \
-  && go build -o _bin/server/cainjector $GOFLAGS -ldflags "$GOLDFLAGS" cmd/cainjector/main.go
+  && make _bin/server/controller-linux-amd64 \
+          _bin/server/webhook-linux-amd64 \
+          _bin/server/cainjector-linux-amd64 \
+          _bin/server/startupapicheck-linux-amd64
