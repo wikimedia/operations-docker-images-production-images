@@ -1,19 +1,19 @@
 FROM {{ "build" | image_tag }} as build
 
-FROM {{ registry }}/bullseye:latest
+FROM {{ registry }}/bookworm:latest
+# This is basically https://github.com/istio/istio/blob/1.24.2/pilot/docker/Dockerfile.proxyv2
 
 ENV BUILD_DIR=/go/github.com/istio/istio \
     # Environment variable indicating the exact proxy sha - for debugging or version-specific configs
     # To find the exact sha string: checkout the istio repository and the tag/branch that you want to build,
     # and then use the istio.deps's lastStableSHA value.
-    ISTIO_META_ISTIO_PROXY_SHA="66da2bf864bde982351ee0ca2cae0a4e931f923c" \
-    # Environment variable indicating the exact build, for debugging
-    ISTIO_META_ISTIO_VERSION=1.15.7
+    ISTIO_META_ISTIO_PROXY_SHA="1ed7d44031746a2ad74707202464b4bfdcb38e82"
 
 USER root
 RUN {{ "istio" | add_user }}
 
 # Istio's base docker image installs a lot of tools, we selected only the few that seemed mandatory.
+# See https://github.com/istio/istio/blob/1.24.2/docker/Dockerfile.base
 RUN {{ "iptables iproute2 wmf-certificates" | apt_install }}; \
     # By default istio adds the following in its Dockerfiles:
     # echo "istio-proxy ALL=NOPASSWD: /usr/sbin/iptables * " >> /etc/sudoers
@@ -28,11 +28,6 @@ COPY --from=build --chown=root $BUILD_DIR/tools/packaging/common/envoy_bootstrap
 COPY --from=build $BUILD_DIR/out/linux_amd64/envoy /usr/local/bin/envoy
 
 COPY --from=build --chown=root $BUILD_DIR/out/linux_amd64/pilot-agent /usr/local/bin/pilot-agent
-
-COPY --from=build --chown=root $BUILD_DIR/out/linux_amd64/release/stats-filter.wasm /etc/istio/extensions/stats-filter.wasm
-COPY --from=build --chown=root $BUILD_DIR/out/linux_amd64/release/stats-filter.compiled.wasm /etc/istio/extensions/stats-filter.compiled.wasm
-COPY --from=build --chown=root $BUILD_DIR/out/linux_amd64/release/metadata-exchange-filter.wasm /etc/istio/extensions/metadata-exchange-filter.wasm
-COPY --from=build --chown=root $BUILD_DIR/out/linux_amd64/release/metadata-exchange-filter.compiled.wasm /etc/istio/extensions/metadata-exchange-filter.compiled.wasm
 
 USER {{ "istio" | uid }}
 # The pilot-agent will bootstrap Envoy.

@@ -1,4 +1,4 @@
 Package: build
 Description: Build image for cert-manager's cert-manager.
-Maintainer: Janis Meybohm <jmeybohm@wikimedia.org>
-Build-Depends: golang1.19
+Maintainer: Kubernetes SIG <kubernetes-sig@lists.wikimedia.org>
+Build-Depends: golang1.22

@@ -1,4 +1,4 @@
-Package: controller
-Description: cert-manager controller
+Package: startupapicheck
+Description: cert-manager startupapicheck
 Maintainer: Kubernetes SIG <kubernetes-sig@lists.wikimedia.org>
 Build-Depends: build

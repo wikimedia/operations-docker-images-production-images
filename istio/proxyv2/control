@@ -1,4 +1,4 @@
 Package: proxyv2
 Description: The Istio Proxy is a microservice proxy that can be used on the client and server side, and forms a microservice mesh.
 Depends: build
-Maintainer: Luca Toscano <ltoscano@wikimedia.org>
+Maintainer: Kubernetes SIG <kubernetes-sig@lists.wikimedia.org>

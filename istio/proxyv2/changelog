@@ -1,3 +1,13 @@
+proxyv2 (1.24.2-1) wikimedia; urgency=medium
+
+  * Upstream release 1.24.2
+  * Build with go1.21
+  * Update to bookworm
+  * Remove ISTIO_META_ISTIO_VERSION, upstream does no longer define it
+  * wasm files are no longer build and not included in the upstream image
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Wed, 22 Jan 2025 17:17:51 +0100
+
 proxyv2 (1.15.7-2-20250119) wikimedia; urgency=medium
 
   * Weekly rebuild.

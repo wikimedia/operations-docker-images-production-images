@@ -1,9 +1,9 @@
 FROM {{ "build" | image_tag }} as build
 
-FROM {{ registry }}/bullseye:latest
+FROM {{ registry }}/bookworm:latest
 
 USER root
-COPY --from=build --chown=root /go/github.com/cert-manager/cert-manager/_bin/server/webhook /usr/bin/webhook
+COPY --from=build --chown=root /go/github.com/cert-manager/cert-manager/_bin/server/webhook-linux-amd64 /usr/bin/webhook
 
 USER {{ "nobody" | uid }}
 ENTRYPOINT ["/usr/bin/webhook"]

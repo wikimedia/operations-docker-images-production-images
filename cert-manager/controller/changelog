@@ -1,3 +1,13 @@
+controller (1.16.3-1) wikimedia; urgency=medium
+
+  * New upstream version 1.16.3
+  * Build with go1.22 (like upstream)
+  * Bug: T341984
+  * Change maintainer to the Kubernetes SIG,
+    kubernetes-sig@lists.wikimedia.org; Bug: T373526
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Thu, 23 Jan 2025 10:32:30 +0100
+
 controller (1.10.1-2-20250119) wikimedia; urgency=medium
 
   * Weekly rebuild.

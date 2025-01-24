@@ -1,4 +1,4 @@
 Package: coredns
 Description: coredns container for k8s
-Maintainer: Fsero <fabian.sellesrosa@gmail.com>
-Build-Depends: golang1.18
+Maintainer: Kubernetes SIG <kubernetes-sig@lists.wikimedia.org>
+Build-Depends: golang1.21

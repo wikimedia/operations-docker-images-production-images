@@ -1,7 +1,7 @@
 FROM {{ "build" | image_tag }} as build
 
-FROM {{ registry }}/bullseye:latest
-
+FROM {{ registry }}/bookworm:latest
+# This is basically https://github.com/istio/istio/blob/1.24.2/pilot/docker/Dockerfile.pilot
 USER root
 RUN {{ "istio" | add_user }}
 

@@ -1,13 +1,13 @@
-FROM {{ registry }}/golang1.19 as build
+FROM {{ registry }}/golang1.21 as build
 
 # The VERSION env value is injected in pilot's binary to allow it to answer
 # to /version API calls. The istioctl tool calls /version when trying to figure
 # out the version of istiod (pilot is part of it), in order to decide what upgrade
 # path is needed. By default version is something like 1.9.0-dev, and it doesn't
 # track patch versions but only major.minor.
-{% set istio_make_variables = 'VERSION=1.15.7 BUILD_WITH_CONTAINER=0' %}
+{% set istio_make_variables = 'VERSION=1.24.2 BUILD_WITH_CONTAINER=0' %}
 {% set repo_base = '/go/github.com/istio' %}
-{% set istio_version_git_tag = '1.15.7' %}
+{% set istio_version_git_tag = '1.24.2' %}
 
 WORKDIR /go
 
@@ -23,6 +23,4 @@ RUN mkdir -p {{ repo_base }} \
 
 
 WORKDIR {{ repo_base }}/istio
-# The gen-charts target is needed to add the Istio's default
-# helm charts in the final istioctl/operator binaries.
-RUN export {{ istio_make_variables }}; make gen-charts && make build-linux
+RUN export {{ istio_make_variables }}; make build-linux

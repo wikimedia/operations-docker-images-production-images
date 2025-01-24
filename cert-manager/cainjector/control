@@ -1,4 +1,4 @@
 Package: cainjector
 Description: cert-manager cainjector
+Maintainer: Kubernetes SIG <kubernetes-sig@lists.wikimedia.org>
 Build-Depends: build
-Maintainer: Janis Meybohm <jmeybohm@wikimedia.org>

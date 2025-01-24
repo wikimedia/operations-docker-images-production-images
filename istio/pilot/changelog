@@ -1,3 +1,11 @@
+pilot (1.24.2-1) wikimedia; urgency=medium
+
+  * Upstream release 1.24.2
+  * Build with go1.21
+  * Update to bookworm
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Wed, 22 Jan 2025 17:17:51 +0100
+
 pilot (1.15.7-2-20250119) wikimedia; urgency=medium
 
   * Weekly rebuild.
