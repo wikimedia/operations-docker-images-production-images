@@ -1,3 +1,9 @@
+rsyslog (8.2102.0-3-20250126) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 26 Jan 2025 06:00:20 +0000
+
 rsyslog (8.2102.0-3-20250119) wikimedia; urgency=medium
 
   * Weekly rebuild.

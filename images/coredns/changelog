@@ -1,3 +1,9 @@
+coredns (1.11.3-1-20250126) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 26 Jan 2025 06:00:27 +0000
+
 coredns (1.11.3-1) wikimedia; urgency=medium
 
   * Import new upstream version 1.11.3; Bug: T341984

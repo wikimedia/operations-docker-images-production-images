@@ -1,3 +1,9 @@
+mapnik (4.0.2-3-20250126) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 26 Jan 2025 06:00:26 +0000
+
 mapnik (4.0.2-3) wikimedia; urgency=medium
 
   * Skip copying mapnik build files to /usr/local.
