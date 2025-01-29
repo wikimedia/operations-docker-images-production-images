@@ -7,5 +7,5 @@ FROM {{ "amd-pytorch-common" | image_tag }}
 # currently works on Debian Bookworm,
 # see https://phabricator.wikimedia.org/T346090
 USER {{ "somebody" | uid }}
-RUN  /usr/bin/pip3 install --target /opt/lib/python/base-packages --no-cache-dir --break-system-packages torch==2.5.1 --extra-index-url https://download.pytorch.org/whl/rocm6.1 && \
+RUN  /usr/bin/pip3 install --target /opt/lib/python/base-packages --no-cache-dir --break-system-packages torch==2.5.1 --extra-index-url https://download.pytorch.org/whl/rocm6.2 && \
 /bin/bash -c 'for file in $(ls /opt/lib/python/base-packages | egrep -v "bin|share|__pycache__"); do ln -s "/opt/lib/python/base-packages/${file}" "/opt/lib/python/site-packages/${file}"; done'

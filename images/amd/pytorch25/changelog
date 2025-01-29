@@ -1,3 +1,9 @@
+amd-pytorch25 (2.5.1rocm6.2-1) wikimedia; urgency=high
+
+  * Use ROCm 6.2 with Pytorch 2.5.1
+
+ -- Ilias Sarantopoulos <isarantopoulos@wikimedia.org>  Fri, 29 Jan 2025 12:30:00 +0300
+
 amd-pytorch25 (2.5.1rocm6.1-1-20250126) wikimedia; urgency=medium
 
   * Weekly rebuild.
