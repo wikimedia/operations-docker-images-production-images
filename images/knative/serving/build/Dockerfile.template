@@ -5,6 +5,8 @@ FROM {{ 'golang1.22' | image_tag }} as build
 
 USER root
 COPY builder.sh /bin/builder.sh
+COPY pull_13376.patch /tmp/pull_13376.patch
+COPY pull_13401.patch /tmp/pull_13401.patch
 RUN chmod o+rx /bin/builder.sh
 
 USER nobody
@@ -12,6 +14,8 @@ RUN mkdir -p {{ repo_base }} \
   && cd {{ repo_base }} \
   && git clone https://github.com/knative/serving.git serving \
   && cd serving \
-  && git checkout tags/{{ knative_version_git_tag }}
+  && git checkout tags/{{ knative_version_git_tag }} \
+  && patch -p0 /tmp/pull_13376.patch \
+  && patch -p0 /tmp/pull_13401.patch
 
 RUN /bin/builder.sh {{ repo_base }} serving

@@ -1,0 +1,150 @@
+From d2304ccd495369bb8d020749f58c1fb11ca2bb3e Mon Sep 17 00:00:00 2001
+From: Stavros Kontopoulos <skontopo@redhat.com>
+Date: Mon, 10 Oct 2022 21:26:01 +0300
+Subject: [PATCH 1/2] allow user workloads to run with restricted profile
+
+---
+ pkg/reconciler/revision/resources/deploy.go    |  9 +++++++++
+ .../revision/resources/deploy_test.go          | 18 ++++++++++++++----
+ pkg/reconciler/revision/resources/queue.go     |  5 ++++-
+ 3 files changed, 27 insertions(+), 5 deletions(-)
+
+diff --git a/pkg/reconciler/revision/resources/deploy.go b/pkg/reconciler/revision/resources/deploy.go
+index cf4a307ee213..a95f21b6a3a8 100644
+--- a/pkg/reconciler/revision/resources/deploy.go
++++ b/pkg/reconciler/revision/resources/deploy.go
+@@ -230,6 +230,15 @@ func makeContainer(container corev1.Container, rev *v1.Revision) corev1.Containe
+ 	container.Lifecycle = userLifecycle
+ 	container.Env = append(container.Env, getKnativeEnvVar(rev)...)
+ 
++	// Set PSP requirements explicitly to avoid failures in case `pod-security.kubernetes.io/enforce=restricted` is used
++	// at the user workload namespace
++	if container.SecurityContext == nil {
++		container.SecurityContext = &corev1.SecurityContext{}
++	}
++	container.SecurityContext.AllowPrivilegeEscalation = ptr.Bool(false)
++	container.SecurityContext.SeccompProfile = &corev1.SeccompProfile{
++		Type: corev1.SeccompProfileTypeRuntimeDefault,
++	}
+ 	// Explicitly disable stdin and tty allocation
+ 	container.Stdin = false
+ 	container.TTY = false
+diff --git a/pkg/reconciler/revision/resources/deploy_test.go b/pkg/reconciler/revision/resources/deploy_test.go
+index 009f72f72791..c79cb2304b81 100644
+--- a/pkg/reconciler/revision/resources/deploy_test.go
++++ b/pkg/reconciler/revision/resources/deploy_test.go
+@@ -52,10 +52,15 @@ var (
+ 	sidecarContainerName2        = "sidecar-container-2"
+ 	sidecarIstioInjectAnnotation = "sidecar.istio.io/inject"
+ 	defaultServingContainer      = &corev1.Container{
+-		Name:                     servingContainerName,
+-		Image:                    "busybox",
+-		Ports:                    buildContainerPorts(v1.DefaultUserPort),
+-		Lifecycle:                userLifecycle,
++		Name:      servingContainerName,
++		Image:     "busybox",
++		Ports:     buildContainerPorts(v1.DefaultUserPort),
++		Lifecycle: userLifecycle,
++		SecurityContext: &corev1.SecurityContext{
++			AllowPrivilegeEscalation: ptr.Bool(false),
++			SeccompProfile: &corev1.SeccompProfile{
++				Type: corev1.SeccompProfileTypeRuntimeDefault,
++			}},
+ 		TerminationMessagePolicy: corev1.TerminationMessageFallbackToLogsOnError,
+ 		Stdin:                    false,
+ 		TTY:                      false,
+@@ -255,6 +260,11 @@ func defaultSidecarContainer(containerName string) *corev1.Container {
+ 		TerminationMessagePolicy: corev1.TerminationMessageFallbackToLogsOnError,
+ 		Stdin:                    false,
+ 		TTY:                      false,
++		SecurityContext: &corev1.SecurityContext{
++			AllowPrivilegeEscalation: ptr.Bool(false),
++			SeccompProfile: &corev1.SeccompProfile{
++				Type: corev1.SeccompProfileTypeRuntimeDefault,
++			}},
+ 		Env: []corev1.EnvVar{{
+ 			Name:  "K_REVISION",
+ 			Value: "bar",
+diff --git a/pkg/reconciler/revision/resources/queue.go b/pkg/reconciler/revision/resources/queue.go
+index e65f30f9683d..29ac1db50796 100644
+--- a/pkg/reconciler/revision/resources/queue.go
++++ b/pkg/reconciler/revision/resources/queue.go
+@@ -85,7 +85,10 @@ var (
+ 		ReadOnlyRootFilesystem:   ptr.Bool(true),
+ 		RunAsNonRoot:             ptr.Bool(true),
+ 		Capabilities: &corev1.Capabilities{
+-			Drop: []corev1.Capability{"all"},
++			Drop: []corev1.Capability{"ALL"},
++		},
++		SeccompProfile: &corev1.SeccompProfile{
++			Type: corev1.SeccompProfileTypeRuntimeDefault,
+ 		},
+ 	}
+ )
+
+From f3360cf192ef7b59a24331af9448de26b3ae3226 Mon Sep 17 00:00:00 2001
+From: Stavros Kontopoulos <skontopo@redhat.com>
+Date: Mon, 17 Oct 2022 23:03:16 +0300
+Subject: [PATCH 2/2] only change queue proxy
+
+---
+ pkg/reconciler/revision/resources/deploy.go    |  9 ---------
+ .../revision/resources/deploy_test.go          | 18 ++++--------------
+ 2 files changed, 4 insertions(+), 23 deletions(-)
+
+diff --git a/pkg/reconciler/revision/resources/deploy.go b/pkg/reconciler/revision/resources/deploy.go
+index a95f21b6a3a8..cf4a307ee213 100644
+--- a/pkg/reconciler/revision/resources/deploy.go
++++ b/pkg/reconciler/revision/resources/deploy.go
+@@ -230,15 +230,6 @@ func makeContainer(container corev1.Container, rev *v1.Revision) corev1.Containe
+ 	container.Lifecycle = userLifecycle
+ 	container.Env = append(container.Env, getKnativeEnvVar(rev)...)
+ 
+-	// Set PSP requirements explicitly to avoid failures in case `pod-security.kubernetes.io/enforce=restricted` is used
+-	// at the user workload namespace
+-	if container.SecurityContext == nil {
+-		container.SecurityContext = &corev1.SecurityContext{}
+-	}
+-	container.SecurityContext.AllowPrivilegeEscalation = ptr.Bool(false)
+-	container.SecurityContext.SeccompProfile = &corev1.SeccompProfile{
+-		Type: corev1.SeccompProfileTypeRuntimeDefault,
+-	}
+ 	// Explicitly disable stdin and tty allocation
+ 	container.Stdin = false
+ 	container.TTY = false
+diff --git a/pkg/reconciler/revision/resources/deploy_test.go b/pkg/reconciler/revision/resources/deploy_test.go
+index c79cb2304b81..009f72f72791 100644
+--- a/pkg/reconciler/revision/resources/deploy_test.go
++++ b/pkg/reconciler/revision/resources/deploy_test.go
+@@ -52,15 +52,10 @@ var (
+ 	sidecarContainerName2        = "sidecar-container-2"
+ 	sidecarIstioInjectAnnotation = "sidecar.istio.io/inject"
+ 	defaultServingContainer      = &corev1.Container{
+-		Name:      servingContainerName,
+-		Image:     "busybox",
+-		Ports:     buildContainerPorts(v1.DefaultUserPort),
+-		Lifecycle: userLifecycle,
+-		SecurityContext: &corev1.SecurityContext{
+-			AllowPrivilegeEscalation: ptr.Bool(false),
+-			SeccompProfile: &corev1.SeccompProfile{
+-				Type: corev1.SeccompProfileTypeRuntimeDefault,
+-			}},
++		Name:                     servingContainerName,
++		Image:                    "busybox",
++		Ports:                    buildContainerPorts(v1.DefaultUserPort),
++		Lifecycle:                userLifecycle,
+ 		TerminationMessagePolicy: corev1.TerminationMessageFallbackToLogsOnError,
+ 		Stdin:                    false,
+ 		TTY:                      false,
+@@ -260,11 +255,6 @@ func defaultSidecarContainer(containerName string) *corev1.Container {
+ 		TerminationMessagePolicy: corev1.TerminationMessageFallbackToLogsOnError,
+ 		Stdin:                    false,
+ 		TTY:                      false,
+-		SecurityContext: &corev1.SecurityContext{
+-			AllowPrivilegeEscalation: ptr.Bool(false),
+-			SeccompProfile: &corev1.SeccompProfile{
+-				Type: corev1.SeccompProfileTypeRuntimeDefault,
+-			}},
+ 		Env: []corev1.EnvVar{{
+ 			Name:  "K_REVISION",
+ 			Value: "bar",

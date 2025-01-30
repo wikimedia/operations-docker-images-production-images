@@ -1,3 +1,9 @@
+knative-serving-controller (1.7.2-4) wikimedia; urgency=medium
+
+  * Backport https://github.com/knative/serving/pull/13401.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Thu, 30 Jan 2025 15:00:00 +0100
+
 knative-serving-controller (1.7.2-3-20250202) wikimedia; urgency=medium
 
   * Weekly rebuild.

@@ -1,0 +1,116 @@
+From 630c08d617b985a30da1b39f4295a5e74ba8b38d Mon Sep 17 00:00:00 2001
+From: Evan Anderson <evan.k.anderson@gmail.com>
+Date: Sun, 16 Oct 2022 11:03:48 -0700
+Subject: [PATCH] Allow setting seccompProfile to enable using restricted
+ security profile
+
+---
+ pkg/apis/serving/fieldmask.go      |  5 +++++
+ pkg/apis/serving/fieldmask_test.go | 23 +++++++++++++++++++++++
+ 2 files changed, 28 insertions(+)
+
+diff --git a/pkg/apis/serving/fieldmask.go b/pkg/apis/serving/fieldmask.go
+index c9936c887c35..ab8724b49f60 100644
+--- a/pkg/apis/serving/fieldmask.go
++++ b/pkg/apis/serving/fieldmask.go
+@@ -600,12 +600,14 @@ func PodSecurityContextMask(ctx context.Context, in *corev1.PodSecurityContext)
+ 	out.RunAsNonRoot = in.RunAsNonRoot
+ 	out.FSGroup = in.FSGroup
+ 	out.SupplementalGroups = in.SupplementalGroups
++	out.SeccompProfile = in.SeccompProfile
+ 
+ 	// Disallowed
+ 	// This list is unnecessary, but added here for clarity
+ 	out.SELinuxOptions = nil
+ 	out.WindowsOptions = nil
+ 	out.Sysctls = nil
++	out.FSGroupChangePolicy = nil
+ 
+ 	return out
+ }
+@@ -631,6 +633,9 @@ func SecurityContextMask(ctx context.Context, in *corev1.SecurityContext) *corev
+ 	// AllowPrivilegeEscalation when unset can behave the same way as true
+ 	// We do want the ability for folks to set this value to false
+ 	out.AllowPrivilegeEscalation = in.AllowPrivilegeEscalation
++	// SeccompProfile defaults to "unconstrained", but the safe values are
++	// "RuntimeDefault" or "Localhost" (with localhost path set)
++	out.SeccompProfile = in.SeccompProfile
+ 
+ 	// Disallowed
+ 	// This list is unnecessary, but added here for clarity
+diff --git a/pkg/apis/serving/fieldmask_test.go b/pkg/apis/serving/fieldmask_test.go
+index 0b5d2da611cf..d4cc35363ba7 100644
+--- a/pkg/apis/serving/fieldmask_test.go
++++ b/pkg/apis/serving/fieldmask_test.go
+@@ -656,6 +656,9 @@ func TestPodSecurityContextMask(t *testing.T) {
+ 		RunAsGroup:         ptr.Int64(1),
+ 		RunAsNonRoot:       ptr.Bool(true),
+ 		FSGroup:            ptr.Int64(1),
++		SeccompProfile: &corev1.SeccompProfile{
++			Type: corev1.SeccompProfileTypeRuntimeDefault,
++		},
+ 	}
+ 
+ 	want := &corev1.PodSecurityContext{}
+@@ -688,6 +691,9 @@ func TestPodSecurityContextMask_FeatureEnabled(t *testing.T) {
+ 		RunAsGroup:         ptr.Int64(1),
+ 		RunAsNonRoot:       ptr.Bool(true),
+ 		FSGroup:            ptr.Int64(1),
++		SeccompProfile: &corev1.SeccompProfile{
++			Type: corev1.SeccompProfileTypeRuntimeDefault,
++		},
+ 	}
+ 
+ 	want := &corev1.PodSecurityContext{
+@@ -696,6 +702,9 @@ func TestPodSecurityContextMask_FeatureEnabled(t *testing.T) {
+ 		RunAsNonRoot:       ptr.Bool(true),
+ 		FSGroup:            ptr.Int64(1),
+ 		SupplementalGroups: []int64{1},
++		SeccompProfile: &corev1.SeccompProfile{
++			Type: corev1.SeccompProfileTypeRuntimeDefault,
++		},
+ 	}
+ 
+ 	ctx := config.ToContext(context.Background(),
+@@ -728,6 +737,9 @@ func TestSecurityContextMask(t *testing.T) {
+ 		RunAsNonRoot:             ptr.Bool(true),
+ 		ReadOnlyRootFilesystem:   ptr.Bool(true),
+ 		AllowPrivilegeEscalation: ptr.Bool(false),
++		SeccompProfile: &corev1.SeccompProfile{
++			Type: corev1.SeccompProfileTypeRuntimeDefault,
++		},
+ 	}
+ 	in := &corev1.SecurityContext{
+ 		RunAsUser:                ptr.Int64(1),
+@@ -739,6 +751,10 @@ func TestSecurityContextMask(t *testing.T) {
+ 		ReadOnlyRootFilesystem:   ptr.Bool(true),
+ 		AllowPrivilegeEscalation: ptr.Bool(false),
+ 		ProcMount:                &mtype,
++		SeccompProfile: &corev1.SeccompProfile{
++			Type: corev1.SeccompProfileTypeRuntimeDefault,
++		},
++		WindowsOptions: &corev1.WindowsSecurityContextOptions{},
+ 	}
+ 
+ 	got := SecurityContextMask(context.Background(), in)
+@@ -767,6 +783,9 @@ func TestSecurityContextMask_FeatureEnabled(t *testing.T) {
+ 		RunAsNonRoot:             ptr.Bool(true),
+ 		RunAsUser:                ptr.Int64(1),
+ 		ReadOnlyRootFilesystem:   ptr.Bool(true),
++		SeccompProfile: &corev1.SeccompProfile{
++			Type: corev1.SeccompProfileTypeRuntimeDefault,
++		},
+ 	}
+ 	in := &corev1.SecurityContext{
+ 		AllowPrivilegeEscalation: ptr.Bool(false),
+@@ -778,6 +797,10 @@ func TestSecurityContextMask_FeatureEnabled(t *testing.T) {
+ 		RunAsNonRoot:             ptr.Bool(true),
+ 		RunAsUser:                ptr.Int64(1),
+ 		SELinuxOptions:           &corev1.SELinuxOptions{},
++		SeccompProfile: &corev1.SeccompProfile{
++			Type: corev1.SeccompProfileTypeRuntimeDefault,
++		},
++		WindowsOptions: &corev1.WindowsSecurityContextOptions{},
+ 	}
+ 
+ 	ctx := config.ToContext(context.Background(),
