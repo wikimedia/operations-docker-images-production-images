@@ -1,7 +1,4 @@
-# As of 2023-05-22, the benthos package needs systemd-sysusers. On Buster, this is only available as
-# part of the systemd package, which is unnecessary bloat. Thus, we use Bullseye here so that we can
-# install just that one script. Should be changed back to `{{ seed_image }}` once we're on Bullseye.
-FROM docker-registry.wikimedia.org/bullseye:latest
+FROM {{ "bookworm" | image_tag }}
 
 RUN {{ "opensysusers benthos wmf-certificates" | apt_install }}
 
