@@ -1,3 +1,9 @@
+kubectl (1.23.14-4-20250202) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 02 Feb 2025 06:00:01 +0000
+
 kubectl (1.23.14-4-20250126) wikimedia; urgency=medium
 
   * Weekly rebuild.

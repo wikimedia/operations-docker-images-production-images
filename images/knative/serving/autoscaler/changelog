@@ -1,3 +1,9 @@
+knative-serving-autoscaler (1.7.2-3-20250202) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 02 Feb 2025 06:00:07 +0000
+
 knative-serving-autoscaler (1.7.2-3-20250126) wikimedia; urgency=medium
 
   * Weekly rebuild.

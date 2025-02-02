@@ -1,3 +1,9 @@
+wmf-debci-bullseye (0.0.3-20250202) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 02 Feb 2025 06:00:13 +0000
+
 wmf-debci-bullseye (0.0.3-20250126) wikimedia; urgency=medium
 
   * Weekly rebuild.
