@@ -1,3 +1,9 @@
+knative-serving-controller (1.7.2-5) wikimedia; urgency=medium
+
+  * Fix the Dockerfile to properly backport Knative upstream patches.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Tue, 04 Jan 2025 15:05:00 +0100
+
 knative-serving-controller (1.7.2-4) wikimedia; urgency=medium
 
   * Backport https://github.com/knative/serving/pull/13401.

@@ -1,0 +1,91 @@
+From 1c01bd94b943e5e8c4855d00291237fd9eae4ffd Mon Sep 17 00:00:00 2001
+From: Matt Moore <mattmoor@chainguard.dev>
+Date: Fri, 14 Oct 2022 13:56:41 -0700
+Subject: [PATCH] Feature: Let users set `allowPrivilegeEscalation = false` on
+ ksvc.
+
+:gift: This allows used to specify `allowPrivilegeEscalation` (in particular to false) to ensure that processes cannot escalate privileges.
+
+Kicking the tires on the new GKE security posture dashboard, I noticed that ~all Knative services get flagged for this despite Knative not allowing me to set it to false!
+
+https://cloud.google.com/kubernetes-engine/docs/concepts/about-security-posture-dashboard
+
+/kind bug
+---
+ pkg/apis/serving/fieldmask.go      |  4 +++-
+ pkg/apis/serving/fieldmask_test.go | 26 ++++++++++++++------------
+ 2 files changed, 17 insertions(+), 13 deletions(-)
+
+diff --git a/pkg/apis/serving/fieldmask.go b/pkg/apis/serving/fieldmask.go
+index 2c5e8fcee254..c9936c887c35 100644
+--- a/pkg/apis/serving/fieldmask.go
++++ b/pkg/apis/serving/fieldmask.go
+@@ -628,12 +628,14 @@ func SecurityContextMask(ctx context.Context, in *corev1.SecurityContext) *corev
+ 	// RunAsNonRoot when unset behaves the same way as false
+ 	// We do want the ability for folks to set this value to true
+ 	out.RunAsNonRoot = in.RunAsNonRoot
++	// AllowPrivilegeEscalation when unset can behave the same way as true
++	// We do want the ability for folks to set this value to false
++	out.AllowPrivilegeEscalation = in.AllowPrivilegeEscalation
+ 
+ 	// Disallowed
+ 	// This list is unnecessary, but added here for clarity
+ 	out.Privileged = nil
+ 	out.SELinuxOptions = nil
+-	out.AllowPrivilegeEscalation = nil
+ 	out.ProcMount = nil
+ 
+ 	return out
+diff --git a/pkg/apis/serving/fieldmask_test.go b/pkg/apis/serving/fieldmask_test.go
+index 55ce512901da..0b5d2da611cf 100644
+--- a/pkg/apis/serving/fieldmask_test.go
++++ b/pkg/apis/serving/fieldmask_test.go
+@@ -722,11 +722,12 @@ func TestPodSecurityContextMask_FeatureEnabled(t *testing.T) {
+ func TestSecurityContextMask(t *testing.T) {
+ 	mtype := corev1.UnmaskedProcMount
+ 	want := &corev1.SecurityContext{
+-		Capabilities:           &corev1.Capabilities{},
+-		RunAsUser:              ptr.Int64(1),
+-		RunAsGroup:             ptr.Int64(2),
+-		RunAsNonRoot:           ptr.Bool(true),
+-		ReadOnlyRootFilesystem: ptr.Bool(true),
++		Capabilities:             &corev1.Capabilities{},
++		RunAsUser:                ptr.Int64(1),
++		RunAsGroup:               ptr.Int64(2),
++		RunAsNonRoot:             ptr.Bool(true),
++		ReadOnlyRootFilesystem:   ptr.Bool(true),
++		AllowPrivilegeEscalation: ptr.Bool(false),
+ 	}
+ 	in := &corev1.SecurityContext{
+ 		RunAsUser:                ptr.Int64(1),
+@@ -736,7 +737,7 @@ func TestSecurityContextMask(t *testing.T) {
+ 		RunAsGroup:               ptr.Int64(2),
+ 		RunAsNonRoot:             ptr.Bool(true),
+ 		ReadOnlyRootFilesystem:   ptr.Bool(true),
+-		AllowPrivilegeEscalation: ptr.Bool(true),
++		AllowPrivilegeEscalation: ptr.Bool(false),
+ 		ProcMount:                &mtype,
+ 	}
+ 
+@@ -760,14 +761,15 @@ func TestSecurityContextMask(t *testing.T) {
+ func TestSecurityContextMask_FeatureEnabled(t *testing.T) {
+ 	mtype := corev1.UnmaskedProcMount
+ 	want := &corev1.SecurityContext{
+-		Capabilities:           &corev1.Capabilities{},
+-		RunAsGroup:             ptr.Int64(2),
+-		RunAsNonRoot:           ptr.Bool(true),
+-		RunAsUser:              ptr.Int64(1),
+-		ReadOnlyRootFilesystem: ptr.Bool(true),
++		AllowPrivilegeEscalation: ptr.Bool(false),
++		Capabilities:             &corev1.Capabilities{},
++		RunAsGroup:               ptr.Int64(2),
++		RunAsNonRoot:             ptr.Bool(true),
++		RunAsUser:                ptr.Int64(1),
++		ReadOnlyRootFilesystem:   ptr.Bool(true),
+ 	}
+ 	in := &corev1.SecurityContext{
+-		AllowPrivilegeEscalation: ptr.Bool(true),
++		AllowPrivilegeEscalation: ptr.Bool(false),
+ 		Capabilities:             &corev1.Capabilities{},
+ 		Privileged:               ptr.Bool(true),
+ 		ProcMount:                &mtype,

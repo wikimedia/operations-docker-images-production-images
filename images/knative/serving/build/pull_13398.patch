@@ -1,0 +1,1257 @@
+From 7f344b7947db17f152a593c51f57f64283bdec04 Mon Sep 17 00:00:00 2001
+From: Evan Anderson <evan.k.anderson@gmail.com>
+Date: Sat, 15 Oct 2022 11:25:28 -0700
+Subject: [PATCH 01/14] Add secure-pod-defaults flag to default Pods to
+ 'restricted' profile by default
+
+---
+ config/core/configmaps/features.yaml          |   9 +-
+ pkg/apis/config/features.go                   |   3 +
+ pkg/apis/config/features_test.go              |   2 +
+ pkg/apis/serving/v1/revision_defaults.go      |  35 ++++++
+ pkg/apis/serving/v1/revision_defaults_test.go | 118 ++++++++++++++++++
+ 5 files changed, 166 insertions(+), 1 deletion(-)
+
+diff --git a/config/core/configmaps/features.yaml b/config/core/configmaps/features.yaml
+index 0f6fde5b12e9..72792eb1f355 100644
+--- a/config/core/configmaps/features.yaml
++++ b/config/core/configmaps/features.yaml
+@@ -22,7 +22,7 @@ metadata:
+     app.kubernetes.io/component: controller
+     app.kubernetes.io/version: devel
+   annotations:
+-    knative.dev/example-checksum: "4d5feafc"
++    knative.dev/example-checksum: "ca2c8415"
+ data:
+   _example: |-
+     ################################
+@@ -40,6 +40,13 @@ data:
+     # this example block and unindented to be in the data block
+     # to actually change the configuration.
+ 
++    # Default SecurityContext settings to secure-by-default values
++    # if unset.
++    #
++    # This value will default to "enabled" in a future release,
++    # probably Knative 1.8
++    secure-pod-defaults: "disabled"
++
+     # Indicates whether multi container support is enabled
+     #
+     # WARNING: Cannot safely be disabled once enabled.
+diff --git a/pkg/apis/config/features.go b/pkg/apis/config/features.go
+index d8d8b04be74d..221125912084 100644
+--- a/pkg/apis/config/features.go
++++ b/pkg/apis/config/features.go
+@@ -70,6 +70,7 @@ func defaultFeaturesConfig() *Features {
+ 		PodSpecInitContainers:            Disabled,
+ 		PodSpecDNSPolicy:                 Disabled,
+ 		PodSpecDNSConfig:                 Disabled,
++		SecurePodDefaults: Disabled,
+ 		TagHeaderBasedRouting:            Disabled,
+ 		AutoDetectHTTP2:                  Disabled,
+ 	}
+@@ -99,6 +100,7 @@ func NewFeaturesConfigFromMap(data map[string]string) (*Features, error) {
+ 		asFlag("kubernetes.podspec-persistent-volume-write", &nc.PodSpecPersistentVolumeWrite),
+ 		asFlag("kubernetes.podspec-dnspolicy", &nc.PodSpecDNSPolicy),
+ 		asFlag("kubernetes.podspec-dnsconfig", &nc.PodSpecDNSConfig),
++		asFlag("secure-pod-defaults", &nc.SecurePodDefaults),
+ 		asFlag("tag-header-based-routing", &nc.TagHeaderBasedRouting),
+ 		asFlag("queueproxy.mount-podinfo", &nc.QueueProxyMountPodInfo),
+ 		asFlag("autodetect-http2", &nc.AutoDetectHTTP2)); err != nil {
+@@ -134,6 +136,7 @@ type Features struct {
+ 	QueueProxyMountPodInfo           Flag
+ 	PodSpecDNSPolicy                 Flag
+ 	PodSpecDNSConfig                 Flag
++	SecurePodDefaults                Flag
+ 	TagHeaderBasedRouting            Flag
+ 	AutoDetectHTTP2                  Flag
+ }
+diff --git a/pkg/apis/config/features_test.go b/pkg/apis/config/features_test.go
+index 77c1c3305e27..bad1cbeefa2e 100644
+--- a/pkg/apis/config/features_test.go
++++ b/pkg/apis/config/features_test.go
+@@ -72,6 +72,7 @@ func TestFeaturesConfiguration(t *testing.T) {
+ 			PodSpecSchedulerName:             Enabled,
+ 			PodSpecDNSPolicy:                 Enabled,
+ 			PodSpecDNSConfig:                 Enabled,
++			SecurePodDefaults:                Enabled,
+ 			TagHeaderBasedRouting:            Enabled,
+ 		}),
+ 		data: map[string]string{
+@@ -88,6 +89,7 @@ func TestFeaturesConfiguration(t *testing.T) {
+ 			"kubernetes.podspec-schedulername":             "Enabled",
+ 			"kubernetes.podspec-dnspolicy":                 "Enabled",
+ 			"kubernetes.podspec-dnsconfig":                 "Enabled",
++			"secure-pod-defaults":                          "Enabled",
+ 			"tag-header-based-routing":                     "Enabled",
+ 		},
+ 	}, {
+diff --git a/pkg/apis/serving/v1/revision_defaults.go b/pkg/apis/serving/v1/revision_defaults.go
+index 354b12d89d6f..94819d275514 100644
+--- a/pkg/apis/serving/v1/revision_defaults.go
++++ b/pkg/apis/serving/v1/revision_defaults.go
+@@ -72,6 +72,10 @@ func (rs *RevisionSpec) SetDefaults(ctx context.Context) {
+ 	applyDefaultContainerNames(rs.PodSpec.InitContainers, containerNames, defaultInitContainerName)
+ 	for idx := range rs.PodSpec.Containers {
+ 		rs.applyDefault(ctx, &rs.PodSpec.Containers[idx], cfg)
++		rs.defaultSecurityContext(ctx, &rs.PodSpec.Containers[idx], cfg)
++	}
++	for idx := range rs.PodSpec.InitContainers {
++		rs.defaultSecurityContext(ctx, &rs.PodSpec.InitContainers[idx], cfg)
+ 	}
+ }
+ 
+@@ -158,6 +162,37 @@ func (*RevisionSpec) applyProbes(container *corev1.Container) {
+ 	}
+ }
+ 
++//
++func (rs *RevisionSpec) defaultSecurityContext(ctx context.Context, container *corev1.Container, cfg *config.Config) {
++	if cfg.Features.SecurePodDefaults != config.Enabled {
++		return
++	}
++
++	if container.SecurityContext == nil {
++		container.SecurityContext = &corev1.SecurityContext{}
++	}
++
++	if container.SecurityContext.AllowPrivilegeEscalation == nil {
++		container.SecurityContext.AllowPrivilegeEscalation = ptr.Bool(false)
++	}
++	if container.SecurityContext.SeccompProfile == nil {
++		container.SecurityContext.SeccompProfile = &corev1.SeccompProfile{}
++	}
++	if container.SecurityContext.SeccompProfile.Type == "" {
++		container.SecurityContext.SeccompProfile.Type = corev1.SeccompProfileTypeRuntimeDefault
++	}
++	if container.SecurityContext.Capabilities == nil {
++		container.SecurityContext.Capabilities = &corev1.Capabilities{}
++	}
++	if container.SecurityContext.Capabilities.Drop == nil {
++		container.SecurityContext.Capabilities.Drop = []corev1.Capability{"ALL"}
++	}
++	// Default in NET_BIND_SERVICE to allow binding to low-numbered ports.
++	if container.SecurityContext.Capabilities.Add == nil {
++		container.SecurityContext.Capabilities.Add = []corev1.Capability{"NET_BIND_SERVICE"}
++	}
++}
++
+ func applyDefaultContainerNames(containers []corev1.Container, containerNames sets.String, defaultContainerName string) {
+ 	// Default container name based on ContainerNameFromTemplate value from configmap.
+ 	// In multi-container or init-container mode, add a numeric suffix, avoiding clashes with user-supplied names.
+diff --git a/pkg/apis/serving/v1/revision_defaults_test.go b/pkg/apis/serving/v1/revision_defaults_test.go
+index e56ec9c52ec8..b2214ebc0d2f 100644
+--- a/pkg/apis/serving/v1/revision_defaults_test.go
++++ b/pkg/apis/serving/v1/revision_defaults_test.go
+@@ -835,6 +835,124 @@ func TestRevisionDefaulting(t *testing.T) {
+ 				},
+ 			},
+ 		},
++	}, {
++		name: "Default security context with feature enabled",
++		wc: func(ctx context.Context) context.Context {
++			s := config.NewStore(logger)
++			s.OnConfigChanged(&corev1.ConfigMap{ObjectMeta: metav1.ObjectMeta{Name: autoscalerconfig.ConfigName}})
++			s.OnConfigChanged(&corev1.ConfigMap{ObjectMeta: metav1.ObjectMeta{Name: config.DefaultsConfigName}})
++			s.OnConfigChanged(
++				&corev1.ConfigMap{
++					ObjectMeta: metav1.ObjectMeta{Name: config.FeaturesConfigName},
++					Data:       map[string]string{"secure-pod-defaults": "Enabled"},
++				},
++			)
++
++			return s.ToContext(ctx)
++		},
++		in: &Revision{
++			Spec: RevisionSpec{
++				PodSpec: corev1.PodSpec{
++					Containers: []corev1.Container{{
++						Name: "user-container",
++						Ports: []corev1.ContainerPort{{
++							ContainerPort: 8888,
++						}},
++					}, {
++						Name:            "sidecar",
++						SecurityContext: &corev1.SecurityContext{},
++					}, {
++						Name: "special-sidecar",
++						SecurityContext: &corev1.SecurityContext{
++							AllowPrivilegeEscalation: ptr.Bool(true),
++							Capabilities: &corev1.Capabilities{
++								Add:  []corev1.Capability{"NET_ADMIN"},
++								Drop: []corev1.Capability{},
++							},
++						},
++					}},
++					InitContainers: []corev1.Container{{
++						Name: "special-init",
++						SecurityContext: &corev1.SecurityContext{
++							AllowPrivilegeEscalation: ptr.Bool(true),
++							SeccompProfile: &corev1.SeccompProfile{
++								Type:             corev1.SeccompProfileTypeLocalhost,
++								LocalhostProfile: ptr.String("special"),
++							},
++							Capabilities: &corev1.Capabilities{
++								Add: []corev1.Capability{"NET_ADMIN"},
++							},
++						},
++					}},
++				},
++			},
++		},
++		want: &Revision{
++			Spec: RevisionSpec{
++				ContainerConcurrency: ptr.Int64(config.DefaultContainerConcurrency),
++				TimeoutSeconds:       ptr.Int64(config.DefaultRevisionTimeoutSeconds),
++				PodSpec: corev1.PodSpec{
++					Containers: []corev1.Container{{
++						Name: "user-container",
++						Ports: []corev1.ContainerPort{{
++							ContainerPort: 8888,
++						}},
++						ReadinessProbe: defaultProbe,
++						Resources:      defaultResources,
++						SecurityContext: &corev1.SecurityContext{
++							AllowPrivilegeEscalation: ptr.Bool(false),
++							SeccompProfile: &corev1.SeccompProfile{
++								Type: corev1.SeccompProfileTypeRuntimeDefault,
++							},
++							Capabilities: &corev1.Capabilities{
++								Drop: []corev1.Capability{"ALL"},
++								Add:  []corev1.Capability{"NET_BIND_SERVICE"},
++							},
++						},
++					}, {
++						Name:      "sidecar",
++						Resources: defaultResources,
++						SecurityContext: &corev1.SecurityContext{
++							AllowPrivilegeEscalation: ptr.Bool(false),
++							SeccompProfile: &corev1.SeccompProfile{
++								Type: corev1.SeccompProfileTypeRuntimeDefault,
++							},
++							Capabilities: &corev1.Capabilities{
++								Drop: []corev1.Capability{"ALL"},
++								Add:  []corev1.Capability{"NET_BIND_SERVICE"},
++							},
++						},
++					}, {
++						Name:      "special-sidecar",
++						Resources: defaultResources,
++						SecurityContext: &corev1.SecurityContext{
++							AllowPrivilegeEscalation: ptr.Bool(true),
++							SeccompProfile: &corev1.SeccompProfile{
++								Type: corev1.SeccompProfileTypeRuntimeDefault,
++							},
++							Capabilities: &corev1.Capabilities{
++								Add:  []corev1.Capability{"NET_ADMIN"},
++								Drop: []corev1.Capability{},
++							},
++						},
++					}},
++					InitContainers: []corev1.Container{{
++						Name: "special-init",
++						SecurityContext: &corev1.SecurityContext{
++							AllowPrivilegeEscalation: ptr.Bool(true),
++							SeccompProfile: &corev1.SeccompProfile{
++								Type:             corev1.SeccompProfileTypeLocalhost,
++								LocalhostProfile: ptr.String("special"),
++							},
++							Capabilities: &corev1.Capabilities{
++								Add:  []corev1.Capability{"NET_ADMIN"},
++								Drop: []corev1.Capability{"ALL"},
++							},
++						},
++					}},
++				},
++			},
++		},
+ 	}}
+ 
+ 	for _, test := range tests {
+
+From 73167333b0a25d9ffa8bea3e774d7328e193056b Mon Sep 17 00:00:00 2001
+From: Evan Anderson <evan.k.anderson@gmail.com>
+Date: Sun, 16 Oct 2022 08:11:15 -0700
+Subject: [PATCH 02/14] Account for pod-level SecurityContext when setting
+ defaluts
+
+---
+ pkg/apis/serving/v1/revision_defaults.go      | 57 +++++++++-----
+ pkg/apis/serving/v1/revision_defaults_test.go | 77 ++++++++++++++++++-
+ 2 files changed, 112 insertions(+), 22 deletions(-)
+
+diff --git a/pkg/apis/serving/v1/revision_defaults.go b/pkg/apis/serving/v1/revision_defaults.go
+index 94819d275514..39e33c522217 100644
+--- a/pkg/apis/serving/v1/revision_defaults.go
++++ b/pkg/apis/serving/v1/revision_defaults.go
+@@ -72,10 +72,10 @@ func (rs *RevisionSpec) SetDefaults(ctx context.Context) {
+ 	applyDefaultContainerNames(rs.PodSpec.InitContainers, containerNames, defaultInitContainerName)
+ 	for idx := range rs.PodSpec.Containers {
+ 		rs.applyDefault(ctx, &rs.PodSpec.Containers[idx], cfg)
+-		rs.defaultSecurityContext(ctx, &rs.PodSpec.Containers[idx], cfg)
++		rs.defaultSecurityContext(ctx, rs.PodSpec.SecurityContext, &rs.PodSpec.Containers[idx], cfg)
+ 	}
+ 	for idx := range rs.PodSpec.InitContainers {
+-		rs.defaultSecurityContext(ctx, &rs.PodSpec.InitContainers[idx], cfg)
++		rs.defaultSecurityContext(ctx, rs.PodSpec.SecurityContext, &rs.PodSpec.InitContainers[idx], cfg)
+ 	}
+ }
+ 
+@@ -163,33 +163,52 @@ func (*RevisionSpec) applyProbes(container *corev1.Container) {
+ }
+ 
+ //
+-func (rs *RevisionSpec) defaultSecurityContext(ctx context.Context, container *corev1.Container, cfg *config.Config) {
++func (rs *RevisionSpec) defaultSecurityContext(ctx context.Context, psc *corev1.PodSecurityContext, container *corev1.Container, cfg *config.Config) {
+ 	if cfg.Features.SecurePodDefaults != config.Enabled {
+ 		return
+ 	}
+ 
+-	if container.SecurityContext == nil {
+-		container.SecurityContext = &corev1.SecurityContext{}
++	if psc == nil {
++		psc = &corev1.PodSecurityContext{}
+ 	}
+ 
+-	if container.SecurityContext.AllowPrivilegeEscalation == nil {
+-		container.SecurityContext.AllowPrivilegeEscalation = ptr.Bool(false)
+-	}
+-	if container.SecurityContext.SeccompProfile == nil {
+-		container.SecurityContext.SeccompProfile = &corev1.SeccompProfile{}
++	updatedSC := container.SecurityContext
++
++	if updatedSC == nil {
++		updatedSC = &corev1.SecurityContext{}
+ 	}
+-	if container.SecurityContext.SeccompProfile.Type == "" {
+-		container.SecurityContext.SeccompProfile.Type = corev1.SeccompProfileTypeRuntimeDefault
++
++	if updatedSC.AllowPrivilegeEscalation == nil {
++		updatedSC.AllowPrivilegeEscalation = ptr.Bool(false)
+ 	}
+-	if container.SecurityContext.Capabilities == nil {
+-		container.SecurityContext.Capabilities = &corev1.Capabilities{}
++	if psc.SeccompProfile == nil || psc.SeccompProfile.Type == "" {
++		if updatedSC.SeccompProfile == nil {
++			updatedSC.SeccompProfile = &corev1.SeccompProfile{}
++		}
++		if updatedSC.SeccompProfile.Type == "" {
++			updatedSC.SeccompProfile.Type = corev1.SeccompProfileTypeRuntimeDefault
++		}
+ 	}
+-	if container.SecurityContext.Capabilities.Drop == nil {
+-		container.SecurityContext.Capabilities.Drop = []corev1.Capability{"ALL"}
++	if updatedSC.Capabilities == nil {
++		updatedSC.Capabilities = &corev1.Capabilities{}
++	}
++	if updatedSC.Capabilities.Drop == nil {
++		updatedSC.Capabilities.Drop = []corev1.Capability{"ALL"}
++		// Default in NET_BIND_SERVICE to allow binding to low-numbered ports.
++		needsLowPort := false
++		for _, p := range container.Ports {
++			if p.ContainerPort < 1024 {
++				needsLowPort = true
++				break
++			}
++		}
++		if updatedSC.Capabilities.Add == nil && needsLowPort {
++			updatedSC.Capabilities.Add = []corev1.Capability{"NET_BIND_SERVICE"}
++		}
+ 	}
+-	// Default in NET_BIND_SERVICE to allow binding to low-numbered ports.
+-	if container.SecurityContext.Capabilities.Add == nil {
+-		container.SecurityContext.Capabilities.Add = []corev1.Capability{"NET_BIND_SERVICE"}
++
++	if *updatedSC != (corev1.SecurityContext{}) {
++		container.SecurityContext = updatedSC
+ 	}
+ }
+ 
+diff --git a/pkg/apis/serving/v1/revision_defaults_test.go b/pkg/apis/serving/v1/revision_defaults_test.go
+index b2214ebc0d2f..5b37c18f818c 100644
+--- a/pkg/apis/serving/v1/revision_defaults_test.go
++++ b/pkg/apis/serving/v1/revision_defaults_test.go
+@@ -856,7 +856,7 @@ func TestRevisionDefaulting(t *testing.T) {
+ 					Containers: []corev1.Container{{
+ 						Name: "user-container",
+ 						Ports: []corev1.ContainerPort{{
+-							ContainerPort: 8888,
++							ContainerPort: 80,
+ 						}},
+ 					}, {
+ 						Name:            "sidecar",
+@@ -895,7 +895,7 @@ func TestRevisionDefaulting(t *testing.T) {
+ 					Containers: []corev1.Container{{
+ 						Name: "user-container",
+ 						Ports: []corev1.ContainerPort{{
+-							ContainerPort: 8888,
++							ContainerPort: 80,
+ 						}},
+ 						ReadinessProbe: defaultProbe,
+ 						Resources:      defaultResources,
+@@ -919,7 +919,6 @@ func TestRevisionDefaulting(t *testing.T) {
+ 							},
+ 							Capabilities: &corev1.Capabilities{
+ 								Drop: []corev1.Capability{"ALL"},
+-								Add:  []corev1.Capability{"NET_BIND_SERVICE"},
+ 							},
+ 						},
+ 					}, {
+@@ -953,6 +952,78 @@ func TestRevisionDefaulting(t *testing.T) {
+ 				},
+ 			},
+ 		},
++	}, {
++		name: "uses pod defaults in security context",
++		wc: func(ctx context.Context) context.Context {
++			s := config.NewStore(logger)
++			s.OnConfigChanged(&corev1.ConfigMap{ObjectMeta: metav1.ObjectMeta{Name: autoscalerconfig.ConfigName}})
++			s.OnConfigChanged(&corev1.ConfigMap{ObjectMeta: metav1.ObjectMeta{Name: config.DefaultsConfigName}})
++			s.OnConfigChanged(
++				&corev1.ConfigMap{
++					ObjectMeta: metav1.ObjectMeta{Name: config.FeaturesConfigName},
++					Data:       map[string]string{"secure-pod-defaults": "Enabled"},
++				},
++			)
++
++			return s.ToContext(ctx)
++		},
++		in: &Revision{
++			Spec: RevisionSpec{
++				PodSpec: corev1.PodSpec{
++					Containers: []corev1.Container{{
++						Name: "user-container",
++						Ports: []corev1.ContainerPort{{
++							ContainerPort: 8080,
++						}},
++					}},
++					InitContainers: []corev1.Container{{
++						Name:            "init",
++						SecurityContext: &corev1.SecurityContext{},
++					}},
++					SecurityContext: &corev1.PodSecurityContext{
++						SeccompProfile: &corev1.SeccompProfile{
++							Type: corev1.SeccompProfileTypeUnconfined,
++						},
++					},
++				},
++			},
++		},
++		want: &Revision{
++			Spec: RevisionSpec{
++				ContainerConcurrency: ptr.Int64(config.DefaultContainerConcurrency),
++				TimeoutSeconds:       ptr.Int64(config.DefaultRevisionTimeoutSeconds),
++				PodSpec: corev1.PodSpec{
++					Containers: []corev1.Container{{
++						Name: "user-container",
++						Ports: []corev1.ContainerPort{{
++							ContainerPort: 8080,
++						}},
++						ReadinessProbe: defaultProbe,
++						Resources:      defaultResources,
++						SecurityContext: &corev1.SecurityContext{
++							AllowPrivilegeEscalation: ptr.Bool(false),
++							Capabilities: &corev1.Capabilities{
++								Drop: []corev1.Capability{"ALL"},
++							},
++						},
++					}},
++					InitContainers: []corev1.Container{{
++						Name: "init",
++						SecurityContext: &corev1.SecurityContext{
++							AllowPrivilegeEscalation: ptr.Bool(false),
++							Capabilities: &corev1.Capabilities{
++								Drop: []corev1.Capability{"ALL"},
++							},
++						},
++					}},
++					SecurityContext: &corev1.PodSecurityContext{
++						SeccompProfile: &corev1.SeccompProfile{
++							Type: corev1.SeccompProfileTypeUnconfined,
++						},
++					},
++				},
++			},
++		},
+ 	}}
+ 
+ 	for _, test := range tests {
+
+From 540f339b5fd77bcb473774395755b90e2b9c4d61 Mon Sep 17 00:00:00 2001
+From: Evan Anderson <evan.k.anderson@gmail.com>
+Date: Sun, 16 Oct 2022 10:30:34 -0700
+Subject: [PATCH 03/14] Fix format that somehow slipped through
+ auto-format-on-save
+
+---
+ pkg/apis/config/features.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pkg/apis/config/features.go b/pkg/apis/config/features.go
+index 221125912084..de120be115ba 100644
+--- a/pkg/apis/config/features.go
++++ b/pkg/apis/config/features.go
+@@ -70,7 +70,7 @@ func defaultFeaturesConfig() *Features {
+ 		PodSpecInitContainers:            Disabled,
+ 		PodSpecDNSPolicy:                 Disabled,
+ 		PodSpecDNSConfig:                 Disabled,
+-		SecurePodDefaults: Disabled,
++		SecurePodDefaults:                Disabled,
+ 		TagHeaderBasedRouting:            Disabled,
+ 		AutoDetectHTTP2:                  Disabled,
+ 	}
+
+From a2f323ce7e927525fa307e5413fdcb7d5d98bc8c Mon Sep 17 00:00:00 2001
+From: Evan Anderson <evan.k.anderson@gmail.com>
+Date: Sun, 16 Oct 2022 15:10:30 -0700
+Subject: [PATCH 04/14] Fix lint unparam complaint
+
+---
+ pkg/apis/serving/v1/revision_defaults.go | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/pkg/apis/serving/v1/revision_defaults.go b/pkg/apis/serving/v1/revision_defaults.go
+index 39e33c522217..fdbaa0791158 100644
+--- a/pkg/apis/serving/v1/revision_defaults.go
++++ b/pkg/apis/serving/v1/revision_defaults.go
+@@ -72,10 +72,10 @@ func (rs *RevisionSpec) SetDefaults(ctx context.Context) {
+ 	applyDefaultContainerNames(rs.PodSpec.InitContainers, containerNames, defaultInitContainerName)
+ 	for idx := range rs.PodSpec.Containers {
+ 		rs.applyDefault(ctx, &rs.PodSpec.Containers[idx], cfg)
+-		rs.defaultSecurityContext(ctx, rs.PodSpec.SecurityContext, &rs.PodSpec.Containers[idx], cfg)
++		rs.defaultSecurityContext(rs.PodSpec.SecurityContext, &rs.PodSpec.Containers[idx], cfg)
+ 	}
+ 	for idx := range rs.PodSpec.InitContainers {
+-		rs.defaultSecurityContext(ctx, rs.PodSpec.SecurityContext, &rs.PodSpec.InitContainers[idx], cfg)
++		rs.defaultSecurityContext(rs.PodSpec.SecurityContext, &rs.PodSpec.InitContainers[idx], cfg)
+ 	}
+ }
+ 
+@@ -163,7 +163,7 @@ func (*RevisionSpec) applyProbes(container *corev1.Container) {
+ }
+ 
+ //
+-func (rs *RevisionSpec) defaultSecurityContext(ctx context.Context, psc *corev1.PodSecurityContext, container *corev1.Container, cfg *config.Config) {
++func (rs *RevisionSpec) defaultSecurityContext(psc *corev1.PodSecurityContext, container *corev1.Container, cfg *config.Config) {
+ 	if cfg.Features.SecurePodDefaults != config.Enabled {
+ 		return
+ 	}
+
+From be9f9c1965613798f237c649ed6d02037955fd58 Mon Sep 17 00:00:00 2001
+From: Evan Anderson <evan.k.anderson@gmail.com>
+Date: Fri, 30 Dec 2022 22:09:34 -0800
+Subject: [PATCH 05/14] Don't default Revision values when BYO name is
+ unchanged.
+
+Fixes #11512
+---
+ pkg/apis/serving/v1/configuration_defaults.go | 20 +++++++++
+ .../serving/v1/configuration_defaults_test.go | 41 +++++++++++++++++++
+ 2 files changed, 61 insertions(+)
+
+diff --git a/pkg/apis/serving/v1/configuration_defaults.go b/pkg/apis/serving/v1/configuration_defaults.go
+index 6e2527693be7..12175627f253 100644
+--- a/pkg/apis/serving/v1/configuration_defaults.go
++++ b/pkg/apis/serving/v1/configuration_defaults.go
+@@ -38,5 +38,25 @@ func (c *Configuration) SetDefaults(ctx context.Context) {
+ 
+ // SetDefaults implements apis.Defaultable
+ func (cs *ConfigurationSpec) SetDefaults(ctx context.Context) {
++	if apis.IsInUpdate(ctx) {
++		var prev ConfigurationSpec
++		prevConfig, ok := apis.GetBaseline(ctx).(*Configuration)
++		if ok {
++			prev = prevConfig.Spec
++		} else {
++			prevSvc, ok := apis.GetBaseline(ctx).(*Service)
++			if !ok {
++				panic("expected a Configuration or Service baseline")
++			}
++			prev = prevSvc.Spec.ConfigurationSpec
++		}
++		newName := cs.Template.ObjectMeta.Name
++		oldName := prev.Template.ObjectMeta.Name
++		if newName != "" && newName == oldName {
++			// Skip defaulting, to avoid suggesting changes that would conflict with
++			// "BYO RevisionName".
++			return
++		}
++	}
+ 	cs.Template.SetDefaults(ctx)
+ }
+diff --git a/pkg/apis/serving/v1/configuration_defaults_test.go b/pkg/apis/serving/v1/configuration_defaults_test.go
+index 94597122d432..ae6e8d9058e3 100644
+--- a/pkg/apis/serving/v1/configuration_defaults_test.go
++++ b/pkg/apis/serving/v1/configuration_defaults_test.go
+@@ -23,6 +23,7 @@ import (
+ 	"github.com/google/go-cmp/cmp"
+ 	authv1 "k8s.io/api/authentication/v1"
+ 	corev1 "k8s.io/api/core/v1"
++	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+ 
+ 	"knative.dev/pkg/apis"
+ 	"knative.dev/pkg/ptr"
+@@ -173,6 +174,46 @@ func TestConfigurationDefaulting(t *testing.T) {
+ 	}
+ }
+ 
++func TestBYORevisionName(t *testing.T) {
++	new := &Configuration{
++		ObjectMeta: metav1.ObjectMeta{
++			Name:        "thing",
++			Annotations: map[string]string{"annotated": "yes"},
++		},
++		Spec: ConfigurationSpec{
++			Template: RevisionTemplateSpec{
++				ObjectMeta: metav1.ObjectMeta{
++					Name: "thing-2022",
++				},
++				Spec: RevisionSpec{
++					PodSpec: corev1.PodSpec{
++						Containers: []corev1.Container{{
++							Image: "busybox",
++						}},
++					},
++				},
++			},
++		},
++	}
++
++	old := new.DeepCopy()
++	old.ObjectMeta.Annotations = map[string]string{}
++
++	want := new.DeepCopy()
++
++	ctx := apis.WithinUpdate(context.Background(), old)
++	new.SetDefaults(ctx)
++
++	if diff := cmp.Diff(want, new); diff != "" {
++		t.Errorf("SetDefaults (-want, +got) = %v", diff)
++	}
++
++	new.SetDefaults(context.Background())
++	if cmp.Equal(want, new, ignoreUnexportedResources) {
++		t.Errorf("Expected diff, got none! object: %v", new)
++	}
++}
++
+ func TestConfigurationUserInfo(t *testing.T) {
+ 	const (
+ 		u1 = "oveja@knative.dev"
+
+From 87722a5384d1f700b8dfa3953999f251f35b7ff5 Mon Sep 17 00:00:00 2001
+From: Evan Anderson <evan.k.anderson@gmail.com>
+Date: Sat, 31 Dec 2022 13:28:03 -0800
+Subject: [PATCH 06/14] Switch to using a context-passed ConfigurationSpec
+ reference instead of hard-coding Configuration and Service.
+
+---
+ pkg/apis/serving/v1/configuration_defaults.go | 41 +++++++++++--------
+ pkg/apis/serving/v1/service_defaults.go       | 13 +++---
+ 2 files changed, 32 insertions(+), 22 deletions(-)
+
+diff --git a/pkg/apis/serving/v1/configuration_defaults.go b/pkg/apis/serving/v1/configuration_defaults.go
+index 12175627f253..3031931db65d 100644
+--- a/pkg/apis/serving/v1/configuration_defaults.go
++++ b/pkg/apis/serving/v1/configuration_defaults.go
+@@ -23,33 +23,40 @@ import (
+ 	"knative.dev/serving/pkg/apis/serving"
+ )
+ 
++type configSpecKey struct{}
++
++// WithConfigurationSpec stores a ConfigurationSpec in the context,
++func WithConfigurationSpec(ctx context.Context, spec *ConfigurationSpec) context.Context {
++	return context.WithValue(ctx, configSpecKey{}, spec)
++}
++
++func previousConfigSpec(ctx context.Context) *ConfigurationSpec {
++	if spec, ok := ctx.Value(configSpecKey{}).(*ConfigurationSpec); ok {
++		return spec
++	}
++	return nil
++}
++
+ // SetDefaults implements apis.Defaultable
+ func (c *Configuration) SetDefaults(ctx context.Context) {
+ 	ctx = apis.WithinParent(ctx, c.ObjectMeta)
++
++	var prevSpec *ConfigurationSpec
++	if prev, ok := apis.GetBaseline(ctx).(*Configuration); ok && prev != nil {
++		prevSpec = &prev.Spec
++		ctx = WithConfigurationSpec(ctx, prevSpec)
++	}
++
+ 	c.Spec.SetDefaults(apis.WithinSpec(ctx))
++
+ 	if c.GetOwnerReferences() == nil {
+-		if apis.IsInUpdate(ctx) {
+-			serving.SetUserInfo(ctx, apis.GetBaseline(ctx).(*Configuration).Spec, c.Spec, c)
+-		} else {
+-			serving.SetUserInfo(ctx, nil, c.Spec, c)
+-		}
++		serving.SetUserInfo(ctx, prevSpec, &c.Spec, c)
+ 	}
+ }
+ 
+ // SetDefaults implements apis.Defaultable
+ func (cs *ConfigurationSpec) SetDefaults(ctx context.Context) {
+-	if apis.IsInUpdate(ctx) {
+-		var prev ConfigurationSpec
+-		prevConfig, ok := apis.GetBaseline(ctx).(*Configuration)
+-		if ok {
+-			prev = prevConfig.Spec
+-		} else {
+-			prevSvc, ok := apis.GetBaseline(ctx).(*Service)
+-			if !ok {
+-				panic("expected a Configuration or Service baseline")
+-			}
+-			prev = prevSvc.Spec.ConfigurationSpec
+-		}
++	if prev := previousConfigSpec(ctx); prev != nil {
+ 		newName := cs.Template.ObjectMeta.Name
+ 		oldName := prev.Template.ObjectMeta.Name
+ 		if newName != "" && newName == oldName {
+diff --git a/pkg/apis/serving/v1/service_defaults.go b/pkg/apis/serving/v1/service_defaults.go
+index 095ca9c45696..e27de10eeb4c 100644
+--- a/pkg/apis/serving/v1/service_defaults.go
++++ b/pkg/apis/serving/v1/service_defaults.go
+@@ -26,13 +26,16 @@ import (
+ // SetDefaults implements apis.Defaultable
+ func (s *Service) SetDefaults(ctx context.Context) {
+ 	ctx = apis.WithinParent(ctx, s.ObjectMeta)
+-	s.Spec.SetDefaults(apis.WithinSpec(ctx))
+ 
+-	if apis.IsInUpdate(ctx) {
+-		serving.SetUserInfo(ctx, apis.GetBaseline(ctx).(*Service).Spec, s.Spec, s)
+-	} else {
+-		serving.SetUserInfo(ctx, nil, s.Spec, s)
++	var prevSpec *ServiceSpec
++	if prev, ok := apis.GetBaseline(ctx).(*Service); ok && prev != nil {
++		prevSpec = &prev.Spec
++		ctx = WithConfigurationSpec(ctx, &prev.Spec.ConfigurationSpec)
+ 	}
++
++	s.Spec.SetDefaults(apis.WithinSpec(ctx))
++	serving.SetUserInfo(ctx, prevSpec, &s.Spec, s)
++
+ }
+ 
+ // SetDefaults implements apis.Defaultable
+
+From e49e4d1c0120e693268f097cae553d9e0b3c9e56 Mon Sep 17 00:00:00 2001
+From: Evan Anderson <evan.k.anderson@gmail.com>
+Date: Sat, 31 Dec 2022 13:59:01 -0800
+Subject: [PATCH 07/14] Complete docstring for WithConfigurationSpec
+
+---
+ pkg/apis/serving/v1/configuration_defaults.go | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/pkg/apis/serving/v1/configuration_defaults.go b/pkg/apis/serving/v1/configuration_defaults.go
+index 3031931db65d..24793813ce38 100644
+--- a/pkg/apis/serving/v1/configuration_defaults.go
++++ b/pkg/apis/serving/v1/configuration_defaults.go
+@@ -25,7 +25,9 @@ import (
+ 
+ type configSpecKey struct{}
+ 
+-// WithConfigurationSpec stores a ConfigurationSpec in the context,
++// WithConfigurationSpec stores a ConfigurationSpec in the context, to allow
++// ConfigurationSpec.SetDefaults to determine whether the update would create a
++// new Revision.
+ func WithConfigurationSpec(ctx context.Context, spec *ConfigurationSpec) context.Context {
+ 	return context.WithValue(ctx, configSpecKey{}, spec)
+ }
+
+From 86b1846dd38793798710badb773e10e318c483bb Mon Sep 17 00:00:00 2001
+From: Evan Anderson <evan.k.anderson@gmail.com>
+Date: Tue, 3 Jan 2023 21:20:54 -0800
+Subject: [PATCH 08/14] Permit explicitly selecting Kubernetes defaults in
+ PodSecurityContext.
+
+---
+ pkg/apis/serving/fieldmask.go      | 16 +++++++++++
+ pkg/apis/serving/fieldmask_test.go | 45 ++++++++++++++++++++++++++++++
+ 2 files changed, 61 insertions(+)
+
+diff --git a/pkg/apis/serving/fieldmask.go b/pkg/apis/serving/fieldmask.go
+index ab8724b49f60..cfe455abbdab 100644
+--- a/pkg/apis/serving/fieldmask.go
++++ b/pkg/apis/serving/fieldmask.go
+@@ -23,6 +23,7 @@ import (
+ 	"context"
+ 
+ 	corev1 "k8s.io/api/core/v1"
++	"knative.dev/pkg/logging"
+ 	"knative.dev/serving/pkg/apis/config"
+ )
+ 
+@@ -208,6 +209,9 @@ func PodSpecMask(ctx context.Context, in *corev1.PodSpec) *corev1.PodSpec {
+ 	}
+ 	if cfg.Features.PodSpecSecurityContext != config.Disabled {
+ 		out.SecurityContext = in.SecurityContext
++	} else if cfg.Features.SecurePodDefaults != config.Disabled {
++		// This is further validated in ValidatePodSecurityContext.
++		out.SecurityContext = in.SecurityContext
+ 	}
+ 	if cfg.Features.PodSpecPriorityClassName != config.Disabled {
+ 		out.PriorityClassName = in.PriorityClassName
+@@ -591,10 +595,22 @@ func PodSecurityContextMask(ctx context.Context, in *corev1.PodSecurityContext)
+ 
+ 	out := new(corev1.PodSecurityContext)
+ 
++	if config.FromContextOrDefaults(ctx).Features.SecurePodDefaults == config.Enabled {
++		// Allow to opt out of more-secure defaults if SecurePodDefaults is enabled.
++		// This aligns with defaultSecurityContext in revision_defaults.go.
++		if in.SeccompProfile != nil && in.SeccompProfile.Type == corev1.SeccompProfileTypeUnconfined {
++			out.SeccompProfile = &corev1.SeccompProfile{
++				Type: corev1.SeccompProfileTypeUnconfined,
++			}
++		}
++	}
++
+ 	if config.FromContextOrDefaults(ctx).Features.PodSpecSecurityContext == config.Disabled {
+ 		return out
+ 	}
+ 
++	logging.FromContext(ctx).Info("PodSecurityContextMask: PodSpecSecurityContext feature is enabled")
++
+ 	out.RunAsUser = in.RunAsUser
+ 	out.RunAsGroup = in.RunAsGroup
+ 	out.RunAsNonRoot = in.RunAsNonRoot
+diff --git a/pkg/apis/serving/fieldmask_test.go b/pkg/apis/serving/fieldmask_test.go
+index d4cc35363ba7..f5b14a28185b 100644
+--- a/pkg/apis/serving/fieldmask_test.go
++++ b/pkg/apis/serving/fieldmask_test.go
+@@ -728,6 +728,51 @@ func TestPodSecurityContextMask_FeatureEnabled(t *testing.T) {
+ 	}
+ }
+ 
++func TestPodSecurityContextMask_SecureEnabled(t *testing.T) {
++	// Ensure that users can opt out of better security by explicitly
++	// requesting the Kubernetes default, which is "Unconfined".
++	want := &corev1.PodSecurityContext{
++		SeccompProfile: &corev1.SeccompProfile{
++			Type: corev1.SeccompProfileTypeUnconfined,
++		},
++	}
++
++	in := &corev1.PodSecurityContext{
++		SELinuxOptions:     &corev1.SELinuxOptions{},
++		WindowsOptions:     &corev1.WindowsSecurityContextOptions{},
++		SupplementalGroups: []int64{1},
++		Sysctls:            []corev1.Sysctl{},
++		RunAsUser:          ptr.Int64(1),
++		RunAsGroup:         ptr.Int64(1),
++		RunAsNonRoot:       ptr.Bool(true),
++		FSGroup:            ptr.Int64(1),
++		SeccompProfile: &corev1.SeccompProfile{
++			Type: corev1.SeccompProfileTypeUnconfined,
++		},
++	}
++
++	ctx := config.ToContext(context.Background(),
++		&config.Config{
++			Features: &config.Features{
++				SecurePodDefaults:      config.Enabled,
++				PodSpecSecurityContext: config.Disabled,
++			},
++		},
++	)
++
++	got := PodSecurityContextMask(ctx, in)
++
++	if &want == &got {
++		t.Error("Input and output share addresses. Want different addresses")
++	}
++
++	if diff, err := kmp.SafeDiff(want, got); err != nil {
++		t.Error("Got error comparing output, err =", err)
++	} else if diff != "" {
++		t.Error("PostSecurityContextMask (-want, +got):", diff)
++	}
++}
++
+ func TestSecurityContextMask(t *testing.T) {
+ 	mtype := corev1.UnmaskedProcMount
+ 	want := &corev1.SecurityContext{
+
+From f934e45ec404f6bab651ff9c78bdbc7a3de014e3 Mon Sep 17 00:00:00 2001
+From: Evan Anderson <evan.k.anderson@gmail.com>
+Date: Wed, 4 Jan 2023 15:04:52 -0800
+Subject: [PATCH 09/14] Fix comment on defaultSecurityContext
+
+---
+ pkg/apis/serving/v1/revision_defaults.go | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/pkg/apis/serving/v1/revision_defaults.go b/pkg/apis/serving/v1/revision_defaults.go
+index fdbaa0791158..e5024e2a5d09 100644
+--- a/pkg/apis/serving/v1/revision_defaults.go
++++ b/pkg/apis/serving/v1/revision_defaults.go
+@@ -162,7 +162,10 @@ func (*RevisionSpec) applyProbes(container *corev1.Container) {
+ 	}
+ }
+ 
+-//
++// Upgrade SecurityContext for this container and the Pod definition to use settings
++// for the `restricted` profile when the feature flag is enabled.
++// This does not currently set `runAsNonRoot` for the restricted profile, because
++// that feels harder to default safely.
+ func (rs *RevisionSpec) defaultSecurityContext(psc *corev1.PodSecurityContext, container *corev1.Container, cfg *config.Config) {
+ 	if cfg.Features.SecurePodDefaults != config.Enabled {
+ 		return
+
+From b5b091562163722caf1cfa8fd4932a2abe5c5d59 Mon Sep 17 00:00:00 2001
+From: Evan Anderson <evana@vmware.com>
+Date: Fri, 20 Jan 2023 10:14:27 -0800
+Subject: [PATCH 10/14] Allow both "safe" future default and "unsafe" current
+ default to be set explicitly when feature is enabled.
+
+---
+ pkg/apis/serving/fieldmask.go | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/pkg/apis/serving/fieldmask.go b/pkg/apis/serving/fieldmask.go
+index cfe455abbdab..cc59b95f383c 100644
+--- a/pkg/apis/serving/fieldmask.go
++++ b/pkg/apis/serving/fieldmask.go
+@@ -23,7 +23,6 @@ import (
+ 	"context"
+ 
+ 	corev1 "k8s.io/api/core/v1"
+-	"knative.dev/pkg/logging"
+ 	"knative.dev/serving/pkg/apis/config"
+ )
+ 
+@@ -598,9 +597,12 @@ func PodSecurityContextMask(ctx context.Context, in *corev1.PodSecurityContext)
+ 	if config.FromContextOrDefaults(ctx).Features.SecurePodDefaults == config.Enabled {
+ 		// Allow to opt out of more-secure defaults if SecurePodDefaults is enabled.
+ 		// This aligns with defaultSecurityContext in revision_defaults.go.
+-		if in.SeccompProfile != nil && in.SeccompProfile.Type == corev1.SeccompProfileTypeUnconfined {
+-			out.SeccompProfile = &corev1.SeccompProfile{
+-				Type: corev1.SeccompProfileTypeUnconfined,
++		if in.SeccompProfile != nil {
++			seccomp := in.SeccompProfile.Type
++			if seccomp == corev1.SeccompProfileTypeRuntimeDefault || seccomp == corev1.SeccompProfileTypeUnconfined {
++				out.SeccompProfile = &corev1.SeccompProfile{
++					Type: seccomp,
++				}
+ 			}
+ 		}
+ 	}
+@@ -609,8 +611,6 @@ func PodSecurityContextMask(ctx context.Context, in *corev1.PodSecurityContext)
+ 		return out
+ 	}
+ 
+-	logging.FromContext(ctx).Info("PodSecurityContextMask: PodSpecSecurityContext feature is enabled")
+-
+ 	out.RunAsUser = in.RunAsUser
+ 	out.RunAsGroup = in.RunAsGroup
+ 	out.RunAsNonRoot = in.RunAsNonRoot
+
+From 8f6e31cc879bb04e7e2345ff195e4625212f5ada Mon Sep 17 00:00:00 2001
+From: Evan Anderson <evana@vmware.com>
+Date: Fri, 20 Jan 2023 22:34:35 -0800
+Subject: [PATCH 11/14] Add seccompProfile to CRD schemas (it was accepted, but
+ not documented)
+
+---
+ config/core/300-resources/configuration.yaml | 12 ++++++++++++
+ config/core/300-resources/revision.yaml      | 12 ++++++++++++
+ config/core/300-resources/service.yaml       | 12 ++++++++++++
+ hack/schemapatch-config.yaml                 |  1 +
+ 4 files changed, 37 insertions(+)
+
+diff --git a/config/core/300-resources/configuration.yaml b/config/core/300-resources/configuration.yaml
+index 535230ad0b69..602634d3c2d7 100644
+--- a/config/core/300-resources/configuration.yaml
++++ b/config/core/300-resources/configuration.yaml
+@@ -478,6 +478,18 @@ spec:
+                                     description: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. Note that this field cannot be set when spec.os.name is windows.
+                                     type: integer
+                                     format: int64
++                                  seccompProfile:
++                                    description: The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options. Note that this field cannot be set when spec.os.name is windows.
++                                    type: object
++                                    required:
++                                      - type
++                                    properties:
++                                      localhostProfile:
++                                        description: localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
++                                        type: string
++                                      type:
++                                        description: "type indicates which kind of seccomp profile will be applied. Valid options are: \n Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied."
++                                        type: string
+                               terminationMessagePath:
+                                 description: 'Optional: Path at which the file to which the container''s termination message will be written is mounted into the container''s filesystem. Message written is intended to be brief final status, such as an assertion failure message. Will be truncated by the node if greater than 4096 bytes. The total message length across all containers will be limited to 12kb. Defaults to /dev/termination-log. Cannot be updated.'
+                                 type: string
+diff --git a/config/core/300-resources/revision.yaml b/config/core/300-resources/revision.yaml
+index 17f1f3c35e15..f3b13bbd2bf9 100644
+--- a/config/core/300-resources/revision.yaml
++++ b/config/core/300-resources/revision.yaml
+@@ -457,6 +457,18 @@ spec:
+                             description: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. Note that this field cannot be set when spec.os.name is windows.
+                             type: integer
+                             format: int64
++                          seccompProfile:
++                            description: The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options. Note that this field cannot be set when spec.os.name is windows.
++                            type: object
++                            required:
++                              - type
++                            properties:
++                              localhostProfile:
++                                description: localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
++                                type: string
++                              type:
++                                description: "type indicates which kind of seccomp profile will be applied. Valid options are: \n Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied."
++                                type: string
+                       terminationMessagePath:
+                         description: 'Optional: Path at which the file to which the container''s termination message will be written is mounted into the container''s filesystem. Message written is intended to be brief final status, such as an assertion failure message. Will be truncated by the node if greater than 4096 bytes. The total message length across all containers will be limited to 12kb. Defaults to /dev/termination-log. Cannot be updated.'
+                         type: string
+diff --git a/config/core/300-resources/service.yaml b/config/core/300-resources/service.yaml
+index e2030b368455..d487e37d958f 100644
+--- a/config/core/300-resources/service.yaml
++++ b/config/core/300-resources/service.yaml
+@@ -482,6 +482,18 @@ spec:
+                                     description: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. Note that this field cannot be set when spec.os.name is windows.
+                                     type: integer
+                                     format: int64
++                                  seccompProfile:
++                                    description: The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options. Note that this field cannot be set when spec.os.name is windows.
++                                    type: object
++                                    required:
++                                      - type
++                                    properties:
++                                      localhostProfile:
++                                        description: localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
++                                        type: string
++                                      type:
++                                        description: "type indicates which kind of seccomp profile will be applied. Valid options are: \n Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied."
++                                        type: string
+                               terminationMessagePath:
+                                 description: 'Optional: Path at which the file to which the container''s termination message will be written is mounted into the container''s filesystem. Message written is intended to be brief final status, such as an assertion failure message. Will be truncated by the node if greater than 4096 bytes. The total message length across all containers will be limited to 12kb. Defaults to /dev/termination-log. Cannot be updated.'
+                                 type: string
+diff --git a/hack/schemapatch-config.yaml b/hack/schemapatch-config.yaml
+index f767e8e882ed..e0030b4dcb84 100644
+--- a/hack/schemapatch-config.yaml
++++ b/hack/schemapatch-config.yaml
+@@ -286,6 +286,7 @@ k8s.io/api/core/v1.SecurityContext:
+     - RunAsGroup
+     - RunAsNonRoot
+     - RunAsUser
++    - SeccompProfile
+ k8s.io/api/core/v1.Capabilities:
+   fieldMask:
+     - Add
+
+From 15fef2f9b2a45e7802afcaafac495bbc3be29cc9 Mon Sep 17 00:00:00 2001
+From: Evan Anderson <evan.k.anderson@gmail.com>
+Date: Sat, 21 Jan 2023 14:06:37 -0800
+Subject: [PATCH 12/14] Add e2e tests, checking CI combinations
+
+---
+ test/e2e-tests.sh                             |   5 +
+ .../secure_pod_defaults_test.go               | 113 ++++++++++++++++++
+ 2 files changed, 118 insertions(+)
+ create mode 100644 test/e2e/securedefaults/secure_pod_defaults_test.go
+
+diff --git a/test/e2e-tests.sh b/test/e2e-tests.sh
+index ad0f7fde67f1..c7fe4bf73edd 100755
+--- a/test/e2e-tests.sh
++++ b/test/e2e-tests.sh
+@@ -126,6 +126,11 @@ toggle_feature kubernetes.podspec-securitycontext Disabled
+ toggle_feature kubernetes.podspec-persistent-volume-write Disabled
+ toggle_feature kubernetes.podspec-persistent-volume-claim Disabled
+ 
++# RUN 
++toggle_feature secure-pod-defaults Enabled
++go_test_e2e -timeout=3m ./test/e2e/securedefaults ${TEST_OPTIONS} || failed=1
++toggle_feature secure-pod-defaults Disabled
++
+ # Run HA tests separately as they're stopping core Knative Serving pods.
+ # Define short -spoofinterval to ensure frequent probing while stopping pods.
+ toggle_feature autocreateClusterDomainClaims true config-network || fail_test
+diff --git a/test/e2e/securedefaults/secure_pod_defaults_test.go b/test/e2e/securedefaults/secure_pod_defaults_test.go
+new file mode 100644
+index 000000000000..af1498deede8
+--- /dev/null
++++ b/test/e2e/securedefaults/secure_pod_defaults_test.go
+@@ -0,0 +1,113 @@
++//go:build e2e
++// +build e2e
++
++/*
++Copyright 2023 The Knative Authors
++
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package securedefaults
++
++import (
++	"testing"
++
++	v1 "k8s.io/api/core/v1"
++	"knative.dev/pkg/ptr"
++	. "knative.dev/serving/pkg/testing/v1"
++	"knative.dev/serving/test"
++	v1test "knative.dev/serving/test/v1"
++)
++
++func TestSecureDefaults(t *testing.T) {
++	if !test.ServingFlags.EnableAlphaFeatures {
++		t.Skip("Alpha features not enabled")
++	}
++	t.Parallel()
++	clients := test.Setup(t)
++
++	names := test.ResourceNames{
++		Service: test.ObjectNameForTest(t),
++		Image:   test.HelloWorld,
++	}
++
++	test.EnsureTearDown(t, clients, &names)
++
++	t.Log("Creating a new Service")
++
++	resources, err := v1test.CreateServiceReady(t, clients, &names)
++	if err != nil {
++		t.Fatalf("Failed to create service with default SecurityContext: %v: %v", names.Service, err)
++	}
++
++	revisionSC := resources.Revision.Spec.Containers[0].SecurityContext
++	if revisionSC == nil {
++		t.Fatal("Container SecurityContext was nil, should have been defaulted.")
++	}
++	if len(revisionSC.Capabilities.Drop) != 1 || revisionSC.Capabilities.Drop[0] != "ALL" {
++		t.Errorf("Expected to Drop 'ALL' capability: %v", revisionSC.Capabilities)
++	}
++	if revisionSC.AllowPrivilegeEscalation == nil || *revisionSC.AllowPrivilegeEscalation {
++		t.Errorf("Expected allowPrivilegeEscalation: false, got %v", revisionSC.AllowPrivilegeEscalation)
++	}
++	if revisionSC.SeccompProfile == nil || revisionSC.SeccompProfile.Type != v1.SeccompProfileTypeRuntimeDefault {
++		t.Errorf("Expected seccompProfile to be RuntimeDefault, got: %v", revisionSC.SeccompProfile)
++	}
++}
++
++func TestUnsafePermitted(t *testing.T) {
++	if !test.ServingFlags.EnableAlphaFeatures {
++		t.Skip("Alpha features not enabled")
++	}
++	t.Parallel()
++	clients := test.Setup(t)
++
++	names := test.ResourceNames{
++		Service: test.ObjectNameForTest(t),
++		Image:   test.HelloWorld,
++	}
++
++	test.EnsureTearDown(t, clients, &names)
++
++	t.Log("Creating a new Service")
++
++	withDefaultUnsafeContext := WithSecurityContext(&v1.SecurityContext{
++		Capabilities: &v1.Capabilities{
++			Drop: []v1.Capability{},
++		},
++		RunAsNonRoot:             ptr.Bool(false),
++		AllowPrivilegeEscalation: ptr.Bool(true),
++		SeccompProfile: &v1.SeccompProfile{
++			Type: v1.SeccompProfileTypeUnconfined,
++		},
++	})
++
++	resources, err := v1test.CreateServiceReady(t, clients, &names, withDefaultUnsafeContext)
++	if err != nil {
++		t.Fatalf("Failed to create service with explicit k8s default SecurityContext: %v: %v", names.Service, err)
++	}
++
++	revisionSC := resources.Revision.Spec.Containers[0].SecurityContext
++	if revisionSC == nil {
++		t.Fatal("Container SecurityContext was nil, requested non-nil.")
++	}
++	if len(revisionSC.Capabilities.Drop) != 0 {
++		t.Errorf("Expected to Drop no capabilities (empty list): %v", revisionSC.Capabilities)
++	}
++	if revisionSC.AllowPrivilegeEscalation == nil || !*revisionSC.AllowPrivilegeEscalation {
++		t.Errorf("Expected allowPrivilegeEscalation: true, got %v", revisionSC.AllowPrivilegeEscalation)
++	}
++	if revisionSC.SeccompProfile == nil || revisionSC.SeccompProfile.Type != v1.SeccompProfileTypeUnconfined {
++		t.Errorf("Expected seccompProfile to be Unconfined, got: %v", revisionSC.SeccompProfile)
++	}
++}
+
+From 36e9e3866fcc3e8500789f2a55ec7a7f061b644d Mon Sep 17 00:00:00 2001
+From: Evan Anderson <evan.k.anderson@gmail.com>
+Date: Sat, 21 Jan 2023 20:22:24 -0800
+Subject: [PATCH 13/14] Capabilities.Drop is "omitempty", so it will always be
+ empty instead of nil.
+
+---
+ pkg/apis/serving/v1/revision_defaults.go      | 2 --
+ pkg/apis/serving/v1/revision_defaults_test.go | 3 +--
+ 2 files changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/pkg/apis/serving/v1/revision_defaults.go b/pkg/apis/serving/v1/revision_defaults.go
+index e5024e2a5d09..8acbf3446fd1 100644
+--- a/pkg/apis/serving/v1/revision_defaults.go
++++ b/pkg/apis/serving/v1/revision_defaults.go
+@@ -194,8 +194,6 @@ func (rs *RevisionSpec) defaultSecurityContext(psc *corev1.PodSecurityContext, c
+ 	}
+ 	if updatedSC.Capabilities == nil {
+ 		updatedSC.Capabilities = &corev1.Capabilities{}
+-	}
+-	if updatedSC.Capabilities.Drop == nil {
+ 		updatedSC.Capabilities.Drop = []corev1.Capability{"ALL"}
+ 		// Default in NET_BIND_SERVICE to allow binding to low-numbered ports.
+ 		needsLowPort := false
+diff --git a/pkg/apis/serving/v1/revision_defaults_test.go b/pkg/apis/serving/v1/revision_defaults_test.go
+index 5b37c18f818c..332fecfb4d9d 100644
+--- a/pkg/apis/serving/v1/revision_defaults_test.go
++++ b/pkg/apis/serving/v1/revision_defaults_test.go
+@@ -944,8 +944,7 @@ func TestRevisionDefaulting(t *testing.T) {
+ 								LocalhostProfile: ptr.String("special"),
+ 							},
+ 							Capabilities: &corev1.Capabilities{
+-								Add:  []corev1.Capability{"NET_ADMIN"},
+-								Drop: []corev1.Capability{"ALL"},
++								Add: []corev1.Capability{"NET_ADMIN"},
+ 							},
+ 						},
+ 					}},
+
+From 3f6c947e7e4b5fe02aeb0035b12aaf51868e623d Mon Sep 17 00:00:00 2001
+From: Evan Anderson <evan.k.anderson@gmail.com>
+Date: Sat, 21 Jan 2023 20:39:53 -0800
+Subject: [PATCH 14/14] Fix e2e test comment.
+
+---
+ test/e2e-tests.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/test/e2e-tests.sh b/test/e2e-tests.sh
+index c7fe4bf73edd..dc4a02ffea9f 100755
+--- a/test/e2e-tests.sh
++++ b/test/e2e-tests.sh
+@@ -126,7 +126,7 @@ toggle_feature kubernetes.podspec-securitycontext Disabled
+ toggle_feature kubernetes.podspec-persistent-volume-write Disabled
+ toggle_feature kubernetes.podspec-persistent-volume-claim Disabled
+ 
+-# RUN 
++# RUN secure pod defaults test in a separate install.
+ toggle_feature secure-pod-defaults Enabled
+ go_test_e2e -timeout=3m ./test/e2e/securedefaults ${TEST_OPTIONS} || failed=1
+ toggle_feature secure-pod-defaults Disabled

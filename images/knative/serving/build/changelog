@@ -1,3 +1,13 @@
+knative-build (1.7.2-4) wikimedia; urgency=medium
+
+  * Fix the Dockerfile to properly backport Knative upstream patches.
+  * Backport https://github.com/knative/serving/pull/13376.
+  * Backport https://github.com/knative/serving/pull/13395.
+  * Backport https://github.com/knative/serving/pull/13398.
+  * Backport https://github.com/knative/serving/pull/13401.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Tue, 04 Jan 2025 15:05:00 +0100
+
 knative-build (1.7.2-3) wikimedia; urgency=medium
 
   * Backport https://github.com/knative/serving/pull/13401.
