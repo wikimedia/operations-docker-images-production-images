@@ -1,0 +1,76 @@
+From dde36728a96efe46fceef93de15a62d8cc628356 Mon Sep 17 00:00:00 2001
+From: Matt Moore <mattmoor@chainguard.dev>
+Date: Sun, 16 Oct 2022 15:16:48 -0700
+Subject: [PATCH] Fix: Add the new `AllowPrivilegeEscalation` field to the
+ *other* fieldmask.
+
+:bug: My previous changed missed the new config file that controls how the CRD schema is updated.
+
+You can now clearly see the fields being added to the schemas.
+
+Apologies for the break, I had no clue this was a thing!
+
+/kind bug
+
+Related: https://github.com/knative/serving/pull/13395
+---
+ config/core/300-resources/configuration.yaml | 3 +++
+ config/core/300-resources/revision.yaml      | 3 +++
+ config/core/300-resources/service.yaml       | 3 +++
+ hack/schemapatch-config.yaml                 | 1 +
+ 4 files changed, 10 insertions(+)
+
+diff --git a/config/core/300-resources/configuration.yaml b/config/core/300-resources/configuration.yaml
+index c4c89e611c48..535230ad0b69 100644
+--- a/config/core/300-resources/configuration.yaml
++++ b/config/core/300-resources/configuration.yaml
+@@ -445,6 +445,9 @@ spec:
+                                 description: 'SecurityContext defines the security options the container should be run with. If set, the fields of SecurityContext override the equivalent fields of PodSecurityContext. More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/'
+                                 type: object
+                                 properties:
++                                  allowPrivilegeEscalation:
++                                    description: 'AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN Note that this field cannot be set when spec.os.name is windows.'
++                                    type: boolean
+                                   capabilities:
+                                     description: The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime. Note that this field cannot be set when spec.os.name is windows.
+                                     type: object
+diff --git a/config/core/300-resources/revision.yaml b/config/core/300-resources/revision.yaml
+index 78bf26e8ed5e..17f1f3c35e15 100644
+--- a/config/core/300-resources/revision.yaml
++++ b/config/core/300-resources/revision.yaml
+@@ -424,6 +424,9 @@ spec:
+                         description: 'SecurityContext defines the security options the container should be run with. If set, the fields of SecurityContext override the equivalent fields of PodSecurityContext. More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/'
+                         type: object
+                         properties:
++                          allowPrivilegeEscalation:
++                            description: 'AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN Note that this field cannot be set when spec.os.name is windows.'
++                            type: boolean
+                           capabilities:
+                             description: The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime. Note that this field cannot be set when spec.os.name is windows.
+                             type: object
+diff --git a/config/core/300-resources/service.yaml b/config/core/300-resources/service.yaml
+index 814c2979fc11..e2030b368455 100644
+--- a/config/core/300-resources/service.yaml
++++ b/config/core/300-resources/service.yaml
+@@ -449,6 +449,9 @@ spec:
+                                 description: 'SecurityContext defines the security options the container should be run with. If set, the fields of SecurityContext override the equivalent fields of PodSecurityContext. More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/'
+                                 type: object
+                                 properties:
++                                  allowPrivilegeEscalation:
++                                    description: 'AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN Note that this field cannot be set when spec.os.name is windows.'
++                                    type: boolean
+                                   capabilities:
+                                     description: The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime. Note that this field cannot be set when spec.os.name is windows.
+                                     type: object
+diff --git a/hack/schemapatch-config.yaml b/hack/schemapatch-config.yaml
+index 66d3b9bdf894..f767e8e882ed 100644
+--- a/hack/schemapatch-config.yaml
++++ b/hack/schemapatch-config.yaml
+@@ -280,6 +280,7 @@ k8s.io/api/core/v1.ResourceRequirementsMask:
+     - Requests
+ k8s.io/api/core/v1.SecurityContext:
+   fieldMask:
++    - AllowPrivilegeEscalation
+     - Capabilities
+     - ReadOnlyRootFilesystem
+     - RunAsGroup

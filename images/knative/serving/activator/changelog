@@ -1,3 +1,9 @@
+knative-serving-activator (1.7.2-6) wikimedia; urgency=medium
+
+  * Backport https://github.com/knative/serving/pull/13402.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 05 Jan 2025 09:00:00 +0100
+
 knative-serving-activator (1.7.2-5) wikimedia; urgency=medium
 
   * Fix the Dockerfile to properly backport Knative upstream patches.
