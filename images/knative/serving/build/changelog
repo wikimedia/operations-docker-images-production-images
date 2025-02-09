@@ -1,3 +1,9 @@
+knative-build (1.7.2-5-20250209) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 09 Feb 2025 06:00:08 +0000
+
 knative-build (1.7.2-5) wikimedia; urgency=medium
 
   * Backport https://github.com/knative/serving/pull/13402.

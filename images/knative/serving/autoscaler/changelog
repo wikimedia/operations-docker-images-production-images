@@ -1,3 +1,9 @@
+knative-serving-autoscaler (1.7.2-6-20250209) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 09 Feb 2025 06:00:09 +0000
+
 knative-serving-autoscaler (1.7.2-6) wikimedia; urgency=medium
 
   * Backport https://github.com/knative/serving/pull/13402.
