@@ -1,4 +1,4 @@
-rust-web (1.78) wikimedia; urgency=high
+abstractwiki-rust-web (1.78) wikimedia; urgency=high
 
   * Rust 1.78 on Bookworm, base image using 'rustc-web' from Debian
 
