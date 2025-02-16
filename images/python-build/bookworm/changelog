@@ -1,3 +1,9 @@
+python3-build-bookworm (0.1.0-20250216) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 16 Feb 2025 06:00:19 +0000
+
 python3-build-bookworm (0.1.0-20250209) wikimedia; urgency=medium
 
   * Weekly rebuild.

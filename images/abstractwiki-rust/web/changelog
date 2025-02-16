@@ -1,3 +1,9 @@
+abstractwiki-rust-web (1.78-20250216) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 16 Feb 2025 06:00:26 +0000
+
 abstractwiki-rust-web (1.78) wikimedia; urgency=high
 
   * Rust 1.78 on Bookworm, base image using 'rustc-web' from Debian

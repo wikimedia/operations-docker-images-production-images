@@ -1,3 +1,9 @@
+knative-net-istio-build (1.7.0-3-20250216) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 16 Feb 2025 06:00:09 +0000
+
 knative-net-istio-build (1.7.0-3-20250209) wikimedia; urgency=medium
 
   * Weekly rebuild.
