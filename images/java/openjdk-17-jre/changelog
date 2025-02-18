@@ -1,3 +1,9 @@
+openjdk-17-jre (17.0.14-1) wikimedia; urgency=medium
+
+  * Update image version tag to match the java version numer
+
+ -- Moritz Muehlenhoff <moritz@wikimedia.org>  Tue, 04 Mar 2025 17:11:48 +0200
+
 openjdk-17-jre (17.0.13-1-20250302) wikimedia; urgency=medium
 
   * Weekly rebuild.
