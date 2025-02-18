@@ -1,5 +1,5 @@
 # == Set variables ==
-{% set flink_kubernetes_operator_version = '1.4.0' %}
+{% set flink_kubernetes_operator_version = '1.10.0' %}
 # Elastic Common Schema logging version.  Used for structured logging.
 {% set ecs_version = '1.5.0' %}
 {% set flink_mirror_base_uri = 'https://archive.apache.org/dist/flink' %}
@@ -80,7 +80,7 @@ WORKDIR {{ src_dir }}
 #       of our proxy setup in production.
 RUN export MVN_HTTP_PROXY_OPTION=${http_proxy:+"-Dhttp.proxyHost=$(echo $http_proxy | awk -F ':' '{print $(NF-1)}' | tr -d '/') -Dhttp.proxyPort=$(echo $http_proxy | awk -F ':' '{print $NF}')"} && \
     export MVN_HTTPS_PROXY_OPTION=${https_proxy:+"-Dhttps.proxyHost=$(echo $https_proxy | awk -F ':' '{print $(NF-1)}' | tr -d '/') -Dhttps.proxyPort=$(echo $https_proxy | awk -F ':' '{print $NF}')"} && \
-    mvn ${MVN_HTTP_PROXY_OPTION} ${MVN_HTTPS_PROXY_OPTION} --batch-mode clean package -pl '!flink-kubernetes-docs' -DskipTests=true -Dmaven.antrun.skip=true
+    mvn ${MVN_HTTP_PROXY_OPTION} ${MVN_HTTPS_PROXY_OPTION} -ntp clean install -pl flink-kubernetes-standalone,flink-kubernetes-operator-api,flink-kubernetes-operator,flink-autoscaler,flink-kubernetes-webhook -DskipTests=true -Dmaven.antrun.skip=true -Dfabric8.httpclient.impl=okhttp
 
 # TODO: Do we need these?  Not totally sure why the k8s operator needs the flink plugins:
 # https://github.com/apache/flink-kubernetes-operator/blob/main/flink-kubernetes-operator/pom.xml#L246-L289
@@ -114,7 +114,7 @@ RUN {{ "bash wmf-certificates" | apt_install }} && \
 # Copy common operator jars into $FLINK_KUBERNETES_OPERATOR_HOME/lib/
 COPY --from=build --chown=root \
     {{ src_dir }}/flink-kubernetes-operator/target/flink-kubernetes-operator-{{ flink_kubernetes_operator_version }}-shaded.jar \
-    {{ src_dir }}/flink-kubernetes-standalone/target/flink-kubernetes-standalone-{{ flink_kubernetes_operator_version }}-shaded.jar \
+    {{ src_dir }}/flink-kubernetes-standalone/target/flink-kubernetes-standalone-{{ flink_kubernetes_operator_version }}.jar \
     /tmp/ecs-logging-core-{{ ecs_version }}.jar \
     /tmp/log4j2-ecs-layout-{{ ecs_version }}.jar \
     $FLINK_KUBERNETES_OPERATOR_HOME/lib/
