@@ -19,8 +19,12 @@ ENV PHP__date__timezone=UTC \
     ENTRY_POINT_SCRIPT=/bin/entrypoint.php
 
 # Install all the php packages we need, and configure them.
+# NOTE: libpcre2-8-0 is already installed in the base bullseye image, so we
+# need to explicitly request installation again here in order to upgrade to
+# that from component/pcre2.
 {% set packages|replace('\n', ' ') -%}
 ca-certificates
+libpcre2-8-0
 php8.1-cli
 php8.1-bcmath
 php8.1-bz2
@@ -41,6 +45,7 @@ php8.1-redis
 php8.1-uuid
 {%- endset -%}
 RUN echo 'deb http://apt.wikimedia.org/wikimedia bullseye-wikimedia component/php81' > /etc/apt/sources.list.d/php81.list &&\
+    echo 'deb http://apt.wikimedia.org/wikimedia bullseye-wikimedia component/pcre2' > /etc/apt/sources.list.d/pcre2.list &&\
     {{ packages | apt_install }} && \
     echo 'memcached.store_retry_count=0' >> /etc/php/8.1/mods-available/memcached.ini && \
     sed -i"" s/compact_strings=On/compact_strings=Off/ /etc/php/8.1/mods-available/igbinary.ini && \
