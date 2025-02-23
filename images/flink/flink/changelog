@@ -1,3 +1,9 @@
+flink (1.20.0-wmf1-20250223) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 23 Feb 2025 06:00:26 +0000
+
 flink (1.20.0-wmf1-20250216) wikimedia; urgency=medium
 
   * Weekly rebuild.
