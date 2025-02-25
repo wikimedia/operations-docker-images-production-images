@@ -80,5 +80,9 @@ else
     DBLIST=$(/usr/local/bin/expanddblist "${DBLIST_EXPR}")
     for wiki in ${DBLIST}; do
         ${RUNNER} ${CMD} ${wiki} "${@}" | sed -u "s/^/${wiki}:  /"
+        # Skip checking mesh networking after the first invocation
+        if [[ "${MESH_CHECK_SKIP}" != "1" ]]; then
+            MESH_CHECK_SKIP="1"
+        fi
     done
 fi
