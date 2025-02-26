@@ -10,6 +10,7 @@ COPY pull_13395.patch /tmp/pull_13395.patch
 COPY pull_13398.patch /tmp/pull_13398.patch
 COPY pull_13401.patch /tmp/pull_13401.patch
 COPY pull_13402.patch /tmp/pull_13402.patch
+COPY pull_14363.patch /tmp/pull_14363.patch
 RUN chmod o+rx /bin/builder.sh
 
 USER nobody
@@ -22,5 +23,6 @@ RUN mkdir -p {{ repo_base }} \
   && patch -l -p1 < /tmp/pull_13395.patch \
   && patch -l -p1 < /tmp/pull_13398.patch \
   && patch -l -p1 < /tmp/pull_13401.patch \
-  && patch -l -p1 < /tmp/pull_13402.patch
+  && patch -l -p1 < /tmp/pull_13402.patch \
+  && patch -l -p1 < /tmp/pull_14363.patch
 RUN /bin/builder.sh {{ repo_base }} serving

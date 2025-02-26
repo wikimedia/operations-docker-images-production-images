@@ -1,0 +1,86 @@
+From 72613d23483353ed27d8c40d0ae6ebf0ff986694 Mon Sep 17 00:00:00 2001
+From: Clay Kauzlaric <ckauzlaric@vmware.com>
+Date: Wed, 13 Sep 2023 12:57:30 -0400
+Subject: [PATCH 2/3] run as non root by default
+
+---
+ pkg/apis/serving/v1/revision_defaults.go | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/pkg/apis/serving/v1/revision_defaults.go b/pkg/apis/serving/v1/revision_defaults.go
+index 8acbf3446fd1..4805f5b1fe35 100644
+--- a/pkg/apis/serving/v1/revision_defaults.go
++++ b/pkg/apis/serving/v1/revision_defaults.go
+@@ -208,6 +208,10 @@ func (rs *RevisionSpec) defaultSecurityContext(psc *corev1.PodSecurityContext, c
+ 		}
+ 	}
+ 
++	if psc.RunAsNonRoot == nil {
++		updatedSC.RunAsNonRoot = ptr.Bool(true)
++	}
++
+ 	if *updatedSC != (corev1.SecurityContext{}) {
+ 		container.SecurityContext = updatedSC
+ 	}
+
+From 2cf6abf1cc3c884e13d4fab9dc03bbe8b7d3850e Mon Sep 17 00:00:00 2001
+From: Clay Kauzlaric <ckauzlaric@vmware.com>
+Date: Wed, 13 Sep 2023 16:26:53 -0400
+Subject: [PATCH 3/3] update tests to expect new default run as nonroot
+
+---
+ pkg/apis/serving/v1/revision_defaults_test.go | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/pkg/apis/serving/v1/revision_defaults_test.go b/pkg/apis/serving/v1/revision_defaults_test.go
+index 332fecfb4d9d..0fe5e65079b7 100644
+--- a/pkg/apis/serving/v1/revision_defaults_test.go
++++ b/pkg/apis/serving/v1/revision_defaults_test.go
+@@ -900,6 +900,7 @@ func TestRevisionDefaulting(t *testing.T) {
+ 						ReadinessProbe: defaultProbe,
+ 						Resources:      defaultResources,
+ 						SecurityContext: &corev1.SecurityContext{
++							RunAsNonRoot:             ptr.Bool(true),
+ 							AllowPrivilegeEscalation: ptr.Bool(false),
+ 							SeccompProfile: &corev1.SeccompProfile{
+ 								Type: corev1.SeccompProfileTypeRuntimeDefault,
+@@ -913,6 +914,7 @@ func TestRevisionDefaulting(t *testing.T) {
+ 						Name:      "sidecar",
+ 						Resources: defaultResources,
+ 						SecurityContext: &corev1.SecurityContext{
++							RunAsNonRoot:             ptr.Bool(true),
+ 							AllowPrivilegeEscalation: ptr.Bool(false),
+ 							SeccompProfile: &corev1.SeccompProfile{
+ 								Type: corev1.SeccompProfileTypeRuntimeDefault,
+@@ -925,6 +927,7 @@ func TestRevisionDefaulting(t *testing.T) {
+ 						Name:      "special-sidecar",
+ 						Resources: defaultResources,
+ 						SecurityContext: &corev1.SecurityContext{
++							RunAsNonRoot:             ptr.Bool(true),
+ 							AllowPrivilegeEscalation: ptr.Bool(true),
+ 							SeccompProfile: &corev1.SeccompProfile{
+ 								Type: corev1.SeccompProfileTypeRuntimeDefault,
+@@ -938,6 +941,7 @@ func TestRevisionDefaulting(t *testing.T) {
+ 					InitContainers: []corev1.Container{{
+ 						Name: "special-init",
+ 						SecurityContext: &corev1.SecurityContext{
++							RunAsNonRoot:             ptr.Bool(true),
+ 							AllowPrivilegeEscalation: ptr.Bool(true),
+ 							SeccompProfile: &corev1.SeccompProfile{
+ 								Type:             corev1.SeccompProfileTypeLocalhost,
+@@ -1000,6 +1004,7 @@ func TestRevisionDefaulting(t *testing.T) {
+ 						ReadinessProbe: defaultProbe,
+ 						Resources:      defaultResources,
+ 						SecurityContext: &corev1.SecurityContext{
++							RunAsNonRoot:             ptr.Bool(true),
+ 							AllowPrivilegeEscalation: ptr.Bool(false),
+ 							Capabilities: &corev1.Capabilities{
+ 								Drop: []corev1.Capability{"ALL"},
+@@ -1009,6 +1014,7 @@ func TestRevisionDefaulting(t *testing.T) {
+ 					InitContainers: []corev1.Container{{
+ 						Name: "init",
+ 						SecurityContext: &corev1.SecurityContext{
++							RunAsNonRoot:             ptr.Bool(true),
+ 							AllowPrivilegeEscalation: ptr.Bool(false),
+ 							Capabilities: &corev1.Capabilities{
+ 								Drop: []corev1.Capability{"ALL"},
