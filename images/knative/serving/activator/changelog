@@ -1,3 +1,9 @@
+knative-serving-activator (1.7.2-7) wikimedia; urgency=medium
+
+  * Backport https://github.com/knative/serving/pull/14363.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 26 Feb 2025 16:24:00 +0100
+
 knative-serving-activator (1.7.2-6-20250223) wikimedia; urgency=medium
 
   * Weekly rebuild.
