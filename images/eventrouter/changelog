@@ -1,3 +1,9 @@
+eventrouter (0.4.0-2-20250302) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 02 Mar 2025 06:00:24 +0000
+
 eventrouter (0.4.0-2-20250223) wikimedia; urgency=medium
 
   * Weekly rebuild.

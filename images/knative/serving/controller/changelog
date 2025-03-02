@@ -1,3 +1,9 @@
+knative-serving-controller (1.7.2-7-20250302) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 02 Mar 2025 06:00:08 +0000
+
 knative-serving-controller (1.7.2-7) wikimedia; urgency=medium
 
   * Backport https://github.com/knative/serving/pull/14363.
