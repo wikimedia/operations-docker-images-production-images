@@ -1,3 +1,10 @@
+php8.1-fpm-multiversion-base (8.1.34-2-s3) wikimedia; urgency=medium
+
+  * Rebuild to pick up: Set display_startup_errors consistent with
+    display_errors
+
+ -- swfrench <swfrench@wikimedia.org>  Mon, 03 Mar 2025 15:04:07 -0800
+
 php8.1-fpm-multiversion-base (8.1.34-2-20250302) wikimedia; urgency=medium
 
   * Weekly rebuild.
