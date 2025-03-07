@@ -45,7 +45,6 @@ php8.1-redis
 php8.1-uuid
 {%- endset -%}
 RUN echo 'deb http://apt.wikimedia.org/wikimedia bullseye-wikimedia component/php81' > /etc/apt/sources.list.d/php81.list &&\
-    echo 'deb http://apt.wikimedia.org/wikimedia bullseye-wikimedia component/pcre2' > /etc/apt/sources.list.d/pcre2.list &&\
     {{ packages | apt_install }} && \
     echo 'memcached.store_retry_count=0' >> /etc/php/8.1/mods-available/memcached.ini && \
     sed -i"" s/compact_strings=On/compact_strings=Off/ /etc/php/8.1/mods-available/igbinary.ini && \

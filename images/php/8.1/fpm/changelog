@@ -1,3 +1,9 @@
+php8.1-fpm (8.1.34-1-s6) wikimedia; urgency=medium
+
+  * Rebuild to pick up: Install PCRE2 backport from component/php81
+
+ -- swfrench <swfrench@wikimedia.org>  Mon, 10 Mar 2025 07:53:40 -0700
+
 php8.1-fpm (8.1.34-1-s5-20250309) wikimedia; urgency=medium
 
   * Weekly rebuild.
