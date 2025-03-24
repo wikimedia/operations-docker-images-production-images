@@ -1,3 +1,9 @@
+php8.1-fpm-multiversion-base (8.1.32-1-s1) wikimedia; urgency=medium
+
+  * Rebuild to pick up new php and php-excimer packages
+
+ -- swfrench <swfrench@wikimedia.org>  Mon, 24 Mar 2025 07:42:06 -0700
+
 php8.1-fpm-multiversion-base (8.1.34-2-s6-20250323) wikimedia; urgency=medium
 
   * Weekly rebuild.
