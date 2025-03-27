@@ -1,5 +1,0 @@
-Package: golang1.18
-Description: base image for building go applications.
- Uses the same interface as the dockerhub images, but defaults to
- using the go packages from Debian.
-Maintainer: Taavi Väänänen <hi@taavi.wtf>

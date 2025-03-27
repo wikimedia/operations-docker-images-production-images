@@ -1,5 +1,0 @@
-Package: golang1.17
-Description: base image for building go applications.
- Uses the same interface as the dockerhub images, but defaults to
- using the go packages from Debian.
-Maintainer: Janis Meybohm <jmeybohm@wikimedia.org>
