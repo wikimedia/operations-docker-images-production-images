@@ -1,3 +1,10 @@
+golang1.19 (1.19-2) wikimedia; urgency=medium
+
+  * Update the 1.19 image to be based on Bookworm, not bullseye-backports
+    T383557
+
+ -- Moritz Muehlenhoff <moritz@wikimedia.org>  Thu, 27 Mar 2025 09:02:11 +0000
+
 golang1.19 (1.19-1-20250323) wikimedia; urgency=medium
 
   * Weekly rebuild.

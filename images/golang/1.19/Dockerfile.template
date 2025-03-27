@@ -1,4 +1,4 @@
-FROM docker-registry.wikimedia.org/bullseye
+FROM {{ 'bookworm' | image_tag }}
 
 USER root
 ENV GOPATH=/go \
@@ -6,9 +6,6 @@ ENV GOPATH=/go \
 ENV GOCACHE=$GOPATH/.cache/go-build \
     GOENV=$GOPATH/.config/go/env \
     PATH=$GOPATH/bin:/usr/lib/go-$GOLANG_VERSION/bin:$PATH
-
-ADD bullseye-backports.list /etc/apt/sources.list.d/
-ADD bullseye-backports.pref /etc/apt/preferences.d/
 
 RUN {{ "golang-1.19 ca-certificates git build-essential" | apt_install }} \
     && mkdir -p "$GOPATH/src" "$GOPATH/bin" "$GOPATH/.cache" "$GOPATH/.config" \
