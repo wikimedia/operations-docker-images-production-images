@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 usage() {
     echo "Usage: $0 [options]"
     echo "Bash runner for mediawiki maintenance script, replaces mwscript, foreachwiki, foreachwikiindblist and mwscriptwikiset."
@@ -79,7 +81,7 @@ if [ -z "${DBLIST_EXPR}" ]; then
 else
     DBLIST=$(/usr/local/bin/expanddblist "${DBLIST_EXPR}")
     for wiki in ${DBLIST}; do
-        ${RUNNER} ${CMD} ${wiki} "${@}" | sed -u "s/^/${wiki}:  /"
+        ${RUNNER} ${CMD} ${wiki} "${@}" | ts "${wiki}"
         # Skip checking mesh networking after the first invocation
         if [[ "${MESH_CHECK_SKIP}" != "1" ]]; then
             MESH_CHECK_SKIP="1"

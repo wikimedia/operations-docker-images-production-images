@@ -1,3 +1,9 @@
+php8.1-fpm-multiversion-base (8.1.32-1-s3) wikimedia; urgency=high
+
+  * mwscript: set -euo pipefail, use ts
+
+ -- Clément Goubert <Clément Goubert <cgoubert@wikimedia.org>>  Wed,  9 Apr 2025 10:17:08 +0200
+
 php8.1-fpm-multiversion-base (8.1.32-1-s2-20250406) wikimedia; urgency=medium
 
   * Weekly rebuild.

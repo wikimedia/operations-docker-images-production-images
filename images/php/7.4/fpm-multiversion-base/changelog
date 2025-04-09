@@ -1,3 +1,9 @@
+php7.4-fpm-multiversion-base (7.4.35-2-s1) wikimedia; urgency=high
+
+  * mwscript: set -euo pipefail, use ts
+
+ -- Clément Goubert <Clément Goubert <cgoubert@wikimedia.org>>  Wed,  9 Apr 2025 10:16:49 +0200
+
 php7.4-fpm-multiversion-base (7.4.35-2-20250406) wikimedia; urgency=medium
 
   * Weekly rebuild.
