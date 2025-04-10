@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euo pipefail
+set -eo pipefail
 
 usage() {
     echo "Usage: $0 [options]"
@@ -25,7 +25,7 @@ if [[ "${1}" == "-h" || "${1}" == "--help" ]]; then
 fi
 
 # Check for minimum number of arguments, at the very least there should be a script to execute.
-if [[ -z ${1} ]]; then
+if [[ -z "${1}" ]]; then
     usage
     exit 1
 fi
