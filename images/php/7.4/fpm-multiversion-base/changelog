@@ -1,3 +1,9 @@
+php7.4-fpm-multiversion-base (7.4.35-2-s3) wikimedia; urgency=high
+
+   * Move mwscript to later build process T391665
+
+ -- Clément Goubert <Clément Goubert <cgoubert@wikimedia.org>>  Fri, 11 Apr 2025 12:20:22 +0200
+
 php7.4-fpm-multiversion-base (7.4.35-2-s2-20250413) wikimedia; urgency=medium
 
   * Weekly rebuild.

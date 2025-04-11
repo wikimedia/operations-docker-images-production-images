@@ -27,14 +27,10 @@ librsvg2-bin
 mercurius
 jq
 {%- endset -%}
-# Copy cli scripts
-COPY scripts/expanddblist scripts/mwscript /usr/local/bin/
+
 # We create the www-data homedir so that we can add the msmtp configuration later
 RUN {{ packages | apt_install }} && \
-    mkdir -p /var/www && chown -R www-data:www-data /var/www && \
-    ln -s /usr/local/bin/mwscript /usr/local/bin/mwscriptwikiset && \
-    ln -s /usr/local/bin/mwscript /usr/local/bin/foreachwiki && \
-    ln -s /usr/local/bin/mwscript /usr/local/bin/foreachwikiindblist
+    mkdir -p /var/www && chown -R www-data:www-data /var/www
 
 COPY conf/wmerrors.ini /etc/php/8.1/mods-available/wmerrors.ini
 COPY conf/mcrouter.inc /etc/php/8.1/fpm/env/mcrouter.inc
