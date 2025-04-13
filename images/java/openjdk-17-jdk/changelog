@@ -1,3 +1,9 @@
+openjdk-17-jdk (17.0.14-1-20250413) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 13 Apr 2025 06:00:03 +0000
+
 openjdk-17-jdk (17.0.14-1-20250406) wikimedia; urgency=medium
 
   * Weekly rebuild.

@@ -1,3 +1,9 @@
+openjdk-8-jdk (8.432-1-20250413) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 13 Apr 2025 06:00:02 +0000
+
 openjdk-8-jdk (8.432-1-20250406) wikimedia; urgency=medium
 
   * Weekly rebuild.
