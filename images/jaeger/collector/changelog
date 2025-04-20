@@ -1,3 +1,9 @@
+jaeger-collector (1.63.0-1-20250420) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 20 Apr 2025 06:00:05 +0000
+
 jaeger-collector (1.63.0-1-20250413) wikimedia; urgency=medium
 
   * Weekly rebuild.
