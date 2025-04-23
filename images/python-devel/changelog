@@ -1,3 +1,9 @@
+python3-devel (0.0.4) wikimedia; urgency=medium
+
+  * Add `python3-venv` to allow `python3 -m venv`.
+
+ -- Antoine Musso <hashar@free.fr>  Wed, 23 Apr 2025 20:27:33 +0200
+
 python3-devel (0.0.3-20250504) wikimedia; urgency=medium
 
   * Weekly rebuild.
