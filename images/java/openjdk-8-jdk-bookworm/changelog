@@ -1,3 +1,9 @@
+openjdk-8-jdk-bookworm (8.432-1-20250511) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 11 May 2025 06:00:04 +0000
+
 openjdk-8-jdk-bookworm (8.432-1-20250504) wikimedia; urgency=medium
 
   * Weekly rebuild.
