@@ -1,0 +1,127 @@
+########################################################
+# wmf-debian-vllm: ROCm, PyTorch, FlashAttention, vLLM #
+#                                                      #
+# Note: Multiple RUN commands are intentionally kept   #
+# separate to avoid hitting the 4GB (compressed)       #
+# Docker layer limit required by the Wikimedia Docker  #
+# registry.                                            #
+########################################################
+FROM {{ "amd-pytorch-common" | image_tag }} as builder
+
+# — Mirror upstream: create 'render' group
+RUN groupadd -g 109 render
+WORKDIR /srv
+
+# — Add Wikimedia ROCm 6.3 mirror then install ROCm libs and Python tooling
+RUN echo "deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia thirdparty/amd-rocm63" > /etc/apt/sources.list.d/rocm.list \
+    && {{ "hsa-rocr-dev miopen-hip mivisionx radeontop rccl rocblas rocfft rocm-cmake rocm-dev rocm-device-libs rocm-libs rocm-opencl rocm-opencl-dev rocm-utils rocrand rocm-smi-lib migraphx cmake build-essential python3-dev python3-venv git curl sudo vim sqlite3 libsqlite3-dev libfmt-dev libmsgpack-dev libsuitesparse-dev" | apt_install }}
+
+# — Set environment for ROCm and vLLM
+ENV ROCM_PATH=/opt/rocm-6.3.0 \
+    VLLM_TARGET_DEVICE=rocm \
+    # For more details on AMD GPU architecures like gfx90a, see: https://rocm.docs.amd.com/en/latest/reference/gpu-arch-specs.html
+    PYTORCH_ROCM_ARCH=gfx90a \
+    PATH=/opt/rocm-6.3.0/llvm/bin:/opt/rocm-6.3.0/bin:/srv/venv/bin:$PATH \
+    # LD_LIBRARY_PATH is needed to ensure that the runtime can locate shared libraries in non-standard directories, such as /opt/rocm-6.3.0/lib and /usr/local/lib, which are required by ROCm and other dependencies.
+    LD_LIBRARY_PATH=/opt/rocm-6.3.0/lib:/usr/local/lib:
+
+# — Create a Python virtual environment and a custom temp directory
+RUN python3 -m venv /srv/venv \
+    && mkdir -p /opt/tmp
+ENV PATH="/srv/venv/bin:${PATH}"
+ENV TMPDIR=/opt/tmp
+
+# — Install ROCm-enabled PyTorch (into the venv)
+RUN pip install --no-cache-dir --pre torch==2.8.0.dev20250508+rocm6.3 \
+    # Using the nightly index (https://download.pytorch.org/whl/nightly/rocm6*) for PyTorch installation due to dependency issues with the stable index (https://download.pytorch.org/whl/rocm6*), as detailed in https://phabricator.wikimedia.org/P75883. This approach aligns with both the vLLM documentation (https://docs.vllm.ai/en/latest/getting_started/installation/gpu.html?device=rocm) and the ROCm documentation (https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/3rd-party/pytorch-install.html).
+    --index-url https://download.pytorch.org/whl/nightly/rocm6.3
+
+# — Chunk entire hipblaslt and rocblas directories from PyTorch installation
+# Define paths for clarity. Using Python 3.11 from bookworm base.
+ENV TORCH_LIB_PATH="/srv/venv/lib/python3.11/site-packages/torch/lib"
+ENV HIPBLASLT_FULL_PATH="${TORCH_LIB_PATH}/hipblaslt"
+ENV ROCBLAS_FULL_PATH="${TORCH_LIB_PATH}/rocblas"
+
+# — Create parent directory for the torch lib chunks
+RUN mkdir -p /srv/torch_lib_chunks
+
+# — Move the entire hipblaslt directory to the chunk location
+RUN if [ -d "${HIPBLASLT_FULL_PATH}" ]; then \
+        mv "${HIPBLASLT_FULL_PATH}" /srv/torch_lib_chunks/hipblaslt && \
+        echo "Moved ${HIPBLASLT_FULL_PATH} to /srv/torch_lib_chunks/hipblaslt" ; \
+    else \
+        echo "Warning: Directory ${HIPBLASLT_FULL_PATH} not found." ; \
+    fi
+
+# — Move the entire rocblas directory to the chunk location
+RUN if [ -d "${ROCBLAS_FULL_PATH}" ]; then \
+        mv "${ROCBLAS_FULL_PATH}" /srv/torch_lib_chunks/rocblas && \
+        echo "Moved ${ROCBLAS_FULL_PATH} to /srv/torch_lib_chunks/rocblas" ; \
+    else \
+        echo "Warning: Directory ${ROCBLAS_FULL_PATH} not found." ; \
+    fi
+
+# — Install the AMD SMI Python interface
+RUN pip install --no-cache-dir /opt/rocm-6.3.0/share/amd_smi
+
+# — Install Python build packages required by both FlashAttention and vLLM
+RUN pip install --no-cache-dir setuptools_scm packaging \
+    "cmake<4" ninja wheel setuptools pybind11 Cython
+
+# — Build FlashAttention in a separate stage
+FROM builder AS flashattention-builder
+RUN git clone https://github.com/Dao-AILab/flash-attention.git /srv/flash-attn \
+    && cd /srv/flash-attn \
+    && git checkout 1a7f4dfa \
+    && git submodule update --init \
+    # For more details on AMD GPU architecures like gfx90a, see: https://rocm.docs.amd.com/en/latest/reference/gpu-arch-specs.html
+    && GPU_ARCHS=gfx90a python3 setup.py bdist_wheel \
+    && mkdir -p /srv/wheels \
+    && mv dist/*.whl /srv/wheels \
+    && cd /srv \
+    && rm -rf /srv/flash-attn
+
+# — Build vLLM in a separate stage
+FROM builder AS vllm-builder
+ARG VLLM_REPO=https://github.com/vllm-project/vllm.git
+ARG VLLM_BRANCH=main
+RUN git clone --branch ${VLLM_BRANCH} ${VLLM_REPO} /srv/vllm \
+    && cd /srv/vllm \
+    && git checkout c53e073 \
+    && git submodule update --init \
+    && pip install --no-cache-dir -r requirements/rocm.txt \
+    && python3 setup.py bdist_wheel \
+    && mkdir -p /srv/wheels \
+    && mv dist/*.whl /srv/wheels \
+    && cd /srv \
+    && rm -rf /srv/vllm
+
+# — Final stage: Create minimal runtime image
+FROM {{ "amd-pytorch-common" | image_tag }} as runtime
+
+# — Copy venv (main structure; torch/lib will be missing hipblaslt and rocblas because they were moved in builder)
+COPY --from=builder --chown=somebody /srv/venv /srv/venv
+
+# — Define runtime paths corresponding to builder paths. Using Python 3.11 from bookworm base.
+# This directory should typically exist after copying /srv/venv.
+ARG TORCH_LIB_PATH="/srv/venv/lib/python3.11/site-packages/torch/lib"
+
+# — Restore hipblaslt and rocblas directories to torch/lib/ for ROCm-enabled PyTorch functionality
+COPY --from=builder --chown=somebody /srv/torch_lib_chunks/hipblaslt/ "${TORCH_LIB_PATH}/hipblaslt/"
+COPY --from=builder --chown=somebody /srv/torch_lib_chunks/rocblas/ "${TORCH_LIB_PATH}/rocblas/"
+
+# — Copy pre-built wheels for FlashAttention and vLLM
+COPY --from=flashattention-builder --chown=somebody /srv/wheels /srv/wheels
+COPY --from=vllm-builder --chown=somebody /srv/wheels /srv/wheels
+
+# — Set runtime environment PATH to include venv
+ENV PATH="/srv/venv/bin:${PATH}"
+
+# — Install runtime dependencies
+RUN {{ "python3-dev ca-certificates gcc libc6-dev" | apt_install }}
+
+# — Switch to user "somebody" to avoid running the container as root
+USER {{ "somebody" | uid }}
+
+# — Install Python packages from wheels
+RUN pip install --no-cache-dir /srv/wheels/*.whl

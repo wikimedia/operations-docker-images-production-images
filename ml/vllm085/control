@@ -1,0 +1,4 @@
+Package: amd-vllm085
+Description: AMD ROCm-enabled vLLM image with PyTorch and CK FlashAttention.
+Maintainer: Machine Learning Team <ml@wikimedia.org>
+Build-Depends: amd-pytorch-common

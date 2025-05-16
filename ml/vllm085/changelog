@@ -1,0 +1,5 @@
+amd-vllm085 (gfx90arocm6.3.1pytorch2.8.0flash-attn2.7.4vllm0.8.5-1) wikimedia; urgency=high
+
+  * Initial release with ROCm 6.3.1, PyTorch 2.8.0, CK FlashAttention 2.7.4, and vLLM 0.8.5 targeting MI200 (gfx90a) AMD GPUs.
+
+ -- Kevin Bazira <kbazira@wikimedia.org>  Fri, 16 May 2025 10:35:00 +0300
