@@ -1,3 +1,9 @@
+httpd-bookworm (2.4.62-1-20250615) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 15 Jun 2025 06:00:23 +0000
+
 httpd-bookworm (2.4.62-1) wikimedia; urgency=medium
 
   * Initial release on bookworm, branched from httpd:2.4.38-10-u4. Note that

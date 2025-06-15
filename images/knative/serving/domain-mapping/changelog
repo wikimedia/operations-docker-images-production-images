@@ -1,3 +1,9 @@
+knative-serving-domain-mapping (1.7.2-7-20250615) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 15 Jun 2025 06:00:07 +0000
+
 knative-serving-domain-mapping (1.7.2-7-20250608) wikimedia; urgency=medium
 
   * Weekly rebuild.
