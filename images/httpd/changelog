@@ -1,3 +1,9 @@
+httpd (2.4.62-1) wikimedia; urgency=medium
+
+  * Rebase httpd image on debian bookworm.
+
+ -- Scott French <swfrench@wikimedia.org>  Fri, 20 Jun 2025 08:08:09 -0700
+
 httpd (2.4.38-10-u4-20250713) wikimedia; urgency=medium
 
   * Weekly rebuild.

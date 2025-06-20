@@ -1,4 +1,4 @@
-FROM {{ registry }}/buster:latest
+FROM {{ registry }}/bookworm:latest
 
 # Variables to be defined at build time
 ARG APACHE_RUN_USER=www-data

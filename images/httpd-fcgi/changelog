@@ -1,3 +1,9 @@
+httpd-fcgi (2.4.62-1) wikimedia; urgency=medium
+
+  * Rebase httpd-fcgi image on debian bookworm.
+
+ -- Scott French <swfrench@wikimedia.org>  Fri, 20 Jun 2025 08:08:09 -0700
+
 httpd-fcgi (2.4.38-10-u6-20250713) wikimedia; urgency=medium
 
   * Weekly rebuild.

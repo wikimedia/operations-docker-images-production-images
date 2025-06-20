@@ -4,7 +4,4 @@ Description: httpd container for running fcgi applications.
  This image installs all the modules needed to run a fastcgi application,
  but doesn't include anything useless to this end, like perl or other httpd dependencies.
 Depends: httpd
-Maintainer: Giuseppe Lavagetto <joe@wikimedia.org>
-
-
-
+Maintainer: SRE Service Operations <sre-service-ops@wikimedia.org>

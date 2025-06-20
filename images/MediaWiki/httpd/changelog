@@ -1,3 +1,9 @@
+mediawiki-httpd (0.1.9) wikimedia; urgency=medium
+
+  * Rebase mediawiki-httpd image on debian bookworm.
+
+ -- Scott French <swfrench@wikimedia.org>  Fri, 20 Jun 2025 08:08:09 -0700
+
 mediawiki-httpd (0.1.8-u2-20250713) wikimedia; urgency=medium
 
   * Weekly rebuild.
