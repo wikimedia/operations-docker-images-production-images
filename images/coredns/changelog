@@ -1,3 +1,9 @@
+coredns (1.11.3-1-20250629) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 29 Jun 2025 06:00:28 +0000
+
 coredns (1.11.3-1-20250622) wikimedia; urgency=medium
 
   * Weekly rebuild.
