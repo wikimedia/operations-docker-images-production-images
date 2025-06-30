@@ -1,0 +1,5 @@
+Package: php8.3-cli
+Description: Basic php8.3 container (bullseye)
+ By default, this image will just execute a php script located at
+ /bin/entrypoint.php
+Maintainer: SRE Service Operations <sre-service-ops@wikimedia.org>

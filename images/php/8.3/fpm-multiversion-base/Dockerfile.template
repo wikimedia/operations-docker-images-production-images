@@ -1,0 +1,32 @@
+FROM {{ "php8.3-fpm" | image_tag }}
+
+USER root
+
+# Install the WMF internal CAs (T284417) and the php extensions (T285309,
+# T288165).
+#
+# php-apcu, php-memcached, and php-redis are included in base image, as are
+# php-igbinary and php-msgpack as dependencies.
+#
+# php-yaml is for SettingsLoader (T296331).
+{% set packages|replace('\n', ' ') -%}
+wmf-certificates
+php8.3-luasandbox
+php8.3-wikidiff2
+php8.3-wmerrors
+php8.3-yaml
+msmtp
+msmtp-mta
+librsvg2-bin
+mercurius
+jq
+{%- endset -%}
+
+# We create the www-data homedir so that we can add the msmtp configuration later
+RUN {{ packages | apt_install }} && \
+    mkdir -p /var/www && chown -R www-data:www-data /var/www
+
+COPY conf/wmerrors.ini /etc/php/8.3/mods-available/wmerrors.ini
+COPY conf/mcrouter.inc /etc/php/8.3/fpm/env/mcrouter.inc
+
+USER {{ "www-data" | uid }}

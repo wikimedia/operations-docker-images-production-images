@@ -1,0 +1,5 @@
+php8.3-cli (8.3.23-1) wikimedia; urgency=medium
+
+  * Initial release cloned from php8.1-cli
+
+ -- Scott French <swfrench@wikimedia.org>  Sun, 29 Jun 2025 18:11:33 -0700
