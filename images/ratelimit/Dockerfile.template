@@ -1,6 +1,6 @@
 FROM {{ "golang1.21" | image_tag }} as build
 
-ENV RATELIMIT_VERSION=git20240505.3fcc360-2-vendor
+ENV RATELIMIT_VERSION=git20250704.bf8fb04-vendor
 ENV SOURCE_REPO=https://gerrit.wikimedia.org/r/operations/software/envoyproxy/ratelimiter
 ENV WORK_BASE=/work/repo
 
