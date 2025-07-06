@@ -1,3 +1,9 @@
+webhook (1.16.3-1-20250706) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 06 Jul 2025 06:00:33 +0000
+
 webhook (1.16.3-1-20250629) wikimedia; urgency=medium
 
   * Weekly rebuild.
