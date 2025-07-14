@@ -23,7 +23,7 @@
 
 # Beginning of spark-operator-build stage
 
-FROM {{ 'golang1.18' | image_tag }} as spark-operator-build
+FROM {{ 'golang1.19' | image_tag }} as spark-operator-build
 
 USER root
 RUN {{ "git curl" | apt_install }} && \
