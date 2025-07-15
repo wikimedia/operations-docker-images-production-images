@@ -1,6 +1,6 @@
 {# Set variables #}
 
-{% set flink_version = '1.20.0' %}
+{% set flink_version = '1.20.1' %}
 
 {# scala_version is only used when downloading example artifacts.
    We do not include flink-scala in this distribution.  If you want
