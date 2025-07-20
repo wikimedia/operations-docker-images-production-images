@@ -1,3 +1,9 @@
+nodejs12-devel (0.0.1-20250720) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 20 Jul 2025 06:00:12 +0000
+
 nodejs12-devel (0.0.1-20250713) wikimedia; urgency=medium
 
   * Weekly rebuild.
