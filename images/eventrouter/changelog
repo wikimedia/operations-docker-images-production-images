@@ -1,3 +1,9 @@
+eventrouter (0.4.0-3) wikimedia; urgency=medium
+
+  * Update Build-Depends to golang-1.19 in control.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 23 Jul 2025 10:40:00 +0200
+
 eventrouter (0.4.0-2-20250720) wikimedia; urgency=medium
 
   * Weekly rebuild.
