@@ -1,3 +1,10 @@
+python3-build-bullseye (0.1.0-20250720-s1) wikimedia; urgency=high
+
+   Refresh for update in parent image *python3-build-bullseye:
+   * Rebuild to pick up base image change
+
+ -- Clément Goubert <Clément Goubert <cgoubert@wikimedia.org>>  Fri, 25 Jul 2025 15:30:39 +0200
+
 python3-build-bullseye (0.1.0-20250720) wikimedia; urgency=medium
 
   * Weekly rebuild.
