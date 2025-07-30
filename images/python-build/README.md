@@ -1,9 +1,9 @@
 python-build images
 ===================
 
-This base images provide provide the python version provided by the Debian
-distributiion. They are used to build wheels matching the deployment targets
-operating systems.
+These base images include the python version provided by the
+corresponding Debian distribution. They are used to build wheels
+matching the deployment targets' operating systems.
 
 The container expects a deployment git repository to be bind mounted on
 `/deploy`. The repository should have:
