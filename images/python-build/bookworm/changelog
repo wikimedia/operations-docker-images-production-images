@@ -1,3 +1,9 @@
+python3-build-bookworm (0.2.0) wikimedia; urgency=high
+
+   Use debian packages instead of pip3 install --break-system-packages
+
+ -- Ahmon Dancy <adancy@wikimedia.org>  Mon,  4 Aug 2025 17:00:08 -0700
+
 python3-build-bookworm (0.1.0-20250803) wikimedia; urgency=medium
 
   * Weekly rebuild.
