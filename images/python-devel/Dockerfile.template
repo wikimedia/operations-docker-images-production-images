@@ -1,5 +1,3 @@
 FROM {{ "python3-bullseye" | image_tag }}
 
-# python3-venv ships ensurepip which allows `python3 -m venv`. That has less
-# overhead than afull fledged `virtualenv`.
-RUN {{ "python3-dev python3-venv python3-virtualenv virtualenv" | apt_install }}
+RUN {{ "python3-dev" | apt_install }}
