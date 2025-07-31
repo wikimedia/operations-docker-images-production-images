@@ -1,0 +1,5 @@
+golang1.24 (1.24) wikimedia; urgency=high
+
+  * Golang 1.24 on Trixie base image
+
+ -- Brian King <bking@wikimedia.org>  Thu Jul 31 03:55:43 PM UTC 2025
