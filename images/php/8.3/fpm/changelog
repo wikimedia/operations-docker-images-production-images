@@ -1,3 +1,9 @@
+php8.3-fpm (8.3.24-1) wikimedia; urgency=medium
+
+  * Rebuild to pick up 8.3.24-1+wmf11u2
+
+ -- Scott French <swfrench@wikimedia.org>  Mon, 04 Aug 2025 13:36:04 -0700
+
 php8.3-fpm (8.3.23-1-20250803) wikimedia; urgency=medium
 
   * Weekly rebuild.
