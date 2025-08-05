@@ -1,3 +1,9 @@
+php8.1-fpm-multiversion-base (8.1.33-1-s3) wikimedia; urgency=medium
+
+  * Rebuild to pick up 8.1.33-1+wmf11u2 (T383047).
+
+ -- Scott French <swfrench@wikimedia.org>  Tue, 05 Aug 2025 09:19:00 -0700
+
 php8.1-fpm-multiversion-base (8.1.33-1-s2-20250803) wikimedia; urgency=medium
 
   * Weekly rebuild.
