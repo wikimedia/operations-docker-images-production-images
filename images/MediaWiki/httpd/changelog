@@ -1,3 +1,9 @@
+mediawiki-httpd (0.1.9-u1-20250810) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 10 Aug 2025 06:00:35 +0000
+
 mediawiki-httpd (0.1.9-u1) wikimedia; urgency=medium
 
   * Rebuild to pick up new httpd-fcgi base image (2.4.62-1-u1: Fix missing
