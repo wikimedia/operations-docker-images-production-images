@@ -1,3 +1,9 @@
+openjdk-11-jdk (11.0.28-1) wikimedia; urgency=medium
+
+  * Update image version tag to match the java version numer
+
+ -- Moritz Muehlenhoff <moritz@wikimedia.org>  Mon, 11 Aug 2025 17:42:03 +0200
+
 openjdk-11-jdk (11.0.26-1-20250810) wikimedia; urgency=medium
 
   * Weekly rebuild.
