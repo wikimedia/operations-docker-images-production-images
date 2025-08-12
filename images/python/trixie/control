@@ -1,0 +1,3 @@
+Package: python3-trixie
+Description: Lightweight base image for Python 3.13 applications
+Maintainer: Taavi Väänänen <taavi@wikimedia.org>
