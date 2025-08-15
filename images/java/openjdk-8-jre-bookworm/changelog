@@ -1,3 +1,9 @@
+openjdk-8-jre-bookworm (8.462-1) wikimedia; urgency=medium
+
+  * Update image version tag to match the java version of latest sec updates
+
+ -- Moritz Muehlenhoff <moritz@wikimedia.org>  Fri, 15 Aug 2025 12:04:04 +0000
+
 openjdk-8-jre-bookworm (8.452-1-20250810) wikimedia; urgency=medium
 
   * Weekly rebuild.
