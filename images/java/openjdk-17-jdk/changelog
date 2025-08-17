@@ -1,3 +1,9 @@
+openjdk-17-jdk (17.0.16-1-20250817) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 17 Aug 2025 06:00:09 +0000
+
 openjdk-17-jdk (17.0.16-1) wikimedia; urgency=medium
 
   * Update image version tag to match the java version of latest sec updates

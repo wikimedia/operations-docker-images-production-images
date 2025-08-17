@@ -1,3 +1,9 @@
+kserve-controller (0.13.0-0-20250817) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 17 Aug 2025 06:00:15 +0000
+
 kserve-controller (0.13.0-0-20250810) wikimedia; urgency=medium
 
   * Weekly rebuild.

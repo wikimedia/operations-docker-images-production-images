@@ -1,3 +1,9 @@
+nodejs14-slim (0.0.1-20250817) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 17 Aug 2025 06:00:17 +0000
+
 nodejs14-slim (0.0.1-20250810) wikimedia; urgency=medium
 
   * Weekly rebuild.
