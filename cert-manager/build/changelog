@@ -1,3 +1,9 @@
+build (1.16.3-1-20250817) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 17 Aug 2025 06:00:37 +0000
+
 build (1.16.3-1-20250810) wikimedia; urgency=medium
 
   * Weekly rebuild.
