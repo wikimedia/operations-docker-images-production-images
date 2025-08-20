@@ -1,3 +1,9 @@
+php8.1-fpm-multiversion-base (8.1.33-1-s4) wikimedia; urgency=medium
+
+  * Rebuild to pick up /srv/monitoring changes for T402424.
+
+ -- Scott French <swfrench@wikimedia.org>  Wed, 20 Aug 2025 13:48:24 -0700
+
 php8.1-fpm-multiversion-base (8.1.33-1-s3-20250817) wikimedia; urgency=medium
 
   * Weekly rebuild.

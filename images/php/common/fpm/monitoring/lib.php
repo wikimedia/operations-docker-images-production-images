@@ -96,7 +96,7 @@ class PrometheusMetric {
 	}
 
 	public function setLabel(string $name, string $value) {
-		$this->labels[] = "$name=\"${value}\"";
+		$this->labels[] = "$name=\"$value\"";
 	}
 
 	private function _helpLine(): string {
