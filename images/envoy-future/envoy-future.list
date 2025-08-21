@@ -1,1 +1,1 @@
-deb http://apt.wikimedia.org/wikimedia buster-wikimedia component/envoy-future
+deb http://apt.wikimedia.org/wikimedia bullseye-wikimedia component/envoy-future
