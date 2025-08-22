@@ -1,3 +1,10 @@
+envoy-future (1.26.8-2) wikimedia; urgency=medium
+
+  * New upstream version 1.26.8 (properly this time, after fixing the reprepro
+    invocation; note that 1.26.8-1 actually contained Envoy v1.23.10 still)
+
+ -- Reuven Lazarus <rlazarus@wikimedia.org>  Thu, 21 Aug 2025 17:42:22 -0700
+
 envoy-future (1.26.8-1) wikimedia; urgency=medium
 
   * New upstream version 1.26.8
