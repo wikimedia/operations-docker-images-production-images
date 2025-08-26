@@ -1,3 +1,12 @@
+envoy-future (1.26.8-3) wikimedia; urgency=medium
+
+  * Sync dockerfile changes from envoy image to envoy-future:
+  * Execute envoy binary via ENTRYPOINT rather than CMD. (envoy 1.23.10-2-s4)
+  * Create /var/run/envoy (owned by nobody:nogroup) to create the admin UNIX
+    socket in (envoy 1.23.10-2-s2)
+
+ -- Reuven Lazarus <rlazarus@wikimedia.org>  Tue, 26 Aug 2025 12:45:00 -0700
+
 envoy-future (1.26.8-2-20250824) wikimedia; urgency=medium
 
   * Weekly rebuild.
