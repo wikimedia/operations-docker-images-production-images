@@ -1,3 +1,9 @@
+envoy (1.26.8-1) wikimedia; urgency=medium
+
+  * New upstream version 1.26.8.
+
+ -- Reuven Lazarus <rlazarus@wikimedia.org>  Wed, 27 Aug 2025 14:39:34 -0700
+
 envoy (1.23.10-3-20250824) wikimedia; urgency=medium
 
   * Weekly rebuild.
