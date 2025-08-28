@@ -1,0 +1,5 @@
+nodejs22-slim (0.0.1) wikimedia; urgency=medium
+
+  * (T393437) Initial release, with node v22.19.0 and npm v10.9.3.
+
+ -- James D. Forrester <jforrester@wikimedia.org>  Thu, 28 Aug 2025 09:26:55 -0400

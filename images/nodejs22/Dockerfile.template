@@ -1,0 +1,3 @@
+FROM {{ "trixie" | image_tag }}
+
+RUN echo "deb http://apt.wikimedia.org/wikimedia trixie-wikimedia thirdparty/node22" > /etc/apt/sources.list.d/nodejs.list && {{ "nodejs wmf-certificates" | apt_install }}
