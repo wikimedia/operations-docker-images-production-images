@@ -1,3 +1,9 @@
+nodejs22-slim (0.0.1-20250831) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 31 Aug 2025 06:00:09 +0000
+
 nodejs22-slim (0.0.1) wikimedia; urgency=medium
 
   * (T393437) Initial release, with node v22.19.0 and npm v10.9.3.
