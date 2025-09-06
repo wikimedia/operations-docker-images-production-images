@@ -1,3 +1,9 @@
+envoy-future (1.29.12-1) wikimedia; urgency=medium
+
+  * New upstream version 1.29.12 
+
+ -- Reuven Lazarus <rlazarus@wikimedia.org>  Fri, 05 Sep 2025 17:20:10 -0700
+
 envoy-future (1.26.8-3-20250907) wikimedia; urgency=medium
 
   * Weekly rebuild.
