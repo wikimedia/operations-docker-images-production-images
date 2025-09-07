@@ -1,3 +1,9 @@
+prometheus-statsd-exporter (0.26.1-2-20250907) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 07 Sep 2025 06:00:18 +0000
+
 prometheus-statsd-exporter (0.26.1-2-20250831) wikimedia; urgency=medium
 
   * Weekly rebuild.
