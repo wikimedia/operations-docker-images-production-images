@@ -1,3 +1,9 @@
+flink-kubernetes-operator (1.12.1-wmf0) wikimedia; urgency=high
+
+  * Upstream Flink Kubernetes Operator release 1.12.1
+
+ -- Balthazar Rouberol <brouberol@wikimedia.org>  Mon, 08 Sep 2025 09:57:00 +0000
+
 flink-kubernetes-operator (1.12.0-wmf1-20250907) wikimedia; urgency=medium
 
   * Weekly rebuild.
