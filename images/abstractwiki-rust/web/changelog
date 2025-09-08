@@ -1,3 +1,9 @@
+abstractwiki-rust-web (1.85) wikimedia; urgency=high
+
+  * Rust on Bookworm is now 1.85 when using 'rustc-web'
+
+ -- James D. Forrester <jforrester@wikimedia.org>  Mon,  8 Sep 2025 10:21:15 -0400
+
 abstractwiki-rust-web (1.78-20250907) wikimedia; urgency=medium
 
   * Weekly rebuild.
