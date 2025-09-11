@@ -1,6 +1,6 @@
 {# Set variables #}
 
-{% set flink_version = '1.20.1' %}
+{% set flink_version = '1.20.2' %}
 
 {# scala_version is only used when downloading example artifacts.
    We do not include flink-scala in this distribution.  If you want
@@ -11,7 +11,7 @@
    from which to copy pip installed dependecies to the production image
    This does not control the version of python installed.
    You must update this if you upgrade the version of python that is installed. #}
-{% set python_version = '3.9' %}
+{% set python_version = '3.11' %}
 
 {# Elastic Common Schema logging version. Used for structured logging. #}
 {% set ecs_version = '1.5.0' %}
@@ -36,13 +36,13 @@
 #       of more cached RUN layers. production image stage below does consolodate
 #       RUN commands in order to have fewer layers there.
 
-FROM {{ registry }}/bullseye:latest as build
+FROM {{ registry }}/bookworm:latest as build
 USER root
 
 RUN {{ "curl gpg gpg-agent dirmngr coreutils ca-certificates build-essential python3 python3-setuptools python3-pip" | apt_install }}
 WORKDIR /tmp
 
-RUN pip install apache-flink=={{ flink_version }}
+RUN pip3 install apache-flink=={{ flink_version }} --break-system-packages
 
 # Symlink the installed pyflink module directory to {{ flink_home }}.
 # This will give us a consistent and easier to find path for FLINK_HOME,
@@ -90,7 +90,7 @@ COPY --chown=root  examples/wikimedia {{ flink_home }}/examples/wikimedia
 
 # == Start of production image creation ==
 
-FROM {{ "openjdk-11-jre" | image_tag }}
+FROM {{ "openjdk-17-jre" | image_tag }}
 
 USER root
 
