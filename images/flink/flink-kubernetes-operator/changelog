@@ -1,3 +1,9 @@
+flink-kubernetes-operator (1.12.1-wmf0-20250914) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 14 Sep 2025 06:00:31 +0000
+
 flink-kubernetes-operator (1.12.1-wmf0) wikimedia; urgency=high
 
   * Upstream Flink Kubernetes Operator release 1.12.1

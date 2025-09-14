@@ -1,3 +1,9 @@
+abstractwiki-rust-web (1.85-20250914) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 14 Sep 2025 06:00:33 +0000
+
 abstractwiki-rust-web (1.85) wikimedia; urgency=high
 
   * Rust on Bookworm is now 1.85 when using 'rustc-web'

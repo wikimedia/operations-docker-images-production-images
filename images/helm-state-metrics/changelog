@@ -1,3 +1,9 @@
+helm-state-metrics (0.2.0-2-20250914) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 14 Sep 2025 06:00:10 +0000
+
 helm-state-metrics (0.2.0-2-20250907) wikimedia; urgency=medium
 
   * Weekly rebuild.
