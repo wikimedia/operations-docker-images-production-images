@@ -1,3 +1,9 @@
+cainjector (1.16.3-1-20250914) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 14 Sep 2025 06:00:39 +0000
+
 cainjector (1.16.3-1-20250907) wikimedia; urgency=medium
 
   * Weekly rebuild.
