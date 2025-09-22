@@ -1,0 +1,6 @@
+FROM {{ "bullseye" | image_tag }}
+
+RUN {{ "luarocks build-essential" | apt_install }} \
+    && luarocks install busted
+
+ENTRYPOINT [ "/usr/local/bin/busted" ]
