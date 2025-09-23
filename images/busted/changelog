@@ -1,3 +1,9 @@
+busted-bullseye (0.1.1) wikimedia; urgency=medium
+
+  * Rename to busted-bullseye
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Tue, 23 Sep 2025 12:08:54 +0200
+
 busted (0.1.0) wikimedia; urgency=medium
 
   * First build, on bullseye.
