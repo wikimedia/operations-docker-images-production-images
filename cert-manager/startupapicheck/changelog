@@ -1,3 +1,9 @@
+startupapicheck (1.16.3-1-20250928) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 28 Sep 2025 06:00:42 +0000
+
 startupapicheck (1.16.3-1-20250921) wikimedia; urgency=medium
 
   * Weekly rebuild.
