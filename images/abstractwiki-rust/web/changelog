@@ -1,3 +1,9 @@
+abstractwiki-rust-web (1.85-20250928) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 28 Sep 2025 06:00:36 +0000
+
 abstractwiki-rust-web (1.85-20250921) wikimedia; urgency=medium
 
   * Weekly rebuild.
