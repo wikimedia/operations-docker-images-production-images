@@ -1,0 +1,5 @@
+wmf-debci-trixie (0.0.1-20251014) wikimedia; urgency=medium
+
+   * Initial release.
+
+ -- Brett Cornwall <bcornwall@wikimedia.org>  Tue, 14 Oct 2025 16:11:00 +0000
