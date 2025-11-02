@@ -1,3 +1,9 @@
+mcrouter (2023.07.17.00-1-20251102) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 02 Nov 2025 06:00:20 +0000
+
 mcrouter (2023.07.17.00-1-20251026) wikimedia; urgency=medium
 
   * Weekly rebuild.
