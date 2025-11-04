@@ -1,4 +1,4 @@
-FROM {{ "buster" | image_tag }}
+FROM {{ "trixie" | image_tag }}
 
 ENV MEMC_VERBOSITY="" \
         MEMC_MEMORY=64 \
@@ -16,8 +16,7 @@ ENV MEMC_VERBOSITY="" \
         MEMC_ADDITIONAL_ARGS=""
 
 
-RUN echo "deb http://apt.wikimedia.org/wikimedia buster-wikimedia component/memcached16" > /etc/apt/sources.list.d/memecached.list \
-        && {{ "ca-certificates memcached" | apt_install }} && mkdir -p /etc/memcached/ssl \
+RUN {{ "ca-certificates wmf-certificates memcached" | apt_install }} && mkdir -p /etc/memcached/ssl \
         && chown -R nobody:nogroup /etc/memcached
 
 COPY entrypoint.sh /bin

@@ -1,3 +1,9 @@
+memcached (1.6.38-1) wikimedia; urgency=medium
+
+  * Upgrade to Debian Trixie.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Tue, 04 Nov 2025 03:30:00 +0100
+
 memcached (1.6.6-1-20251102) wikimedia; urgency=medium
 
   * Weekly rebuild.
