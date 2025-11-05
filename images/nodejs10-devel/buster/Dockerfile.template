@@ -1,3 +1,0 @@
-FROM {{ registry }}/buster:latest
-
-RUN {{ "nodejs npm" | apt_install }}

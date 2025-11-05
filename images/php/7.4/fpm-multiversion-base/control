@@ -1,4 +1,0 @@
-Package: php7.4-fpm-multiversion-base
-Description: Base image used by the mediawiki-multiversion build process
-Depends: php7.4-fpm
-Maintainer: Release Engineering <releng@wikimedia.org>

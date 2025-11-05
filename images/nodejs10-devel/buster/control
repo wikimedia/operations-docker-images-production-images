@@ -1,3 +1,0 @@
-Package: buster-nodejs10-devel
-Description: Base image for nodejs 10.x based applications on Debian Buster. Contains npm
-Maintainer: Alexandros Kosiaris <akosiaris@wikimedia.org>
