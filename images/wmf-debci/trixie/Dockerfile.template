@@ -1,6 +1,9 @@
 FROM {{ registry }}/trixie:latest
 
 # Install basic tools for Debian package building. We don't use apt_install as we want recommended packages.
+# Also create /usr/share/man/man1 to help ease a bug with java packaging on debian
+# (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=955619)
 RUN {% if apt_only_proxy %}echo 'Acquire::http::Proxy "{{ apt_only_proxy }}";' > /etc/apt/apt.conf.d/80_proxy && {% endif %} apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install --install-recommends --yes build-essential devscripts && rm -f /etc/apt/apt.conf.d/80_proxy \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && apt-get clean && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /usr/share/man/man1
