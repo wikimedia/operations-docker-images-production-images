@@ -1,3 +1,9 @@
+envoy-future (1.35.6-1-20251130) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 30 Nov 2025 06:00:26 +0000
+
 envoy-future (1.35.6-1) wikimedia; urgency=medium
 
   * New upstream version 1.35.6
