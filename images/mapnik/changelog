@@ -1,3 +1,9 @@
+mapnik (4.0.2-3-20251214) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 14 Dec 2025 06:00:33 +0000
+
 mapnik (4.0.2-3-20251207) wikimedia; urgency=medium
 
   * Weekly rebuild.
