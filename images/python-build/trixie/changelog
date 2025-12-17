@@ -1,0 +1,5 @@
+python3-build-trixie (0.0.1) wikimedia; urgency=low
+
+  * Initial Trixie image.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Wed, 17 Dec 2025 10:00:03 +0100
