@@ -1,3 +1,9 @@
+knative-serving-queue (1.7.2-7-20260104) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 04 Jan 2026 06:00:15 +0000
+
 knative-serving-queue (1.7.2-7-20251228) wikimedia; urgency=medium
 
   * Weekly rebuild.
