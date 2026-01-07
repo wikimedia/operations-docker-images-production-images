@@ -1,3 +1,9 @@
+ratelimit (9.0.4-20260107.e9ce92c) wikimedia; urgency=medium
+
+  * Update to main branch e9ce92c.
+
+ -- Clément Goubert <cgoubert@wikimedia.org>  Wed, 07 Jan 2026 17:27:08 +0100
+
 ratelimit (9.0.3-20250704.bf8fb04-20260104) wikimedia; urgency=medium
 
   * Weekly rebuild.
