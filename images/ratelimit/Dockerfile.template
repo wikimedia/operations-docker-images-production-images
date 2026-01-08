@@ -13,8 +13,8 @@ RUN git clone $SOURCE_REPO ratelimiter && \
 
 WORKDIR $WORK_BASE/ratelimiter
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o $WORK_BASE/ratelimiter/ratelimit -ldflags="-w -s" -v github.com/envoyproxy/ratelimit/src/service_cmd
-RUN CGO_ENABLED=0 GOOS=linux go build -o $WORK_BASE/ratelimiter/ratelimit_config_check -ldflags="-w -s" -v github.com/envoyproxy/ratelimit/src/config_check_cmd
+RUN CGO_ENABLED=0 GOOS=linux go build -mod=readonly -o $WORK_BASE/ratelimiter/ratelimit -ldflags="-w -s" -v github.com/envoyproxy/ratelimit/src/service_cmd
+RUN CGO_ENABLED=0 GOOS=linux go build -mod=readonly -o $WORK_BASE/ratelimiter/ratelimit_config_check -ldflags="-w -s" -v github.com/envoyproxy/ratelimit/src/config_check_cmd
 
 RUN mv $WORK_BASE/ratelimiter/ratelimit /work/ratelimit.cmd
 RUN mv $WORK_BASE/ratelimiter/ratelimit_config_check /work/ratelimit_config_check.cmd
