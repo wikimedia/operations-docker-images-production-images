@@ -1,0 +1,7 @@
+FROM {{ "bookworm" | image_tag }}
+RUN echo "deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia component/jdk21" > /etc/apt/sources.list.d/openjdk.list
+# openjdk-21-jre-headless:amd64 (21.0.11+9-1~deb12u1) fails post-inst like:
+# update-alternatives: error: error creating symbolic link '/usr/share/man/man1/java.1.gz.dpkg-tmp': No such file or directory
+# Just create the directory to make it happy.
+RUN mkdir -p /usr/share/man/man1/ && \
+    {{ "openjdk-21-jre-headless" | apt_install }}

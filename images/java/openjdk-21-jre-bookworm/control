@@ -1,0 +1,6 @@
+Package: openjdk-21-jre
+Description: base image for running Java 21 applications.
+ An image used to build images to be used in the WMF
+ pipeline. Contains the just the JRE for version 21,
+ not the entire JDK
+Maintainer: SRE Infrastructure Foundations <sre-foundations@wikimedia.org>
