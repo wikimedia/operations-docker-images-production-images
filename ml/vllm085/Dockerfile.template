@@ -6,7 +6,7 @@
 # Docker layer limit required by the Wikimedia Docker  #
 # registry.                                            #
 ########################################################
-FROM {{ "amd-pytorch-common" | image_tag }} as builder
+FROM {{ registry }}/amd-pytorch-common as builder
 
 # — Mirror upstream: create 'render' group
 RUN groupadd -g 109 render
@@ -97,7 +97,7 @@ RUN git clone --branch ${VLLM_BRANCH} ${VLLM_REPO} /srv/vllm \
     && rm -rf /srv/vllm
 
 # — Final stage: Create minimal runtime image
-FROM {{ "amd-pytorch-common" | image_tag }} as runtime
+FROM {{ registry }}/amd-pytorch-common as builder
 
 # — Copy venv (main structure; torch/lib will be missing hipblaslt and rocblas because they were moved in builder)
 COPY --from=builder --chown=somebody /srv/venv /srv/venv
