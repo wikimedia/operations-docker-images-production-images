@@ -1,3 +1,9 @@
+haproxy (2.8.3-1-20260118) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 18 Jan 2026 06:00:28 +0000
+
 haproxy (2.8.3-1-20260111) wikimedia; urgency=medium
 
   * Weekly rebuild.

@@ -1,3 +1,9 @@
+python3-devel (0.0.4-20250727-s1-20260118) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 18 Jan 2026 06:00:27 +0000
+
 python3-devel (0.0.4-20250727-s1-20260111) wikimedia; urgency=medium
 
   * Weekly rebuild.

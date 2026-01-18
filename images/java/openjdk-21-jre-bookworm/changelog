@@ -1,3 +1,9 @@
+openjdk-21-jre (0.1-20260118) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 18 Jan 2026 06:00:09 +0000
+
 openjdk-21-jre (0.1) wikimedia; urgency=medium
 
   * Initial release.
