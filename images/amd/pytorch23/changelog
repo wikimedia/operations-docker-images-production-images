@@ -1,3 +1,9 @@
+amd-pytorch23 (2.3.0rocm6.0-3-20260125) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 25 Jan 2026 06:00:24 +0000
+
 amd-pytorch23 (2.3.0rocm6.0-3-20260118) wikimedia; urgency=medium
 
   * Weekly rebuild.

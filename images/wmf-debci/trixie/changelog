@@ -1,3 +1,9 @@
+wmf-debci-trixie (0.0.1-20260125) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 25 Jan 2026 06:00:21 +0000
+
 wmf-debci-trixie (0.0.1-20260118) wikimedia; urgency=medium
 
   * Weekly rebuild.

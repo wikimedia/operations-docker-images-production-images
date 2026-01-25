@@ -1,3 +1,9 @@
+prometheus-nutcracker-exporter (0.0.3-20250727-s1-20260125) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 25 Jan 2026 06:00:22 +0000
+
 prometheus-nutcracker-exporter (0.0.3-20250727-s1-20260118) wikimedia; urgency=medium
 
   * Weekly rebuild.
