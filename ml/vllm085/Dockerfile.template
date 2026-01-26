@@ -32,7 +32,7 @@ ENV PATH="/srv/venv/bin:${PATH}"
 ENV TMPDIR=/opt/tmp
 
 # — Install ROCm-enabled PyTorch (into the venv)
-RUN pip install --no-cache-dir --pre torch==2.8.0.dev20250508+rocm6.3 \
+RUN pip install --no-cache-dir --pre torch==2.10.0.dev20250926+rocm6.3 \
     # Using the nightly index (https://download.pytorch.org/whl/nightly/rocm6*) for PyTorch installation due to dependency issues with the stable index (https://download.pytorch.org/whl/rocm6*), as detailed in https://phabricator.wikimedia.org/P75883. This approach aligns with both the vLLM documentation (https://docs.vllm.ai/en/latest/getting_started/installation/gpu.html?device=rocm) and the ROCm documentation (https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/3rd-party/pytorch-install.html).
     --index-url https://download.pytorch.org/whl/nightly/rocm6.3
 
@@ -97,7 +97,7 @@ RUN git clone --branch ${VLLM_BRANCH} ${VLLM_REPO} /srv/vllm \
     && rm -rf /srv/vllm
 
 # — Final stage: Create minimal runtime image
-FROM {{ registry }}/amd-pytorch-common as builder
+FROM {{ registry }}/amd-pytorch-common as runtime
 
 # — Copy venv (main structure; torch/lib will be missing hipblaslt and rocblas because they were moved in builder)
 COPY --from=builder --chown=somebody /srv/venv /srv/venv
