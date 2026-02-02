@@ -1,5 +1,5 @@
-Package: openjdk-21-jre
-Description: base image for running Java 21 applications.
+Package: openjdk-21-jre-bookworm
+Description: base image for running Java 21 applications on bookworm.
  An image used to build images to be used in the WMF
  pipeline. Contains the just the JRE for version 21,
  not the entire JDK
