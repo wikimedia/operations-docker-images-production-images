@@ -1,9 +1,3 @@
-openjdk-21-jdk (0.2) wikimedia; urgency=medium
-
-  * Build atop openjdk-21-jre image, instead of directly from Trixie.
-
- -- Brian King <bking@wikimedia.org>  Mon, Feb 02 2026 15:31:23 +0000
-
 openjdk-21-jdk (0.1-20260201) wikimedia; urgency=medium
 
   * Weekly rebuild.
