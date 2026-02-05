@@ -1,0 +1,147 @@
+########################################################################
+# wmf-debian-vllm: ROCm, PyTorch, MoRi, FlashAttention, aiter, vLLM    #
+#                                                                      #
+# Note: Multiple RUN commands are intentionally kept separate to avoid #
+# hitting the 12GB (compressed) Docker layer limit required by the     #
+# Wikimedia Docker registry.                                           #
+########################################################################
+FROM {{ registry }}/amd-pytorch-common as builder
+
+# Mirror upstream: create 'render' group
+RUN groupadd -g 109 render
+WORKDIR /srv
+
+# Add Wikimedia ROCm 7.0 mirror then install ROCm libs and Python tooling
+RUN echo "deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia thirdparty/amd-rocm70" > /etc/apt/sources.list.d/rocm.list \
+    && {{ "libopenmpi-dev libpci-dev hsa-rocr-dev miopen-hip mivisionx radeontop rccl rocblas rocfft rocm-cmake rocm-dev rocm-device-libs rocm-libs rocm-opencl rocm-opencl-dev rocm-utils rocrand rocm-smi-lib migraphx cmake build-essential python3-dev python3-venv git curl sudo vim sqlite3 libsqlite3-dev libfmt-dev libmsgpack-dev libsuitesparse-dev" | apt_install }}
+
+# Set environment for ROCm and vLLM
+ENV ROCM_PATH=/opt/rocm-7.0.0 \
+    VLLM_TARGET_DEVICE=rocm \
+    # For more details on AMD GPU architectures like gfx90a, see: https://rocm.docs.amd.com/en/latest/reference/gpu-arch-specs.html
+    PYTORCH_ROCM_ARCH=gfx90a;gfx942 \
+    PATH=/opt/rocm-7.0.0/llvm/bin:/opt/rocm-7.0.0/bin:/srv/venv/bin:$PATH \
+    # LD_LIBRARY_PATH is needed to ensure that the runtime can locate shared libraries in non-standard directories, such as /opt/rocm-7.0.0/lib and /usr/local/lib, which are required by ROCm and other dependencies.
+    LD_LIBRARY_PATH=/opt/rocm-7.0.0/lib:/usr/local/lib:
+
+# Create a Python virtual environment and a custom temp directory
+RUN python3 -m venv /srv/venv \
+    && mkdir -p /opt/tmp
+ENV PATH="/srv/venv/bin:${PATH}"
+ENV TMPDIR=/opt/tmp
+
+# Install ROCm-enabled PyTorch (into the venv)
+# Using the stable index instead of the nightly index as it's more stable. (see: https://phabricator.wikimedia.org/P87924)
+RUN pip install --no-cache-dir --pre torch==2.10.0+rocm7.0 \
+    --index-url https://download.pytorch.org/whl/rocm7.0 \
+    --extra-index-url https://pypi.org/simple
+
+# Install the AMD SMI Python interface
+RUN pip install --no-cache-dir /opt/rocm-7.0.0/share/amd_smi
+
+# Install Python build packages required by both FlashAttention and vLLM
+RUN pip install --no-cache-dir setuptools_scm packaging \
+    "cmake<4" ninja wheel "setuptools<80" pybind11 Cython
+
+# Build MoRI in a separate stage
+FROM builder AS mori-builder
+RUN git clone https://github.com/ROCm/mori.git /srv/mori \
+    && cd /srv/mori \
+    && git checkout 2d02c6a9 \
+    && git submodule update --init --recursive \
+    && GPU_TARGETS="gfx90a;gfx942" python3 setup.py bdist_wheel \
+    && mkdir -p /srv/wheels \
+    && mv dist/*.whl /srv/wheels \
+    && cd /srv \
+    && rm -rf /srv/mori
+
+# Build FlashAttention in a separate stage
+FROM builder AS flashattention-builder
+RUN git clone https://github.com/Dao-AILab/flash-attention.git /srv/flash-attn \
+    && cd /srv/flash-attn \
+    && git checkout 0e60e394 \
+    && git submodule update --init \
+    # For more details on AMD GPU architectures like gfx90a, see: https://rocm.docs.amd.com/en/latest/reference/gpu-arch-specs.html
+    && GPU_ARCHS="gfx90a;gfx942" python3 setup.py bdist_wheel \
+    && mkdir -p /srv/wheels \
+    && mv dist/*.whl /srv/wheels \
+    && cd /srv \
+    && rm -rf /srv/flash-attn
+
+# Build aiter in a separate stage
+FROM builder AS aiter-builder
+RUN git clone https://github.com/ROCm/aiter.git /srv/aiter \
+    && cd /srv/aiter \
+    && git checkout 6af8b687 \
+    && git submodule sync \
+    && git submodule update --init --recursive \
+    && pip install -r requirements.txt \
+    # Currently doesn't support gfx90a. (see: https://phabricator.wikimedia.org/P88226)
+    && PREBUILD_KERNELS=1 GPU_ARCHS=gfx942 python3 setup.py bdist_wheel \
+    && mkdir -p /srv/wheels \
+    && mv dist/*.whl /srv/wheels \
+    && cd /srv \
+    && rm -rf /srv/aiter
+
+# Build vLLM in a separate stage
+FROM builder AS vllm-builder
+RUN git clone --branch main https://github.com/vllm-project/vllm.git /srv/vllm \
+    && cd /srv/vllm \
+    && git checkout 6c0064571 \
+    && git submodule update --init \
+    && pip install --no-cache-dir -r requirements/rocm.txt \
+    && GPU_ARCHS="gfx90a;gfx942" python3 setup.py bdist_wheel \
+    && mkdir -p /srv/wheels \
+    && mv dist/*.whl /srv/wheels \
+    && cd /srv \
+    && rm -rf /srv/vllm
+
+# Final stage: Create minimal runtime image
+FROM {{ registry }}/amd-pytorch-common as runtime
+
+WORKDIR /srv
+
+# Set environment for ROCm and vLLM
+ENV ROCM_PATH=/opt/rocm-7.0.0 \
+    ROCM_HOME=/opt/rocm-7.0.0 \
+    VLLM_TARGET_DEVICE=rocm \
+    PATH=/opt/rocm-7.0.0/llvm/bin:/opt/rocm-7.0.0/bin:/srv/venv/bin:$PATH \
+    # LD_LIBRARY_PATH is needed to ensure that the runtime can locate shared libraries in non-standard directories, such as /opt/rocm-7.0.0/lib and /usr/local/lib, which are required by ROCm and other dependencies.
+    LD_LIBRARY_PATH=/srv/venv/lib/python3.11/site-packages/torch/lib:/opt/rocm-7.0.0/lib:/usr/local/lib:
+
+# Add Wikimedia ROCm 7.0 mirror then install minimal runtime ROCm libs and Python tooling
+RUN echo "deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia thirdparty/amd-rocm70" > /etc/apt/sources.list.d/rocm.list \
+    && {{ "libopenmpi-dev libpci-dev libc6-dev rocm-smi-lib hip-dev rccl python3-dev ca-certificates gcc" | apt_install }}
+
+# Remove large unused static libraries
+# We only need the .so files for runtime inference.
+RUN rm -f /opt/rocm-7.0.0/lib/*.a
+
+# Copy venv
+COPY --from=builder --chown=somebody /srv/venv /srv/venv
+
+# Copy pre-built wheels for MoRI, FlashAttention, aiter, and vLLM
+COPY --from=mori-builder --chown=somebody /srv/wheels /srv/wheels
+COPY --from=flashattention-builder --chown=somebody /srv/wheels /srv/wheels
+COPY --from=aiter-builder --chown=somebody /srv/wheels /srv/wheels
+COPY --from=vllm-builder --chown=somebody /srv/wheels /srv/wheels
+
+# Switch to user "somebody" to avoid running the container as root
+USER {{ "somebody" | uid }}
+
+# Install Python packages from wheels and uninstall unused package torchvision
+RUN pip install --no-cache-dir /srv/wheels/*.whl \
+    && pip uninstall -y torchvision \
+    # To reduce the image size, remove the wheel files as they are no longer needed
+    && rm -rf /srv/wheels/*
+
+# Set performance environment variables as defined in upstream vLLM ROCm dockerfiles
+ENV RAY_EXPERIMENTAL_NOSET_ROCR_VISIBLE_DEVICES=1 \
+    RAY_EXPERIMENTAL_NOSET_HIP_VISIBLE_DEVICES=1 \
+    TOKENIZERS_PARALLELISM=false \
+    # ENV that can improve safe tensor loading, and end-to-end time
+    SAFETENSORS_FAST_GPU=1 \
+    # Performance environment variable.
+    HIP_FORCE_DEV_KERNARG=1 \
+    # Required for RCCL in ROCm7.1 (kept this because it also exists in the rocm/vllm:v0.14.0_amd_dev docker image that runs ROCm7.0)
+    HSA_NO_SCRATCH_RECLAIM=1

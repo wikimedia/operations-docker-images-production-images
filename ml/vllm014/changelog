@@ -1,0 +1,11 @@
+amd-vllm014 (gfx90agfx942rocm7.0.0pytorch2.10.0mori0.1flash-attn2.8.3aiter0.1.7vllm0.14) wikimedia; urgency=high
+
+  * Upgrade of the previous ml/amd-vllm085 image to support latest software stack as of Jan 2026.
+  * Upgraded packages: ROCm 6.3.0 -> 7.0.0, torch 2.10.0.dev20250926+rocm6.3 -> 2.10.0+rocm7.0, flash_attn 2.7.4 -> 2.8.3, vLLM 0.8.5 -> 0.14
+  * Added packages: mori 0.1, aiter 0.1.7
+  * Previously only targetted MI210 (gfx90a) GPUs, now targets both MI210 (gfx90a) and MI300X (gfx942) GPUs.
+  * Nolonger using the nightly index for torch installation as it's unstable. Using the stable index instead. (P87924)
+  * Removed chunking of torch libs (hipblaslt and rocblas) because T415627#11573039
+  * Added performance environment variables in runtime image as defined upstream.
+
+ -- Kevin Bazira <kbazira@wikimedia.org>  Fri, 05 Feb 2026 11:03:20 +0300

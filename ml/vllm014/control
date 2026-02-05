@@ -1,0 +1,4 @@
+Package: amd-vllm014
+Description: AMD ROCm-enabled vLLM image with PyTorch, MoRI, Aiter, and CK FlashAttention. Targets both MI210 (gfx90a) and MI300X (gfx942) GPUs.
+Maintainer: Machine Learning Team <ml@wikimedia.org>
+Build-Depends: amd-pytorch-common
