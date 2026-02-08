@@ -1,3 +1,9 @@
+pilot (1.24.2-1-20260208) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 08 Feb 2026 06:00:38 +0000
+
 pilot (1.24.2-1-20260201) wikimedia; urgency=medium
 
   * Weekly rebuild.
