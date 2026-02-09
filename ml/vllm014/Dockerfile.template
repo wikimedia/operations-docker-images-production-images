@@ -43,6 +43,35 @@ RUN pip install --no-cache-dir /opt/rocm-7.0.0/share/amd_smi
 RUN pip install --no-cache-dir setuptools_scm packaging \
     "cmake<4" ninja wheel "setuptools<80" pybind11 Cython
 
+# Chunck torch libs (hipblaslt and rocblas) because they are large.
+# The goal is to copy them separately in the runtime stage to avoid hitting
+# the compressed layer limit in the Wikimedia Docker registry. (T415627#11594815)
+FROM builder AS torch-libs-chunker
+# Chunk entire hipblaslt and rocblas directories from PyTorch installation
+# Define paths for clarity. Using Python 3.11 from bookworm base.
+ENV TORCH_LIB_PATH="/srv/venv/lib/python3.11/site-packages/torch/lib"
+ENV HIPBLASLT_FULL_PATH="${TORCH_LIB_PATH}/hipblaslt"
+ENV ROCBLAS_FULL_PATH="${TORCH_LIB_PATH}/rocblas"
+
+# Create parent directory for the torch lib chunks
+RUN mkdir -p /srv/torch_lib_chunks
+
+# Move the entire hipblaslt directory to the chunk location
+RUN if [ -d "${HIPBLASLT_FULL_PATH}" ]; then \
+        mv "${HIPBLASLT_FULL_PATH}" /srv/torch_lib_chunks/hipblaslt && \
+        echo "Moved ${HIPBLASLT_FULL_PATH} to /srv/torch_lib_chunks/hipblaslt" ; \
+    else \
+        echo "Warning: Directory ${HIPBLASLT_FULL_PATH} not found." ; \
+    fi
+
+# Move the entire rocblas directory to the chunk location
+RUN if [ -d "${ROCBLAS_FULL_PATH}" ]; then \
+        mv "${ROCBLAS_FULL_PATH}" /srv/torch_lib_chunks/rocblas && \
+        echo "Moved ${ROCBLAS_FULL_PATH} to /srv/torch_lib_chunks/rocblas" ; \
+    else \
+        echo "Warning: Directory ${ROCBLAS_FULL_PATH} not found." ; \
+    fi
+
 # Build MoRI in a separate stage
 FROM builder AS mori-builder
 RUN git clone https://github.com/ROCm/mori.git /srv/mori \
@@ -117,8 +146,16 @@ RUN echo "deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia thirdparty/a
 # We only need the .so files for runtime inference.
 RUN rm -f /opt/rocm-7.0.0/lib/*.a
 
-# Copy venv
-COPY --from=builder --chown=somebody /srv/venv /srv/venv
+# Copy venv (main structure; torch/lib will be missing hipblaslt and rocblas because they were moved in torch-libs-chunker stage)
+COPY --from=torch-libs-chunker --chown=somebody /srv/venv /srv/venv
+
+# Define runtime paths corresponding to torch-libs-chunker paths. Using builder's Python 3.11 from bookworm base.
+# This directory should typically exist after copying /srv/venv.
+ARG TORCH_LIB_PATH="/srv/venv/lib/python3.11/site-packages/torch/lib"
+
+# Restore hipblaslt and rocblas directories to torch/lib/ for ROCm-enabled PyTorch functionality
+COPY --from=torch-libs-chunker --chown=somebody /srv/torch_lib_chunks/hipblaslt/ "${TORCH_LIB_PATH}/hipblaslt/"
+COPY --from=torch-libs-chunker --chown=somebody /srv/torch_lib_chunks/rocblas/ "${TORCH_LIB_PATH}/rocblas/"
 
 # Copy pre-built wheels for MoRI, FlashAttention, aiter, and vLLM
 COPY --from=mori-builder --chown=somebody /srv/wheels /srv/wheels
