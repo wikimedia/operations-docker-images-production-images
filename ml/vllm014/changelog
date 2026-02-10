@@ -1,4 +1,4 @@
-amd-vllm014 (gfx90agfx942rocm7.0.0pytorch2.10.0mori0.1flash-attn2.8.3aiter0.1.7vllm0.14) wikimedia; urgency=high
+amd-vllm014 (gfx90agfx942rocm7.0.0pytorch2.10.0mori0.1flash-attn2.8.3aiter0.1.7vllm0.14-1) wikimedia; urgency=high
 
   * Reintroduce chunking of torch libs (hipblaslt and rocblas) to unblock pushing the image to the registry. (T415627#11594815)
 
