@@ -42,7 +42,7 @@ RUN go build -a -o /usr/bin/spark-operator main.go
 # End of spark-operator-build stage
 
 # Beginning of spark-build stage
-FROM {{ 'openjdk-8-jdk' | image_tag }}
+FROM {{ 'openjdk-8-jdk-bookworm' | image_tag }}
 
 USER root
 
