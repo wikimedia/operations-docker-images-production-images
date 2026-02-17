@@ -1,5 +1,5 @@
 # == Set variables ==
-{% set flink_kubernetes_operator_version = '1.12.1' %}
+{% set flink_kubernetes_operator_version = '1.14.0' %}
 # Elastic Common Schema logging version.  Used for structured logging.
 {% set ecs_version = '1.5.0' %}
 {% set flink_mirror_base_uri = 'https://archive.apache.org/dist/flink' %}
@@ -17,7 +17,7 @@
 #       of more cached RUN layers. production image stage below DOES consolodate
 #       RUN commands in order to have fewer layers there.
 
-FROM {{ "openjdk-11-jdk" | image_tag  }} as build
+FROM {{ "openjdk-17-jdk" | image_tag  }} as build
 USER root
 
 # Download the distribution tarball along with its sha512 checksum and GPG signature. Then verify both checksum and signature before extracting the source.
@@ -90,7 +90,7 @@ RUN export MVN_HTTP_PROXY_OPTION=${http_proxy:+"-Dhttp.proxyHost=$(echo $http_pr
 # == End of build stage ==
 
 # == Start of production image creation ==
-FROM {{ "openjdk-11-jre" | image_tag  }}
+FROM {{ "openjdk-17-jre" | image_tag  }}
 USER root
 
 # FLINK_KUBERNETES_OPERATOR_HOME will be used by docker-entrypoint.sh
