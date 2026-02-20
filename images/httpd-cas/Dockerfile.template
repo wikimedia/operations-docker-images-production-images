@@ -1,0 +1,6 @@
+FROM {{ "httpd" | image_tag }}
+
+USER {{ "root" | uid }}
+RUN {{ "libapache2-mod-auth-cas" | apt_install }}
+
+USER {{ "www-data" | uid }}

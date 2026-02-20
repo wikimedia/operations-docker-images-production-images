@@ -1,0 +1,5 @@
+httpd-cas (2.4.62-1) wikimedia; urgency=medium
+
+  * Initial release. Bug: T417990
+
+ -- Balthazar Rouberol <brouberol@wikimedia.org>  Fri, 20 Feb 2026 15:21:28 +0200

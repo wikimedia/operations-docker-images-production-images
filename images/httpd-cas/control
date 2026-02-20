@@ -1,0 +1,6 @@
+Package: httpd-cas
+Description: Basic httpd container with libapache2-mod-auth-cas installed.
+ Apache runs as www-data in this image. It is expected that the configuration
+ will be provided via a mounted volume for the whole /etc/apache directory.
+ No fancy mechanism is used to load modules or not - you will have to provide that as well.
+Maintainer: SRE Service Operations <sre-service-ops@wikimedia.org>
