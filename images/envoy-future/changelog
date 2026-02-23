@@ -1,3 +1,9 @@
+envoy-future (1.35.7-3) wikimedia; urgency=medium
+
+  * Allow inboundonly drain and support min wait time
+
+ -- swfrench <swfrench@wikimedia.org>  Mon, 23 Feb 2026 09:26:13 -0800
+
 envoy-future (1.35.7-2) wikimedia; urgency=high
 
    * Fix setting envoy drain strategy
