@@ -3,10 +3,16 @@ ADMIN_PORT=${ADMIN_PORT:=9901}
 CONN_FILTER=${CONN_FILTER:="http.ingress_https_${SERVICE_NAME}.downstream_cx_active"}
 LOG_FD="/proc/1/fd/1"
 
+ADMIN_QUERY_PARAMS=""
+if [ "${DRAIN_STRATEGY}" -eq "gradual" ]
+then
+    ADMIN_QUERY_PARAMS="?graceful"
+fi
+
 # Trigger connection draining
 echo "Draining connections" > ${LOG_FD}
 exec 4<>/dev/tcp/localhost/${ADMIN_PORT}
-echo -e "POST /drain_listeners?graceful HTTP/1.1\r\nhost: localhost\r\nconnection: close\r\n\r\n" >&4
+echo -e "POST /drain_listeners${ADMIN_QUERY_PARAMS} HTTP/1.1\r\nhost: localhost\r\nconnection: close\r\n\r\n" >&4
 grep -q "OK" <&4
 if [ $? -ne 0 ]
 then

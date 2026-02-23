@@ -1,3 +1,9 @@
+envoy-future (1.35.7-2) wikimedia; urgency=high
+
+   * Fix setting envoy drain strategy
+
+ -- Clément Goubert <Clément Goubert <cgoubert@wikimedia.org>>  Mon, 23 Feb 2026 12:14:51 +0100
+
 envoy-future (1.35.7-1-20260222) wikimedia; urgency=medium
 
   * Weekly rebuild.
