@@ -3,4 +3,8 @@ FROM {{ "httpd" | image_tag }}
 USER {{ "root" | uid }}
 RUN {{ "libapache2-mod-auth-cas" | apt_install }}
 
+# Install apache modules required for proxy pass to an underlying
+# app after the CAS auth login
+RUN a2enmod proxy proxy_http auth_basic
+
 USER {{ "www-data" | uid }}
