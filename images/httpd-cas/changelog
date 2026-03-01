@@ -1,3 +1,9 @@
+httpd-cas (2.4.62-2-20260301) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 01 Mar 2026 06:00:28 +0000
+
 httpd-cas (2.4.62-2) wikimedia; urgency=medium
 
   * Enable proxy, http_proxy and auth_basic modules
