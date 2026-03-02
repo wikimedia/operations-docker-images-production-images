@@ -1,9 +1,16 @@
+FROM {{ "golang1.22" | image_tag }} as build
+
+RUN git clone https://gitlab.wikimedia.org/repos/sre/envoy-drain-tool.git \
+    && cd envoy-drain-tool \
+    && CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w"
+
 FROM {{ "bookworm" | image_tag }}
 
 RUN {{ "envoyproxy gettext-base wmf-certificates" | apt_install }} && \
     mkdir -p /var/run/envoy && \
     chown -R nobody:nogroup /etc/envoy /var/log/envoy /var/run/envoy
 
+COPY --from=build /go/envoy-drain-tool/envoy-drain-tool /usr/bin/envoy-drain-tool
 COPY entrypoint.sh /bin/entrypoint.sh
 COPY drain-envoy.sh /bin/drain-envoy.sh
 

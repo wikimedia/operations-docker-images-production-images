@@ -1,3 +1,9 @@
+envoy (1.35.7-4) wikimedia; urgency=medium
+
+  * Add experimental drain tool support
+
+ -- swfrench <swfrench@wikimedia.org>  Mon, 02 Mar 2026 14:37:56 -0800
+
 envoy (1.35.7-3-20260301) wikimedia; urgency=medium
 
   * Weekly rebuild.

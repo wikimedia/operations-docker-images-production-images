@@ -1,7 +1,60 @@
 #!/bin/bash
+# Supported environment variables:
+#  ADMIN_PORT:
+#    The port where the admin interface is exposed.
+#  ADMIN_SOCKET:
+#    The unix domain socket path where the admin interface is exposed. Only
+#    supported with DRAIN_VIA_TOOL = "true" (supersedes ADMIN_PORT).
+#  DRAIN_INBOUND_ONLY:
+#    If "true" then only listeners with INBOUND traffic direction are drained.
+#  DRAIN_STRATEGY:
+#    If "gradual" then graceful drain is requested.
+#  DRAIN_VIA_TOOL:
+#    If "true" then envoy-drain-tool is used.
+#  DRAIN_WAIT_MINIMUM_S:
+#    If set, then the minimum number of seconds to wait after drain is requested
+#    before returning.
+#  SERVICE_NAME:
+#    The name of the local mesh service, as reflected in the stat prefix of the
+#    associated listener.
+
 ADMIN_PORT=${ADMIN_PORT:=9901}
 CONN_FILTER=${CONN_FILTER:="http.ingress_https_${SERVICE_NAME}.downstream_cx_active"}
 LOG_FD="/proc/1/fd/1"
+
+# TODO: T364245 - Remove this compatibility shim once the mesh.deployment API stabilizes.
+if [ "${DRAIN_VIA_TOOL:-false}" = "true" ]
+then
+    DRAIN_TOOL_ARGS="-stat-prefix-pattern ingress_https_${SERVICE_NAME}"
+
+    # TODO: T364245 - Consider decoupling drain strategy and graceful drain.
+    if [ "${DRAIN_STRATEGY}" = "gradual" ]
+    then
+        DRAIN_TOOL_ARGS="${DRAIN_TOOL_ARGS} -graceful"
+    fi
+
+    if [ "${DRAIN_INBOUND_ONLY:-false}" = "true" ]
+    then
+        DRAIN_TOOL_ARGS="${DRAIN_TOOL_ARGS} -inboundonly"
+    fi
+
+    if [ -n "${ADMIN_SOCKET}" ]
+    then
+        DRAIN_TOOL_ARGS="${DRAIN_TOOL_ARGS} -admin-socket ${ADMIN_SOCKET}"
+    else
+        DRAIN_TOOL_ARGS="${DRAIN_TOOL_ARGS} -admin-address localhost:${ADMIN_PORT}"
+    fi
+
+    if [ -n "${DRAIN_WAIT_MINIMUM_S}" ]
+    then
+        DRAIN_TOOL_ARGS="${DRAIN_TOOL_ARGS} -min-wait-duration ${DRAIN_WAIT_MINIMUM_S}s"
+    fi
+
+    # Trigger drain and (optional) wait until connections are closed.
+    echo "Invoking drain tool with args: ${DRAIN_TOOL_ARGS}" > ${LOG_FD}
+    exec > ${LOG_FD} 2>&1 /usr/bin/envoy-drain-tool ${DRAIN_TOOL_ARGS}
+    exit 1  # exec failed
+fi
 
 ADMIN_QUERY_PARAMS=""
 if [ "${DRAIN_STRATEGY}" = "gradual" ]
