@@ -1,7 +1,7 @@
 FROM {{ "httpd" | image_tag }}
 
 USER {{ "root" | uid }}
-RUN {{ "libapache2-mod-auth-cas" | apt_install }}
+RUN {{ "libapache2-mod-auth-cas wmf-certificates" | apt_install }}
 
 # Install apache modules required for proxy pass to an underlying
 # app after the CAS auth login
