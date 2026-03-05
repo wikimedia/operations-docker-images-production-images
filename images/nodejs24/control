@@ -1,0 +1,4 @@
+Package: nodejs24-slim
+Description: Base image for nodejs 24.x based applications on Debian Trixie
+Maintainer: Moritz Muehlenhoff <moritz@wikimedia.org>
+

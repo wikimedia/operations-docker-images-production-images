@@ -1,0 +1,5 @@
+nodejs24-slim (0.1.0) wikimedia; urgency=medium
+
+  * Initial release T418440
+
+ -- Moritz Muehlenhoff <moritz@wikimedia.org>  Thu, 05 Mar 2026 15:13:05 -0400
