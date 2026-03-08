@@ -1,3 +1,9 @@
+httpd-cas (2.4.62-3-20260308) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 08 Mar 2026 06:00:27 +0000
+
 httpd-cas (2.4.62-3) wikimedia; urgency=medium
 
   * install the wmf-certificates package

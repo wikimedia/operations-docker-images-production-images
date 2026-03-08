@@ -1,3 +1,9 @@
+envoy (1.35.7-4-20260308) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 08 Mar 2026 06:00:26 +0000
+
 envoy (1.35.7-4) wikimedia; urgency=medium
 
   * Add experimental drain tool support

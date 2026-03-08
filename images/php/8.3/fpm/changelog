@@ -1,3 +1,9 @@
+php8.3-fpm (8.3.30-1-20260308) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 08 Mar 2026 06:00:29 +0000
+
 php8.3-fpm (8.3.30-1-20260301) wikimedia; urgency=medium
 
   * Weekly rebuild.

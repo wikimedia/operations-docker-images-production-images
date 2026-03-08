@@ -1,3 +1,9 @@
+busted-bullseye (0.1.1-20260308) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 08 Mar 2026 06:00:31 +0000
+
 busted-bullseye (0.1.1-20260301) wikimedia; urgency=medium
 
   * Weekly rebuild.
