@@ -1,4 +1,4 @@
 Package: flink
 Description: The Flink binary distribution
-Depends: openjdk-11-jre
+Depends: openjdk-17-jre
 Maintainer: Data Platform Engineering <data-platform-engineering@wikimedia.org>
