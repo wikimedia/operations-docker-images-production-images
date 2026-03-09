@@ -5,10 +5,10 @@
 #  ADMIN_SOCKET:
 #    The unix domain socket path where the admin interface is exposed. Only
 #    supported with DRAIN_VIA_TOOL = "true" (supersedes ADMIN_PORT).
+#  DRAIN_GRACEFUL:
+#    If "true" then graceful drain is requested.
 #  DRAIN_INBOUND_ONLY:
 #    If "true" then only listeners with INBOUND traffic direction are drained.
-#  DRAIN_STRATEGY:
-#    If "gradual" then graceful drain is requested.
 #  DRAIN_VIA_TOOL:
 #    If "true" then envoy-drain-tool is used.
 #  DRAIN_WAIT_MINIMUM_S:
@@ -27,8 +27,7 @@ if [ "${DRAIN_VIA_TOOL:-false}" = "true" ]
 then
     DRAIN_TOOL_ARGS="-stat-prefix-pattern ingress_https_${SERVICE_NAME}"
 
-    # TODO: T364245 - Consider decoupling drain strategy and graceful drain.
-    if [ "${DRAIN_STRATEGY}" = "gradual" ]
+    if [ "${DRAIN_GRACEFUL:-false}" = "true" ]
     then
         DRAIN_TOOL_ARGS="${DRAIN_TOOL_ARGS} -graceful"
     fi
@@ -57,7 +56,7 @@ then
 fi
 
 ADMIN_QUERY_PARAMS=""
-if [ "${DRAIN_STRATEGY}" = "gradual" ]
+if [ "${DRAIN_GRACEFUL:-false}" = "true" ]
 then
     ADMIN_QUERY_PARAMS="${ADMIN_QUERY_PARAMS}${QUERY_PARAM_SEPARATOR:-?}graceful"
     QUERY_PARAM_SEPARATOR="&"
