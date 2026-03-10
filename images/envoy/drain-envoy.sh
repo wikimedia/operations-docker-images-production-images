@@ -6,14 +6,18 @@
 #    The unix domain socket path where the admin interface is exposed. Only
 #    supported with DRAIN_VIA_TOOL = "true" (supersedes ADMIN_PORT).
 #  DRAIN_GRACEFUL:
-#    If "true" then graceful drain is requested.
+#    If "true" (the default) then graceful drain is requested.
 #  DRAIN_INBOUND_ONLY:
 #    If "true" then only listeners with INBOUND traffic direction are drained.
 #  DRAIN_VIA_TOOL:
 #    If "true" then envoy-drain-tool is used.
 #  DRAIN_WAIT_MINIMUM_S:
 #    If set, then the minimum number of seconds to wait after drain is requested
-#    before returning.
+#    before returning. If DRAIN_WAIT_MAXIMUM_S is set, then DRAIN_WAIT_MINIMUM_S
+#    cannot exceed it.
+#  DRAIN_WAIT_MAXIMUM_S:
+#    If set, then the maximum number of seconds to wait after drain is requested
+#    before returning. Only supported with DRAIN_VIA_TOOL = "true".
 #  SERVICE_NAME:
 #    The name of the local mesh service, as reflected in the stat prefix of the
 #    associated listener.
@@ -27,7 +31,7 @@ if [ "${DRAIN_VIA_TOOL:-false}" = "true" ]
 then
     DRAIN_TOOL_ARGS="-stat-prefix-pattern ingress_https_${SERVICE_NAME}"
 
-    if [ "${DRAIN_GRACEFUL:-false}" = "true" ]
+    if [ "${DRAIN_GRACEFUL:-true}" = "true" ]
     then
         DRAIN_TOOL_ARGS="${DRAIN_TOOL_ARGS} -graceful"
     fi
@@ -49,6 +53,11 @@ then
         DRAIN_TOOL_ARGS="${DRAIN_TOOL_ARGS} -min-wait-duration ${DRAIN_WAIT_MINIMUM_S}s"
     fi
 
+    if [ -n "${DRAIN_WAIT_MAXIMUM_S}" ]
+    then
+        DRAIN_TOOL_ARGS="${DRAIN_TOOL_ARGS} -max-wait-duration ${DRAIN_WAIT_MAXIMUM_S}s"
+    fi
+
     # Trigger drain and (optional) wait until connections are closed.
     echo "Invoking drain tool with args: ${DRAIN_TOOL_ARGS}" > ${LOG_FD}
     exec > ${LOG_FD} 2>&1 /usr/bin/envoy-drain-tool ${DRAIN_TOOL_ARGS}
@@ -56,7 +65,7 @@ then
 fi
 
 ADMIN_QUERY_PARAMS=""
-if [ "${DRAIN_GRACEFUL:-false}" = "true" ]
+if [ "${DRAIN_GRACEFUL:-true}" = "true" ]
 then
     ADMIN_QUERY_PARAMS="${ADMIN_QUERY_PARAMS}${QUERY_PARAM_SEPARATOR:-?}graceful"
     QUERY_PARAM_SEPARATOR="&"
