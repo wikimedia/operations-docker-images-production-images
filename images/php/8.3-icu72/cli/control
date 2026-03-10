@@ -1,0 +1,5 @@
+Package: php8.3-icu72-cli
+Description: Basic php8.3 container (bullseye, ICU 72)
+ By default, this image will just execute a php script located at
+ /bin/entrypoint.php
+Maintainer: SRE Service Operations <sre-service-ops@wikimedia.org>

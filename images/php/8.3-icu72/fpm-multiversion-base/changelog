@@ -1,0 +1,5 @@
+php8.3-icu72-fpm-multiversion-base (8.3.30-1) wikimedia; urgency=medium
+
+  * Initial release cloned from php8.3-fpm-multiversion-base
+
+ -- Scott French <swfrench@wikimedia.org>  Tue, 10 Mar 2026 00:00:00 -0800
