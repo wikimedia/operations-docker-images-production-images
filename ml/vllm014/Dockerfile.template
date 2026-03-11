@@ -139,8 +139,9 @@ ENV ROCM_PATH=/opt/rocm-7.0.0 \
     LD_LIBRARY_PATH=/srv/venv/lib/python3.11/site-packages/torch/lib:/opt/rocm-7.0.0/lib:/usr/local/lib:
 
 # Add Wikimedia ROCm 7.0 mirror then install minimal runtime ROCm libs and Python tooling
+# Also install ROCm build dependencies to support AITER kernel compilation. (T419650)
 RUN echo "deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia thirdparty/amd-rocm70" > /etc/apt/sources.list.d/rocm.list \
-    && {{ "libopenmpi-dev libpci-dev libc6-dev rocm-smi-lib hip-dev rccl python3-dev ca-certificates gcc" | apt_install }}
+    && {{ "libopenmpi-dev libpci-dev libc6-dev rocm-smi-lib hip-dev rccl python3-dev ca-certificates gcc wmf-certificates libdrm-amdgpu1 g++ rocm-dev rocm-device-libs hipsparse-dev rocthrust-dev rocprim-dev rocblas-dev hipblas-dev rocsparse-dev hipblaslt-dev hipsolver-dev" | apt_install }}
 
 # Remove large unused static libraries
 # We only need the .so files for runtime inference.
