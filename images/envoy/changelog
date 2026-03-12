@@ -1,3 +1,9 @@
+envoy (1.35.9-1) wikimedia; urgency=medium
+
+  * New upstream version v1.35.9
+
+ -- Reuven Lazarus <rlazarus@wikimedia.org>  Thu, 12 Mar 2026 12:28:37 -0700
+
 envoy (1.35.7-6) wikimedia; urgency=medium
 
   * Restore graceful default and support -max-wait-duration
