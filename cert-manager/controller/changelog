@@ -1,3 +1,9 @@
+controller (1.16.3-1-20260315) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 15 Mar 2026 06:00:39 +0000
+
 controller (1.16.3-1-20260308) wikimedia; urgency=medium
 
   * Weekly rebuild.
