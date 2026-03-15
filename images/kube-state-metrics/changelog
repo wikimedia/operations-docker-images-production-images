@@ -1,3 +1,9 @@
+kube-state-metrics (2.10.0-1-20260315) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 15 Mar 2026 06:00:37 +0000
+
 kube-state-metrics (2.10.0-1-20260308) wikimedia; urgency=medium
 
   * Weekly rebuild.
