@@ -7,7 +7,7 @@ RUN mkdir -p {{ repo_base }} \
   && cd {{ repo_base }} \
   && git clone https://github.com/kserve/kserve.git kserve \
   && cd kserve \
-  && git checkout tags/v0.13.0
+  && git checkout tags/v0.17.0
 
 WORKDIR {{ repo_base }}/kserve/cmd
 ENV CGO_ENABLED=0
