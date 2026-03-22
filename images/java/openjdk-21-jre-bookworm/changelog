@@ -1,3 +1,9 @@
+openjdk-21-jre-bookworm (0.1-20260322) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 22 Mar 2026 06:00:12 +0000
+
 openjdk-21-jre-bookworm (0.1-20260315) wikimedia; urgency=medium
 
   * Weekly rebuild.
