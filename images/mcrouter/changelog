@@ -1,3 +1,9 @@
+mcrouter (2023.07.17.00-2) wikimedia; urgency=medium
+
+  * Add the EXTRA_ARGS environment variable to ease testing new settings.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Mon, 23 Mar 2026 17:00:00 +0100
+
 mcrouter (2023.07.17.00-1-20260322) wikimedia; urgency=medium
 
   * Weekly rebuild.

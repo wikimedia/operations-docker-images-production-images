@@ -11,7 +11,8 @@ ENV PORT=5000 \
       PROBE_TIMEOUT=10000 \
       TIMEOUTS_UNTIL_TKO=5 \
       USE_SSL="no" \
-      SSL_PORT=5001
+      SSL_PORT=5001 \
+      EXTRA_ARGS=""
 
 # As of June 2024, the mcrouter package requires systemd and it uses systemd-sysusers
 # to create the mcrouter uid. To have a more predictable uid, a special config

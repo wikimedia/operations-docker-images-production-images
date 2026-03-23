@@ -16,6 +16,7 @@ Several environment variables can be set to control the command-line behaviour. 
 | `--probe-timeout-initial`    | `PROBE_TIMEOUT`      | 10000                          |
 | `--timeouts-until-tko`       | `TIMEOUTS_UNTIL_TKO` | 5                              |
 | `--config`                   | `CONFIG`             | file:/etc/mcrouter/config.json |
+| `--some-mcrouter-arg-to-test`| `EXTRA_ARGS`         | ""                             |
 
 You will need to provide the following volumes:
 * `/etc/mcrouter/config.json` with the full configuration for routes (or override the CONFIG env variable)

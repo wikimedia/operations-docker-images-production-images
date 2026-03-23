@@ -15,4 +15,4 @@ exec /usr/bin/mcrouter --debug-fifo-root /var/lib/mcrouter/fifos --stats-root /v
     --file-observer-sleep-before-update-ms=100 \
     --num-proxies=${NUM_PROXIES} \
     --probe-timeout-initial=${PROBE_TIMEOUT} \
-    --timeouts-until-tko=${TIMEOUTS_UNTIL_TKO} ${SSL_ARGS}
+    --timeouts-until-tko=${TIMEOUTS_UNTIL_TKO} ${SSL_ARGS} ${EXTRA_ARGS}
