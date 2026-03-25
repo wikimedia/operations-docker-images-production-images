@@ -1,4 +1,0 @@
-Package: knative-serving-domain-mapping
-Description: Knative Serving Domain Mapping
-Build-Depends: knative-build
-Maintainer: Machine Learning Team <ml@wikimedia.org>

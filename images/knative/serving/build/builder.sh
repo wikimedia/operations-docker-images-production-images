@@ -17,7 +17,9 @@ if [ $# -ne 2 ]; then
 fi
 
 # knative serving binaries
-for target in activator autoscaler controller webhook queue domain-mapping domain-mapping-webhook
+# Note: domain-mapping and domain-mapping-webhook were merged into the main
+# serving controller and webhook respectively (knative/serving#14082)
+for target in activator autoscaler controller webhook queue
 do
     pushd $1/$2/cmd/$target
     go build

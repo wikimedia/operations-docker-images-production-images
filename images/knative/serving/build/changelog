@@ -1,3 +1,10 @@
+knative-build (1.21.2-1) wikimedia; urgency=medium
+
+  * Upstream release 1.21.2
+  * Remove obsolete backport patches (now included in upstream)
+
+ -- dpogorzelski@wikimedia.org  Tue, 24 Mar 2026 14:30:00 +0000
+
 knative-build (1.7.2-6-20260322) wikimedia; urgency=medium
 
   * Weekly rebuild.

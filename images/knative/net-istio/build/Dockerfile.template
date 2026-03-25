@@ -1,6 +1,6 @@
 FROM {{ 'golang1.22' | image_tag }} as build
 
-{% set knative_netistio_version_git_tag = 'knative-v1.7.0' %}
+{% set knative_netistio_version_git_tag = 'knative-v1.21.1' %}
 {% set repo_base = '/go/github.com/knative' %}
 
 USER root
