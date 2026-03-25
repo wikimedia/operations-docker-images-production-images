@@ -1,3 +1,9 @@
+knative-net-istio-webhook (1.21.1-1) wikimedia; urgency=medium
+
+  * Rebuild with knative-net-istio-build:1.21.1-1
+
+ -- dpogorzelski@wikimedia.org  Wed, 25 Mar 2026 10:50:00 +0000
+
 knative-net-istio-webhook (1.7.0-3-20260322) wikimedia; urgency=medium
 
   * Weekly rebuild.

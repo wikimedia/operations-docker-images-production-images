@@ -1,3 +1,9 @@
+knative-serving-activator (1.21.2-1) wikimedia; urgency=medium
+
+  * Rebuild with knative-build:1.21.2-1 (domain-mapping merged into serving)
+
+ -- dpogorzelski@wikimedia.org  Wed, 25 Mar 2026 10:45:00 +0000
+
 knative-serving-activator (1.7.2-7-20260322) wikimedia; urgency=medium
 
   * Weekly rebuild.
