@@ -1,3 +1,9 @@
+k8s-controller-sidecars (0.0.3-20250601-s1-20260405) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 05 Apr 2026 06:00:35 +0000
+
 k8s-controller-sidecars (0.0.3-20250601-s1-20260329) wikimedia; urgency=medium
 
   * Weekly rebuild.
