@@ -1,3 +1,9 @@
+flink (1.20.3-wmf1-20260416) wikimedia; urgency=medium
+
+  * Install flink in blubber-compatible venv T418525
+
+ -- Atsuko Ito <atsuko@wikimedia.org>  Thu, 16 Apr 2026 15:21:18 +0100
+
 flink (1.20.3-wmf0-20260412) wikimedia; urgency=medium
 
   * Weekly rebuild.
