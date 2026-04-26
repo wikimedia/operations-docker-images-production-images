@@ -1,3 +1,9 @@
+openjdk-11-jdk (11.0.28-1-20260426) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 26 Apr 2026 06:00:12 +0000
+
 openjdk-11-jdk (11.0.28-1-20260419) wikimedia; urgency=medium
 
   * Weekly rebuild.
