@@ -1,3 +1,10 @@
+rsyslog (8.2504.0-1) wikimedia; urgency=medium
+
+  * Update to trixie
+  * Update to rsyslog/rsyslog-kafka 8.2504.0-1
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Mon, 04 May 2026 09:06:48 +0200
+
 rsyslog (8.2102.0-3-20260503) wikimedia; urgency=medium
 
   * Weekly rebuild.

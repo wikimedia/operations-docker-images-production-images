@@ -1,4 +1,4 @@
-FROM {{ "bullseye" | image_tag }}
+FROM {{ "trixie" | image_tag }}
 
 # We make the spool directories world-writable as we might want to run rsyslog as other users in some cases.
 RUN {{ "wmf-certificates rsyslog rsyslog-kafka" | apt_install }} && chown -R nobody. /var/spool/rsyslog \
