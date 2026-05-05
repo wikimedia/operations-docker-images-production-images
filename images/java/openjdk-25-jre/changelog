@@ -1,0 +1,5 @@
+openjdk-25-jre (0.1) wikimedia; urgency=medium
+
+  * Initial release.
+
+ -- Sebastian Trueg <trueg@wikimedia.org>  Tue, 05 May 2026 15:18:46 +0000
