@@ -1,3 +1,9 @@
+otelcol (0.102.0-2) wikimedia; urgency=medium
+
+  * Upgrade OS to Debian Trixie.
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Tue, 05 May 2026 15:37:38 +0200
+
 otelcol (0.102.0-1-20260503) wikimedia; urgency=medium
 
   * Weekly rebuild.

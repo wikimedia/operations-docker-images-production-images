@@ -1,8 +1,8 @@
-FROM {{ "bullseye" | image_tag }}
+FROM {{ "trixie" | image_tag }}
 
 ARG USER_UID=10001
 
-RUN echo "deb http://apt.wikimedia.org/wikimedia bullseye-wikimedia thirdparty/otelcol-contrib" > /etc/apt/sources.list.d/otelcol-contrib.list && \
+RUN echo "deb http://apt.wikimedia.org/wikimedia trixie-wikimedia thirdparty/otelcol-contrib" > /etc/apt/sources.list.d/otelcol-contrib.list && \
 	useradd --system --user-group --no-create-home --shell /sbin/nologin otelcol-contrib --uid ${USER_UID} && \
 	{{ "otelcol-contrib ca-certificates wmf-certificates" | apt_install }}
 COPY config.yaml /etc/otelcol-contrib/config.yaml
