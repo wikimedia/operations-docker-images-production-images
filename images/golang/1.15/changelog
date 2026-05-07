@@ -1,3 +1,9 @@
+golang1.15 (1.15-1-20260507) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 07 May 2026 12:14:50 +0000
+
 golang1.15 (1.15-1-20260503) wikimedia; urgency=medium
 
   * Weekly rebuild.
