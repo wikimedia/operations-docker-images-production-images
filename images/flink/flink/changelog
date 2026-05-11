@@ -1,3 +1,9 @@
+flink (2.0.0-wmf0) wikimedia; urgency=medium
+
+  * Build flink 2.0.0 image.
+
+ -- Balthazar Rouberol <brouberol@wikimedia.org>  Mon, 11 May 2026 09:31:00 +0100
+
 flink (1.20.3-wmf1-20260510) wikimedia; urgency=medium
 
   * Weekly rebuild.
