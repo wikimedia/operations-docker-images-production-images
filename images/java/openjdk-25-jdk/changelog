@@ -1,3 +1,9 @@
+openjdk-25-jdk (25.0.3-1-20260517) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 17 May 2026 06:00:12 +0000
+
 openjdk-25-jdk (25.0.3-1) wikimedia; urgency=medium
 
   * Initial release.

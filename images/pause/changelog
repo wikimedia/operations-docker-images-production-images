@@ -1,3 +1,9 @@
+pause (3.6-1-20260517) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 17 May 2026 06:00:16 +0000
+
 pause (3.6-1-20260510) wikimedia; urgency=medium
 
   * Weekly rebuild.
