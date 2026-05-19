@@ -1,3 +1,9 @@
+php8.3-cli (8.3.31-1) wikimedia; urgency=medium
+
+  * Rebuild to pick up new PHP packages (8.3.31) - T425754
+
+ -- swfrench <swfrench@wikimedia.org>  Tue, 19 May 2026 15:30:19 -0700
+
 php8.3-cli (8.3.30-1-20260517) wikimedia; urgency=medium
 
   * Weekly rebuild.
