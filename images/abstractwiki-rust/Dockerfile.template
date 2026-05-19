@@ -1,0 +1,10 @@
+FROM {{ 'trixie' | image_tag }}
+
+# The trixie-backports apt source is already enabled by the trixie base image,
+# so we only need to drop in a preferences file to promote it for rustc.
+ADD trixie-backports.pref /etc/apt/preferences.d/
+
+USER root
+RUN {{ "rustc cargo rustfmt ca-certificates git build-essential" | apt_install }}
+
+USER nobody

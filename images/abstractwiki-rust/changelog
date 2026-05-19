@@ -1,0 +1,5 @@
+abstractwiki-rust (1.94.1) wikimedia; urgency=high
+
+  * Rust 1.94.1 on Trixie, base image using 'rustc' from Debian backports
+
+ -- James D. Forrester <jforrester@wikimedia.org>  Mon, 18 May 2026 20:20:06 -0400

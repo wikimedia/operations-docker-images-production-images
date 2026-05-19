@@ -1,0 +1,21 @@
+# Pin the Rust toolchain (only) to trixie-backports so we get a current rustc
+# release (1.94.x line) rather than the frozen trixie one (1.85).
+#
+# NOTE on the Pin clause: trixie-backports' Release file advertises
+# `Suite: stable-backports` and `Codename: trixie-backports`. APT's `a=` maps
+# to Suite, so the widely-copied `Pin: release a=trixie-backports` form
+# silently matches nothing -- the pin then has no effect regardless of
+# priority (and we wasted three rebuilds discovering this). Match on Codename
+# instead via `n=trixie-backports`, which is what most online examples really
+# mean. This also keeps us pinned to trixie's backports specifically, so when
+# forky ships and `stable-backports` rolls to forky-backports, this pin
+# stops matching rather than silently following.
+#
+# Scope is intentionally narrow: only the Rust toolchain packages, so the
+# rest of the image continues to track trixie as normal. (The trixie base
+# image also ships /etc/apt/preferences.d/wikimedia with `Pin: release
+# o=Wikimedia` at priority 1001; that does not conflict because it matches
+# a different origin.)
+Package: rustc cargo rustfmt libstd-rust-* libstd-rust libstd-rust-dev librust-*
+Pin: release n=trixie-backports
+Pin-Priority: 1001
