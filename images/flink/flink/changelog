@@ -1,3 +1,9 @@
+flink (2.0.2-wmf0) wikimedia; urgency=medium
+
+   * Upgrade flink to 2.0.2 on top of openjdk-25-jre.
+
+ -- JavierMonton <jmonton@wikimedia.org>  Tue, 19 May 2026 10:55:34 +0200
+
 flink (2.0.0-wmf0-20260517) wikimedia; urgency=medium
 
   * Weekly rebuild.

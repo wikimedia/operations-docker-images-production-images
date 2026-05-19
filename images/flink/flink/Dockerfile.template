@@ -10,7 +10,7 @@
 {% set python_binary = python_prefix + '/bin/python3' %}
 {% set pip_binary = python_prefix + '/bin/pip3' %}
 
-{% set flink_version = '2.0.0' %}
+{% set flink_version = '2.0.2' %}
 
 {# scala_version is only used when downloading example artifacts.
    We do not include flink-scala in this distribution.  If you want
@@ -94,7 +94,7 @@ COPY --chown=root  examples/wikimedia {{ flink_home }}/examples/wikimedia
 
 # == Start of production image creation ==
 
-FROM {{ "openjdk-17-jre" | image_tag }}
+FROM {{ "openjdk-25-jre" | image_tag }}
 
 USER root
 
