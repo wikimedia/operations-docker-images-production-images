@@ -1,3 +1,9 @@
+abstractwiki-rust (1.94.1-20260524) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 24 May 2026 06:00:32 +0000
+
 abstractwiki-rust (1.94.1) wikimedia; urgency=high
 
   * Rust 1.94.1 on Trixie, base image using 'rustc' from Debian backports

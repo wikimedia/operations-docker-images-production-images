@@ -1,3 +1,9 @@
+flink (2.0.2-wmf0-20260524) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 24 May 2026 06:00:30 +0000
+
 flink (2.0.2-wmf0) wikimedia; urgency=medium
 
    * Upgrade flink to 2.0.2 on top of openjdk-25-jre.
