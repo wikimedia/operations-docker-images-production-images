@@ -1,6 +1,6 @@
-FROM {{ 'golang1.19' | image_tag }} as build
+FROM {{ 'golang1.24' | image_tag }} as build
 
-ENV SOURCE_VERSION=v2.10.0
+ENV SOURCE_VERSION=v2.14.0
 ENV SOURCE_REPO=https://github.com/kubernetes/kube-state-metrics.git
 
 RUN git clone $SOURCE_REPO && \
@@ -8,7 +8,7 @@ RUN git clone $SOURCE_REPO && \
     git checkout $SOURCE_VERSION && \
     make build-local
 
-FROM {{ "bookworm" | image_tag }}
+FROM {{ "trixie" | image_tag }}
 
 COPY --from=build /go/kube-state-metrics/kube-state-metrics /usr/bin/
 

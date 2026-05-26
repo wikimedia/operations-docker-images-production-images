@@ -1,3 +1,13 @@
+kube-state-metrics2.14 (2.14.0-1) wikimedia; urgency=medium
+
+  * Rename image to kube-state-metrics2.14 to support multiple versions
+  * Upgrade to v2.14.0 / Kubernetes v1.31
+  * Update to build with golang 1.24
+  * Update to trixie base image
+  * T388387
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Tue, 26 May 2026 12:09:28 +0200
+
 kube-state-metrics (2.10.0-1-20260524) wikimedia; urgency=medium
 
   * Weekly rebuild.
