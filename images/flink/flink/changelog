@@ -1,3 +1,10 @@
+flink (2.0.2-wmf1) wikimedia; urgency=medium
+
+   * Build Flink 2.0.2 on top of openjdk-21-jre-bookworm.
+     This fixes the issue with Python 3.11 and symlinks
+
+ -- JavierMonton <jmonton@wikimedia.org>  Tue, 26 May 2026 17:07:49 +0200
+
 flink (2.0.2-wmf0-20260524) wikimedia; urgency=medium
 
   * Weekly rebuild.

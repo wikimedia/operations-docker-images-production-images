@@ -94,7 +94,7 @@ COPY --chown=root  examples/wikimedia {{ flink_home }}/examples/wikimedia
 
 # == Start of production image creation ==
 
-FROM {{ "openjdk-25-jre" | image_tag }}
+FROM {{ "openjdk-21-jre-bookworm" | image_tag }}
 
 USER root
 
