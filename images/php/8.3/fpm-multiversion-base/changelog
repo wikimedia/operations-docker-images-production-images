@@ -1,3 +1,9 @@
+php8.3-fpm-multiversion-base (8.3.31-1-u1) wikimedia; urgency=medium
+
+  * Rebuild to switch to debian bookworm.
+
+ -- swfrench <swfrench@wikimedia.org>  Thu, 28 May 2026 09:27:42 -0700
+
 php8.3-fpm-multiversion-base (8.3.31-1-20260607) wikimedia; urgency=medium
 
   * Weekly rebuild.

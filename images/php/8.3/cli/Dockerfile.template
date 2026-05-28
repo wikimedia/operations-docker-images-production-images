@@ -1,4 +1,4 @@
-FROM {{ registry }}/bullseye:latest
+FROM {{ registry }}/bookworm:latest
 
 # We declare each php_ini variable we want to be able to modify
 # Note: error_reporting is using the numeric value for
@@ -19,14 +19,8 @@ ENV PHP__date__timezone=UTC \
     ENTRY_POINT_SCRIPT=/bin/entrypoint.php
 
 # Install all the php packages we need, and configure them.
-# NOTE: libpcre2-8-0 10.36 ships with debian bullseye and is already present
-# in the base image. However, component/php83 contains 10.42 backported from
-# bookworm to fix a regression introduced in 10.35 (fixed in 10.39). We need to
-# explicitly request installation here in order to upgrade to the package from
-# component/php83. See T386006.
 {% set packages|replace('\n', ' ') -%}
 ca-certificates
-libpcre2-8-0
 php8.3-cli
 php8.3-bcmath
 php8.3-bz2
@@ -46,7 +40,7 @@ php8.3-msgpack
 php8.3-redis
 php8.3-uuid
 {%- endset -%}
-RUN echo 'deb http://apt.wikimedia.org/wikimedia bullseye-wikimedia component/php83' > /etc/apt/sources.list.d/php83.list &&\
+RUN echo 'deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia component/php83' > /etc/apt/sources.list.d/php83.list &&\
     {{ packages | apt_install }} && \
     echo 'memcached.store_retry_count=0' >> /etc/php/8.3/mods-available/memcached.ini && \
     sed -i"" s/compact_strings=On/compact_strings=Off/ /etc/php/8.3/mods-available/igbinary.ini && \
