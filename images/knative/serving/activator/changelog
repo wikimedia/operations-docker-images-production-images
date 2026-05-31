@@ -1,3 +1,9 @@
+knative-serving-activator (1.21.2-1-20260531) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 31 May 2026 06:00:12 +0000
+
 knative-serving-activator (1.21.2-1-20260524) wikimedia; urgency=medium
 
   * Weekly rebuild.
