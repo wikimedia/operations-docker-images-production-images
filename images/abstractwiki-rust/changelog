@@ -1,3 +1,9 @@
+abstractwiki-rust (1.94.1-1) wikimedia; urgency=medium
+
+  * Add rust-clippy and clang (T427998)
+
+ -- James D. Forrester <jforrester@wikimedia.org>  Tue, 02 Jun 2026 17:05:15 -0400
+
 abstractwiki-rust (1.94.1-20260531) wikimedia; urgency=medium
 
   * Weekly rebuild.

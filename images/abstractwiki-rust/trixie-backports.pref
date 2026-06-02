@@ -16,6 +16,6 @@
 # image also ships /etc/apt/preferences.d/wikimedia with `Pin: release
 # o=Wikimedia` at priority 1001; that does not conflict because it matches
 # a different origin.)
-Package: rustc cargo rustfmt libstd-rust-* libstd-rust libstd-rust-dev librust-*
+Package: rustc cargo rustfmt rust-clippy libstd-rust-* libstd-rust libstd-rust-dev librust-*
 Pin: release n=trixie-backports
 Pin-Priority: 1001
