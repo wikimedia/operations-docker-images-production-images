@@ -1,3 +1,9 @@
+abstractwiki-rust (1.94.1-2) wikimedia; urgency=medium
+
+  * Add cargo-chef 0.1.77, cloned from its vendored-sources repo and built offline (T427990)
+
+ -- James D. Forrester <jforrester@wikimedia.org>  Wed, 03 Jun 2026 12:00:00 -0400
+
 abstractwiki-rust (1.94.1-1-20260607) wikimedia; urgency=medium
 
   * Weekly rebuild.

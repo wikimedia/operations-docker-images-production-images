@@ -7,4 +7,22 @@ ADD trixie-backports.pref /etc/apt/preferences.d/
 USER root
 RUN {{ "rustc cargo rustfmt rust-clippy clang ca-certificates git build-essential" | apt_install }}
 
+
+### (T427990) Install cargo-chef, built offline from vendored sources
+
+# Cloned from the WMF-hosted vendored-sources repo (pinned to a tag) and compiled
+# fully offline against its committed vendor/ tree. The clone is the only network
+# step and it targets WMF infra; the compile itself reaches no network, so
+# nothing comes from crates.io or a prebuilt GitHub binary. --locked --offline
+# guarantees that and fails the build if Cargo.lock and the vendored tree have
+# drifted apart. See that repo's refresh.sh for how to bump the version, then
+# bump CARGO_CHEF_REF below to the new tag. git is already installed above.
+ARG CARGO_CHEF_REPO=https://gitlab.wikimedia.org/repos/abstract-wiki/vendored-cargo-chef.git
+ARG CARGO_CHEF_REF=v0.1.77-wikimedia
+RUN git clone "$CARGO_CHEF_REPO" /tmp/cargo-chef \
+    && git -C /tmp/cargo-chef checkout "$CARGO_CHEF_REF" \
+    && cd /tmp/cargo-chef \
+    && cargo install --path . --locked --offline --root /usr/local \
+    && rm -rf /tmp/cargo-chef
+
 USER nobody
