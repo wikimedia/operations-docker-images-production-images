@@ -1,3 +1,9 @@
+abstractwiki-rust (1.94.1-1-20260607) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 07 Jun 2026 06:00:33 +0000
+
 abstractwiki-rust (1.94.1-1) wikimedia; urgency=medium
 
   * Add rust-clippy and clang (T427998)
