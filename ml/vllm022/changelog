@@ -1,0 +1,12 @@
+amd-vllm022 (gfx90agfx942rocm7.2.0pytorch2.10.0flash-attn2.8.3aiter0.1.13vllm0.22.1) wikimedia; urgency=high
+
+  * Upgrade of the previous ml/amd-vllm014 image to support latest software stack as of June 2026.
+  * Upgraded packages: ROCm 7.0.0 -> 7.2.0, torch 2.10.0+rocm7.0 -> 2.10.0+git8514f05, aiter 0.1.7 -> 0.1.13, vLLM 0.14 -> 0.22.1
+  * Removed packages: mori 0.1
+  * Continues to target both MI210 (gfx90a) and MI300X (gfx942) GPUs.
+  * Added a global version manifest to make easier to upgrade packages.
+  * Installs vLLM and its dependencies (PyTorch, FlashAttention, aiter) from upstream's pre-built ROCm wheels instead of compiling them from source, reducing image build time from ~4 hours to ~12 minutes.
+  * Switched from python3.11 (Debian Bookworm default) to python3.12, provisioned via uv-managed CPython, because the upstream pre-built ROCm wheels are cp312-only.
+  * Added performance environment variables in runtime image as defined upstream.
+
+ -- Kevin Bazira <kbazira@wikimedia.org>  Thur, 11 Jun 2026 10:03:05 +0300

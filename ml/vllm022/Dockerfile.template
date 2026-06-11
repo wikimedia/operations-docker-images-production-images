@@ -1,0 +1,132 @@
+########################################################################
+# debian-vllm-image: ROCm + vLLM (pre-built wheel)                     #
+#                                                                      #
+# The vLLM 0.22 pre-built wheel bundles:                               #
+# PyTorch, FlashAttention, aiter, vLLM                                 #
+#                                                                      #
+# Note: Multiple RUN commands are intentionally kept separate to avoid #
+# hitting the 4GB (compressed) Docker layer limit required by the      #
+# Wikimedia Docker registry. (T426766#11951605)                        #
+########################################################################
+
+# Global version manifest. Bump these for upgrades.
+ARG BASE_IMAGE=amd-pytorch-common
+ARG VLLM_VERSION=0.22.1
+ARG ROCM_VARIANT=rocm722
+ARG ROCM_APT_VERSION=7.2
+ARG ROCM_PATH_VERSION=7.2.0
+ARG PYTORCH_ROCM_ARCH=gfx90a;gfx942
+
+FROM {{ registry }}/${BASE_IMAGE} as builder
+
+# Inherit global version defaults
+ARG VLLM_VERSION
+ARG ROCM_VARIANT
+
+WORKDIR /srv
+
+# Install Python 3 and uv for managed Python 3.12 and wheel installs
+RUN {{ "python3-pip ca-certificates" | apt_install }} \
+    && pip install uv --break-system-packages \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create Python 3.12 venv using uv-managed CPython.
+# The vLLM ROCm pre-built wheels require Python 3.12 (cp312 ABI).
+RUN uv venv /srv/venv --python 3.12 --seed --managed-python
+
+# Install vLLM from the pre-built ROCm wheel.
+# vllm==X.Y.Z matches X.Y.Z+rocmNNN because PEP 440 ignores local version
+# tags during matching. --index-strategy unsafe-best-match prioritizes the
+# extra-index over PyPI, preventing silent CUDA-wheel fallback
+# (https://github.com/vllm-project/vllm/issues/44660).
+RUN uv pip install vllm==${VLLM_VERSION} \
+    --python /srv/venv \
+    --extra-index-url "https://wheels.vllm.ai/rocm/${VLLM_VERSION}/${ROCM_VARIANT}" \
+    --index-strategy unsafe-best-match
+
+# Install AMD SMI Python interface for GPU monitoring
+RUN uv pip install amdsmi --python /srv/venv
+
+# Relocate the uv-managed CPython out of /root (mode 700, untraversable by the
+# unprivileged user "somebody" at runtime) to a stable /opt path, and repoint
+# the venv's metadata at the new location so the venv stays self-consistent
+# when copied into the runtime stage. This fixes three baked-in references to
+# the original /root path: filesystem permissions (/root -> /opt), the venv's
+# recorded interpreter home (pyvenv.cfg), and the bin/python symlinks. The
+# fixed name "/opt/python3.12" also drops uv's version-specific
+# "cpython-3.12-..." directory segment so nothing downstream hardcodes it.
+RUN UVPY="$(echo /root/.local/share/uv/python/cpython-3.12-*)" \
+    && mkdir -p /opt \
+    && cp -a "$UVPY" /opt/python3.12 \
+    && sed -i "s|^home = .*|home = /opt/python3.12/bin|" /srv/venv/pyvenv.cfg \
+    && ln -sf /opt/python3.12/bin/python3.12 /srv/venv/bin/python \
+    && ln -sf /opt/python3.12/bin/python3.12 /srv/venv/bin/python3 \
+    && ln -sf /opt/python3.12/bin/python3.12 /srv/venv/bin/python3.12
+
+
+# Final stage: Create minimal runtime image
+FROM {{ registry }}/${BASE_IMAGE} as runtime
+
+# Inherit global version defaults
+ARG ROCM_APT_VERSION
+ARG ROCM_PATH_VERSION
+ARG PYTORCH_ROCM_ARCH
+
+WORKDIR /srv
+
+# Mirror upstream: create "render" group and add Wikimedia ROCm 7.2 mirror
+RUN groupadd -g 109 render \
+    && echo "deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia thirdparty/amd-rocm72" \
+       > /etc/apt/sources.list.d/rocm.list
+
+# ROCm runtime libs, split so no single layer is oversized. (T426766#11951605)
+RUN {{ "wmf-certificates miopen-hip rccl rocrand rocm-smi-lib libopenmpi3 libopenmpi-dev build-essential" | apt_install }}
+RUN {{ "rocm-libs" | apt_install }}
+
+# Copy the relocated CPython 3.12 to /opt (traversable by user "somebody" ; the venv
+# was already repointed at this path in the builder). PYTHONHOME below tells the
+# interpreter where its stdlib lives.
+COPY --from=builder --chown=somebody /opt/python3.12 /opt/python3.12
+
+# Copy Python venv from builder (includes vLLM, PyTorch, and all Python deps).
+COPY --from=builder --chown=somebody /srv/venv /srv/venv
+
+# Set environment for ROCm and vLLM
+ENV PYTHONHOME=/opt/python3.12 \
+    ROCM_PATH=/opt/rocm-${ROCM_PATH_VERSION} \
+    VLLM_TARGET_DEVICE=rocm \
+    PYTORCH_ROCM_ARCH=${PYTORCH_ROCM_ARCH} \
+    PATH=/srv/venv/bin:/opt/rocm-${ROCM_PATH_VERSION}/llvm/bin:/opt/rocm-${ROCM_PATH_VERSION}/bin:${PATH} \
+    LD_LIBRARY_PATH=/srv/venv/lib/python3.12/site-packages/torch/lib:/opt/rocm-${ROCM_PATH_VERSION}/lib:/usr/local/lib:
+
+# Remove large unused static libraries (.so files are all that's needed at runtime)
+RUN rm -f /opt/rocm-${ROCM_PATH_VERSION}/lib/*.a
+
+# Writable caches for the unprivileged user. This wheel image JIT-compiles
+# Triton kernels on first inference, so user "somebody"  needs a writable cache.
+ENV HOME=/srv \
+    XDG_CACHE_HOME=/srv/.cache \
+    XDG_CONFIG_HOME=/srv/.cache/config \
+    HF_HOME=/srv/.cache/huggingface \
+    VLLM_CACHE_ROOT=/srv/.cache/vllm \
+    TRITON_CACHE_DIR=/srv/.cache/triton \
+    VLLM_NO_USAGE_STATS=1 \
+    DO_NOT_TRACK=1
+# Triton writes its build cache to $HOME/.triton and vLLM's usage reporter to
+# $HOME/.config (neither honours XDG_CACHE_HOME) so user "somebody"  must own /srv
+# itself, not just /srv/.cache. Chowning /srv removes the whole class of
+# "tool wants a new dotdir in HOME" permission failures. The explicit
+# TRITON_CACHE_DIR redirects Triton's cache under the cache tree as well.
+RUN mkdir -p /srv/.cache/huggingface /srv/.cache/vllm /srv/.cache/triton /srv/.cache/config \
+    && chown -R somebody /srv
+
+# Set performance environment variables as defined in upstream vLLM ROCm dockerfiles
+ENV RAY_EXPERIMENTAL_NOSET_ROCR_VISIBLE_DEVICES=1 \
+    RAY_EXPERIMENTAL_NOSET_HIP_VISIBLE_DEVICES=1 \
+    TOKENIZERS_PARALLELISM=false \
+    SAFETENSORS_FAST_GPU=1 \
+    HIP_FORCE_DEV_KERNARG=1 \
+    HSA_NO_SCRATCH_RECLAIM=1
+
+# Switch to user "somebody" to avoid running the container as root.
+USER {{ "somebody" | uid }}
