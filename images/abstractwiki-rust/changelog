@@ -1,3 +1,9 @@
+abstractwiki-rust (1.94.1-2-20260614) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 14 Jun 2026 06:00:33 +0000
+
 abstractwiki-rust (1.94.1-2) wikimedia; urgency=medium
 
   * Add cargo-chef 0.1.77, cloned from its vendored-sources repo and built offline (T427990)
