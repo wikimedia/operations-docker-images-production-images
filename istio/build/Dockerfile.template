@@ -1,13 +1,13 @@
-FROM {{ registry }}/golang1.21 as build
+FROM {{ registry }}/golang1.24 as build
 
 # The VERSION env value is injected in pilot's binary to allow it to answer
 # to /version API calls. The istioctl tool calls /version when trying to figure
 # out the version of istiod (pilot is part of it), in order to decide what upgrade
 # path is needed. By default version is something like 1.9.0-dev, and it doesn't
 # track patch versions but only major.minor.
-{% set istio_make_variables = 'VERSION=1.24.2 BUILD_WITH_CONTAINER=0' %}
+{% set istio_make_variables = 'VERSION=1.29.4 BUILD_WITH_CONTAINER=0' %}
 {% set repo_base = '/go/github.com/istio' %}
-{% set istio_version_git_tag = '1.24.2' %}
+{% set istio_version_git_tag = '1.29.4' %}
 
 WORKDIR /go
 

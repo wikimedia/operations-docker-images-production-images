@@ -1,7 +1,7 @@
 FROM {{ "build" | image_tag }} as build
 
-FROM {{ registry }}/bookworm:latest
-# This is basically https://github.com/istio/istio/blob/1.24.2/pilot/docker/Dockerfile.proxyv2
+FROM {{ registry }}/trixie:latest
+# This is basically https://github.com/istio/istio/blob/1.29.4/pilot/docker/Dockerfile.proxyv2
 
 ENV BUILD_DIR=/go/github.com/istio/istio \
     # Environment variable indicating the exact proxy sha - for debugging or version-specific configs
@@ -13,8 +13,8 @@ USER root
 RUN {{ "istio" | add_user }}
 
 # Istio's base docker image installs a lot of tools, we selected only the few that seemed mandatory.
-# See https://github.com/istio/istio/blob/1.24.2/docker/Dockerfile.base
-RUN {{ "iptables iproute2 wmf-certificates" | apt_install }}; \
+# See https://github.com/istio/istio/blob/1.29.4/docker/Dockerfile.base
+RUN {{ "iptables nftables iproute2 wmf-certificates" | apt_install }}; \
     # By default istio adds the following in its Dockerfiles:
     # echo "istio-proxy ALL=NOPASSWD: /usr/sbin/iptables * " >> /etc/sudoers
     # The version below is tailored for our use case (namely allowing only iptables commands).
