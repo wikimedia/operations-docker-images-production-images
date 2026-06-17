@@ -4,4 +4,4 @@ Description: Basic haproxy container.
  assumed that the user will provide this. Config is loaded from
  /etc/haproxy/haproxy.cfg and /etc/haproxy/conf.d.
 
-Maintainer: Hugh Nowlan <hnowlan@wikimedia.org>
+Maintainer: SRE Traffic <sre-traffic@wikimedia.org>
