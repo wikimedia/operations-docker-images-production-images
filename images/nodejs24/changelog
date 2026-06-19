@@ -1,3 +1,10 @@
+nodejs24-slim (24.17.0-1) wikimedia; urgency=medium
+
+  * Bump the version of the image so that the latest security import is
+    more visible in the container version
+
+ -- Moritz Muehlenhoff <moritz@wikimedia.org>  Fri, 19 June 2026 10:39:55 +0000
+
 nodejs24-slim (0.1.0-20260614) wikimedia; urgency=medium
 
   * Weekly rebuild.
