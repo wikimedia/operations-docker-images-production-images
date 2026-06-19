@@ -1,3 +1,9 @@
+amd-vllm014 (gfx90agfx942rocm7.0.0pytorch2.10.0mori0.1flash-attn2.8.3aiter0.1.7vllm0.14-3) wikimedia; urgency=high
+
+  * Rebuild with base image that uses deb.debian.org in apt sources instead of the deprecated mirrors.wikimedia.org (T429667)
+
+ -- Kevin Bazira <kbazira@wikimedia.org>  Fri, 19 Jun 2026 10:40:02 +0300
+
 amd-vllm014 (gfx90agfx942rocm7.0.0pytorch2.10.0mori0.1flash-attn2.8.3aiter0.1.7vllm0.14-2) wikimedia; urgency=high
 
   * Add ROCm build dependencies to the runtime image to support AITER kernel compilation. (T419650)
