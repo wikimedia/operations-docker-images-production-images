@@ -82,6 +82,8 @@ RUN groupadd -g 109 render \
 # ROCm runtime libs, split so no single layer is oversized. (T426766#11951605)
 RUN {{ "wmf-certificates miopen-hip rccl rocrand rocm-smi-lib libopenmpi3 libopenmpi-dev build-essential" | apt_install }}
 RUN {{ "rocm-libs" | apt_install }}
+# Also install ROCm build dependencies to support AITER kernel compilation. (T419650)
+RUN {{ "libdrm-amdgpu1 rocm-dev rocm-device-libs hip-dev hipsparse-dev rocthrust-dev rocprim-dev rocblas-dev hipblas-dev rocsparse-dev hipblaslt-dev hipsolver-dev" | apt_install }}
 
 # Copy the relocated CPython 3.12 to /opt (traversable by user "somebody" ; the venv
 # was already repointed at this path in the builder). PYTHONHOME below tells the

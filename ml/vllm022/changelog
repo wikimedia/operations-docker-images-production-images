@@ -1,3 +1,9 @@
+amd-vllm022 (gfx90agfx942rocm7.2.0pytorch2.10.0flash-attn2.8.3aiter0.1.13vllm0.22.1-3) wikimedia; urgency=high
+
+  * Add ROCm build deps for AITER kernel compilation to vllm022 image as we did for vllm014 image in T419650
+
+ -- Kevin Bazira <kbazira@wikimedia.org>  Fri, 19 Jun 2026 10:40:02 +0300
+
 amd-vllm022 (gfx90agfx942rocm7.2.0pytorch2.10.0flash-attn2.8.3aiter0.1.13vllm0.22.1-2) wikimedia; urgency=high
 
   * Rebuild with base image that uses deb.debian.org in apt sources instead of the deprecated mirrors.wikimedia.org (T429667)
