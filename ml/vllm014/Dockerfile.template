@@ -2,7 +2,7 @@
 # wmf-debian-vllm: ROCm, PyTorch, MoRi, FlashAttention, aiter, vLLM    #
 #                                                                      #
 # Note: Multiple RUN commands are intentionally kept separate to avoid #
-# hitting the 12GB (compressed) Docker layer limit required by the     #
+# hitting the 4.6GB (compressed) Docker layer limit required by the    #
 # Wikimedia Docker registry.                                           #
 ########################################################################
 FROM {{ registry }}/amd-pytorch-common as builder
@@ -42,35 +42,6 @@ RUN pip install --no-cache-dir /opt/rocm-7.0.0/share/amd_smi
 # Install Python build packages required by both FlashAttention and vLLM
 RUN pip install --no-cache-dir setuptools_scm packaging \
     "cmake<4" ninja wheel "setuptools<80" pybind11 Cython
-
-# Chunck torch libs (hipblaslt and rocblas) because they are large.
-# The goal is to copy them separately in the runtime stage to avoid hitting
-# the compressed layer limit in the Wikimedia Docker registry. (T415627#11594815)
-FROM builder AS torch-libs-chunker
-# Chunk entire hipblaslt and rocblas directories from PyTorch installation
-# Define paths for clarity. Using Python 3.11 from bookworm base.
-ENV TORCH_LIB_PATH="/srv/venv/lib/python3.11/site-packages/torch/lib"
-ENV HIPBLASLT_FULL_PATH="${TORCH_LIB_PATH}/hipblaslt"
-ENV ROCBLAS_FULL_PATH="${TORCH_LIB_PATH}/rocblas"
-
-# Create parent directory for the torch lib chunks
-RUN mkdir -p /srv/torch_lib_chunks
-
-# Move the entire hipblaslt directory to the chunk location
-RUN if [ -d "${HIPBLASLT_FULL_PATH}" ]; then \
-        mv "${HIPBLASLT_FULL_PATH}" /srv/torch_lib_chunks/hipblaslt && \
-        echo "Moved ${HIPBLASLT_FULL_PATH} to /srv/torch_lib_chunks/hipblaslt" ; \
-    else \
-        echo "Warning: Directory ${HIPBLASLT_FULL_PATH} not found." ; \
-    fi
-
-# Move the entire rocblas directory to the chunk location
-RUN if [ -d "${ROCBLAS_FULL_PATH}" ]; then \
-        mv "${ROCBLAS_FULL_PATH}" /srv/torch_lib_chunks/rocblas && \
-        echo "Moved ${ROCBLAS_FULL_PATH} to /srv/torch_lib_chunks/rocblas" ; \
-    else \
-        echo "Warning: Directory ${ROCBLAS_FULL_PATH} not found." ; \
-    fi
 
 # Build MoRI in a separate stage
 FROM builder AS mori-builder
@@ -119,11 +90,68 @@ RUN git clone --branch main https://github.com/vllm-project/vllm.git /srv/vllm \
     && git checkout 6c0064571 \
     && git submodule update --init \
     && pip install --no-cache-dir -r requirements/rocm.txt \
+    && pip install --no-cache-dir --pre torch==2.10.0+rocm7.0 \
+        --index-url https://download.pytorch.org/whl/rocm7.0 \
+        --extra-index-url https://pypi.org/simple \
     && GPU_ARCHS="gfx90a;gfx942" python3 setup.py bdist_wheel \
     && mkdir -p /srv/wheels \
     && mv dist/*.whl /srv/wheels \
     && cd /srv \
     && rm -rf /srv/vllm
+
+# Assemble the complete venv: install all four wheels into the ROCm-torch venv,
+# then reassert ROCm torch (the wheels pull CUDA torch as a dep) and strip the
+# leftover CUDA packages (nvidia/, cupy*) that the wheels' deps dragged in.
+# Verified safe to remove: imports of vllm/torch/aiter/flash_attn/numpy/transformers
+# all succeed without them, and torch stays 2.10.0+rocm7.0.
+FROM builder AS venv-assembler
+COPY --from=mori-builder /srv/wheels /srv/wheels
+COPY --from=flashattention-builder /srv/wheels /srv/wheels
+COPY --from=aiter-builder /srv/wheels /srv/wheels
+COPY --from=vllm-builder /srv/wheels /srv/wheels
+RUN pip install --no-cache-dir /srv/wheels/*.whl \
+    && pip install --no-cache-dir --pre torch==2.10.0+rocm7.0 \
+        --index-url https://download.pytorch.org/whl/rocm7.0 \
+        --extra-index-url https://pypi.org/simple \
+    && pip uninstall -y torchvision \
+    && pip uninstall -y cupy-cuda12x 2>/dev/null || true \
+    && rm -rf /srv/venv/lib/python3.11/site-packages/nvidia \
+    && rm -rf /srv/venv/lib/python3.11/site-packages/cupy \
+    && rm -rf /srv/venv/lib/python3.11/site-packages/cupy_backends \
+    && rm -rf /srv/wheels
+
+# Chunk the large directories out of the assembled venv so each can be copied
+# as a separate layer in the runtime stage, keeping every layer under the
+# compressed registry limit. (T415627#11594815)
+# Sizes (from du on the built venv):
+#   torch/lib/hipblaslt        3.8G
+#   torch/lib/libmagma.so      1.3G  + aotriton.images 889M + libMIOpen.so 910M
+#       + librocsolver.so 725M -> ~3.8G grouped
+#   aiter                      3.5G
+FROM venv-assembler AS venv-chunker
+ENV TORCH_LIB_PATH="/srv/venv/lib/python3.11/site-packages/torch/lib"
+ENV SITE_PACKAGES="/srv/venv/lib/python3.11/site-packages"
+
+RUN mkdir -p /srv/chunks/hipblaslt_chunk \
+             /srv/chunks/torchlib_chunk \
+             /srv/chunks/aiter_chunk
+
+# Chunk 1: hipblaslt (3.8G)
+RUN if [ -d "${TORCH_LIB_PATH}/hipblaslt" ]; then \
+        mv "${TORCH_LIB_PATH}/hipblaslt" /srv/chunks/hipblaslt_chunk/hipblaslt ; \
+    else echo "Warning: hipblaslt not found." ; fi
+
+# Chunk 2: largest remaining torch/lib artifacts (~3.8G grouped)
+RUN for item in libmagma.so aotriton.images libMIOpen.so librocsolver.so; do \
+        if [ -e "${TORCH_LIB_PATH}/${item}" ]; then \
+            mv "${TORCH_LIB_PATH}/${item}" /srv/chunks/torchlib_chunk/${item} ; \
+        else echo "Warning: ${item} not found." ; fi ; \
+    done
+
+# Chunk 3: aiter (3.5G)
+RUN if [ -d "${SITE_PACKAGES}/aiter" ]; then \
+        mv "${SITE_PACKAGES}/aiter" /srv/chunks/aiter_chunk/aiter ; \
+    else echo "Warning: aiter not found." ; fi
 
 # Final stage: Create minimal runtime image
 FROM {{ registry }}/amd-pytorch-common as runtime
@@ -147,31 +175,23 @@ RUN echo "deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia thirdparty/a
 # We only need the .so files for runtime inference.
 RUN rm -f /opt/rocm-7.0.0/lib/*.a
 
-# Copy venv (main structure; torch/lib will be missing hipblaslt and rocblas because they were moved in torch-libs-chunker stage)
-COPY --from=torch-libs-chunker --chown=somebody /srv/venv /srv/venv
+# Layer 1 (base): slim venv with the large chunks removed (~3G)
+COPY --from=venv-chunker --chown=somebody /srv/venv /srv/venv
 
-# Define runtime paths corresponding to torch-libs-chunker paths. Using builder's Python 3.11 from bookworm base.
-# This directory should typically exist after copying /srv/venv.
 ARG TORCH_LIB_PATH="/srv/venv/lib/python3.11/site-packages/torch/lib"
+ARG SITE_PACKAGES="/srv/venv/lib/python3.11/site-packages"
 
-# Restore hipblaslt and rocblas directories to torch/lib/ for ROCm-enabled PyTorch functionality
-COPY --from=torch-libs-chunker --chown=somebody /srv/torch_lib_chunks/hipblaslt/ "${TORCH_LIB_PATH}/hipblaslt/"
-COPY --from=torch-libs-chunker --chown=somebody /srv/torch_lib_chunks/rocblas/ "${TORCH_LIB_PATH}/rocblas/"
+# Layer 2: hipblaslt (3.8G)
+COPY --from=venv-chunker --chown=somebody /srv/chunks/hipblaslt_chunk/hipblaslt/ "${TORCH_LIB_PATH}/hipblaslt/"
 
-# Copy pre-built wheels for MoRI, FlashAttention, aiter, and vLLM
-COPY --from=mori-builder --chown=somebody /srv/wheels /srv/wheels
-COPY --from=flashattention-builder --chown=somebody /srv/wheels /srv/wheels
-COPY --from=aiter-builder --chown=somebody /srv/wheels /srv/wheels
-COPY --from=vllm-builder --chown=somebody /srv/wheels /srv/wheels
+# Layer 3: grouped torch/lib artifacts (~3.8G)
+COPY --from=venv-chunker --chown=somebody /srv/chunks/torchlib_chunk/ "${TORCH_LIB_PATH}/"
+
+# Layer 4: aiter (3.5G)
+COPY --from=venv-chunker --chown=somebody /srv/chunks/aiter_chunk/aiter/ "${SITE_PACKAGES}/aiter/"
 
 # Switch to user "somebody" to avoid running the container as root
 USER {{ "somebody" | uid }}
-
-# Install Python packages from wheels and uninstall unused package torchvision
-RUN pip install --no-cache-dir /srv/wheels/*.whl \
-    && pip uninstall -y torchvision \
-    # To reduce the image size, remove the wheel files as they are no longer needed
-    && rm -rf /srv/wheels/*
 
 # Set performance environment variables as defined in upstream vLLM ROCm dockerfiles
 ENV RAY_EXPERIMENTAL_NOSET_ROCR_VISIBLE_DEVICES=1 \

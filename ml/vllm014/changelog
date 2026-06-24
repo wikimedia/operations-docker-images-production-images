@@ -1,6 +1,7 @@
 amd-vllm014 (gfx90agfx942rocm7.0.0pytorch2.10.0mori0.1flash-attn2.8.3aiter0.1.7vllm0.14-3) wikimedia; urgency=high
 
   * Rebuild with base image that uses deb.debian.org in apt sources instead of the deprecated mirrors.wikimedia.org (T429667)
+  * Replace the previous torch-libs-chunker stage (which only chunked hipblaslt/rocblas) with the broader venv-chunker. This drops the largest uncompressed layer from 22GB to 9.96GB enabling us to publish the image to the WMF registry.
 
  -- Kevin Bazira <kbazira@wikimedia.org>  Fri, 19 Jun 2026 10:40:02 +0300
 
