@@ -1,0 +1,7 @@
+kube-state-metrics2.18 (2.18.0-1) wikimedia; urgency=medium
+
+  * Upgrade to v2.18.0 / Kubernetes v1.34
+  * T427405
+
+ -- Blake Jensen <blake@wikimedia.org>  Wed, 24 Jun 2026 11:34:00 +0100
+
