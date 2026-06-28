@@ -1,3 +1,9 @@
+nodejs22-slim (22.23.0-1-20260628) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 28 Jun 2026 06:00:10 +0000
+
 nodejs22-slim (22.23.0-1-20260621) wikimedia; urgency=medium
 
   * Weekly rebuild.
