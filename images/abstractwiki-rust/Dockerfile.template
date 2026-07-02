@@ -5,7 +5,7 @@ FROM {{ 'trixie' | image_tag }}
 ADD trixie-backports.pref /etc/apt/preferences.d/
 
 USER root
-RUN {{ "rustc cargo rustfmt rust-clippy clang ca-certificates git build-essential" | apt_install }}
+RUN {{ "rustc cargo rustfmt rust-clippy rust-src clang rust-llvm wasi-libc ca-certificates git build-essential" | apt_install }}
 
 
 ### (T427990) Install cargo-chef, built offline from vendored sources
@@ -24,5 +24,49 @@ RUN git clone "$CARGO_CHEF_REPO" /tmp/cargo-chef \
     && cd /tmp/cargo-chef \
     && cargo install --path . --locked --offline --root /usr/local \
     && rm -rf /tmp/cargo-chef
+
+
+### (T430145) Bake the wasm32-wasip1 Rust std, built by this image's own rustc
+
+# A prebuilt upstream std can't be used: Rust's Strict Version Hash only accepts
+# a std compiled by this exact rustc. So we compile it from rust-src at build
+# time via `-Z build-std` (unlocked on stable rustc with RUSTC_BOOTSTRAP=1) and
+# install the .rlibs into the sysroot, after which a plain
+# `cargo build --target wasm32-wasip1` links with no rustup present. std's own
+# crates.io deps aren't in Debian at matching versions, so they're vendored
+# (locked, WMF-hosted) and consumed offline via a cargo source replacement --
+# same hermetic pattern as cargo-chef above; bump RUST_STD_VENDOR_REF in lockstep
+# with the rustc version (see that repo's refresh.sh). wasi-libc supplies the
+# self-contained crt objects + libc.a (not SVH-bound). The wasm linker is
+# rust-lld from the version-locked rust-llvm package (its /usr/bin/rust-lld
+# tracks the LLVM this rustc was built with, currently lld-21); rustc looks for
+# it in the sysroot bin, so we symlink it there.
+# std is built with -Cembed-bitcode=yes to match rustup's distributed std, so
+# downstream fat-LTO release builds can fold it into their LTO unit -- a plain
+# build-std omits bitcode and breaks LTO, and disabling LTO downstream is not an
+# option as it would change the shipped interpreter's size/perf profile.
+ARG RUST_STD_VENDOR_REPO=https://gitlab.wikimedia.org/repos/abstract-wiki/vendored-rust-std.git
+ARG RUST_STD_VENDOR_REF=v1.94.1-wikimedia
+RUN set -eux; \
+    host="$(rustc -vV | sed -n 's/^host: //p')"; \
+    install -d "/usr/lib/rustlib/$host/bin"; \
+    ln -s /usr/bin/rust-lld "/usr/lib/rustlib/$host/bin/rust-lld"; \
+    # Stage wasi-libc's crt objects + libc.a into self-contained/ FIRST, so the
+    # wasm link during build-std itself succeeds (and doubles as a link check).
+    install -d /usr/lib/rustlib/wasm32-wasip1/lib/self-contained; \
+    cp -a "$(dirname "$(dpkg -L wasi-libc | grep -m1 crt1-command.o)")"/. \
+        /usr/lib/rustlib/wasm32-wasip1/lib/self-contained/; \
+    git clone "$RUST_STD_VENDOR_REPO" /tmp/rust-std-vendor; \
+    git -C /tmp/rust-std-vendor checkout "$RUST_STD_VENDOR_REF"; \
+    mkdir -p /tmp/build-std/src; cd /tmp/build-std; \
+    printf '[package]\nname="build-std"\nversion="0.0.0"\nedition="2021"\n' > Cargo.toml; \
+    printf 'fn main() {}\n' > src/main.rs; \
+    RUSTC_BOOTSTRAP=1 RUSTFLAGS='-Cembed-bitcode=yes' \
+    cargo build --release --offline --target wasm32-wasip1 \
+        -Z build-std=std,panic_abort \
+        --config 'source.crates-io.replace-with="vendored"' \
+        --config 'source.vendored.directory="/tmp/rust-std-vendor/vendor"'; \
+    cp target/wasm32-wasip1/release/deps/*.rlib /usr/lib/rustlib/wasm32-wasip1/lib/; \
+    rm -rf /tmp/rust-std-vendor /tmp/build-std
 
 USER nobody

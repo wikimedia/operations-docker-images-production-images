@@ -1,3 +1,13 @@
+abstractwiki-rust (1.94.1-3) wikimedia; urgency=medium
+
+  * Bake the wasm32-wasip1 Rust std, built by this image's own rustc, and
+    exact-pin the toolchain so rustc, rust-src and the vendored build-deps stay
+    in lockstep (T430145)
+  * Source the wasm linker (rust-lld) from the version-matched rust-llvm package
+    rather than the unpinned system lld (T430145)
+
+ -- James D. Forrester <jforrester@wikimedia.org>  Thu, 02 Jul 2026 12:00:00 -0400
+
 abstractwiki-rust (1.94.1-2-20260719) wikimedia; urgency=medium
 
   * Weekly rebuild.
