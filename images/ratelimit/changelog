@@ -1,3 +1,9 @@
+ratelimit (9.0.4-20260107.e9ce92c-20260712) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 12 Jul 2026 06:00:10 +0000
+
 ratelimit (9.0.4-20260107.e9ce92c-20260705) wikimedia; urgency=medium
 
   * Weekly rebuild.

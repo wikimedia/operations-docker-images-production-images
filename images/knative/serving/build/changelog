@@ -1,3 +1,9 @@
+knative-build (1.21.2-1-20260712) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 12 Jul 2026 06:00:12 +0000
+
 knative-build (1.21.2-1-20260705) wikimedia; urgency=medium
 
   * Weekly rebuild.
