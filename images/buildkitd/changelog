@@ -1,3 +1,9 @@
+buildkitd (0.10.4-2-20260719) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 19 Jul 2026 06:00:21 +0000
+
 buildkitd (0.10.4-2-20260712) wikimedia; urgency=medium
 
   * Weekly rebuild.

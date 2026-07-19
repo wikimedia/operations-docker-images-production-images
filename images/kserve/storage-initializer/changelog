@@ -1,3 +1,9 @@
+kserve-storage-initializer (0.17.0-0-20260719) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 19 Jul 2026 06:00:15 +0000
+
 kserve-storage-initializer (0.17.0-0-20260712) wikimedia; urgency=medium
 
   * Weekly rebuild.
