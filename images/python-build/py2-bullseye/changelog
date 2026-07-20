@@ -1,3 +1,10 @@
+python2-build-bullseye (0.3.1) wikimedia; urgency=medium
+
+  * Replace Debian python-pip-whl wheel, broken on Python 2 by DLA-4348-1
+    (T432636)
+
+ -- Ahmon Dancy <adancy@wikimedia.org>  Mon, 20 Jul 2026 12:25:00 -0700
+
 python2-build-bullseye (0.3.0-20260726) wikimedia; urgency=medium
 
   * Weekly rebuild.
