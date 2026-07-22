@@ -1,0 +1,5 @@
+golang1.25 (1.25) wikimedia; urgency=high
+
+  * Golang 1.25 on Trixie base image
+
+ -- Jelto Wodstrcil <jwodstrcil@wikimedia.org>  Wed, 22 Jul 2026 11:19:43 +0200
