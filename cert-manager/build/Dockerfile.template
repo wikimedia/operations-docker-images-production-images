@@ -1,8 +1,8 @@
-FROM {{ registry }}/golang1.22 as build
+FROM {{ registry }}/golang1.25 as build
 
 # This Dockerfile reimplements building the binaries as the upstream Makefile
 # does always build multiple architectures.
-ENV CERT_MANAGER_VERSION_GIT_TAG=v1.16.3 \
+ENV CERT_MANAGER_VERSION_GIT_TAG=v1.19.6 \
     CERT_MANAGER_SOURCE_REPO=https://github.com/cert-manager/cert-manager.git \
     REPO_BASE=/go/github.com/cert-manager
 

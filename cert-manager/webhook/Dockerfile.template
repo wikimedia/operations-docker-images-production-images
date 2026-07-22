@@ -1,6 +1,6 @@
 FROM {{ "build" | image_tag }} as build
 
-FROM {{ registry }}/bookworm:latest
+FROM {{ registry }}/trixie:latest
 
 USER root
 COPY --from=build --chown=root /go/github.com/cert-manager/cert-manager/_bin/server/webhook-linux-amd64 /usr/bin/webhook
