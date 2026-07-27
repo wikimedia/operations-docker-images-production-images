@@ -268,10 +268,17 @@ function prometheus_metrics(): array {
 			'value' => $ac['num_inserts'],
 		],
 		[
+			// TODO: Remove this (T433312)
 			'name' => 'php_apcu_cache_ops',
 			'type' => 'counter',
 			'label' => ['type', 'entries'],
 			'desc' => '',
+			'value' => $ac['num_entries'],
+		],
+		[
+			'name' => 'php_apcu_cache_entries',
+			'type' => 'gauge',
+			'desc' => 'APCu entries count',
 			'value' => $ac['num_entries'],
 		],
 		[
