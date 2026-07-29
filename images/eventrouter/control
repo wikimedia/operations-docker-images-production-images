@@ -1,4 +1,4 @@
 Package: eventrouter
 Description: Simple introspective kubernetes service that forwards events to a specified sink
-Maintainer: Janis Meybohm <jmeybohm@wikimedia.org>
+Maintainer: Kubernetes SIG <kubernetes-sig@lists.wikimedia.org>
 Build-Depends: golang1.19
