@@ -1,3 +1,9 @@
+php8.3-cli (8.3.32-2) wikimedia; urgency=high
+
+   * fix APCU entries metric
+
+ -- Raine Souček <raine@wikimedia.org>  Mon, 03 Aug 2026 12:28:24 +0200
+
 php8.3-cli (8.3.32-1-20260802) wikimedia; urgency=medium
 
   * Weekly rebuild.
