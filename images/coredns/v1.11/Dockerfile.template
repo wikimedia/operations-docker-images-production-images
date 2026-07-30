@@ -11,10 +11,12 @@ RUN mkdir -p {{ repo_base }} \
   && cd coredns \
   && git checkout tags/{{ coredns_version_git_tag }}
 WORKDIR {{ repo_base }}/coredns
+COPY plugin.cfg plugin.cfg
 # Unset GOLANG_VERSION as it is used as $GOTOOLCHAIN in Makefile
-RUN unset GOLANG_VERSION && make coredns SYSTEM="GOOS=linux GOARCH=amd64"
+# Run make gen to ensure coredns.go is updated after plugin.cfg change
+RUN unset GOLANG_VERSION && make gen && make coredns SYSTEM="GOOS=linux GOARCH=amd64"
 
-FROM {{ "bookworm" | image_tag }}
+FROM {{ "trixie" | image_tag }}
 
 USER root
 COPY --from=build {{ repo_base }}/coredns/coredns /usr/bin/coredns
