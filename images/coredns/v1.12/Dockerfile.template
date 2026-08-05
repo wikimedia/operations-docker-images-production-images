@@ -1,0 +1,28 @@
+FROM {{ 'golang1.24' | image_tag }} as build
+
+{% set repo_base = '/go/github.com/coredns' %}
+{% set coredns_version_git_tag = 'v1.12.1' %}
+
+WORKDIR /go
+USER {{ "nobody" | uid }}
+RUN mkdir -p {{ repo_base }} \
+  && cd {{ repo_base }} \
+  && git clone https://github.com/coredns/coredns.git coredns \
+  && cd coredns \
+  && git checkout tags/{{ coredns_version_git_tag }}
+WORKDIR {{ repo_base }}/coredns
+COPY plugin.cfg plugin.cfg
+
+# Unset GOLANG_VERSION as it is used as $GOTOOLCHAIN in Makefile
+# Run make gen to ensure coredns.go is updated after plugin.cfg change
+RUN unset GOLANG_VERSION && make gen && make coredns SYSTEM="GOOS=linux GOARCH=amd64"
+
+FROM {{ "trixie" | image_tag }}
+
+USER root
+COPY --from=build {{ repo_base }}/coredns/coredns /usr/bin/coredns
+COPY Corefile /etc/coredns/Corefile
+COPY entrypoint.sh /bin/entrypoint.sh
+
+USER {{ "nobody" | uid }}
+ENTRYPOINT ["/bin/entrypoint.sh"]

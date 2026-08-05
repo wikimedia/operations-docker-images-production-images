@@ -1,0 +1,4 @@
+Package: coredns1.12
+Description: coredns container for k8s
+Maintainer: Kubernetes SIG <kubernetes-sig@lists.wikimedia.org>
+Build-Depends: golang1.24

@@ -1,0 +1,21 @@
+.:53 {
+        errors
+        prometheus 0.0.0.0:9153
+        cache 30
+        loop
+        loadbalance
+        health {
+            lameduck 5s
+        }
+        ready
+        kubeapi
+        kubepods pod.cluster.local in-addr.arpa ip6.arpa {
+            fallthrough in-addr.arpa ip6.arpa
+        }
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
+           pods insecure
+           fallthrough in-addr.arpa ip6.arpa
+        }
+        forward . /etc/resolv.conf
+        reload
+}

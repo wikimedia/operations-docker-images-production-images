@@ -1,0 +1,5 @@
+coredns1.12 (1.12.1-1) wikimedia; urgency=medium
+
+  * Import coredns v1.12.1
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Thu, 30 Jul 2026 15:33:51 +0200
