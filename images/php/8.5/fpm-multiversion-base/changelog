@@ -1,0 +1,5 @@
+php8.5-fpm-multiversion-base (8.5.9-1) wikimedia; urgency=medium
+
+  * Initial release cloned from php8.3-fpm-multiversion-base
+
+ -- Raine Souček <raine@wikimedia.org>  Fri, 14 Aug 2026 15:31:03 +0200

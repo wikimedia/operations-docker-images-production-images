@@ -1,0 +1,5 @@
+php8.5-cli (8.5.9-1) wikimedia; urgency=medium
+
+  * Initial release cloned from php8.3-cli
+
+ -- Raine Souček <raine@wikimedia.org>  Fri, 14 Aug 2026 15:04:56 +0200

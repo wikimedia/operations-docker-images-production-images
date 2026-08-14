@@ -1,0 +1,4 @@
+Package: php8.5-fpm-multiversion-base
+Description: Base php8.5 image used by the mediawiki-multiversion build process
+Depends: php8.5-fpm
+Maintainer: Release Engineering <releng@wikimedia.org>

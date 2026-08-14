@@ -1,0 +1,5 @@
+Package: php8.5-cli
+Description: Basic php8.5 container (bookworm)
+ By default, this image will just execute a php script located at
+ /bin/entrypoint.php
+Maintainer: SRE Service Operations <sre-service-ops@wikimedia.org>
