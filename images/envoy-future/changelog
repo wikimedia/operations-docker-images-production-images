@@ -1,3 +1,9 @@
+envoy-future (1.39.0-1-20260816) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 16 Aug 2026 06:00:23 +0000
+
 envoy-future (1.39.0-1) wikimedia; urgency=medium
 
   * New upstream version v1.39.0
