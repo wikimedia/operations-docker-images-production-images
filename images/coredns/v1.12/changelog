@@ -1,3 +1,9 @@
+coredns1.12 (1.12.1-1-20260823) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 23 Aug 2026 06:00:35 +0000
+
 coredns1.12 (1.12.1-1) wikimedia; urgency=medium
 
   * Import coredns v1.12.1

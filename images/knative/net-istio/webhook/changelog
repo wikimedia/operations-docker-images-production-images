@@ -1,3 +1,9 @@
+knative-net-istio-webhook (1.21.1-1-20260823) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 23 Aug 2026 06:00:15 +0000
+
 knative-net-istio-webhook (1.21.1-1-20260816) wikimedia; urgency=medium
 
   * Weekly rebuild.

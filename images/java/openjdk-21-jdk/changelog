@@ -1,3 +1,9 @@
+openjdk-21-jdk (0.1-20260823) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 23 Aug 2026 06:00:09 +0000
+
 openjdk-21-jdk (0.1-20260816) wikimedia; urgency=medium
 
   * Weekly rebuild.
