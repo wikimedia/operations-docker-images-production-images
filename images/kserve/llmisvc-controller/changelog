@@ -1,0 +1,5 @@
+kserve-llmisvc-controller (0.20.0-0) wikimedia; urgency=medium
+
+  * Initial release. Controller for LLMInferenceService, from upstream 0.20.0.
+
+ -- Dawid Pogorzelski <dpogorzelski@wikimedia.org>  Wed, 19 Aug 2026 12:00:00 +0200

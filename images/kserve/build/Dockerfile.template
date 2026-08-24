@@ -11,4 +11,4 @@ RUN mkdir -p {{ repo_base }} \
 
 WORKDIR {{ repo_base }}/kserve/cmd
 ENV CGO_ENABLED=0
-RUN cd manager && go build && cd ../agent && go build
+RUN cd manager && go build && cd ../agent && go build && cd ../llmisvc && go build

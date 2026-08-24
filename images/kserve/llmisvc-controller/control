@@ -1,0 +1,4 @@
+Package: kserve-llmisvc-controller
+Description: KServe LLMInferenceService Controller
+Depends: kserve-build
+Maintainer: Machine Learning Team <ml@wikimedia.org>

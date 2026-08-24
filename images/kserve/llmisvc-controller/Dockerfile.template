@@ -1,0 +1,12 @@
+FROM {{ "kserve-build" | image_tag }} as build
+
+FROM {{ "bookworm" | image_tag }}
+
+USER root
+# The upstream chart runs this container with `command: [/manager]`, so the
+# binary goes to /manager rather than /usr/bin. That keeps the vendored
+# kserve-llmisvc-resources chart free of a WMF-specific command override.
+COPY --from=build --chown=root /go/github.com/kserve/kserve/cmd/llmisvc/llmisvc /manager
+
+USER {{ "nobody" | uid }}
+ENTRYPOINT ["/manager"]
