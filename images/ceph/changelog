@@ -1,3 +1,10 @@
+ceph (18.2.8-wmf1) wikimedia; urgency=medium
+
+  * Update to upstream 18.2.8
+  * Remove old rgw/{__init__,module}.py as fixed upstream
+
+ -- Matthew Vernon <mvernon@wikimedia.org>  Mon, 24 Aug 2026 10:32:26 +0100
+
 ceph (18.2.7-wmf1-20260823) wikimedia; urgency=medium
 
   * Weekly rebuild.
