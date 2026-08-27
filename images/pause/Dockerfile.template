@@ -1,28 +1,26 @@
-FROM {{ "bullseye" | image_tag }} AS build
+FROM {{ "trixie" | image_tag }} AS build
 
-# Instead of pulling the whole Kubernetes repository, we just import pause.c
-# and we build it with gcc. When you update the values below, check the related
-# Makefile (in this case https://github.com/kubernetes/kubernetes/blob/release-1.23/build/pause/Makefile)
-# The gcc version used on Debian upstream should be enough for the simple pause.c
-# use case, but to be extra sure one can compare versions checking what's
-# installed for 'x86_64-linux-gnu-gcc' in the build image (see Makefile).
+# Instead of pulling the whole Kubernetes repository, we do a sparse checkout
+# of the build/pause directory so we can use the Makefile to build the binary.
+# Since the Makefile is designed to build using a container, we inject
+# a target (build-local) using `make --eval` to build the pause binary using
+# gcc instead, while still using the CFLAGS defined by the Makefile.
 
-{% set kubernetes_version = '1.23' %}
-# The VERSION is composed by the target pause value plus
-# the result of `git describe --contains --always --match='v*'`
-# executed in the Kubernetes git repository (swithing to the kubernetes_version
-# branch beforehand).
-{% set CFLAGS = '-Os -Wall -Werror -static -DVERSION=v3.6-2b8076aad0e' %}
-{% set workdir = '/srv/workdir' %}
+{% set kubernetes_version = '1.34' %}
+{% set workdir = '/tmp/workdir' %}
 
 USER root
-RUN {{ "gcc binutils libc6-dev ca-certificates wget" | apt_install }} && \
-  mkdir {{ workdir }} && chmod 777 {{ workdir }} && cd {{ workdir }} && \
-  wget "https://raw.githubusercontent.com/kubernetes/kubernetes/release-{{ kubernetes_version }}/build/pause/linux/pause.c"
+RUN {{ "make gcc binutils libc6-dev ca-certificates git" | apt_install }}
 
-WORKDIR {{ workdir }}
 USER {{ "nobody" | uid }}
-RUN /usr/bin/gcc {{ CFLAGS }} -o {{ workdir }}/pause {{ workdir }}/pause.c && /usr/bin/strip {{ workdir }}/pause
+RUN mkdir {{ workdir }}
+WORKDIR {{ workdir }}
+RUN git clone --depth 1 --filter=tree:0 --sparse \
+    --branch release-{{ kubernetes_version }} https://github.com/kubernetes/kubernetes.git . && \
+    git sparse-checkout set build/pause && \
+    cd build/pause && \
+    make --eval='build-local:; /usr/bin/gcc $(CFLAGS) -o {{ workdir }}/pause linux/pause.c' build-local && \
+    /usr/bin/strip {{ workdir }}/pause
 
 FROM scratch
 
