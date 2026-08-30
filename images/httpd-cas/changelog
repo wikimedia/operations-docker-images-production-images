@@ -1,3 +1,9 @@
+httpd-cas (2.4.67-1-20260830) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 30 Aug 2026 06:00:22 +0000
+
 httpd-cas (2.4.67-1-20260823) wikimedia; urgency=medium
 
   * Weekly rebuild.

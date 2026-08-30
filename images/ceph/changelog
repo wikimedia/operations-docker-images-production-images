@@ -1,3 +1,9 @@
+ceph (18.2.8-wmf1-20260830) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 30 Aug 2026 06:00:10 +0000
+
 ceph (18.2.8-wmf1) wikimedia; urgency=medium
 
   * Update to upstream 18.2.8

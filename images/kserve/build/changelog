@@ -1,3 +1,9 @@
+kserve-build (0.20.0-1-20260830) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 30 Aug 2026 06:00:20 +0000
+
 kserve-build (0.20.0-1) wikimedia; urgency=medium
 
   * Also build cmd/llmisvc, for the LLMInferenceService controller image.

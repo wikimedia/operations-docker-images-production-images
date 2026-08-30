@@ -1,3 +1,9 @@
+kserve-llmisvc-controller (0.20.0-0-20260830) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 30 Aug 2026 06:00:21 +0000
+
 kserve-llmisvc-controller (0.20.0-0) wikimedia; urgency=medium
 
   * Initial release. Controller for LLMInferenceService, from upstream 0.20.0.

@@ -1,3 +1,9 @@
+pause (3.10-1-20260830) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 30 Aug 2026 06:00:13 +0000
+
 pause (3.10-1) wikimedia; urgency=medium
 
   * Update to pause 3.10.1 (kubernetes 1.34)
