@@ -39,6 +39,7 @@ php8.5-memcached
 php8.5-msgpack
 php8.5-redis
 php8.5-uuid
+php8.5-zip
 {%- endset -%}
 RUN echo 'deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia component/php85' > /etc/apt/sources.list.d/php85.list &&\
     {{ packages | apt_install }} && \

@@ -1,3 +1,9 @@
+php8.3-cli (8.3.33-2) wikimedia; urgency=high
+
+   Add php zip extension
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Mon, 31 Aug 2026 08:00:43 +0200
+
 php8.3-cli (8.3.33-1-20260830) wikimedia; urgency=medium
 
   * Weekly rebuild.

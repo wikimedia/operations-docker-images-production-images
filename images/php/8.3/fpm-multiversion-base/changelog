@@ -1,3 +1,10 @@
+php8.3-fpm-multiversion-base (8.3.33-1-20260830-s1) wikimedia; urgency=high
+
+   Refresh for update in parent image php8.3-cli:
+   Add php zip extension
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Mon, 31 Aug 2026 08:00:43 +0200
+
 php8.3-fpm-multiversion-base (8.3.33-1-20260830) wikimedia; urgency=medium
 
   * Weekly rebuild.

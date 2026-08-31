@@ -45,6 +45,7 @@ php8.3-memcached
 php8.3-msgpack
 php8.3-redis
 php8.3-uuid
+php8.3-zip
 {%- endset -%}
 RUN echo 'deb http://apt.wikimedia.org/wikimedia bullseye-wikimedia component/php83-icu72' > /etc/apt/sources.list.d/php83-icu72.list &&\
     {{ packages | apt_install }} && \

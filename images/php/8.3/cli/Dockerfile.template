@@ -39,6 +39,7 @@ php8.3-memcached
 php8.3-msgpack
 php8.3-redis
 php8.3-uuid
+php8.3-zip
 {%- endset -%}
 RUN echo 'deb http://apt.wikimedia.org/wikimedia bookworm-wikimedia component/php83' > /etc/apt/sources.list.d/php83.list &&\
     {{ packages | apt_install }} && \
