@@ -1,0 +1,7 @@
+FROM {{ 'trixie' | image_tag }}
+
+RUN {{ "opensysusers bento wmf-certificates" | apt_install }}
+
+USER {{ "nobody" | uid }}
+
+ENTRYPOINT ["/usr/bin/bento"]

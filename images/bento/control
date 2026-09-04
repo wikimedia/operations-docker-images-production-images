@@ -1,0 +1,3 @@
+Package: bento
+Description: Basic Bento stream processor container
+Maintainer: SRE Observability <sre-observability@wikimedia.org>
