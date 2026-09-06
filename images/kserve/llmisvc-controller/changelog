@@ -1,3 +1,9 @@
+kserve-llmisvc-controller (0.20.0-0-20260906) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 06 Sep 2026 06:00:21 +0000
+
 kserve-llmisvc-controller (0.20.0-0-20260830) wikimedia; urgency=medium
 
   * Weekly rebuild.

@@ -1,3 +1,9 @@
+php8.3-icu72-cli (8.3.31-2-20260906) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 06 Sep 2026 06:00:18 +0000
+
 php8.3-icu72-cli (8.3.31-2) wikimedia; urgency=high
 
    Add php zip extension

@@ -1,3 +1,9 @@
+php8.5-fpm (8.5.9-1-20260830-s1-20260906) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 06 Sep 2026 06:00:18 +0000
+
 php8.5-fpm (8.5.9-1-20260830-s1) wikimedia; urgency=high
 
    Refresh for update in parent image php8.5-cli:
