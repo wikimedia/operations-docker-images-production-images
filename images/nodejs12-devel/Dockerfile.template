@@ -1,3 +1,0 @@
-FROM {{ registry }}/bullseye:latest
-
-RUN {{ "nodejs npm" | apt_install }}
