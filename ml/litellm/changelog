@@ -1,5 +1,0 @@
-litellm (1.99.1-1) wikimedia; urgency=medium
-
-  * Initial release: retag of ghcr.io/berriai/litellm-non_root:v1.99.1.
-
- -- Dawid Pogorzelski <dpogorzelski@wikimedia.org>  Wed, 02 Sep 2026 16:05:35 +0200

@@ -1,3 +1,0 @@
-Package: litellm
-Description: LiteLLM proxy (upstream non-root image, retagged) - OpenAI-compatible gateway for Lift Wing Studio.
-Maintainer: Machine Learning Team <ml@wikimedia.org>
