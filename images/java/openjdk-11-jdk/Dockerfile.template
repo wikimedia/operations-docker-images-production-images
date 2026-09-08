@@ -1,3 +1,0 @@
-FROM {{ "openjdk-11-jre" | image_tag }}
-
-RUN {{ "openjdk-11-jdk-headless" | apt_install }}
