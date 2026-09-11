@@ -1,3 +1,0 @@
-Package: buildkitd
-Description: Server for building container images using buildkit frontends
-Maintainer: Dan Duvall <dduvall@wikimedia.org>
