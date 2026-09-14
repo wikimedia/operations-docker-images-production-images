@@ -1,3 +1,9 @@
+nodejs18-devel (0.0.1-20260914) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Mon, 14 Sep 2026 13:57:40 +0000
+
 nodejs18-devel (0.0.1-20260913) wikimedia; urgency=medium
 
   * Weekly rebuild.

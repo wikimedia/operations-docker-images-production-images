@@ -1,3 +1,9 @@
+ceph (18.2.8-wmf1-20260914) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Mon, 14 Sep 2026 13:57:44 +0000
+
 ceph (18.2.8-wmf1-20260913) wikimedia; urgency=medium
 
   * Weekly rebuild.

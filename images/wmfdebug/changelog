@@ -1,3 +1,9 @@
+wmfdebug (0.0.7-20260914) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Mon, 14 Sep 2026 13:58:04 +0000
+
 wmfdebug (0.0.7-20260913) wikimedia; urgency=medium
 
   * Weekly rebuild.
