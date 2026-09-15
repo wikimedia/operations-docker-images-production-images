@@ -1,0 +1,5 @@
+prometheus-bird-exporter (0.0.1) wikimedia; urgency=medium
+
+  * Initial release.
+
+ -- Blake Jensen <blake@wikimedia.org>  Tue, 15 Sep 2026 13:23:29 +0100

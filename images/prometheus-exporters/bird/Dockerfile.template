@@ -1,0 +1,14 @@
+FROM {{ "golang1.26" | image_tag }} as build
+USER nobody
+RUN mkdir -p /go/prometheus-bird-exporter \
+  && cd /go/prometheus-bird-exporter \
+  && git clone https://gitlab.wikimedia.org/repos/sre/prometheus-bird-exporter.git \
+  && cd prometheus-bird-exporter \
+  && git checkout tags/v1.6.2-wikimedia \
+  && CGO_ENABLED=0 go build -mod vendor -ldflags="-s -w" \
+  && cp bird_exporter /go/bin
+
+FROM {{ "trixie" | image_tag }}
+COPY --from=build /go/bin/bird_exporter /usr/bin/
+USER {{ "nobody" | uid }}
+ENTRYPOINT ["/usr/bin/bird_exporter"]

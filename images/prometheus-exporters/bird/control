@@ -1,0 +1,4 @@
+Package: prometheus-bird-exporter
+Description: bird prometheus exporter
+Maintainer: Blake Jensen <blake@wikimedia.org>
+Build-Depends: golang1.26
