@@ -1,0 +1,5 @@
+golang1.26 (1.26) wikimedia; urgency=high
+
+  * Golang 1.26 on Trixie base image
+
+ -- Blake Jensen <blake@wikimedia.org>  Wed, 22 Jul 2026 14:23:43 +0100
