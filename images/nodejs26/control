@@ -1,0 +1,4 @@
+Package: nodejs26-slim
+Description: Base image for nodejs 26.x based applications on Debian Trixie
+Maintainer: SRE Infrastructure Foundations <sre-foundations@wikimedia.org>
+

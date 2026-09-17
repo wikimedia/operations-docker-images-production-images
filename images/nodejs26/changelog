@@ -1,0 +1,5 @@
+nodejs26-slim (26.8.2) wikimedia; urgency=medium
+
+  * Initial release T437509
+
+ -- Moritz Muehlenhoff <moritz@wikimedia.org>  Thu, 17 Sep 2026 10:16:02 +0200
