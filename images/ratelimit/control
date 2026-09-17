@@ -1,3 +1,4 @@
 Package: ratelimit
 Description: Envoy ratelimit service container for API gateway and other services
+Build-Depends: golang1.24
 Maintainer: Hugh Nowlan <hnowlan@wikimedia.org>

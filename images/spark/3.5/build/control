@@ -1,4 +1,5 @@
 Package: spark3.5-build
 Description: A build image containing spark and spark-controller
-Build-Depends: openjdk-8-jdk,golang1.19
+Depends: openjdk-8-jdk
+Build-Depends: golang1.22
 Maintainer: Data Platform Engineering <data-platform-engineering@wikimedia.org>

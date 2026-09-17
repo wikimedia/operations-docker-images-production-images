@@ -1,4 +1,5 @@
 Package: kserve-storage-initializer
 Description: KServe Storage Initializer
-Depends: kserve-build
+Depends: python3-bookworm
+Build-Depends: kserve-build
 Maintainer: Machine Learning Team <ml@wikimedia.org>

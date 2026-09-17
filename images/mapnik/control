@@ -1,3 +1,4 @@
 Package: mapnik
 Description: Base image for the mapnik library.
 Maintainer: Luca Toscano <ltoscano@wikimedia.org>
+Depends: python3-bookworm

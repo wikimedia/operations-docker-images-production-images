@@ -1,3 +1,4 @@
 Package: amd-pytorch-common
 Description: Common image for Pytorch base images.
+Depends: python3-bookworm
 Maintainer: Machine Learning Team <ml@wikimedia.org>
