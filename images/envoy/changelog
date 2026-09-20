@@ -1,3 +1,9 @@
+envoy (1.39.0-1-20260920) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 20 Sep 2026 06:00:27 +0000
+
 envoy (1.39.0-1-20260916) wikimedia; urgency=medium
 
   * Weekly rebuild.

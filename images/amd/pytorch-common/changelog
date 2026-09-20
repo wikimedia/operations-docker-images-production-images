@@ -1,3 +1,9 @@
+amd-pytorch-common (0.0.1-2-20260920) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 20 Sep 2026 06:00:22 +0000
+
 amd-pytorch-common (0.0.1-2-20260916) wikimedia; urgency=medium
 
   * Weekly rebuild.
