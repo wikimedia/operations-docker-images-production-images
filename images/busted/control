@@ -1,3 +1,0 @@
-Package: busted-bullseye
-Description: Image base to run lua tests, on bullseye (for the CDN)
-Maintainer: Giuseppe Lavagetto <glavagetto@wikimedia.org>
