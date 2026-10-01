@@ -1,3 +1,9 @@
+php8.3-fpm (8.3.35-1) wikimedia; urgency=medium
+
+  * Rebuild to pick up 8.3.35-1+wmf12u2
+
+ -- Raine <raine@wikimedia.org>  Thu, 01 Oct 2026 17:58:29 +0200
+
 php8.3-fpm (8.3.33-1-20260830-s1-20260927) wikimedia; urgency=medium
 
   * Weekly rebuild.
