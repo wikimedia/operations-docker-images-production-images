@@ -1,3 +1,9 @@
+abstractwiki-rust (1.95.0-20261011) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 11 Oct 2026 06:00:34 +0000
+
 abstractwiki-rust (1.95.0) wikimedia; urgency=medium
 
   Bump version number; trixie-backports has upgraded rustc etc. from 1.94.1 to 1.95.0.

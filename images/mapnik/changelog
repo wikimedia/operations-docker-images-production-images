@@ -1,3 +1,9 @@
+mapnik (4.0.2-3-20261011) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 11 Oct 2026 06:00:12 +0000
+
 mapnik (4.0.2-3-20261004) wikimedia; urgency=medium
 
   * Weekly rebuild.
