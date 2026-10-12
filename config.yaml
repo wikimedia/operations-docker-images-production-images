@@ -3,11 +3,15 @@ base_images:
   - docker-registry.wikimedia.org/bullseye:latest
   - docker-registry.wikimedia.org/bookworm:latest
   - docker-registry.wikimedia.org/trixie:latest
-# This list needs to include all UID mappings, and
-# should be kept in sync with production.
+# This list needs to include all UID mappings used in Wikimedia container
+# images which either get built via the weekly systemd timer to rebuild
+# the base production images or which is used in one of the production
+# images built via Gitlab pipelines and which need to be kept in sync
+# with UIDs used on the Wikimedia production cluster.
+#
 # NOTE: If you modify this list, you must also modify
 # profile::docker::builder::known_uid_mappings
-# in WMF operations/puppet repository.
+# in the WMF operations/puppet repository.
 known_uid_mappings:
   root: 0
   www-data: 33
