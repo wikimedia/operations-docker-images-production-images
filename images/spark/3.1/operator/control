@@ -1,5 +1,0 @@
-Package: spark3.1-operator
-Description: The spark image with added spark-operator binary
-Depends: spark3.1
-Build-Depends: spark3.1-build
-Maintainer: Data Platform Engineering <data-platform-engineering@wikimedia.org>
