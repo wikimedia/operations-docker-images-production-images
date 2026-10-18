@@ -1,3 +1,9 @@
+nodejs26-slim (26.8.2-20261018) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 18 Oct 2026 06:00:37 +0000
+
 nodejs26-slim (26.8.2-20261011) wikimedia; urgency=medium
 
   * Weekly rebuild.

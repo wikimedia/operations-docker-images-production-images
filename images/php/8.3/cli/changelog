@@ -1,3 +1,9 @@
+php8.3-cli (8.3.35-1-20261018) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 18 Oct 2026 06:00:21 +0000
+
 php8.3-cli (8.3.35-1-20261011) wikimedia; urgency=medium
 
   * Weekly rebuild.

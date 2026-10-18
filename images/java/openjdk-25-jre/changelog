@@ -1,3 +1,9 @@
+openjdk-25-jre (25.0.3-1-20261018) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 18 Oct 2026 06:00:30 +0000
+
 openjdk-25-jre (25.0.3-1-20261011) wikimedia; urgency=medium
 
   * Weekly rebuild.
