@@ -1,3 +1,9 @@
+php8.5-cli (8.5.12-1) wikimedia; urgency=medium
+
+  * Rebuild to pick up 8.5.12-1+wmf12u1
+
+ -- Raine <raine@wikimedia.org>  Thu, 22 Oct 2026 14:46:00 +0200
+
 php8.5-cli (8.5.9-2-20261021) wikimedia; urgency=medium
 
   * Weekly rebuild.
