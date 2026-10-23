@@ -1,3 +1,9 @@
+nodejs22-slim (22.23.4-1) wikimedia; urgency=medium
+
+  * T442062 
+
+ -- Giuseppe Lavagetto <glavagetto@wikimedia.org>  Fri, 23 Oct 2026 16:37:06 +0200
+
 nodejs22-slim (22.23.0-1-20261018) wikimedia; urgency=medium
 
   * Weekly rebuild.
