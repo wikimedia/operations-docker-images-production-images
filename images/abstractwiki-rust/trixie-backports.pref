@@ -1,5 +1,5 @@
 # Pin the Rust toolchain to trixie-backports so we get a current rustc release
-# (1.95.x line) rather than the frozen trixie one (1.85).
+# (1.96.x line) rather than the frozen trixie one (1.85).
 #
 # NOTE on the Pin clause: trixie-backports' Release file advertises
 # `Suite: stable-backports` and `Codename: trixie-backports`. APT's `a=` maps
@@ -11,7 +11,7 @@
 # forky ships and `stable-backports` rolls to forky-backports, this pin
 # stops matching rather than silently following.
 #
-# rustc, cargo, rust-src and rust-llvm are EXACT-pinned to the 1.95.0 line (not
+# rustc, cargo, rust-src and rust-llvm are EXACT-pinned to the 1.96.1 line (not
 # merely to backports) because they now move in lockstep: the wasm32-wasip1 std
 # is compiled from rust-src at build time by this rustc (T430145), rust-src's
 # Cargo.lock must match the vendored build-deps in the vendored-rust-std repo,
@@ -23,7 +23,7 @@
 # o=Wikimedia` at priority 1001; that does not conflict because it matches
 # a different origin.)
 Package: rustc cargo rust-src rust-llvm libstd-rust-* libstd-rust libstd-rust-dev
-Pin: version 1.95.0*
+Pin: version 1.96.1*
 Pin-Priority: 1001
 
 Package: rustc cargo rust-src rust-llvm libstd-rust-* libstd-rust libstd-rust-dev

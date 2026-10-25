@@ -1,3 +1,9 @@
+abstractwiki-rust (1.96.1) wikimedia; urgency=high
+
+   Bump version number to 1.96, with new vendored std libs, as upstream has moved.
+
+ -- James D. Forrester <jforrester@wikimedia.org>  Mon, 26 Oct 2026 09:59:44 -0400
+
 abstractwiki-rust (1.95.0-20261025) wikimedia; urgency=medium
 
   * Weekly rebuild.

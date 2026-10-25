@@ -46,7 +46,7 @@ RUN git clone "$CARGO_CHEF_REPO" /tmp/cargo-chef \
 # build-std omits bitcode and breaks LTO, and disabling LTO downstream is not an
 # option as it would change the shipped interpreter's size/perf profile.
 ARG RUST_STD_VENDOR_REPO=https://gitlab.wikimedia.org/repos/abstract-wiki/vendored-rust-std.git
-ARG RUST_STD_VENDOR_REF=v1.95.0-wikimedia
+ARG RUST_STD_VENDOR_REF=v1.96.1-wikimedia
 RUN set -eux; \
     host="$(rustc -vV | sed -n 's/^host: //p')"; \
     install -d "/usr/lib/rustlib/$host/bin"; \
