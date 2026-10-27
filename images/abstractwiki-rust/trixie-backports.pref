@@ -35,3 +35,10 @@ Pin-Priority: -1
 Package: rustfmt rust-clippy librust-*
 Pin: release n=trixie-backports
 Pin-Priority: 1001
+
+# wasi-libc supplies the libc.a that the wasm32-wasip1 std links against.
+# std uses pthreads on WASI, and only the backports build has the
+# single-threaded pthread stubs.
+Package: wasi-libc
+Pin: release n=trixie-backports
+Pin-Priority: 1001
