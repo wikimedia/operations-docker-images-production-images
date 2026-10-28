@@ -1,0 +1,7 @@
+amd-vllm032 (gfx90agfx942rocm7.2.3pytorch2.13.0flash-attn2.8.3aiter0.1.24.post1vllm0.32.0-1) wikimedia; urgency=medium
+
+  * Initial release. vLLM 0.32.0 ROCm wheels need glibc 2.39, so use a trixie base.
+  * Add libdw1t64 and a libmpi_cxx.so.40 stub. The torch wheel needs them, and
+    trixie has OpenMPI 5 without the C++ bindings.
+
+ -- Bartosz Wójtowicz <bwojtowicz@wikimedia.org>  Wed, 28 Oct 2026 16:00:00 +0100
