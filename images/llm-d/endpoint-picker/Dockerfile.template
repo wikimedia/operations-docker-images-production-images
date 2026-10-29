@@ -1,0 +1,21 @@
+FROM {{ 'golang1.25' | image_tag }} as build
+
+ENV SOURCE_VERSION=v0.9.0
+ENV SOURCE_REPO=https://github.com/llm-d/llm-d-router.git
+
+RUN git clone --depth 1 --branch $SOURCE_VERSION $SOURCE_REPO && \
+    cd llm-d-router && \
+    CGO_ENABLED=0 go build \
+      -ldflags="-s -w -X github.com/llm-d/llm-d-router/version.BuildRef=$SOURCE_VERSION" \
+      -o bin/epp cmd/epp/main.go
+
+FROM {{ "trixie" | image_tag }}
+
+USER root
+RUN {{ "wmf-certificates" | apt_install }}
+# KServe's kserve-config-llm-scheduler preset runs this container with
+# `command: [/app/epp, ...]`, so the binary goes to /app/epp as upstream.
+COPY --from=build --chown=root /go/llm-d-router/bin/epp /app/epp
+
+USER {{ "nobody" | uid }}
+ENTRYPOINT ["/app/epp"]

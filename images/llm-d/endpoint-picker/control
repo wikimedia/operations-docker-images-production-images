@@ -1,0 +1,4 @@
+Package: llm-d-endpoint-picker
+Description: llm-d Endpoint Picker (EPP) for Gateway API Inference Extension InferencePools
+Maintainer: Machine Learning Team <ml@wikimedia.org>
+Build-Depends: golang1.25

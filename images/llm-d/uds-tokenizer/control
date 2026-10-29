@@ -1,0 +1,4 @@
+Package: llm-d-uds-tokenizer
+Description: llm-d tokenizer sidecar for the endpoint picker's precise prefix-cache scorer
+Maintainer: Machine Learning Team <ml@wikimedia.org>
+Depends: python3-trixie

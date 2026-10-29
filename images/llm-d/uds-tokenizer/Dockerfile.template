@@ -1,0 +1,33 @@
+FROM {{ "python3-trixie" | image_tag }} as build
+
+ENV SOURCE_VERSION=v0.9.0
+ENV SOURCE_REPO=https://github.com/llm-d/llm-d-kv-cache.git
+
+USER root
+RUN {{ "git python3-venv ca-certificates" | apt_install }} && \
+    mkdir -p /src /opt/tokenizer && chown nobody /src /opt/tokenizer
+
+# Upstream builds from services/uds_tokenizer/pyproject.toml, which pins the
+# vLLM CPU wheel (vLLM is only used for tokenization) and pulls torch from the
+# PyTorch CPU index. See services/uds_tokenizer/Dockerfile upstream.
+USER {{ "nobody" | uid }}
+RUN git clone --depth 1 --branch $SOURCE_VERSION $SOURCE_REPO /src/llm-d-kv-cache && \
+    python3 -m venv /opt/tokenizer && \
+    /opt/tokenizer/bin/python3 -m pip install --no-cache-dir \
+      --extra-index-url https://download.pytorch.org/whl/cpu \
+      /src/llm-d-kv-cache/services/uds_tokenizer
+
+# Only site-packages is copied over, as in kserve-storage-initializer, so the
+# venv binaries stay out of the final image.
+FROM {{ "python3-trixie" | image_tag }}
+
+USER root
+RUN {{ "wmf-certificates" | apt_install }}
+COPY --from=build --chown=root /opt/tokenizer/lib/python3*/site-packages /opt/tokenizer/site-packages
+
+USER {{ "nobody" | uid }}
+ENV PYTHONPATH=/opt/tokenizer/site-packages
+# The KServe scheduler preset mounts emptyDirs on /tmp, /tmp/tokenizer (the UDS
+# socket) and /.cache, and points TOKENIZERS_DIR at the model on /mnt/models.
+EXPOSE 8082
+ENTRYPOINT ["python3", "-m", "run_grpc_server"]
