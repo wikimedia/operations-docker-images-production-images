@@ -1,4 +1,4 @@
-openjdk-25-jre (25.0.5-1-20261029) wikimedia; urgency=medium
+openjdk-25-jdk (25.0.5-1-20261029) wikimedia; urgency=medium
 
   * Bump for latest Java security release
 
