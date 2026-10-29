@@ -1,3 +1,9 @@
+openjdk-21-jre (21.0.13-20261029) wikimedia; urgency=medium
+
+  * Bump for latest Java security release
+
+ -- Image build Bot <root@wikimedia.org>  Thu, 29 Oct 2026 13:15:22 +0000
+
 openjdk-21-jdk (0.1-20261025) wikimedia; urgency=medium
 
   * Weekly rebuild.
