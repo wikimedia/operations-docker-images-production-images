@@ -1,3 +1,9 @@
+rsyslog (8.2608.0-4-20261108) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 08 Nov 2026 06:00:26 +0000
+
 rsyslog (8.2608.0-4-20261101) wikimedia; urgency=medium
 
   * Weekly rebuild.

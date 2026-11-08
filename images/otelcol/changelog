@@ -1,3 +1,9 @@
+otelcol (0.102.0-2-20261108) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 08 Nov 2026 06:00:14 +0000
+
 otelcol (0.102.0-2-20261101) wikimedia; urgency=medium
 
   * Weekly rebuild.
