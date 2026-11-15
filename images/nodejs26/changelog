@@ -1,3 +1,9 @@
+nodejs26-slim (26.13.1-1-20261115) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 15 Nov 2026 06:00:37 +0000
+
 nodejs26-slim (26.13.1-1) wikimedia; urgency=medium
 
   * Bump the version of the image so that the latest security import is

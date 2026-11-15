@@ -1,3 +1,9 @@
+httpd (2.4.67-1-20261115) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 15 Nov 2026 06:00:23 +0000
+
 httpd (2.4.67-1-20261108) wikimedia; urgency=medium
 
   * Weekly rebuild.

@@ -1,3 +1,9 @@
+llm-d-uds-tokenizer (0.9.0-0-20261115) wikimedia; urgency=medium
+
+  * Weekly rebuild.
+
+ -- Image build Bot <root@wikimedia.org>  Sun, 15 Nov 2026 06:00:36 +0000
+
 llm-d-uds-tokenizer (0.9.0-0-20261108) wikimedia; urgency=medium
 
   * Weekly rebuild.
