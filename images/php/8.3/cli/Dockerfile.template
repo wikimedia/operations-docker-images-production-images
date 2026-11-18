@@ -16,6 +16,7 @@ ENV PHP__date__timezone=UTC \
     PHP__mysql__connect_timeout=3 \
     PHP__pcre__backtrack_limit=50000 \
     PHP__session__save_path=/tmp \
+    PHP__session__save_handler=files \
     ENTRY_POINT_SCRIPT=/bin/entrypoint.php
 
 # Install all the php packages we need, and configure them.

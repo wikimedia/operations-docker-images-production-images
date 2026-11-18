@@ -1,3 +1,9 @@
+php8.3-cli (8.3.36-2-20261118) wikimedia; urgency=medium
+
+  * Allow to configure session.save_handler in php.ini; Bug T434399
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Wed, 18 Nov 2026 12:26:31 +0100
+
 php8.3-cli (8.3.36-1-20261115) wikimedia; urgency=medium
 
   * Weekly rebuild.
