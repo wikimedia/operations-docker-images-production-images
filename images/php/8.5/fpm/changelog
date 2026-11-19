@@ -1,3 +1,9 @@
+php8.5-fpm (8.5.13-1) wikimedia; urgency=high
+
+  * Update to php 8.5.13
+
+ -- Janis Meybohm <jmeybohm@wikimedia.org>  Thu, 19 Nov 2026 15:00:49 +0100
+
 php8.5-fpm (8.5.12-2-20261118) wikimedia; urgency=medium
 
   * Allow to configure session.save_handler in php.ini; Bug T434399
